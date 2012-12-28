@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua.iOS", "KeraLua.iOS.csproj", "{3F57C208-AA13-4B67-B3E7-ED41307F00A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = KeraLua.iOS.csproj
+	EndGlobalSection
+EndGlobal

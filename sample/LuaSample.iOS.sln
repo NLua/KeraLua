@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuaSample.iOS", "LuaSample.iOS\LuaSample.iOS.csproj", "{256AB610-5FFE-45FB-950E-A5394C2CB489}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		Ad-Hoc|iPhoneSimulator = Ad-Hoc|iPhoneSimulator
+		AppStore|iPhone = AppStore|iPhone
+		AppStore|iPhoneSimulator = AppStore|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Ad-Hoc|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Ad-Hoc|iPhoneSimulator.Build.0 = Ad-Hoc|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.AppStore|iPhoneSimulator.ActiveCfg = AppStore|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.AppStore|iPhoneSimulator.Build.0 = AppStore|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Debug|iPhone.Build.0 = Debug|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Release|iPhone.ActiveCfg = Release|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Release|iPhone.Build.0 = Release|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = LuaSample.iOS\LuaSample.iOS.csproj
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

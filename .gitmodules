@@ -1,0 +1,3 @@
+[submodule "external/lua"]
+	path = external/lua
+	url = git://github.com/codefoco/lua.git
