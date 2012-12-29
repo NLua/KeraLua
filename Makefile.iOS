@@ -2,7 +2,8 @@ PROJECT=KeraLua.iOS.sln
 MDTOOL=/Applications/MonoDevelop.app/Contents/MacOS/mdtool
 
 all:
-	$(MDTOOL) build $(PROJECT)
+	$(MDTOOL) build --target:Build --configuration:Release $(PROJECT)
 
 clean:
-	-rm -f *.a *dll
+	$(MDTOOL) build --target:Clean --configuration:Release $(PROJECT)
+

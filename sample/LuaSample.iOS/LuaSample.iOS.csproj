@@ -80,9 +80,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
-    <Reference Include="KeraLua.iOS">
-      <HintPath>..\..\bin\Debug\KeraLua.iOS.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -102,4 +99,10 @@
     <InterfaceDefinition Include="LuaSampleViewController.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\KeraLua.iOS.csproj">
+      <Project>{3F57C208-AA13-4B67-B3E7-ED41307F00A0}</Project>
+      <Name>KeraLua.iOS</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

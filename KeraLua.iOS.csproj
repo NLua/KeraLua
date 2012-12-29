@@ -40,6 +40,12 @@
     <ConsolePause>False</ConsolePause>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <DefineConstants>MONOTOUCH</DefineConstants>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="BeforeBuild" command="make -C &quot;./external/lua/ios_build&quot;" />
+        <Command type="BeforeBuild" command="cp &quot;./external/lua/ios_build/libLua51iOS.a&quot; libLua51iOS.a" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

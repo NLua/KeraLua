@@ -3,18 +3,54 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua.iOS", "KeraLua.iOS.csproj", "{3F57C208-AA13-4B67-B3E7-ED41307F00A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuaSample.iOS", "sample\LuaSample.iOS\LuaSample.iOS.csproj", "{256AB610-5FFE-45FB-950E-A5394C2CB489}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		AppStore|iPhone = AppStore|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Debug|iPhone.Build.0 = Debug|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Release|iPhone.ActiveCfg = Release|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Release|iPhone.Build.0 = Release|iPhone
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{256AB610-5FFE-45FB-950E-A5394C2CB489}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.AppStore|iPhone.Build.0 = Debug|Any CPU
 		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Release|iPhone.Build.0 = Release|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = KeraLua.iOS.csproj
+		StartupItem = sample\LuaSample.iOS\LuaSample.iOS.csproj
 	EndGlobalSection
 EndGlobal
