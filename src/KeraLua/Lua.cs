@@ -116,8 +116,8 @@ public class Lua
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
 	public static extern int lua_pcall(IntPtr luaState, int nArgs, int nResults, int errfunc);
 
-	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
-	public static extern int lua_rawcall(IntPtr luaState, int nArgs, int nResults);
+	//[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
+	//public static extern int lua_rawcall(IntPtr luaState, int nArgs, int nResults);
 
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
 	public static extern IntPtr lua_tocfunction(IntPtr luaState, int index);

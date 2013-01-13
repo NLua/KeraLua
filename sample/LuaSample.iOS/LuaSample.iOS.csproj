@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Resources\Icons\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -104,5 +105,20 @@
       <Project>{3F57C208-AA13-4B67-B3E7-ED41307F00A0}</Project>
       <Name>KeraLua.iOS</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icons\Icon-72.png" />
+    <BundleResource Include="Resources\Icons\Icon-72%402x.png" />
+    <BundleResource Include="Resources\Icons\Icon-Small-50.png" />
+    <BundleResource Include="Resources\Icons\Icon-Small-50%402x.png" />
+    <BundleResource Include="Resources\Icons\Icon-Small.png" />
+    <BundleResource Include="Resources\Icons\Icon-Small%402x.png" />
+    <BundleResource Include="Resources\Icons\Icon.png" />
+    <BundleResource Include="Resources\Icons\Icon%402x.png" />
+    <BundleResource Include="Resources\Icons\iTunesArtwork%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="Resources\Icons\iTunesArtwork.png" />
+    <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
 </Project>

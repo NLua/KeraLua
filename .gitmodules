@@ -1,3 +1,6 @@
 [submodule "external/lua"]
 	path = external/lua
 	url = git://github.com/codefoco/lua.git
+[submodule "tests/LuaTests"]
+	path = tests/LuaTests
+	url = git://github.com/codefoco/LuaTests.git

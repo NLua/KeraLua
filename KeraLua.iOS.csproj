@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="src\iOS\AssemblyInfo.cs" />
     <Compile Include="src\KeraLua\Lua.cs" />
+    <Compile Include="src\KeraLua\lua_State.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="libLua51iOS.a">

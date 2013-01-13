@@ -57,6 +57,7 @@ namespace LuaSample
 			Console.WriteLine (" Executed: return code = " + error);
 		}
 
+		[MonoTouch.MonoPInvokeCallback (typeof (Lua.lua_CFunction))]
 		static int print (IntPtr L)
 		{
 			int n = Lua.lua_gettop(L);  /* number of arguments */

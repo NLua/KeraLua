@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua.iOS", "KeraLua.iOS.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuaSample.iOS", "sample\LuaSample.iOS\LuaSample.iOS.csproj", "{256AB610-5FFE-45FB-950E-A5394C2CB489}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.iOS", "tests\Tests.iOS\Tests.iOS.csproj", "{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,8 +51,24 @@ Global
 		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Release|iPhone.Build.0 = Release|Any CPU
 		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{3F57C208-AA13-4B67-B3E7-ED41307F00A0}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Debug|iPhone.Build.0 = Debug|iPhone
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Release|iPhone.ActiveCfg = Release|iPhone
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Release|iPhone.Build.0 = Release|iPhone
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = sample\LuaSample.iOS\LuaSample.iOS.csproj
+		StartupItem = tests\Tests.iOS\Tests.iOS.csproj
 	EndGlobalSection
 EndGlobal
