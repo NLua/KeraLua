@@ -9,7 +9,9 @@ namespace Tests.iOS
 	[TestFixture]
 	public class core
 	{
+#if MONOTOUCH
 		[MonoTouch.MonoPInvokeCallback (typeof (Lua.lua_CFunction))]
+#endif
 		static int print (IntPtr L)
 		{
 			int n = Lua.lua_gettop(L);  /* number of arguments */
@@ -30,6 +32,7 @@ namespace Tests.iOS
 		IntPtr state;
 		string GetTestPath(string name)
 		{
+			string path = Directory.GetCurrentDirectory ();
 			string filePath = Path.Combine ("LuaTests", "core", name + ".lua");
 			return filePath;
 		}
@@ -59,7 +62,7 @@ namespace Tests.iOS
 
 
 		[SetUp]
-		void Setup()
+		public void Setup()
 		{
 			state = Lua.luaL_newstate ();
 			Lua.luaL_openlibs (state);
@@ -70,7 +73,7 @@ namespace Tests.iOS
 		}
 
 		[TearDown]
-		void TearDown ()
+		public void TearDown ()
 		{
 			Lua.lua_close (state);
 			state = IntPtr.Zero;

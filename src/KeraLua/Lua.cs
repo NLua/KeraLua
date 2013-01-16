@@ -11,14 +11,14 @@ public class Lua
 #if MONOTOUCH || MONODROID
 		const string LIBNAME = "__Internal";
 #else
-		const string LIBNAME = "liblua51";
+		const string LIBNAME = "lua51";
 #endif
 
 	[DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl)]
 	public static extern int lua_gc(IntPtr luaState, int what, int data);
 	
 	[DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl)]
-	public static extern string lua_typename(IntPtr luaState, int type);
+	public static extern IntPtr lua_typename(IntPtr luaState, int type);
 			
 	[DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl)]
 	public static extern void luaL_error(IntPtr luaState, string message);
@@ -116,9 +116,6 @@ public class Lua
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
 	public static extern int lua_pcall(IntPtr luaState, int nArgs, int nResults, int errfunc);
 
-	//[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
-	//public static extern int lua_rawcall(IntPtr luaState, int nArgs, int nResults);
-
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
 	public static extern IntPtr lua_tocfunction(IntPtr luaState, int index);
 
@@ -141,12 +138,15 @@ public class Lua
 	public static extern void lua_atpanic(IntPtr luaState, IntPtr panicf);
 	
 	[DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl)]
-	public static extern void  lua_pushcclosure (IntPtr luaState, IntPtr fn, int n);
+	private static extern void  lua_pushcclosure (IntPtr luaState, IntPtr fn, int n);
+
+	[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
+	public static extern void lua_pushstdcallcfunction (IntPtr luaState, IntPtr function);
 
 	public static void  lua_pushcfunction (IntPtr luaState, lua_CFunction fn)
 	{
 			IntPtr pfunc = Marshal.GetFunctionPointerForDelegate (fn);
-			lua_pushcclosure (luaState, pfunc, 0);
+			lua_pushstdcallcfunction (luaState, pfunc);
 	}
 	
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
