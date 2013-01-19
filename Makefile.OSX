@@ -1,0 +1,8 @@
+
+all:
+	cd external/lua; mkdir osx;	cd osx; cmake "-DCMAKE_OSX_ARCHITECTURES=x86_64;i386" ..; cmake --build . --config Release
+	cp external/lua/osx/lib/liblua51.dylib tests/liblua51.dylib
+
+clean:
+	rm -Rf external/lua/osx
+	rm -f tests/liblua51.dylib
