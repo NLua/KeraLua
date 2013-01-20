@@ -4,7 +4,7 @@ using NUnit.Framework;
 using System.IO;
 using KeraLua;
 
-namespace Tests.iOS
+namespace KeraLua.Tests
 {
 	[TestFixture]
 	public class core
@@ -32,25 +32,18 @@ namespace Tests.iOS
 		IntPtr state;
 		string GetTestPath(string name)
 		{
-			string path = Directory.GetCurrentDirectory ();
-			string filePath = Path.Combine ("LuaTests", "core", name + ".lua");
+			string filePath = Path.Combine (Path.Combine ("LuaTests", "core"), name + ".lua");
 			return filePath;
 		}
 
 		void AssertFile (string path)
 		{
-			string error;
 			int result = Lua.luaL_loadfile (state, path);
 			Assert.True (result == 0, "Fail loading file: " + path);
 			
-			result =  Lua.lua_pcall(state, 0, -1, 0);
+			result =  Lua.lua_pcall (state, 0, -1, 0);
 
-			if (result != 0) {
-				int len;
-				IntPtr pstring = Lua.lua_tolstring (state, -1, out len);
-				if (pstring != IntPtr.Zero)
-					error =  System.Runtime.InteropServices.Marshal.PtrToStringAnsi(pstring, len);
-			}
+
 			Assert.True (result == 0, "Fail calling file: " + path);
 		}
 
@@ -64,6 +57,7 @@ namespace Tests.iOS
 		[SetUp]
 		public void Setup()
 		{
+			System.IO.File.WriteAllText("/Users/codefoco/cwd.txt", Directory.GetCurrentDirectory ());
 			state = Lua.luaL_newstate ();
 			Lua.luaL_openlibs (state);
 			Lua.lua_pushcfunction (state, print);
