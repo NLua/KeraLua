@@ -57,7 +57,6 @@ namespace KeraLua.Tests
 		[SetUp]
 		public void Setup()
 		{
-			System.IO.File.WriteAllText("/Users/codefoco/cwd.txt", Directory.GetCurrentDirectory ());
 			state = Lua.luaL_newstate ();
 			Lua.luaL_openlibs (state);
 			Lua.lua_pushcfunction (state, print);
