@@ -7,7 +7,7 @@ language: c
 
 # We need CMake, Mono and NUnit
 install:
-  - sudo apt-get nunit install cmake mono-devel mono-gmcs >/dev/null 2>&1
+  - sudo apt-get install cmake mono-devel mono-gmcs nunit >/dev/null 2>&1
 
 script:
   - git submodule update --init
