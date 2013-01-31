@@ -81,10 +81,7 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-    <Folder Include="Resources\Icons\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Info.plist" />
   </ItemGroup>
@@ -119,6 +116,5 @@
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="Resources\Icons\iTunesArtwork.png" />
-    <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
 </Project>

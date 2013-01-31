@@ -2,8 +2,12 @@ PROJECT=KeraLua.iOS.sln
 MDTOOL=/Applications/MonoDevelop.app/Contents/MacOS/mdtool
 
 all:
+	#Make the iOS native library (remeber to update git submodules before run make)
+	make -C "./external/lua/ios_build"
+	cp "./external/lua/ios_build/libLua51iOS.a" libLua51iOS.a
 	$(MDTOOL) build --target:Build --configuration:Release $(PROJECT)
 
 clean:
 	$(MDTOOL) build --target:Clean --configuration:Release $(PROJECT)
-
+	rm -f *.a
+	make -C "./external/lua/ios_build" clean

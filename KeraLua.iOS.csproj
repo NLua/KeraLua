@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -22,14 +22,6 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <CustomCommands>
-      <CustomCommands>
-        <Command type="BeforeBuild" command="make -C &quot;./external/lua/ios_build&quot;" />
-        <Command type="BeforeBuild" command="cp &quot;./external/lua/ios_build/libLua51iOS.a&quot; libLua51iOS.a" />
-        <Command type="AfterClean" command="rm -f *.a" />
-        <Command type="AfterClean" command="make -C &quot;./external/lua/ios_build&quot; clean" />
-      </CustomCommands>
-    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -42,8 +34,6 @@
     <DefineConstants>MONOTOUCH</DefineConstants>
     <CustomCommands>
       <CustomCommands>
-        <Command type="BeforeBuild" command="make -C &quot;./external/lua/ios_build&quot;" />
-        <Command type="BeforeBuild" command="cp &quot;./external/lua/ios_build/libLua51iOS.a&quot; libLua51iOS.a" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -53,10 +43,8 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
     <Compile Include="src\iOS\AssemblyInfo.cs" />
     <Compile Include="src\KeraLua\Lua.cs" />
@@ -64,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="libLua51iOS.a">
-      <Link>Resources\libLua51iOS.a</Link>
+      <Link>libLua51iOS.a</Link>
       <LogicalName>libLua51iOS.a</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
