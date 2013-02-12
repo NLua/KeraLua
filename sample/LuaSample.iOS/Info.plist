@@ -2,20 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
+	<key>CFBundleDisplayName</key>
+	<string>LuaSample</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>Icons/Icon</string>
-		<string>Icons/Icon@2x</string>
-		<string>Icons/Icon-72</string>
-		<string>Icons/Icon-Small</string>
-		<string>Icons/Icon-Small@2x</string>
-		<string>Icons/Icon-Small-50</string>
+		<string>Icons/Icon.png</string>
+		<string>Icons/Icon@2x.png</string>
+		<string>Icons/Icon-72.png</string>
+		<string>Icons/Icon-Small.png</string>
+		<string>Icons/Icon-Small@2x.png</string>
+		<string>Icons/Icon-Small-50.png</string>
+	</array>
+	<key>CFBundleIdentifier</key>
+	<string>com.codefoco.luasample</string>
+	<key>MinimumOSVersion</key>
+	<string>3.2</string>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
 	</array>
 	<key>UIPrerenderedIcon</key>
 	<true/>
@@ -25,24 +29,24 @@
 		<dict>
 			<key>Style</key>
 			<string>UIBarStyleDefault</string>
-			<key>Translucent</key>
-			<false/>
 			<key>TintColor</key>
 			<dict>
-				<key>Red</key>
-				<real>0.133516441596094</real>
-				<key>Green</key>
-				<real>0.133516441596094</real>
 				<key>Blue</key>
-				<real>0.444449530785077</real>
+				<integer>0</integer>
+				<key>Green</key>
+				<integer>0</integer>
+				<key>Red</key>
+				<integer>0</integer>
 			</dict>
+			<key>Translucent</key>
+			<false/>
 		</dict>
 	</dict>
-	<key>CFBundleDisplayName</key>
-	<string>LuaSample</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.codefoco.luasample</string>
-	<key>MinimumOSVersion</key>
-	<string>3.2</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
 </dict>
 </plist>

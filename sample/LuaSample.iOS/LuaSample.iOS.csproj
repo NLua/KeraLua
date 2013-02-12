@@ -104,17 +104,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Icons\Icon-72.png" />
-    <BundleResource Include="Resources\Icons\Icon-72%402x.png" />
-    <BundleResource Include="Resources\Icons\Icon-Small-50.png" />
-    <BundleResource Include="Resources\Icons\Icon-Small-50%402x.png" />
-    <BundleResource Include="Resources\Icons\Icon-Small.png" />
-    <BundleResource Include="Resources\Icons\Icon-Small%402x.png" />
-    <BundleResource Include="Resources\Icons\Icon.png" />
-    <BundleResource Include="Resources\Icons\Icon%402x.png" />
-    <BundleResource Include="Resources\Icons\iTunesArtwork%402x.png" />
+    <Folder Include="Icons\" />
   </ItemGroup>
   <ItemGroup>
-    <ITunesArtwork Include="Resources\Icons\iTunesArtwork.png" />
+    <ITunesArtwork Include="Icons\iTunesArtwork.png" />
+    <ITunesArtwork Include="Icons\iTunesArtwork%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Icons\Icon-72.png" />
+    <BundleResource Include="Icons\Icon-72%402x.png" />
+    <BundleResource Include="Icons\Icon-Small-50.png" />
+    <BundleResource Include="Icons\Icon-Small-50%402x.png" />
+    <BundleResource Include="Icons\Icon-Small.png" />
+    <BundleResource Include="Icons\Icon-Small%402x.png" />
+    <BundleResource Include="Icons\Icon.png" />
+    <BundleResource Include="Icons\Icon%402x.png" />
   </ItemGroup>
 </Project>

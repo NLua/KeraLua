@@ -86,9 +86,8 @@
     <Reference Include="MonoTouch.NUnitLite" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
     <Folder Include="LuaTests\" />
-    <Folder Include="Resources\Icons\" />
+    <Folder Include="Icons\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -108,55 +107,53 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="..\..\..\LuaTests\core\bisect.lua">
+    <BundleResource Include="..\LuaTests\core\bisect.lua">
       <Link>LuaTests\core\bisect.lua</Link>
     </BundleResource>
-    <BundleResource Include="..\..\..\LuaTests\core\cf.lua">
+    <BundleResource Include="..\LuaTests\core\cf.lua">
       <Link>LuaTests\core\cf.lua</Link>
     </BundleResource>
-    <BundleResource Include="..\..\..\LuaTests\core\env.lua">
+    <BundleResource Include="..\LuaTests\core\env.lua">
       <Link>LuaTests\core\env.lua</Link>
     </BundleResource>
-    <BundleResource Include="..\..\..\LuaTests\core\factorial.lua">
+    <BundleResource Include="..\LuaTests\core\factorial.lua">
       <Link>LuaTests\core\factorial.lua</Link>
     </BundleResource>
-    <BundleResource Include="..\..\..\LuaTests\core\fib.lua">
+    <BundleResource Include="..\LuaTests\core\fib.lua">
       <Link>LuaTests\core\fib.lua</Link>
     </BundleResource>
-    <BundleResource Include="..\..\..\LuaTests\core\fibfor.lua">
+    <BundleResource Include="..\LuaTests\core\fibfor.lua">
       <Link>LuaTests\core\fibfor.lua</Link>
     </BundleResource>
-    <BundleResource Include="..\..\..\LuaTests\core\life.lua">
+    <BundleResource Include="..\LuaTests\core\life.lua">
       <Link>LuaTests\core\life.lua</Link>
     </BundleResource>
-    <BundleResource Include="..\..\..\LuaTests\core\printf.lua">
+    <BundleResource Include="..\LuaTests\core\printf.lua">
       <Link>LuaTests\core\printf.lua</Link>
     </BundleResource>
-    <BundleResource Include="..\..\..\LuaTests\core\readonly.lua">
+    <BundleResource Include="..\LuaTests\core\readonly.lua">
       <Link>LuaTests\core\readonly.lua</Link>
     </BundleResource>
-    <BundleResource Include="..\..\..\LuaTests\core\sieve.lua">
+    <BundleResource Include="..\LuaTests\core\sieve.lua">
       <Link>LuaTests\core\sieve.lua</Link>
     </BundleResource>
-    <BundleResource Include="..\..\..\LuaTests\core\sort.lua">
+    <BundleResource Include="..\LuaTests\core\sort.lua">
       <Link>LuaTests\core\sort.lua</Link>
     </BundleResource>
-    <BundleResource Include="..\..\..\LuaTests\core\trace-globals.lua">
+    <BundleResource Include="..\LuaTests\core\trace-globals.lua">
       <Link>LuaTests\core\trace-globals.lua</Link>
     </BundleResource>
-    <BundleResource Include="Resources\Icons\Icon-72.png" />
-    <BundleResource Include="Resources\Icons\Icon-72%402x.png" />
-    <BundleResource Include="Resources\Icons\Icon-Small-50.png" />
-    <BundleResource Include="Resources\Icons\Icon-Small-50%402x.png" />
-    <BundleResource Include="Resources\Icons\Icon-Small.png" />
-    <BundleResource Include="Resources\Icons\Icon-Small%402x.png" />
-    <BundleResource Include="Resources\Icons\Icon.png" />
-    <BundleResource Include="Resources\Icons\Icon%402x.png" />
-    <BundleResource Include="Resources\Icons\iTunesArtwork%402x.png" />
-    <BundleResource Include="Resources\Icon.png" />
+    <BundleResource Include="Icons\Icon-72.png" />
+    <BundleResource Include="Icons\Icon-72%402x.png" />
+    <BundleResource Include="Icons\Icon-Small-50.png" />
+    <BundleResource Include="Icons\Icon-Small-50%402x.png" />
+    <BundleResource Include="Icons\Icon-Small.png" />
+    <BundleResource Include="Icons\Icon-Small%402x.png" />
+    <BundleResource Include="Icons\Icon.png" />
+    <BundleResource Include="Icons\Icon%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <ITunesArtwork Include="Resources\Icons\iTunesArtwork.png" />
-    <ITunesArtwork Include="iTunesArtwork%402x" />
+    <ITunesArtwork Include="Icons\iTunesArtwork.png" />
+    <ITunesArtwork Include="Icons\iTunesArtwork%402x.png" />
   </ItemGroup>
 </Project>

@@ -38,13 +38,30 @@ namespace KeraLua.Tests
 
 		void AssertFile (string path)
 		{
+			string error = string.Empty;
+
 			int result = Lua.luaL_loadfile (state, path);
-			Assert.True (result == 0, "Fail loading file: " + path);
+
+			if (result != 0) {
+				int len;
+				IntPtr pstring = Lua.lua_tolstring (state, 1, out len);
+				if (pstring != IntPtr.Zero)
+					error =  System.Runtime.InteropServices.Marshal.PtrToStringAnsi(pstring, len);
+			}
+
+			Assert.True (result == 0, "Fail loading file: " + path +  "ERROR:" + error);
 			
 			result =  Lua.lua_pcall (state, 0, -1, 0);
 
+			if (result != 0) {
+				int len;
+				IntPtr pstring = Lua.lua_tolstring (state, 1, out len);
+				if (pstring != IntPtr.Zero)
+					error =  System.Runtime.InteropServices.Marshal.PtrToStringAnsi(pstring, len);
+			}
 
-			Assert.True (result == 0, "Fail calling file: " + path);
+
+			Assert.True (result == 0, "Fail calling file: " + path + " ERROR: " + error);
 		}
 
 		void TestLuaFile (string name)
