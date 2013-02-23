@@ -18,12 +18,24 @@ namespace KeraLua.Tests
 			int i;
 			int len;
 			for (i=1; i<=n; i++) {
-				IntPtr pstring = Lua.lua_tolstring (L, i, out len);
-				if (pstring == IntPtr.Zero)
-					continue;
-				string s =  System.Runtime.InteropServices.Marshal.PtrToStringAnsi(pstring, len);
-				
-				Console.WriteLine (s);
+				int type = Lua.lua_type(L, i);
+				switch (type) {
+						
+					case 0:
+						Console.Write("nil");
+						break;
+					case 4:
+						IntPtr pstring = Lua.lua_tolstring (L, i, out len);
+						if (pstring != IntPtr.Zero) {
+							string s = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(pstring, len);
+							Console.WriteLine(s);
+						}
+						break;
+					case 3:
+						double number = Lua.lua_tonumber (L, i);
+						Console.Write (number);
+						break;
+				}
 			}
 			Console.WriteLine();
 			return 0;
@@ -76,10 +88,11 @@ namespace KeraLua.Tests
 		{
 			state = Lua.luaL_newstate ();
 			Lua.luaL_openlibs (state);
-			Lua.lua_pushcfunction (state, print);
-			Lua.lua_pushstring (state, "print");
-			Lua.lua_insert (state, -2);
-			Lua.lua_settable (state, (int)-10002);
+			Lua.lua_pushcfunction(state, print);
+			Lua.lua_pushstring(state, "print");
+			Lua.lua_insert(state, -2);
+			Lua.lua_settable(state, (int)-10002);
+			
 		}
 
 		[TearDown]

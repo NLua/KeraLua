@@ -51,6 +51,42 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\tests\LuaTests\core\bisect.lua">
+      <Link>tests\bisect.lua</Link>
+    </None>
+    <None Include="..\tests\LuaTests\core\cf.lua">
+      <Link>tests\cf.lua</Link>
+    </None>
+    <None Include="..\tests\LuaTests\core\env.lua">
+      <Link>tests\env.lua</Link>
+    </None>
+    <None Include="..\tests\LuaTests\core\factorial.lua">
+      <Link>tests\factorial.lua</Link>
+    </None>
+    <None Include="..\tests\LuaTests\core\fib.lua">
+      <Link>tests\fib.lua</Link>
+    </None>
+    <None Include="..\tests\LuaTests\core\fibfor.lua">
+      <Link>tests\fibfor.lua</Link>
+    </None>
+    <None Include="..\tests\LuaTests\core\life.lua">
+      <Link>tests\life.lua</Link>
+    </None>
+    <None Include="..\tests\LuaTests\core\printf.lua">
+      <Link>tests\printf.lua</Link>
+    </None>
+    <None Include="..\tests\LuaTests\core\readonly.lua">
+      <Link>tests\readonly.lua</Link>
+    </None>
+    <None Include="..\tests\LuaTests\core\sieve.lua">
+      <Link>tests\sieve.lua</Link>
+    </None>
+    <None Include="..\tests\LuaTests\core\sort.lua">
+      <Link>tests\sort.lua</Link>
+    </None>
+    <None Include="..\tests\LuaTests\core\trace-globals.lua">
+      <Link>trace-globals.lua</Link>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
