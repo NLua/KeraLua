@@ -8,14 +8,10 @@ public partial class Lua
 {
 	public delegate int lua_CFunction(lua_State L);
 
-#if MONOTOUCH || MONODROID
+#if MONOTOUCH
 		const string LIBNAME = "__Internal";
 #else
-	#if DEBUG
-		const string LIBNAME = "lua51d";
-	#else
 		const string LIBNAME = "lua51";
-	#endif
 #endif
 
 	[DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl)]

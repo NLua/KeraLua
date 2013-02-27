@@ -12,8 +12,7 @@ namespace ConsoleTest
 
 		static void Main (string [] args)
 		{
-			var task = System.Threading.Tasks.Task.Factory.StartNew (TestAll);
-			task.Wait ();
+			TestAll ();
 		}
 
 		static void TestAll ()
