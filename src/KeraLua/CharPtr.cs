@@ -22,7 +22,7 @@ namespace KeraLua
 
 			public override string ToString ()
 			{
-				if (str == null || str == IntPtr.Zero)
+				if (str == IntPtr.Zero)
 					return "";
 
 				return System.Runtime.InteropServices.Marshal.PtrToStringAnsi (str);
@@ -30,7 +30,7 @@ namespace KeraLua
 
 			public string ToString (uint lenght)
 			{
-				if (str == null || str == IntPtr.Zero)
+				if (str == IntPtr.Zero)
 					return "";
 
 				return System.Runtime.InteropServices.Marshal.PtrToStringAnsi (str, (int)lenght);

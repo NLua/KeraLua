@@ -12,6 +12,7 @@ namespace LuaSample
 	public partial class LuaSampleViewController : UIViewController
 	{
 		IntPtr state;
+		public static Lua.lua_CFunction g_print = print;
 
 		public void lua_setglobal(string name)
 		{
@@ -42,12 +43,6 @@ namespace LuaSample
 			
 			// Perform any additional setup after loading the view, typically from a nib.
 		}
-		
-		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
-		{
-			// Return true for supported orientations
-			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
-		}
 
 		[Action ("OnClickEval:")]
 		void OnClickEval (MonoTouch.Foundation.NSObject sender)
@@ -58,18 +53,14 @@ namespace LuaSample
 		}
 
 		[MonoTouch.MonoPInvokeCallback (typeof (Lua.lua_CFunction))]
-		static int print (IntPtr L)
+		static int print (Lua.lua_State L)
 		{
 			int n = Lua.lua_gettop(L);  /* number of arguments */
 			int i;
-			int len;
+			uint len;
 			for (i=1; i<=n; i++) {
-				IntPtr pstring = Lua.lua_tolstring (L, i, out len);
-				if (pstring == IntPtr.Zero)
-					continue;
-				string s =  System.Runtime.InteropServices.Marshal.PtrToStringAnsi(pstring, len);
-
-				Console.WriteLine (s);
+				string s = Lua.lua_tolstring (L, i, out len).ToString (len);
+				Console.Write (s);
 			}
 			Console.WriteLine();
 			return 0;
