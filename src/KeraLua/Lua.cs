@@ -139,8 +139,13 @@ public partial class Lua
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
 	public static extern int lua_toboolean(IntPtr luaState, int index);
 	
-	[DllImport(LIBNAME,CallingConvention = CallingConvention.Cdecl)]
-	public static extern CharPtr lua_tolstring(IntPtr luaState, int index, out uint strLen);
+	[DllImport(LIBNAME,CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_tolstring")]
+	private static extern IntPtr lua_tolstring_ptr(IntPtr luaState, int index, out uint strLen);
+
+	public static CharPtr lua_tolstring(IntPtr luaState, int index, out uint strLen)
+	{
+			return lua_tolstring_ptr (luaState, index, out strLen);
+	}
 	
 	public static void lua_atpanic(IntPtr luaState,  lua_CFunction panicf)
 	{
