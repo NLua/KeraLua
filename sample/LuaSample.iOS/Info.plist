@@ -14,7 +14,7 @@
 		<string>Icons/Icon-Small-50.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.codefoco.luasample</string>
+	<string>org.nlua.luasample</string>
 	<key>MinimumOSVersion</key>
 	<string>3.2</string>
 	<key>UIDeviceFamily</key>

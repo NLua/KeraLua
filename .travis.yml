@@ -25,7 +25,7 @@ branches:
 # Notify if needed
 notifications:
   recipients:
-    - codefoco@gmail.com
+    - viniciusjarina@gmail.com
   email:
     on_success: change
     on_failure: always

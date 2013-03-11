@@ -1,7 +1,7 @@
 KeraLua
 =======
 
-[![Build Status](https://travis-ci.org/codefoco/KeraLua.png?branch=master)](https://travis-ci.org/codefoco/KeraLua)
+[![Build Status](https://travis-ci.org/NLua/KeraLua.png?branch=master)](https://travis-ci.org/NLua/KeraLua)
 
 C# KopiLua compatible API for native bindings of Lua/LuaJIT (compatible with iOS/Mac/Android/.NET)
 
