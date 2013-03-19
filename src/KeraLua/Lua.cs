@@ -91,7 +91,8 @@ public partial class Lua
 
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
 	public static extern void lua_rawseti(IntPtr luaState, int tableIndex, int index);
-
+	
+	[CLSCompliant (false)]
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
 	public static extern IntPtr lua_newuserdata(IntPtr luaState, uint size);
 
@@ -142,6 +143,7 @@ public partial class Lua
 	[DllImport(LIBNAME,CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_tolstring")]
 	private static extern IntPtr lua_tolstring_ptr(IntPtr luaState, int index, out uint strLen);
 
+	[CLSCompliant (false)]
 	public static CharPtr lua_tolstring(IntPtr luaState, int index, out uint strLen)
 	{
 			return lua_tolstring_ptr (luaState, index, out strLen);
@@ -173,7 +175,8 @@ public partial class Lua
 
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
 	public static extern void lua_pushboolean(IntPtr luaState, int value);
-
+	
+	[CLSCompliant (false)]
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
 	public static extern void lua_pushlstring(IntPtr luaState, string str, uint size);
 
@@ -192,6 +195,7 @@ public partial class Lua
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
 	public static extern int luaL_getmetafield(IntPtr luaState, int stackPos, string field);
 
+	[CLSCompliant (false)]
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
 	public static extern int luaL_loadbuffer(IntPtr luaState, string buff, uint size, string name);
 	

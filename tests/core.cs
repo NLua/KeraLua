@@ -30,7 +30,7 @@ namespace KeraLua.Tests
 						Console.Write("nil");
 						break;
 					case 4:
-						string s = Lua.lua_tolstring (L, i, out len).ToString (len);
+						string s = Lua.lua_tolstring (L, i, out len).ToString ((int)len);
 						Console.Write(s);
 						break;
 					case 3:
@@ -60,7 +60,7 @@ namespace KeraLua.Tests
 
 			if (result != 0) {
 				uint len;
-				error = Lua.lua_tolstring (state, 1, out len).ToString (len);
+				error = Lua.lua_tolstring (state, 1, out len).ToString ((int)len);
 			}
 
 			Assert.True (result == 0, "Fail loading file: " + path +  "ERROR:" + error);
@@ -69,7 +69,7 @@ namespace KeraLua.Tests
 
 			if (result != 0) {
 				uint len;
-				error = Lua.lua_tolstring (state, 1, out len).ToString(len);
+				error = Lua.lua_tolstring (state, 1, out len).ToString((int)len);
 			}
 
 

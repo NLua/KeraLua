@@ -28,12 +28,12 @@ namespace KeraLua
 				return System.Runtime.InteropServices.Marshal.PtrToStringAnsi (str);
 			}
 
-			public string ToString (uint lenght)
+			public string ToString (int lenght)
 			{
 				if (str == IntPtr.Zero)
 					return "";
 
-				return System.Runtime.InteropServices.Marshal.PtrToStringAnsi (str, (int)lenght);
+				return System.Runtime.InteropServices.Marshal.PtrToStringAnsi (str, lenght);
 			}
 
 
