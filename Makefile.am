@@ -11,3 +11,4 @@ endif
 
 # Projekt-specifikus makefile beszúrása
 include KeraLua.make
+include Makefile.Linux # Todo: All platform
