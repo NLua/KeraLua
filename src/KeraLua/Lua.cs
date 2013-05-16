@@ -39,6 +39,9 @@ public partial class Lua
 	public static extern int luaL_loadstring(IntPtr luaState, string chunk);
 
 	[DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl)]
+	public static extern int luaL_loadstring(IntPtr luaState, byte[] chunk);
+		
+	[DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl)]
 	public static extern void lua_createtable(IntPtr luaState, int narr, int nrec);
 	
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
@@ -199,6 +202,10 @@ public partial class Lua
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
 	public static extern int luaL_loadbuffer(IntPtr luaState, string buff, uint size, string name);
 	
+	[CLSCompliant (false)]
+	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
+	public static extern int luaL_loadbuffer(IntPtr luaState, byte[] buff, uint size, string name);
+		
 	[DllImport(LIBNAME,CallingConvention=CallingConvention.Cdecl)]
 	public static extern int luaL_loadfile(IntPtr luaState, string filename);
 	
