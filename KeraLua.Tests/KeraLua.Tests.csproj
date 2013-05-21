@@ -57,7 +57,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KeraLua.csproj">
+    <ProjectReference Include="..\src\KeraLua.csproj">
       <Project>{47153754-10F5-44D8-B578-F5A32B69061A}</Project>
       <Name>KeraLua</Name>
     </ProjectReference>

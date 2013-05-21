@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua", "KeraLua.csproj", "{47153754-10F5-44D8-B578-F5A32B69061A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua", "src\KeraLua.csproj", "{47153754-10F5-44D8-B578-F5A32B69061A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua.Tests", "KeraLua.Tests\KeraLua.Tests.csproj", "{9C7932E8-A045-4AE4-A3B4-9F4C44511087}"
 EndProject
