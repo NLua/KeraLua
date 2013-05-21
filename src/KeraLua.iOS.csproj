@@ -42,12 +42,12 @@
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="src\iOS\AssemblyInfo.cs" />
-    <Compile Include="src\KeraLua\Lua.cs" />
-    <Compile Include="src\KeraLua\CharPtr.cs" />
-    <Compile Include="src\KeraLua\LuaDebug.cs" />
-    <Compile Include="src\KeraLua\LuaState.cs" />
-    <Compile Include="src\KeraLua\LuaTag.cs" />
+    <Compile Include="iOS\AssemblyInfo.cs" />
+    <Compile Include="KeraLua\Lua.cs" />
+    <Compile Include="KeraLua\CharPtr.cs" />
+    <Compile Include="KeraLua\LuaDebug.cs" />
+    <Compile Include="KeraLua\LuaState.cs" />
+    <Compile Include="KeraLua\LuaTag.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="libLua51iOS.a">

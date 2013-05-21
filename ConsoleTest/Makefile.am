@@ -10,15 +10,15 @@ ASSEMBLY = ../tests/ConsoleTest.exe
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
-	../bin/Debug/KeraLua.dll \
+	../src/bin/Debug/KeraLua.dll \
 	../tests/KeraLua.Tests.dll
 BUILD_DIR = ../tests/
 
 CONSOLETEST_EXE_MDB_SOURCE=../tests/ConsoleTest.exe.mdb
 CONSOLETEST_EXE_MDB=$(BUILD_DIR)/ConsoleTest.exe.mdb
 CONSOLETEST_EXE_CONFIG_SOURCE=App.config
-KERALUA_DLL_SOURCE=../bin/Debug/KeraLua.dll
-KERALUA_DLL_MDB_SOURCE=../bin/Debug/KeraLua.dll.mdb
+KERALUA_DLL_SOURCE=../src/bin/Debug/KeraLua.dll
+KERALUA_DLL_MDB_SOURCE=../src/bin/Debug/KeraLua.dll.mdb
 KERALUA_DLL_MDB=$(BUILD_DIR)/KeraLua.dll.mdb
 KERALUA_TESTS_DLL_SOURCE=../tests/KeraLua.Tests.dll
 KERALUA_TESTS_DLL_MDB_SOURCE=../tests/KeraLua.Tests.dll.mdb
@@ -34,13 +34,13 @@ ASSEMBLY = ../tests/ConsoleTest.exe
 ASSEMBLY_MDB = 
 COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
-	../bin/Release/KeraLua.dll \
+	../src/bin/Release/KeraLua.dll \
 	../tests/KeraLua.Tests.dll
 BUILD_DIR = ../tests/
 
 CONSOLETEST_EXE_MDB=
 CONSOLETEST_EXE_CONFIG_SOURCE=App.config
-KERALUA_DLL_SOURCE=../bin/Release/KeraLua.dll
+KERALUA_DLL_SOURCE=../src/bin/Release/KeraLua.dll
 KERALUA_DLL_MDB=
 KERALUA_TESTS_DLL_SOURCE=../tests/KeraLua.Tests.dll
 KERALUA_TESTS_DLL_MDB=

@@ -10,14 +10,14 @@ ASSEMBLY = ../tests/KeraLua.Tests.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
-	../bin/Debug/KeraLua.dll
+	../src/bin/Debug/KeraLua.dll
 BUILD_DIR = ../tests/
 
 KERALUA_TESTS_DLL_MDB_SOURCE=../tests/KeraLua.Tests.dll.mdb
 KERALUA_TESTS_DLL_MDB=$(BUILD_DIR)/KeraLua.Tests.dll.mdb
 NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
-KERALUA_DLL_SOURCE=../bin/Debug/KeraLua.dll
-KERALUA_DLL_MDB_SOURCE=../bin/Debug/KeraLua.dll.mdb
+KERALUA_DLL_SOURCE=../src/bin/Debug/KeraLua.dll
+KERALUA_DLL_MDB_SOURCE=../src/bin/Debug/KeraLua.dll.mdb
 KERALUA_DLL_MDB=$(BUILD_DIR)/KeraLua.dll.mdb
 
 endif
@@ -29,12 +29,12 @@ ASSEMBLY = ../tests/KeraLua.Tests.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
-	../bin/Release/KeraLua.dll
+	../src/bin/Release/KeraLua.dll
 BUILD_DIR = ../tests/
 
 KERALUA_TESTS_DLL_MDB=
 NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
-KERALUA_DLL_SOURCE=../bin/Release/KeraLua.dll
+KERALUA_DLL_SOURCE=../src/bin/Release/KeraLua.dll
 KERALUA_DLL_MDB=
 
 endif
