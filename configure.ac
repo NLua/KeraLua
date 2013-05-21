@@ -51,7 +51,8 @@ dnl package checks, per config
 
 
 AC_CONFIG_FILES([
-keralua.pc
+src/keralua.pc
+src/Makefile
 KeraLua.Tests/keralua.tests.pc
 KeraLua.Tests/Makefile
 ConsoleTest/consoletest

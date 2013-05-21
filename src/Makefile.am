@@ -1,4 +1,5 @@
 
+EXTRA_DIST =  
 
 # Warning: This is an automatically generated file, do not edit!
 
@@ -9,7 +10,7 @@ ASSEMBLY = bin/Debug/KeraLua.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES = 
-BUILD_DIR = bin/Debug/
+BUILD_DIR = bin/Debug
 
 KERALUA_DLL_MDB_SOURCE=bin/Debug/KeraLua.dll.mdb
 KERALUA_DLL_MDB=$(BUILD_DIR)/KeraLua.dll.mdb
@@ -23,7 +24,7 @@ ASSEMBLY = bin/Release/KeraLua.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
 PROJECT_REFERENCES = 
-BUILD_DIR = bin/Release/
+BUILD_DIR = bin/Release
 
 KERALUA_DLL_MDB=
 
@@ -44,12 +45,12 @@ RESGEN=resgen2
 all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
 FILES = \
-	src/KeraLua/CharPtr.cs \
-	src/KeraLua/Lua.cs \
-	src/KeraLua/LuaDebug.cs \
-	src/KeraLua/LuaState.cs \
-	src/KeraLua/LuaTag.cs \
-	src/KeraLua/Properties/AssemblyInfo.cs 
+	KeraLua/CharPtr.cs \
+	KeraLua/Lua.cs \
+	KeraLua/LuaDebug.cs \
+	KeraLua/LuaState.cs \
+	KeraLua/LuaTag.cs \
+	KeraLua/Properties/AssemblyInfo.cs 
 
 DATA_FILES = 
 

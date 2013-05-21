@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua.iOS", "KeraLua.iOS.csproj", "{3F57C208-AA13-4B67-B3E7-ED41307F00A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua.iOS", "src\KeraLua.iOS.csproj", "{3F57C208-AA13-4B67-B3E7-ED41307F00A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuaSample.iOS", "sample\LuaSample.iOS\LuaSample.iOS.csproj", "{256AB610-5FFE-45FB-950E-A5394C2CB489}"
 EndProject
