@@ -9,7 +9,12 @@ Before build fetch the submodules:
 
 	git submodule update --init --recursive
 
-
+  *  Contributing
+--------------
+ * KeraLua is using the Mono Code-Style http://www.mono-project.com/Coding_Guidelines .
+ * Please, do not change the line-end or re-indent the code.
+ * Run the tests before push.
+ * Avoid to push unneeded style changes (unless is really needed) renaming, move code.
 
 
 iOS Build
