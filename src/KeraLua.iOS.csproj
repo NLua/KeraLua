@@ -48,6 +48,7 @@
     <Compile Include="KeraLua\LuaDebug.cs" />
     <Compile Include="KeraLua\LuaState.cs" />
     <Compile Include="KeraLua\LuaTag.cs" />
+    <Compile Include="KeraLua\NativeMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="libLua51iOS.a">
