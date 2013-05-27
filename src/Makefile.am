@@ -50,6 +50,7 @@ FILES = \
 	KeraLua/LuaDebug.cs \
 	KeraLua/LuaState.cs \
 	KeraLua/LuaTag.cs \
+	KeraLua/NativeMethods.cs \
 	KeraLua/Properties/AssemblyInfo.cs 
 
 DATA_FILES = 
