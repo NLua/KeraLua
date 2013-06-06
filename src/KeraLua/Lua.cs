@@ -409,6 +409,26 @@ namespace KeraLua
 		{
 			return NativeMethods.luanet_gettag ();
 		}
+
+		public static void luanet_pushglobaltable (IntPtr luaState)
+		{
+			NativeMethods.luanet_pushglobaltable (luaState);
+		}
+
+		public static void luanet_popglobaltable (IntPtr luaState)
+		{
+			NativeMethods.luanet_popglobaltable (luaState);
+		}
+
+		public static void luanet_setglobal (IntPtr luaState, string name)
+		{
+			NativeMethods.luanet_setglobal (luaState, name);
+		}
+
+		public static void luanet_getglobal (IntPtr luaState, string name)
+		{
+			NativeMethods.luanet_getglobal (luaState, name);
+		}
 	}
 
 }

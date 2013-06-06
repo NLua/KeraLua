@@ -229,5 +229,17 @@ namespace KeraLua
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern IntPtr luanet_gettag ();
 
+		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void luanet_pushglobaltable (IntPtr luaState);
+
+		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void luanet_popglobaltable (IntPtr luaState);
+
+		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void luanet_getglobal (IntPtr luaState, string name);
+
+		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void luanet_setglobal (IntPtr luaState, string name);
+
 	}
 }
