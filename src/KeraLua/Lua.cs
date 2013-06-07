@@ -390,6 +390,11 @@ namespace KeraLua
 			return NativeMethods.luanet_tonetobject (luaState, index);
 		}
 
+		public static int luanet_registryindex (IntPtr luaState, int index)
+		{
+			return NativeMethods.luanet_registryindex (luaState, index);
+		}
+
 		public static void luanet_newudata (IntPtr luaState, int val)
 		{
 			NativeMethods.luanet_newudata (luaState, val);
