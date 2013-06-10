@@ -113,7 +113,7 @@ namespace KeraLua
 
 		public static int lua_equal (IntPtr luaState, int index1, int index2)
 		{
-			return NativeMethods.lua_equal (luaState, index2, index2);
+			return NativeMethods.luanet_equal (luaState, index2, index2);
 		}
 
 
@@ -198,10 +198,9 @@ namespace KeraLua
 			return NativeMethods.lua_call (luaState, nArgs, nResults);
 		}
 
-
-		public static int lua_pcall (IntPtr luaState, int nArgs, int nResults, int errfunc)
+		public static int luanet_pcall (IntPtr luaState, int nArgs, int nResults, int errfunc)
 		{
-			return NativeMethods.lua_pcall (luaState, nArgs, nResults, errfunc);
+			return NativeMethods.luanet_pcall (luaState, nArgs, nResults, errfunc);
 		}
 
 		public static lua_CFunction lua_tocfunction (IntPtr luaState, int index)
@@ -214,9 +213,9 @@ namespace KeraLua
 		}
 
 
-		public static double lua_tonumber (IntPtr luaState, int index)
+		public static double luanet_tonumber (IntPtr luaState, int index)
 		{
-			return NativeMethods.lua_tonumber (luaState, index);
+			return NativeMethods.luanet_tonumber (luaState, index);
 		}
 
 
@@ -285,21 +284,21 @@ namespace KeraLua
 		}
 
 		[CLSCompliantAttribute (false)]
-		public static int luaL_loadbuffer (IntPtr luaState, string buff, uint size, string name)
+		public static int luanet_loadbuffer (IntPtr luaState, string buff, uint size, string name)
 		{
-			return NativeMethods.luaL_loadbuffer (luaState, buff, size, name);
+			return NativeMethods.luanet_loadbuffer (luaState, buff, size, name);
 
 		}
 
 		[CLSCompliantAttribute (false)]
-		public static int luaL_loadbuffer (IntPtr luaState, byte [] buff, uint size, string name)
+		public static int luanet_loadbuffer (IntPtr luaState, byte [] buff, uint size, string name)
 		{
-			return NativeMethods.luaL_loadbuffer (luaState, buff, size, name);
+			return NativeMethods.luanet_loadbuffer (luaState, buff, size, name);
 		}
 
-		public static int luaL_loadfile (IntPtr luaState, string filename)
+		public static int luanet_loadfile (IntPtr luaState, string filename)
 		{
-			return NativeMethods.luaL_loadfile (luaState, filename);
+			return NativeMethods.luanet_loadfile (luaState, filename);
 		}
 
 		public static void lua_error (IntPtr luaState)

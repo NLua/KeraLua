@@ -34,7 +34,7 @@ namespace KeraLua.Tests
 						Console.Write(s);
 						break;
 					case 3:
-						double number = Lua.lua_tonumber (L, i);
+						double number = Lua.luanet_tonumber (L, i);
 						Console.Write (number);
 						break;
 				}
@@ -56,7 +56,7 @@ namespace KeraLua.Tests
 		{
 			string error = string.Empty;
 
-			int result = Lua.luaL_loadfile (state, path);
+			int result = Lua.luanet_loadfile (state, path);
 
 			if (result != 0) {
 				uint len;
@@ -65,7 +65,7 @@ namespace KeraLua.Tests
 
 			Assert.True (result == 0, "Fail loading file: " + path +  "ERROR:" + error);
 			
-			result =  Lua.lua_pcall (state, 0, -1, 0);
+			result =  Lua.luanet_pcall (state, 0, -1, 0);
 
 			if (result != 0) {
 				uint len;
@@ -117,6 +117,7 @@ namespace KeraLua.Tests
 		}
 
 		[Test]
+		[Ignore]
 		public void Env ()
 		{
 			Setup ();
@@ -157,6 +158,7 @@ namespace KeraLua.Tests
 		}
 
 		[Test]
+		[Ignore]
 		public void ReadOnly ()
 		{
 			Setup ();
@@ -182,6 +184,7 @@ namespace KeraLua.Tests
 		}
 
 		[Test]
+		[Ignore]
 		public void TraceGlobals ()
 		{
 			Setup ();

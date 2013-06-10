@@ -4,7 +4,7 @@
 #export CXXFLAGS=-m32
 #export LDFLAGS=-m32
 make -f Makefile.Linux
-export LD_LIBRARY_PATH=$PWD/external/lua/linux/lib64
+export LD_LIBRARY_PATH=$PWD/external/lua/linux/lib64:$PWD/external/lua/linux/lib
 #export LD_LIBRARY_PATH=$PWD/external/lua/linux/lib
 xbuild KeraLua.sln /p:Configuration=Release
 cd tests/

@@ -77,7 +77,7 @@ namespace KeraLua
 		internal static extern int lua_getmetatable (IntPtr luaState, int objIndex);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
-		internal static extern int lua_equal (IntPtr luaState, int index1, int index2);
+		internal static extern int luanet_equal (IntPtr luaState, int index1, int index2);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void lua_pushvalue (IntPtr luaState, int index);
@@ -122,13 +122,13 @@ namespace KeraLua
 		internal static extern int lua_call (IntPtr luaState, int nArgs, int nResults);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
-		internal static extern int lua_pcall (IntPtr luaState, int nArgs, int nResults, int errfunc);
+		internal static extern int luanet_pcall (IntPtr luaState, int nArgs, int nResults, int errfunc);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_tocfunction")]
 		internal static extern IntPtr lua_tocfunction_ptr (IntPtr luaState, int index);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
-		internal static extern double lua_tonumber (IntPtr luaState, int index);
+		internal static extern double luanet_tonumber (IntPtr luaState, int index);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern int lua_toboolean (IntPtr luaState, int index);
@@ -170,13 +170,13 @@ namespace KeraLua
 		internal static extern int luaL_getmetafield (IntPtr luaState, int stackPos, string field);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-		internal static extern int luaL_loadbuffer (IntPtr luaState, string buff, uint size, string name);
+		internal static extern int luanet_loadbuffer (IntPtr luaState, string buff, uint size, string name);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-		internal static extern int luaL_loadbuffer (IntPtr luaState, byte [] buff, uint size, string name);
+		internal static extern int luanet_loadbuffer (IntPtr luaState, byte [] buff, uint size, string name);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-		internal static extern int luaL_loadfile (IntPtr luaState, string filename);
+		internal static extern int luanet_loadfile (IntPtr luaState, string filename);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void lua_error (IntPtr luaState);
