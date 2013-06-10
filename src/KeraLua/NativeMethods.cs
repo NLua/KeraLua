@@ -152,7 +152,7 @@ namespace KeraLua
 		internal static extern void lua_pushboolean (IntPtr luaState, int value);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-		internal static extern void lua_pushlstring (IntPtr luaState, string str, uint size);
+		internal static extern void luanet_pushlstring (IntPtr luaState, string str, uint size);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
 		internal static extern void lua_pushstring (IntPtr luaState, string str);
