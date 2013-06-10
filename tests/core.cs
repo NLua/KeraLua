@@ -88,10 +88,7 @@ namespace KeraLua.Tests
 			state = Lua.luaL_newstate ();
 			Lua.luaL_openlibs (state);
 			Lua.lua_pushcfunction (state,  core.func_print);
-			Lua.lua_pushstring(state, "print");
-			Lua.lua_insert(state, -2);
-			Lua.lua_settable(state, (int)-10002);
-			
+			Lua.luanet_setglobal (state, "print");			
 		}
 
 		public void TearDown ()

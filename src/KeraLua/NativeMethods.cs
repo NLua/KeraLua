@@ -13,9 +13,9 @@ namespace KeraLua
 		const string LIBNAME = "__Internal";
 #else
 #if DEBUGLUA
-		const string LIBNAME = "lua51d";
+		const string LIBNAME = "lua52d";
 #else
-		const string LIBNAME = "lua51";
+		const string LIBNAME = "lua52";
 #endif
 #endif
 

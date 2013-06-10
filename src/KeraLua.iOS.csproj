@@ -51,9 +51,9 @@
     <Compile Include="KeraLua\NativeMethods.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="libLua51iOS.a">
-      <Link>libLua51iOS.a</Link>
-      <LogicalName>libLua51iOS.a</LogicalName>
+    <EmbeddedResource Include="libLua52iOS.a">
+      <Link>libLua52iOS.a</Link>
+      <LogicalName>libLua52iOS.a</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
 </Project>
