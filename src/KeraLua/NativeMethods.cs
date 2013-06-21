@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace KeraLua
 {
-	class NativeMethods
+	static class NativeMethods
 	{
 
 #if MONOTOUCH
@@ -138,10 +138,7 @@ namespace KeraLua
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void lua_atpanic (IntPtr luaState, IntPtr panicf);
-
-		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void lua_pushcclosure (IntPtr luaState, IntPtr fn, int n);
-
+		
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void lua_pushstdcallcfunction (IntPtr luaState, IntPtr function);
 
@@ -235,10 +232,10 @@ namespace KeraLua
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void luanet_popglobaltable (IntPtr luaState);
 
-		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
 		internal static extern void luanet_getglobal (IntPtr luaState, string name);
 
-		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
 		internal static extern void luanet_setglobal (IntPtr luaState, string name);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl)]

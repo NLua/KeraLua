@@ -64,7 +64,7 @@ namespace KeraLua
 						s.Append ((char)b);
 					return s.ToString ();
 				} else
-					return System.Runtime.InteropServices.Marshal.PtrToStringAnsi (str, length);
+					return PointerToString(str, length);
 			}
 
 			IntPtr str;

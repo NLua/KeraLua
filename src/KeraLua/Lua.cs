@@ -252,7 +252,8 @@ namespace KeraLua
 			NativeMethods.lua_pushboolean (luaState, value);
 		}
 
-		private static void luanet_pushlstring (IntPtr luaState, string str, uint size)
+		[CLSCompliantAttribute (false)]
+		public static void luanet_pushlstring (IntPtr luaState, string str, uint size)
 		{
 			NativeMethods.luanet_pushlstring (luaState, str, size);
 		}
