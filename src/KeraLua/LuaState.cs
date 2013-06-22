@@ -6,20 +6,20 @@ namespace KeraLua
 {
 	public partial class Lua
 	{
-		public struct lua_State
+		public struct LuaState
 		{
-			public lua_State (IntPtr state)
+			public LuaState (IntPtr state)
 				: this ()
 			{
 				this.state = state;
 			}
 
-			static public implicit operator lua_State (IntPtr ptr)
+			static public implicit operator LuaState (IntPtr ptr)
 			{
-				return new lua_State (ptr);
+				return new LuaState (ptr);
 			}
 
-			static public implicit operator IntPtr (lua_State state)
+			static public implicit operator IntPtr (LuaState state)
 			{
 				return state.state;
 			}

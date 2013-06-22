@@ -6,7 +6,7 @@ namespace KeraLua
 {
 	public partial class Lua
 	{
-		public delegate void lua_Hook (lua_State L, lua_Debug ar);
+		public delegate void LuaHook (LuaState L, LuaDebug ar);
 		/// <summary>
 		/// Structure for lua debug information
 		/// </summary>
@@ -15,7 +15,7 @@ namespace KeraLua
 		/// </remarks>
 		/// <author>Reinhard Ostermeier</author>
 		[System.Runtime.InteropServices.StructLayout (System.Runtime.InteropServices.LayoutKind.Sequential)]
-		public struct lua_Debug
+		public struct LuaDebug
 		{
 			public int eventCode;
 			[System.Runtime.InteropServices.MarshalAs (System.Runtime.InteropServices.UnmanagedType.LPStr)]
