@@ -8,10 +8,10 @@ namespace KeraLua
 	{
 		public struct LuaState
 		{
-			public LuaState (IntPtr state)
+			public LuaState (IntPtr ptrState)
 				: this ()
 			{
-				this.state = state;
+				state = ptrState;
 			}
 
 			static public implicit operator LuaState (IntPtr ptr)
@@ -19,9 +19,9 @@ namespace KeraLua
 				return new LuaState (ptr);
 			}
 
-			static public implicit operator IntPtr (LuaState state)
+			static public implicit operator IntPtr (LuaState luastate)
 			{
-				return state.state;
+				return luastate.state;
 			}
 
 			IntPtr state;

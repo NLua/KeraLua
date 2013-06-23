@@ -4,9 +4,9 @@ using System.Runtime.InteropServices;
 
 namespace KeraLua
 {
-	public partial class Lua
+	public static partial class Lua
 	{
-		public delegate int lua_CFunction (LuaState L);
+		public delegate int LuaNativeFunction (LuaState luaState);
 
 		public static int LuaGC (IntPtr luaState, int what, int data)
 		{
@@ -113,7 +113,7 @@ namespace KeraLua
 
 		public static int LuaNetEqual (IntPtr luaState, int index1, int index2)
 		{
-			return NativeMethods.LuaNetEqual (luaState, index2, index2);
+			return NativeMethods.LuaNetEqual (luaState, index1, index2);
 		}
 
 
@@ -203,12 +203,12 @@ namespace KeraLua
 			return NativeMethods.LuaNetPCall (luaState, nArgs, nResults, errfunc);
 		}
 
-		public static lua_CFunction LuaToCFunction (IntPtr luaState, int index)
+		public static LuaNativeFunction LuaToCFunction (IntPtr luaState, int index)
 		{
 			IntPtr ptr = NativeMethods.LuaToCFunction (luaState, index);
 			if (ptr == IntPtr.Zero)
 				return null;
-			lua_CFunction function = Marshal.GetDelegateForFunctionPointer (ptr, typeof (lua_CFunction)) as lua_CFunction;
+			LuaNativeFunction function = Marshal.GetDelegateForFunctionPointer (ptr, typeof (LuaNativeFunction)) as LuaNativeFunction;
 			return function;
 		}
 
@@ -219,7 +219,7 @@ namespace KeraLua
 		}
 
 
-		public static int lua_toboolean (IntPtr luaState, int index)
+		public static int LuaToBoolean (IntPtr luaState, int index)
 		{
 			return NativeMethods.LuaToBoolean (luaState, index);
 		}
@@ -230,13 +230,13 @@ namespace KeraLua
 			return NativeMethods.LuaToLString (luaState, index, out strLen);
 		}
 
-		public static void LuaAtPanic (IntPtr luaState, lua_CFunction panicf)
+		public static void LuaAtPanic (IntPtr luaState, LuaNativeFunction panicf)
 		{
 			IntPtr fnpanic = Marshal.GetFunctionPointerForDelegate (panicf);
 			NativeMethods.LuaAtPanic (luaState, fnpanic);
 		}
 
-		public static void LuaPushStdCallCFunction (IntPtr luaState, lua_CFunction fn)
+		public static void LuaPushStdCallCFunction (IntPtr luaState, LuaNativeFunction fn)
 		{
 			IntPtr pfunc = Marshal.GetFunctionPointerForDelegate (fn);
 			NativeMethods.LuaPushStdCallCFunction (luaState, pfunc);
@@ -258,7 +258,7 @@ namespace KeraLua
 			NativeMethods.LuaNetPushLString (luaState, str, size);
 		}
 
-		public static void lua_pushstring (IntPtr luaState, string str)
+		public static void LuaPushString (IntPtr luaState, string str)
 		{
 			NativeMethods.LuaPushString (luaState, str);
 		}
@@ -273,9 +273,9 @@ namespace KeraLua
 			NativeMethods.LuaGetField (luaState, stackPos, meta);
 		}
 
-		public static IntPtr LuaCheckUData (IntPtr luaState, int stackPos, string meta)
+		public static IntPtr LuaLCheckUData (IntPtr luaState, int stackPos, string meta)
 		{
-			return NativeMethods.LuaCheckUData (luaState, stackPos, meta);
+			return NativeMethods.LuaLCheckUData (luaState, stackPos, meta);
 		}
 
 		public static int LuaLGetMetafield (IntPtr luaState, int stackPos, string field)

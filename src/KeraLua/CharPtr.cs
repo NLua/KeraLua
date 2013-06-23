@@ -10,10 +10,10 @@ namespace KeraLua
 	{
 		public struct CharPtr
 		{
-			public CharPtr (IntPtr str)
+			public CharPtr (IntPtr ptrString)
 				: this ()
 			{
-				this.str = str;
+				str = ptrString;
 			}
 
 			static public implicit operator CharPtr (IntPtr ptr)
@@ -21,17 +21,17 @@ namespace KeraLua
 				return new CharPtr (ptr);
 			}
 			
-			private string PointerToString (IntPtr ptr)
+			static private string PointerToString (IntPtr ptr)
 			{
-				return System.Runtime.InteropServices.Marshal.PtrToStringAnsi (str);
+				return System.Runtime.InteropServices.Marshal.PtrToStringAnsi (ptr);
 			}
 
-			private string PointerToString (IntPtr ptr, int length)
+			static private string PointerToString (IntPtr ptr, int length)
 			{
-				return System.Runtime.InteropServices.Marshal.PtrToStringAnsi (str, length);
+				return System.Runtime.InteropServices.Marshal.PtrToStringAnsi (ptr, length);
 			}
 
-			private byte [] PointerToBuffer (IntPtr ptr, int length)
+			static private byte [] PointerToBuffer (IntPtr ptr, int length)
 			{
 				byte [] buff = new byte [length];
 				System.Runtime.InteropServices.Marshal.Copy (ptr, buff, 0, length);

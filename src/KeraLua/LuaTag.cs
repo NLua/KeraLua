@@ -5,7 +5,7 @@ using System.Text;
 
 namespace KeraLua
 {
-	public partial class Lua
+	public static partial class Lua
 	{
 		public struct LuaTag
 		{

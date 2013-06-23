@@ -161,7 +161,7 @@ namespace KeraLua
 		internal static extern void LuaGetField (IntPtr luaState, int stackPos, string meta);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, EntryPoint = "luaL_checkudata")]
-		internal static extern IntPtr LuaCheckUData (IntPtr luaState, int stackPos, string meta);
+		internal static extern IntPtr LuaLCheckUData (IntPtr luaState, int stackPos, string meta);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, EntryPoint = "luaL_getmetafield")]
 		internal static extern int LuaLGetMetafield (IntPtr luaState, int stackPos, string field);

@@ -6,7 +6,7 @@ namespace KeraLua
 {
 	public partial class Lua
 	{
-		public delegate void LuaHook (LuaState L, LuaDebug ar);
+		public delegate void LuaHook (LuaState l, LuaDebug ar);
 		/// <summary>
 		/// Structure for lua debug information
 		/// </summary>

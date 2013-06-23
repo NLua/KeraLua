@@ -43,7 +43,7 @@ namespace KeraLua.Tests
 			return 0;
 		}
 
-		public static Lua.lua_CFunction func_print = print;
+		public static Lua.LuaNativeFunction func_print = print;
 
 		Lua.LuaState state;
 		string GetTestPath(string name)
