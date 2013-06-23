@@ -5,22 +5,19 @@ using System.Text;
 
 namespace KeraLua
 {
-	public static partial class Lua
+	public struct LuaTag
 	{
-		public struct LuaTag
+		public LuaTag (IntPtr tag)
+			: this ()
 		{
-			public LuaTag (IntPtr tag)
-				: this ()
-			{
-				this.Tag = tag;
-			}
-
-			static public implicit operator LuaTag (IntPtr ptr)
-			{
-				return new LuaTag (ptr);
-			}
-
-			public IntPtr Tag { get; set; }
+			this.Tag = tag;
 		}
+
+		static public implicit operator LuaTag (IntPtr ptr)
+		{
+			return new LuaTag (ptr);
+		}
+
+		public IntPtr Tag { get; set; }
 	}
 }

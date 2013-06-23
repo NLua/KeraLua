@@ -16,7 +16,7 @@ namespace KeraLua.Tests
 		[MonoTouch.MonoPInvokeCallback (typeof (Lua.lua_CFunction))]
 #endif
 		[System.Runtime.InteropServices.AllowReversePInvokeCalls]
-		static int print (Lua.LuaState state)
+		static int print (LuaState state)
 		{
 			IntPtr L = state;
 			int n = Lua.LuaGetTop(L);  /* number of arguments */
@@ -45,7 +45,7 @@ namespace KeraLua.Tests
 
 		public static Lua.LuaNativeFunction func_print = print;
 
-		Lua.LuaState state;
+		LuaState state;
 		string GetTestPath(string name)
 		{
 			string filePath = Path.Combine (Path.Combine ("LuaTests", "core"), name + ".lua");
