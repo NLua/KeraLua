@@ -13,7 +13,7 @@ namespace KeraLua.Tests
 		
 		
 #if MONOTOUCH
-		[MonoTouch.MonoPInvokeCallback (typeof (Lua.lua_CFunction))]
+		[MonoTouch.MonoPInvokeCallback (typeof (LuaNativeFunction))]
 #endif
 		[System.Runtime.InteropServices.AllowReversePInvokeCalls]
 		static int print (LuaState state)
@@ -43,7 +43,7 @@ namespace KeraLua.Tests
 			return 0;
 		}
 
-		public static Lua.LuaNativeFunction func_print = print;
+		public static LuaNativeFunction func_print = print;
 
 		LuaState state;
 		string GetTestPath(string name)

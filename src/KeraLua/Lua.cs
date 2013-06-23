@@ -4,10 +4,10 @@ using System.Runtime.InteropServices;
 
 namespace KeraLua
 {
+	public delegate int LuaNativeFunction (LuaState luaState);
+
 	public static partial class Lua
 	{
-		public delegate int LuaNativeFunction (LuaState luaState);
-
 		public static int LuaGC (IntPtr luaState, int what, int data)
 		{
 			return NativeMethods.LuaGC (luaState, what, data);
