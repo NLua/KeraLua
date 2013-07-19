@@ -83,22 +83,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="KeraLua\CharPtr.cs" />
-    <Compile Include="KeraLua\Lua.cs" />
-    <Compile Include="KeraLua\LuaDebug.cs" />
-    <Compile Include="KeraLua\LuaState.cs" />
-    <Compile Include="KeraLua\LuaTag.cs" />
-    <Compile Include="WP8\AssemblyInfo.cs" />
-    <Compile Include="WP8\NativeMethods.cs" />
+    <None Include="lua52.vcxproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\external\lua\wp8_build\lua\liblua\liblua.vcxproj">
+    <Compile Include="..\KeraLua\CharPtr.cs">
+      <Link>CharPtr.cs</Link>
+    </Compile>
+    <Compile Include="..\KeraLua\Lua.cs">
+      <Link>Lua.cs</Link>
+    </Compile>
+    <Compile Include="..\KeraLua\LuaDebug.cs">
+      <Link>LuaDebug.cs</Link>
+    </Compile>
+    <Compile Include="..\KeraLua\LuaState.cs">
+      <Link>LuaState.cs</Link>
+    </Compile>
+    <Compile Include="..\KeraLua\LuaTag.cs">
+      <Link>LuaTag.cs</Link>
+    </Compile>
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\external\lua\wp8_build\lua\lua52\lua52.vcxproj">
       <Project>{ABD36435-56AD-4940-B51A-10AEECA46C01}</Project>
       <Name>lua52</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

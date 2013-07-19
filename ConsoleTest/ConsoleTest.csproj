@@ -45,7 +45,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KeraLua.csproj">
+    <ProjectReference Include="..\src\KeraLua.csproj">
       <Project>{47153754-10f5-44d8-b578-f5a32b69061a}</Project>
       <Name>KeraLua</Name>
     </ProjectReference>
