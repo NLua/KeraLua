@@ -83,9 +83,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="lua52.vcxproj" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\KeraLua\CharPtr.cs">
       <Link>CharPtr.cs</Link>
     </Compile>
