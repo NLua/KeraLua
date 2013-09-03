@@ -12,7 +12,7 @@
     <RootNamespace>KeraLua.Tests</RootNamespace>
     <AssemblyName>KeraLua.Tests</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -55,12 +55,6 @@
     <Compile Include="..\tests\core.cs">
       <Link>core.cs</Link>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\src\KeraLua.csproj">
-      <Project>{47153754-10F5-44D8-B578-F5A32B69061A}</Project>
-      <Name>KeraLua</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\tests\LuaTests\core\bisect.lua">
@@ -111,5 +105,11 @@
   -->
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\KeraLua.Net40.csproj">
+      <Project>{47153754-10f5-44d8-b578-f5a32b69061a}</Project>
+      <Name>KeraLua.Net40</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

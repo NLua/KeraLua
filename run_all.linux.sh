@@ -6,6 +6,6 @@
 make -f Makefile.Linux
 export LD_LIBRARY_PATH=$PWD/external/lua/linux/lib64:$PWD/external/lua/linux/lib
 #export LD_LIBRARY_PATH=$PWD/external/lua/linux/lib
-xbuild KeraLua.sln /p:Configuration=Release
+xbuild KeraLua.Net40.sln /p:Configuration=Release
 cd tests/
 nunit-console KeraLua.Tests.dll

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ConsoleTest</RootNamespace>
     <AssemblyName>ConsoleTest</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -45,13 +45,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\KeraLua.csproj">
-      <Project>{47153754-10f5-44d8-b578-f5a32b69061a}</Project>
-      <Name>KeraLua</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KeraLua.Tests\KeraLua.Tests.csproj">
       <Project>{9c7932e8-a045-4ae4-a3b4-9f4c44511087}</Project>
       <Name>KeraLua.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\KeraLua.Net40.csproj">
+      <Project>{47153754-10f5-44d8-b578-f5a32b69061a}</Project>
+      <Name>KeraLua.Net40</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
