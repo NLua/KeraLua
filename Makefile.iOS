@@ -1,5 +1,5 @@
 PROJECT=KeraLua.iOS.sln
-MDTOOL=/Applications/MonoDevelop.app/Contents/MacOS/mdtool
+MDTOOL=/Applications/Xamarin\ Studio.app/Contents/MacOS/mdtool
 
 all:
 	#Make the iOS native library (remeber to update git submodules before run make)
