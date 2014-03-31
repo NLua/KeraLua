@@ -10,7 +10,14 @@ namespace KeraLua.Tests
 	[TestFixture]
 	public class core
 	{
-		
+		public static readonly char UnicodeChar = '\uE007';
+		public static string UnicodeString
+		{
+			get
+			{
+				return Convert.ToString (UnicodeChar);
+			}
+		}
 		
 #if MONOTOUCH
 		[MonoTouch.MonoPInvokeCallback (typeof (LuaNativeFunction))]
@@ -43,13 +50,52 @@ namespace KeraLua.Tests
 			return 0;
 		}
 
+		static int TestUnicodeString (LuaState state)
+		{
+			uint len;
+			CharPtr ptrParam = Lua.LuaToLString (state, 1, out len);
+			string param = ptrParam.ToString ();
+
+			Assert.AreEqual (core.UnicodeString, param, "#1 ToString()");
+
+			string param2 = ptrParam.ToString ((int)len);
+			
+			Assert.AreEqual (core.UnicodeString, param2, "#2 ToString(len)");
+			return 0;
+		}
+
 		public static LuaNativeFunction func_print = print;
+		public static LuaNativeFunction FuncTestUnicodeString = TestUnicodeString;
+
+		
 
 		LuaState state;
 		string GetTestPath(string name)
 		{
 			string filePath = Path.Combine (Path.Combine ("LuaTests", "core"), name + ".lua");
 			return filePath;
+		}
+
+		void AssertString (string chunk)
+		{
+			string error = string.Empty;
+
+			int result = Lua.LuaNetLoadBuffer (state, chunk, 0, "chunk");
+
+			if (result != 0) {
+				uint len;
+				error = Lua.LuaToLString (state, 1, out len).ToString ((int)len);
+			}
+
+			Assert.True (result == 0, "Fail loading string: " + chunk + "ERROR:" + error);
+
+			result = Lua.LuaNetPCall (state, 0, -1, 0);
+
+			if (result != 0) {
+				uint len;
+				error = Lua.LuaToLString (state, 1, out len).ToString ((int)len);
+			}
+			Assert.True (result == 0, "Fail calling chunk: " + chunk + " ERROR: " + error);
 		}
 
 		void AssertFile (string path)
@@ -186,6 +232,18 @@ namespace KeraLua.Tests
 		{
 			Setup ();
 			TestLuaFile ("trace-globals");
+			TearDown ();
+		}
+
+		[Test]
+		public void TestUnicodeString ()
+		{
+			Setup ();
+			Lua.LuaPushStdCallCFunction (state, core.FuncTestUnicodeString);
+			Lua.LuaNetSetGlobal (state, "TestUnicodeString");
+			Lua.LuaPushString (state, core.UnicodeString);
+			Lua.LuaNetSetGlobal (state, "unicodeString");
+			AssertString ("TestUnicodeString(unicodeString)");
 			TearDown ();
 		}
 	}
