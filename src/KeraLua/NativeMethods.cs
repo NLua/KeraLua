@@ -246,5 +246,8 @@ namespace KeraLua
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "luanet_registryindex")]
 		internal static extern int LuaNetRegistryIndex ();
+
+		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "luanet_get_main_state")]
+		internal static extern IntPtr LuaNetGetMainState (IntPtr luaState);
 	}
 }

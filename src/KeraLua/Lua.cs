@@ -427,6 +427,11 @@ namespace KeraLua
 		{
 			NativeMethods.LuaNetGetGlobal (luaState, name);
 		}
+
+		public static IntPtr LuaNetGetMainState (IntPtr luaState)
+		{
+			return NativeMethods.LuaNetGetMainState (luaState);
+		}
 	}
 
 }
