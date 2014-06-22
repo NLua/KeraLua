@@ -199,7 +199,7 @@ namespace KeraLua
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_gethookmask")]
 		internal static extern int LuaGetHookMask (IntPtr luaState);
 
-		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_sethook")]
+		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "luanet_sethook")]
 		internal static extern int LuaSetHook (IntPtr luaState, IntPtr func, int mask, int count);
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_gethookcount")]

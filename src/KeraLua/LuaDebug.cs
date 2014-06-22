@@ -4,7 +4,7 @@ using System.Text;
 
 namespace KeraLua
 {
-	public delegate void LuaHook (LuaState l, LuaDebug ar);
+	public delegate void LuaHook (LuaState l, IntPtr ar);
 
 	/// <summary>
 	/// Structure for lua debug information
@@ -17,20 +17,51 @@ namespace KeraLua
 	public struct LuaDebug
 	{
 		public int eventCode;
-		[System.Runtime.InteropServices.MarshalAs (System.Runtime.InteropServices.UnmanagedType.LPStr)]
-		public String name;
-		[System.Runtime.InteropServices.MarshalAs (System.Runtime.InteropServices.UnmanagedType.LPStr)]
-		public String namewhat;
-		[System.Runtime.InteropServices.MarshalAs (System.Runtime.InteropServices.UnmanagedType.LPStr)]
-		public String what;
-		[System.Runtime.InteropServices.MarshalAs (System.Runtime.InteropServices.UnmanagedType.LPStr)]
-		public String source;
+		IntPtr pname;
+		IntPtr pnamewhat;
+		IntPtr pwhat;
+		IntPtr psource;
 		public int currentline;
-		public int nups;
 		public int linedefined;
 		public int lastlinedefined;
-		[System.Runtime.InteropServices.MarshalAs (System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst = 60/*LUA_IDSIZE*/)]
-		public String shortsrc;
-		public int i_ci;
+		byte nups;
+		byte nparams;
+		char isvararg;        /* (u) */
+		char istailcall;	/* (t) */
+		IntPtr pshortsrc;
+		IntPtr i_ci;
+
+		public string name
+		{
+			get
+			{
+				return new CharPtr (pname).ToString ();
+			}
+		}
+
+		public string namewhat
+		{
+			get
+			{
+				return new CharPtr (pname).ToString ();
+			}
+		}
+
+		public string source
+		{
+			get
+			{
+				return new CharPtr (pname).ToString ();
+			}
+		}
+
+		public string shortsrc
+		{
+			get
+			{
+				return new CharPtr (pname).ToString ();
+			}
+		}
+
 	}
 }
