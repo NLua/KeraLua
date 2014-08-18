@@ -9,7 +9,7 @@
     <RootNamespace>KeraLua.Tests</RootNamespace>
     <AssemblyName>KeraLua.Tests</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -31,7 +31,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\lib\nunit\nunit.framework.dll</HintPath>
     </Reference>
@@ -92,9 +94,9 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\KeraLua.Net45.csproj">
+    <ProjectReference Include="..\src\KeraLua.Net40.csproj">
       <Project>{47153754-10F5-44D8-B578-F5A32B69061A}</Project>
-      <Name>KeraLua.Net45</Name>
+      <Name>KeraLua.Net40</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

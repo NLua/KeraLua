@@ -20,14 +20,12 @@ namespace ConsoleTest
 			var tests = new core ();
 			tests.Bisect ();
 			tests.CF ();
-			tests.Env ();
 			tests.Life ();
 			tests.Factorial ();
 			tests.FibFor ();
 			tests.Printf ();
 			tests.Sieve ();
 			tests.Sort ();
-			tests.TraceGlobals ();
 		}
 	}
 }

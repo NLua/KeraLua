@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ConsoleTest</RootNamespace>
     <AssemblyName>ConsoleTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -22,7 +22,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,6 +44,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\KeraLua.Net40.csproj">
+      <Project>{47153754-10F5-44D8-B578-F5A32B69061A}</Project>
+      <Name>KeraLua.Net40</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KeraLua.Tests\KeraLua.Tests.40.csproj">
+      <Project>{9C7932E8-A045-4AE4-A3B4-9F4C44511087}</Project>
+      <Name>KeraLua.Tests.40</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -53,14 +62,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <ProjectReference Include="..\src\KeraLua.Net45.csproj">
-      <Project>{47153754-10F5-44D8-B578-F5A32B69061A}</Project>
-      <Name>KeraLua.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KeraLua.Tests\KeraLua.Tests.csproj">
-      <Project>{9C7932E8-A045-4AE4-A3B4-9F4C44511087}</Project>
-      <Name>KeraLua.Tests</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
