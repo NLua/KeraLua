@@ -32,7 +32,7 @@ namespace KeraLua
 			byte [] buffer = new byte [len];
 			System.Runtime.InteropServices.Marshal.Copy (nativeUtf8, buffer, 0, buffer.Length);
 
-			return Encoding.UTF8.GetString (buffer);
+			return Encoding.UTF8.GetString (buffer, 0, len);
 		}
 		
 		static private string PointerToString (IntPtr ptr)

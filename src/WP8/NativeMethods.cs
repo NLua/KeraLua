@@ -410,5 +410,10 @@ namespace KeraLua
         {
             return lua52.Interop.LuaNetRegistryIndex();
         }
+
+		internal static IntPtr LuaNetGetMainState (IntPtr luaState)
+		{
+			return lua52.Interop.LuaNetGetMainState (luaState.ToIntPtr ()).ToIntPtr ();
+		}
 	}
 }
