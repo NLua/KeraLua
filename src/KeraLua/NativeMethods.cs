@@ -6,9 +6,10 @@ using System.Runtime.InteropServices;
 
 namespace KeraLua
 {
+
 	static class NativeMethods
 	{
-
+	
 #if MONOTOUCH
 		const string LIBNAME = "__Internal";
 #else
@@ -17,6 +18,14 @@ namespace KeraLua
 #else
 		const string LIBNAME = "lua52";
 #endif
+
+#if USE_DYNAMIC_DLL_REGISTER
+		static NativeMethods ()
+		{
+			DynamicLibraryPath.RegisterPathForDll (LIBNAME);
+		}
+#endif
+
 #endif
 
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_gc")]
