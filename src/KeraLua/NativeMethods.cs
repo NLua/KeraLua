@@ -214,6 +214,12 @@ namespace KeraLua
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_gethookcount")]
 		internal static extern int LuaGetHookCount (IntPtr luaState);
 
+		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_getinfo")]
+		internal static extern int LuaGetInfo (IntPtr luaState, string what, IntPtr ar);
+
+		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_getstack")]
+		internal static extern int LuaGetStack (IntPtr luaState, int level, IntPtr n);
+
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_getlocal")]
 		internal static extern IntPtr LuaGetLocal (IntPtr luaState, IntPtr ar, int n);
 

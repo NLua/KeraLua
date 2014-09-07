@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace KeraLua
@@ -13,7 +14,7 @@ namespace KeraLua
 	/// Do not change this struct because it must match the lua structure lua_debug
 	/// </remarks>
 	/// <author>Reinhard Ostermeier</author>
-	[System.Runtime.InteropServices.StructLayout (System.Runtime.InteropServices.LayoutKind.Sequential)]
+	[StructLayout (LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
 	public struct LuaDebug
 	{
 		public int eventCode;
@@ -27,8 +28,10 @@ namespace KeraLua
 		byte nups;
 		byte nparams;
 		char isvararg;        /* (u) */
-		char istailcall;	/* (t) */
-		IntPtr pshortsrc;
+		char istailcall;	/* (t) */ 
+		// char short_src[LUA_IDSIZE]; /* (S) */
+		[MarshalAs (UnmanagedType.ByValTStr, SizeConst = 60)]
+		public string short_src;
 		IntPtr i_ci;
 
 		public string name
