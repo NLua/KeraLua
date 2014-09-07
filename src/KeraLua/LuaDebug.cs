@@ -14,7 +14,7 @@ namespace KeraLua
 	/// Do not change this struct because it must match the lua structure lua_debug
 	/// </remarks>
 	/// <author>Reinhard Ostermeier</author>
-	[StructLayout (LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
+	[StructLayout (LayoutKind.Sequential, CharSet = CharSet.Ansi)]
 	public struct LuaDebug
 	{
 		public int eventCode;
