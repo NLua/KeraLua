@@ -367,7 +367,36 @@ namespace KeraLua
 			return local;
 		}
 
+		public static int LuaGetInfo (IntPtr luaState, string what,ref LuaDebug ar)
+		{
+			IntPtr pDebug = Marshal.AllocHGlobal (Marshal.SizeOf (ar));
+			int ret = 0;
 
+			try {
+				Marshal.StructureToPtr (ar, pDebug, false);
+				ret = NativeMethods.LuaGetInfo (luaState, what, pDebug);
+				ar = (LuaDebug)Marshal.PtrToStructure (pDebug, typeof (LuaDebug));
+			} finally {
+				Marshal.FreeHGlobal (pDebug);
+			}
+			return ret;
+		}
+
+		public static int LuaGetStack (IntPtr luaState, int level,ref LuaDebug ar)
+		{
+			IntPtr pDebug = Marshal.AllocHGlobal (Marshal.SizeOf (ar));
+			int ret = 0;
+			try {
+				Marshal.StructureToPtr (ar, pDebug, false);
+				ret = NativeMethods.LuaGetStack (luaState, level, pDebug);
+				ar = (LuaDebug)Marshal.PtrToStructure (pDebug, typeof (LuaDebug));
+			} finally {
+				Marshal.FreeHGlobal (pDebug);
+			}
+			return ret;
+		}
+
+  
 		public static CharPtr LuaGetUpValue (IntPtr luaState, int funcindex, int n)
 		{
 			return NativeMethods.LuaGetUpValue (luaState, funcindex, n);
