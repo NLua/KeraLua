@@ -29,7 +29,7 @@ namespace KeraLua
 			if (File.Exists (path))
 				return;
 
-			if (Environment.Is64BitProcess)
+			if (IntPtr.Size == 8)
 				Register64bitPath (assemblyPath, dllName);
 			else
 				Register32bitPath (assemblyPath, dllName);
