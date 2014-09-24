@@ -179,6 +179,11 @@ namespace KeraLua
 			return NativeMethods.LuaIsString (luaState, index);
 		}
 
+		public static int LuaNetIsStringStrict (IntPtr luaState, int index)
+		{
+			return NativeMethods.LuaNetIsStringStrict (luaState, index);
+		}
+
 
 		public static bool LuaIsCFunction (IntPtr luaState, int index)
 		{

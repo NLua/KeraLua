@@ -121,6 +121,9 @@ namespace KeraLua
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_isstring")]
 		internal static extern int LuaIsString (IntPtr luaState, int index);
 
+		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "luanet_isstring_strict")]
+		internal static extern int LuaNetIsStringStrict (IntPtr luaState, int index);
+
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_iscfunction")]
 		internal static extern int LuaIsCFunction (IntPtr luaState, int index);
 
