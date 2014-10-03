@@ -332,7 +332,7 @@ namespace KeraLua
 
 		public static int LuaSetHook (IntPtr luaState, LuaHook func, int mask, int count)
 		{
-			IntPtr funcHook = Marshal.GetFunctionPointerForDelegate (func);
+			IntPtr funcHook = func == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate (func);
 			return NativeMethods.LuaSetHook (luaState, funcHook, mask, count);
 		}
 
