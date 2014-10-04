@@ -156,7 +156,9 @@ namespace KeraLua
 			NativeMethods.LuaRawSetI (luaState, tableIndex, index);
 		}
 
-		[CLSCompliantAttribute (false)]
+#if !UNITY_3D
+		[CLSCompliantAttribute(false)]
+#endif
 		public static IntPtr LuaNewUserData (IntPtr luaState, uint size)
 		{
 			return NativeMethods.LuaNewUserData (luaState, size);
@@ -223,7 +225,9 @@ namespace KeraLua
 			return NativeMethods.LuaToBoolean (luaState, index);
 		}
 
-		[CLSCompliantAttribute (false)]
+#if !UNITY_3D
+		[CLSCompliantAttribute(false)]
+#endif
 		public static CharPtr LuaToLString (IntPtr luaState, int index, out uint strLen)
 		{
 			return NativeMethods.LuaToLString (luaState, index, out strLen);
@@ -251,7 +255,9 @@ namespace KeraLua
 			NativeMethods.LuaPushBoolean (luaState, value);
 		}
 
-		[CLSCompliantAttribute (false)]
+#if !UNITY_3D
+		[CLSCompliantAttribute(false)]
+#endif
 		public static void LuaNetPushLString (IntPtr luaState, string str, uint size)
 		{
 			NativeMethods.LuaNetPushLString (luaState, str, size);
@@ -282,14 +288,18 @@ namespace KeraLua
 			return NativeMethods.LuaLGetMetafield (luaState, stackPos, field);
 		}
 
-		[CLSCompliantAttribute (false)]
+#if !UNITY_3D
+		[CLSCompliantAttribute(false)]
+#endif
 		public static int LuaNetLoadBuffer (IntPtr luaState, string buff, uint size, string name)
 		{
 			return NativeMethods.LuaNetLoadBuffer (luaState, buff, size, name);
 
 		}
 
-		[CLSCompliantAttribute (false)]
+#if !UNITY_3D
+		[CLSCompliantAttribute(false)]
+#endif
 		public static int LuaNetLoadBuffer (IntPtr luaState, byte [] buff, uint size, string name)
 		{
 			return NativeMethods.LuaNetLoadBuffer (luaState, buff, size, name);
@@ -332,7 +342,7 @@ namespace KeraLua
 
 		public static int LuaSetHook (IntPtr luaState, LuaHook func, int mask, int count)
 		{
-			IntPtr funcHook = func == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate (func);
+			IntPtr funcHook = Marshal.GetFunctionPointerForDelegate (func);
 			return NativeMethods.LuaSetHook (luaState, funcHook, mask, count);
 		}
 
