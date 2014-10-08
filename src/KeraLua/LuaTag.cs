@@ -8,6 +8,7 @@ namespace KeraLua
 	public struct LuaTag
 	{
 		public LuaTag (IntPtr tag)
+
 			: this ()
 		{
 			this.Tag = tag;
@@ -17,7 +18,7 @@ namespace KeraLua
 		{
 			return new LuaTag (ptr);
 		}
-
 		public IntPtr Tag { get; set; }
+
 	}
 }

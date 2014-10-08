@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace KeraLua
 {
-	public delegate int LuaNativeFunction (LuaState luaState);
+	public delegate int LuaNativeFunction (KeraLua.LuaState luaState);
 
 	public static partial class Lua
 	{

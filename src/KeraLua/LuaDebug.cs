@@ -5,7 +5,11 @@ using System.Text;
 
 namespace KeraLua
 {
+#if NETFX_CORE
+	public delegate void LuaHook (LuaState l, long ar);
+#else
 	public delegate void LuaHook (LuaState l, IntPtr ar);
+#endif
 
 	/// <summary>
 	/// Structure for lua debug information
