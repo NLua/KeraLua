@@ -13,7 +13,7 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <AssemblyName>KeraLua.Android</AssemblyName>
-    <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -46,6 +46,7 @@
   <ItemGroup>
     <Folder Include="KeraLua\" />
     <Folder Include="libs\" />
+    <Folder Include="KeraLua\Platform\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="KeraLua\CharPtr.cs" />
@@ -55,7 +56,7 @@
     <Compile Include="KeraLua\LuaTag.cs" />
     <Compile Include="KeraLua\NativeMethods.cs" />
     <Compile Include="KeraLua\Properties\AssemblyInfo.cs" />
-    <Compile Include="Platform\CLSCompliantAttribute.cs" />
+    <Compile Include="KeraLua\Platform\CLSCompliantAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedNativeLibrary Include="..\external\lua\android_build\libs\armeabi\liblua52.so">
