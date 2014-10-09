@@ -55,6 +55,7 @@
     <Compile Include="KeraLua\LuaTag.cs" />
     <Compile Include="KeraLua\NativeMethods.cs" />
     <Compile Include="KeraLua\Properties\AssemblyInfo.cs" />
+    <Compile Include="Platform\CLSCompliantAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedNativeLibrary Include="..\external\lua\android_build\libs\armeabi\liblua52.so">
