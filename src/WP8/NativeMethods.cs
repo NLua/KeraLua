@@ -415,5 +415,20 @@ namespace KeraLua
 		{
 			return lua52.Interop.LuaNetGetMainState (luaState.ToIntPtr ()).ToIntPtr ();
 		}
+
+		internal static int LuaNetIsStringStrict (IntPtr luaState, int index)
+		{
+			return lua52.Interop.LuaNetIsStringStrict (luaState.ToIntPtr (), index);
+		}
+
+		internal static  int LuaGetInfo (IntPtr luaState, string what, IntPtr ar)
+		{
+			return lua52.Interop.LuaGetInfo (luaState.ToIntPtr (), what, ar.ToIntPtr ());
+		}
+
+		internal static int LuaGetStack (IntPtr luaState, int level, IntPtr ar)
+		{
+			return lua52.Interop.LuaGetStack (luaState.ToIntPtr (), level, ar.ToIntPtr ());
+		}
 	}
 }

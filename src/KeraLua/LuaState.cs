@@ -6,7 +6,9 @@ namespace KeraLua
 {
 	public struct LuaState
 	{
+
 		public LuaState (IntPtr ptrState)
+
 			: this ()
 		{
 			state = ptrState;
@@ -16,6 +18,7 @@ namespace KeraLua
 		{
 			return new LuaState (ptr);
 		}
+
 
 		static public implicit operator IntPtr (LuaState luastate)
 		{
