@@ -9,8 +9,8 @@
     <ProjectGuid>{1F139CCB-195B-402D-8776-7A15A3E05886}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ClassLibrary2</RootNamespace>
-    <AssemblyName>ClassLibrary2</AssemblyName>
+    <RootNamespace>KeraLua</RootNamespace>
+    <AssemblyName>KeraLua</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>

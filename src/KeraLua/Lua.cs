@@ -207,7 +207,11 @@ namespace KeraLua
 			IntPtr ptr = NativeMethods.LuaToCFunction (luaState, index);
 			if (ptr == IntPtr.Zero)
 				return null;
+#if NETFX_CORE
+			LuaNativeFunction function = Marshal.GetDelegateForFunctionPointer <LuaNativeFunction> (ptr);
+#else
 			LuaNativeFunction function = Marshal.GetDelegateForFunctionPointer (ptr, typeof (LuaNativeFunction)) as LuaNativeFunction;
+#endif
 			return function;
 		}
 
@@ -380,7 +384,11 @@ namespace KeraLua
 			try {
 				Marshal.StructureToPtr (ar, pDebug, false);
 				ret = NativeMethods.LuaGetInfo (luaState, what, pDebug);
+#if NETFX_CORE
+				ar = Marshal.PtrToStructure <LuaDebug> (pDebug);
+#else
 				ar = (LuaDebug)Marshal.PtrToStructure (pDebug, typeof (LuaDebug));
+#endif
 			} finally {
 				Marshal.FreeHGlobal (pDebug);
 			}
@@ -394,7 +402,11 @@ namespace KeraLua
 			try {
 				Marshal.StructureToPtr (ar, pDebug, false);
 				ret = NativeMethods.LuaGetStack (luaState, level, pDebug);
+#if NETFX_CORE
+				ar = Marshal.PtrToStructure<LuaDebug> (pDebug);
+#else
 				ar = (LuaDebug)Marshal.PtrToStructure (pDebug, typeof (LuaDebug));
+#endif
 			} finally {
 				Marshal.FreeHGlobal (pDebug);
 			}
