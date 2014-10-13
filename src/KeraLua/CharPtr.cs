@@ -86,7 +86,11 @@ namespace KeraLua
 				return s.ToString ();
 			} else
 #if WSTRING
+#if WINDOWS_PHONE
+				return Encoding.UTF8.GetString (buff, 0, buff.Length);
+#else
 				return Encoding.UTF8.GetString (buff);
+#endif
 #else
 				return PointerToString(str, length);
 #endif
