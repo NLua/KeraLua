@@ -86,7 +86,7 @@ namespace KeraLua
 				return s.ToString ();
 			} else
 #if WSTRING
-#if WINDOWS_PHONE
+#if WINDOWS_PHONE || NETFX_CORE
 				return Encoding.UTF8.GetString (buff, 0, buff.Length);
 #else
 				return Encoding.UTF8.GetString (buff);
