@@ -4,21 +4,21 @@ EXTRA_DIST =
 # Warning: This is an automatically generated file, do not edit!
 
 if ENABLE_DEBUG
-ASSEMBLY_COMPILER_COMMAND = gmcs
+ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG;TRACE"
 ASSEMBLY = ../tests/ConsoleTest.exe
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
-	../src/bin/Debug/KeraLua.dll \
+	../src/bin/Debug/net40/KeraLua.dll \
 	../tests/KeraLua.Tests.dll
 BUILD_DIR = ../tests/
 
 CONSOLETEST_EXE_MDB_SOURCE=../tests/ConsoleTest.exe.mdb
 CONSOLETEST_EXE_MDB=$(BUILD_DIR)/ConsoleTest.exe.mdb
 CONSOLETEST_EXE_CONFIG_SOURCE=App.config
-KERALUA_DLL_SOURCE=../src/bin/Debug/KeraLua.dll
-KERALUA_DLL_MDB_SOURCE=../src/bin/Debug/KeraLua.dll.mdb
+KERALUA_DLL_SOURCE=../src/bin/Debug/net40/KeraLua.dll
+KERALUA_DLL_MDB_SOURCE=../src/bin/Debug/net40/KeraLua.dll.mdb
 KERALUA_DLL_MDB=$(BUILD_DIR)/KeraLua.dll.mdb
 KERALUA_TESTS_DLL_SOURCE=../tests/KeraLua.Tests.dll
 KERALUA_TESTS_DLL_MDB_SOURCE=../tests/KeraLua.Tests.dll.mdb
@@ -28,19 +28,19 @@ NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
 endif
 
 if ENABLE_RELEASE
-ASSEMBLY_COMPILER_COMMAND = gmcs
+ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:TRACE"
 ASSEMBLY = ../tests/ConsoleTest.exe
 ASSEMBLY_MDB = 
 COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
-	../src/bin/Release/KeraLua.dll \
+	../src/bin/Release/net40/KeraLua.dll \
 	../tests/KeraLua.Tests.dll
 BUILD_DIR = ../tests/
 
 CONSOLETEST_EXE_MDB=
 CONSOLETEST_EXE_CONFIG_SOURCE=App.config
-KERALUA_DLL_SOURCE=../src/bin/Release/KeraLua.dll
+KERALUA_DLL_SOURCE=../src/bin/Release/net40/KeraLua.dll
 KERALUA_DLL_MDB=
 KERALUA_TESTS_DLL_SOURCE=../tests/KeraLua.Tests.dll
 KERALUA_TESTS_DLL_MDB=
@@ -48,7 +48,7 @@ NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
 
 endif
 
-AL=al2
+AL=al
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
@@ -61,7 +61,7 @@ PROGRAMFILES = \
 	$(NUNIT_FRAMEWORK_DLL)  
 
 BINARIES = \
-	$(CONSOLETEST)  
+	$(CONSOLETEST_40)  
 
 
 RESGEN=resgen2
@@ -78,7 +78,7 @@ RESOURCES =
 
 EXTRAS = \
 	App.config \
-	consoletest.in 
+	consoletest.40.in 
 
 REFERENCES =  \
 	System \
@@ -95,13 +95,13 @@ CONSOLETEST_EXE_CONFIG = $(BUILD_DIR)/ConsoleTest.exe.config
 KERALUA_DLL = $(BUILD_DIR)/KeraLua.dll
 KERALUA_TESTS_DLL = $(BUILD_DIR)/KeraLua.Tests.dll
 NUNIT_FRAMEWORK_DLL = $(BUILD_DIR)/nunit.framework.dll
-CONSOLETEST = $(BUILD_DIR)/consoletest
+CONSOLETEST_40 = $(BUILD_DIR)/consoletest.40
 
 $(eval $(call emit-deploy-target,CONSOLETEST_EXE_CONFIG))
 $(eval $(call emit-deploy-target,KERALUA_DLL))
 $(eval $(call emit-deploy-target,KERALUA_DLL_MDB))
 $(eval $(call emit-deploy-target,NUNIT_FRAMEWORK_DLL))
-$(eval $(call emit-deploy-wrapper,CONSOLETEST,consoletest,x))
+$(eval $(call emit-deploy-wrapper,CONSOLETEST_40,consoletest.40,x))
 
 
 $(eval $(call emit_resgen_targets))
