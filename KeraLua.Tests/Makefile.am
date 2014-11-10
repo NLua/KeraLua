@@ -4,42 +4,42 @@ EXTRA_DIST =
 # Warning: This is an automatically generated file, do not edit!
 
 if ENABLE_DEBUG
-ASSEMBLY_COMPILER_COMMAND = gmcs
+ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG;TRACE"
 ASSEMBLY = ../tests/KeraLua.Tests.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
-	../src/bin/Debug/KeraLua.dll
+	../src/bin/Debug/net40/KeraLua.dll
 BUILD_DIR = ../tests/
 
 KERALUA_TESTS_DLL_MDB_SOURCE=../tests/KeraLua.Tests.dll.mdb
 KERALUA_TESTS_DLL_MDB=$(BUILD_DIR)/KeraLua.Tests.dll.mdb
 NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
-KERALUA_DLL_SOURCE=../src/bin/Debug/KeraLua.dll
-KERALUA_DLL_MDB_SOURCE=../src/bin/Debug/KeraLua.dll.mdb
+KERALUA_DLL_SOURCE=../src/bin/Debug/net40/KeraLua.dll
+KERALUA_DLL_MDB_SOURCE=../src/bin/Debug/net40/KeraLua.dll.mdb
 KERALUA_DLL_MDB=$(BUILD_DIR)/KeraLua.dll.mdb
 
 endif
 
 if ENABLE_RELEASE
-ASSEMBLY_COMPILER_COMMAND = gmcs
+ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:TRACE"
 ASSEMBLY = ../tests/KeraLua.Tests.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
-	../src/bin/Release/KeraLua.dll
+	../src/bin/Release/net40/KeraLua.dll
 BUILD_DIR = ../tests/
 
 KERALUA_TESTS_DLL_MDB=
 NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
-KERALUA_DLL_SOURCE=../src/bin/Release/KeraLua.dll
+KERALUA_DLL_SOURCE=../src/bin/Release/net40/KeraLua.dll
 KERALUA_DLL_MDB=
 
 endif
 
-AL=al2
+AL=al
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
@@ -49,7 +49,7 @@ PROGRAMFILES = \
 	$(KERALUA_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
-	$(KERALUA_TESTS_PC)  
+	$(KERALUA_TESTS_40_PC)  
 
 
 RESGEN=resgen2
@@ -78,7 +78,7 @@ EXTRAS = \
 	../tests/LuaTests/core/trace-globals.lua \
 	packages.config \
 	Properties \
-	keralua.tests.pc.in 
+	keralua.tests.40.pc.in 
 
 REFERENCES =  \
 	System \
@@ -93,12 +93,12 @@ include $(top_srcdir)/Makefile.include
 
 NUNIT_FRAMEWORK_DLL = $(BUILD_DIR)/nunit.framework.dll
 KERALUA_DLL = $(BUILD_DIR)/KeraLua.dll
-KERALUA_TESTS_PC = $(BUILD_DIR)/keralua.tests.pc
+KERALUA_TESTS_40_PC = $(BUILD_DIR)/keralua.tests.40.pc
 
 $(eval $(call emit-deploy-target,NUNIT_FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,KERALUA_DLL))
 $(eval $(call emit-deploy-target,KERALUA_DLL_MDB))
-$(eval $(call emit-deploy-wrapper,KERALUA_TESTS_PC,keralua.tests.pc))
+$(eval $(call emit-deploy-wrapper,KERALUA_TESTS_40_PC,keralua.tests.40.pc))
 
 
 $(eval $(call emit_resgen_targets))

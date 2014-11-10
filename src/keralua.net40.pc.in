@@ -1,0 +1,6 @@
+Name: KeraLua.Net40
+Description: KeraLua.Net40
+Version: 0.1
+
+Requires: 
+Libs: -r:@expanded_libdir@/@PACKAGE@/KeraLua.dll

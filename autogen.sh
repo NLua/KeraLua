@@ -1,6 +1,6 @@
 #! /bin/sh
 
-PROJECT=KeraLua
+PROJECT=KeraLua.Net40
 FILE=
 CONFIGURE=configure.ac
 
