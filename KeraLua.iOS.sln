@@ -91,7 +91,7 @@ Global
 		{CE9EF094-721D-4FDE-B3EB-3591AD0B1744}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = sample\LuaSample.iOS\LuaSample.iOS.csproj
+		StartupItem = tests\Tests.iOS\Tests.iOS.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

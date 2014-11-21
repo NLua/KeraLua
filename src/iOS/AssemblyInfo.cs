@@ -1,5 +1,5 @@
 using System;
-using MonoTouch.ObjCRuntime;
+using ObjCRuntime;
 using System.Reflection;
 
 [assembly: CLSCompliantAttribute (true)]

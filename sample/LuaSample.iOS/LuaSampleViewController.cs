@@ -1,10 +1,11 @@
 using System;
 using System.Drawing;
 
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 
 using KeraLua;
+using ObjCRuntime;
 
 
 namespace LuaSample
@@ -43,14 +44,14 @@ namespace LuaSample
 		}
 
 		[Action ("OnClickEval:")]
-		void OnClickEval (MonoTouch.Foundation.NSObject sender)
+		void OnClickEval (NSObject sender)
 		{
 			int error = DoString (textView.Text);
 
 			Console.WriteLine (" Executed: return code = " + error);
 		}
 
-		[MonoTouch.MonoPInvokeCallback (typeof (LuaNativeFunction))]
+		[MonoPInvokeCallback (typeof (LuaNativeFunction))]
 		static int print (LuaState L)
 		{
 			int n = Lua.LuaGetTop(L);  /* number of arguments */
