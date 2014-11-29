@@ -3,7 +3,10 @@ using System;
 using NUnit.Framework;
 using System.IO;
 using KeraLua;
-using ObjCRuntime;
+
+#if MONOTOUCH
+	using ObjCRuntime;
+#endif
 
 
 namespace KeraLua.Tests
@@ -23,7 +26,6 @@ namespace KeraLua.Tests
 #if MONOTOUCH
 		[MonoPInvokeCallback (typeof (LuaNativeFunction))]
 #endif
-		[System.Runtime.InteropServices.AllowReversePInvokeCalls]
 		static int print (LuaState state)
 		{
 			IntPtr L = state;
