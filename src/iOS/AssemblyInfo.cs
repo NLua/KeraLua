@@ -3,7 +3,7 @@ using ObjCRuntime;
 using System.Reflection;
 
 [assembly: CLSCompliantAttribute (true)]
-[assembly: LinkWith("libLua52iOS.a", LinkTarget.Simulator | LinkTarget.ArmV6 | LinkTarget.ArmV7 | LinkTarget.ArmV7s, Frameworks = "Foundation", ForceLoad = true, IsCxx = true, LinkerFlags = "-lstdc++")]
+[assembly: LinkWith("libLua52iOS.a", LinkTarget.Simulator | LinkTarget.Arm64 | LinkTarget.ArmV7 | LinkTarget.ArmV7s, Frameworks = "Foundation", ForceLoad = true, IsCxx = true, LinkerFlags = "-lstdc++")]
 [assembly: AssemblyTitle ("KeraLua")]
 [assembly: AssemblyDescription ("")]
 [assembly: AssemblyConfiguration ("")]
