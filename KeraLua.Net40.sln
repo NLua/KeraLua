@@ -18,25 +18,36 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		DebugWin|Any CPU = DebugWin|Any CPU
+		ReleaseWin|Any CPU = ReleaseWin|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{47153754-10F5-44D8-B578-F5A32B69061A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{47153754-10F5-44D8-B578-F5A32B69061A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47153754-10F5-44D8-B578-F5A32B69061A}.DebugWin|Any CPU.ActiveCfg = DebugWin|Any CPU
+		{47153754-10F5-44D8-B578-F5A32B69061A}.DebugWin|Any CPU.Build.0 = DebugWin|Any CPU
 		{47153754-10F5-44D8-B578-F5A32B69061A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47153754-10F5-44D8-B578-F5A32B69061A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47153754-10F5-44D8-B578-F5A32B69061A}.ReleaseWin|Any CPU.ActiveCfg = ReleaseWin|Any CPU
+		{47153754-10F5-44D8-B578-F5A32B69061A}.ReleaseWin|Any CPU.Build.0 = ReleaseWin|Any CPU
 		{6BB2A98E-D8AF-4A62-BCA3-E610ED751509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6BB2A98E-D8AF-4A62-BCA3-E610ED751509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BB2A98E-D8AF-4A62-BCA3-E610ED751509}.DebugWin|Any CPU.ActiveCfg = DebugWin|Any CPU
+		{6BB2A98E-D8AF-4A62-BCA3-E610ED751509}.DebugWin|Any CPU.Build.0 = DebugWin|Any CPU
 		{6BB2A98E-D8AF-4A62-BCA3-E610ED751509}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BB2A98E-D8AF-4A62-BCA3-E610ED751509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BB2A98E-D8AF-4A62-BCA3-E610ED751509}.ReleaseWin|Any CPU.ActiveCfg = ReleaseWin|Any CPU
+		{6BB2A98E-D8AF-4A62-BCA3-E610ED751509}.ReleaseWin|Any CPU.Build.0 = ReleaseWin|Any CPU
 		{9C7932E8-A045-4AE4-A3B4-9F4C44511087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C7932E8-A045-4AE4-A3B4-9F4C44511087}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C7932E8-A045-4AE4-A3B4-9F4C44511087}.DebugWin|Any CPU.ActiveCfg = DebugWin|Any CPU
+		{9C7932E8-A045-4AE4-A3B4-9F4C44511087}.DebugWin|Any CPU.Build.0 = DebugWin|Any CPU
 		{9C7932E8-A045-4AE4-A3B4-9F4C44511087}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C7932E8-A045-4AE4-A3B4-9F4C44511087}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C7932E8-A045-4AE4-A3B4-9F4C44511087}.ReleaseWin|Any CPU.ActiveCfg = ReleaseWin|Any CPU
+		{9C7932E8-A045-4AE4-A3B4-9F4C44511087}.ReleaseWin|Any CPU.Build.0 = ReleaseWin|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = KeraLua.Tests\KeraLua.Tests.40.csproj
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = KeraLua.vsmdi
