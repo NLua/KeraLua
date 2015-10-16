@@ -6,4 +6,4 @@ echo "deb http://download.mono-project.com/repo/debian wheezy/snapshots/3.12.0 m
 echo "deb http://download.mono-project.com/repo/debian wheezy-libtiff-compat main" | sudo tee -a /etc/apt/sources.list.d/mono-xamarin.list
 
 sudo apt-get update
-sudo apt-get install mono-devel cmake
+sudo apt-get install mono-devel cmake nunit
