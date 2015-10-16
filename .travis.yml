@@ -15,7 +15,7 @@ install: ./CI/travis.${TRAVIS_OS_NAME}.install.deps.sh
 
 script:
   - git submodule update --init
-  - ./run_all.linux.sh
+  - ./run_all.linux64.sh
 
 # Execute additional tests or commands
 #after_script:
