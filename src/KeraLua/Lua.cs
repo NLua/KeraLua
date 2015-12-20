@@ -424,6 +424,11 @@ namespace KeraLua
 			return NativeMethods.LuaSetUpValue (luaState, funcindex, n);
 		}
 
+		public static void LuaUpValueJoin (IntPtr luaState, int funcindex1, int n1, int funcindex2, int n2)
+		{
+			NativeMethods.LuaUpValueJoin (luaState, funcindex1, n1, funcindex2, n2);
+		}
+
 		public static int LuaNetToNetObject (IntPtr luaState, int index)
 		{
 			return NativeMethods.LuaNetToNetObject (luaState, index);

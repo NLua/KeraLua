@@ -235,6 +235,9 @@ namespace KeraLua
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_setupvalue")]
 		internal static extern IntPtr LuaSetUpValue (IntPtr luaState, int funcindex, int n);
 
+		[DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_upvaluejoin")]
+		internal static extern void LuaUpValueJoin (IntPtr luaState, int funcindex1, int n1, int funcindex2, int n2);
+
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "luanet_tonetobject")]
 		internal static extern int LuaNetToNetObject (IntPtr luaState, int index);
 
