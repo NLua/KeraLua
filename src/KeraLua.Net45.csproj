@@ -65,6 +65,7 @@
     <Compile Include="KeraLua\CharPtr.cs" />
     <Compile Include="KeraLua\DynamicLibraryPath.cs" />
     <Compile Include="KeraLua\Lua.cs" />
+    <Compile Include="KeraLua\LuaCFunction.cs" />
     <Compile Include="KeraLua\LuaDebug.cs" />
     <Compile Include="KeraLua\LuaState.cs" />
     <Compile Include="KeraLua\LuaTag.cs" />

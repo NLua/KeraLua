@@ -3,8 +3,6 @@ using System.Runtime.InteropServices;
 
 namespace KeraLua
 {
-	// typedef int (*lua_CFunction) (lua_State *L);
-	public delegate int LuaNativeFunction(LuaState luaState);
 
 	static class NativeMethods
 	{
@@ -28,7 +26,7 @@ namespace KeraLua
 #endif
 
 		[DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_pushcclosure")]
-		internal static extern void LuaPushCClosure(IntPtr luaState, LuaNativeFunction fn, int n);
+		internal static extern void LuaPushCClosure(IntPtr luaState, LuaCFunction fn, int n);
 
 		[DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, EntryPoint = "lua_setfield")]
 		internal static extern void LuaSetField(IntPtr luaState, int index, [MarshalAs(UnmanagedType.LPStr)] string k);

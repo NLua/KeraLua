@@ -4,9 +4,11 @@ using System.Runtime.InteropServices;
 
 namespace KeraLua
 {
+	public delegate int LuaNativeFunction (KeraLua.LuaState luaState);
+
 	public static partial class Lua
 	{
-		public static void LuaPushCClosure(IntPtr luaState, LuaNativeFunction fn, int n)
+		public static void LuaPushCClosure(IntPtr luaState, LuaCFunction fn, int n)
 		{
 			NativeMethods.LuaPushCClosure(luaState, fn, n);
 		}
