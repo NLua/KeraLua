@@ -50,7 +50,7 @@ namespace KeraLua
 		{
 			get
 			{
-				return new CharPtr (pname).ToString ();
+				return new CharPtr (pnamewhat).ToString ();
 			}
 		}
 
@@ -58,7 +58,7 @@ namespace KeraLua
 		{
 			get
 			{
-				return new CharPtr (pname).ToString ();
+				return new CharPtr (psource).ToString ();
 			}
 		}
 
@@ -66,7 +66,7 @@ namespace KeraLua
 		{
 			get
 			{
-				return new CharPtr (pname).ToString ();
+				return short_src;
 			}
 		}
 
