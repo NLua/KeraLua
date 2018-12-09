@@ -1,0 +1,1542 @@
+using System;
+using System.Text;
+using System.Runtime.InteropServices;
+
+namespace KeraLua
+{
+    public class Lua : IDisposable
+    {
+        private IntPtr luaState;
+        private Lua mainState;
+
+        public Lua MainState => mainState ?? this;
+
+        public Lua(bool openLibs = true)
+        {
+            luaState = NativeMethods.luaL_newstate();
+
+            if (openLibs)
+                NativeMethods.luaL_openlibs(luaState);
+
+            SetExtraObject(this);
+        }
+
+        private Lua(IntPtr luaThread, Lua mainState)
+        {
+            this.mainState = mainState;
+            luaState = luaThread;
+            SetExtraObject(this);
+            GC.SuppressFinalize(this);
+        }
+
+        public static Lua FromIntPtr(IntPtr luaState)
+        {
+            return GetExtraObject<Lua>(luaState);
+        }
+
+        ~Lua()
+        {
+            Dispose(false);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            Close();
+        }
+
+        /// <summary>
+        /// Destroys all objects in the given Lua state (calling the corresponding garbage-collection metamethods, if any) and frees all dynamic memory used by this state
+        /// </summary>
+        public void Close()
+        {
+            if (luaState == IntPtr.Zero || mainState != null)
+                return;
+
+            NativeMethods.lua_close(luaState);
+            luaState = IntPtr.Zero;
+            GC.SuppressFinalize(this);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        private void SetExtraObject<T>(T obj) where T : class
+        {
+            var handle = GCHandle.Alloc(obj, GCHandleType.Weak);
+            IntPtr extraSpace = luaState - IntPtr.Size;
+            Marshal.WriteIntPtr(extraSpace, GCHandle.ToIntPtr(handle));
+        }
+
+        private static T GetExtraObject<T>(IntPtr luaState) where T : class
+        {
+            if (luaState == IntPtr.Zero)
+                return null;
+
+            IntPtr extraSpace = luaState - IntPtr.Size;
+            IntPtr pointer = Marshal.ReadIntPtr(extraSpace);
+            var handle = GCHandle.FromIntPtr(pointer);
+            if (!handle.IsAllocated)
+                return null;
+
+            return (T)handle.Target;
+        }
+        /// <summary>
+        /// Performs an arithmetic or bitwise operation over the two values (or one, in the case of negations) at the top of the stack, with the value at the top being the second operand, pops these values, and pushes the result of the operation. The function follows the semantics of the corresponding Lua operator (that is, it may call metamethods). 
+        /// </summary>
+        /// <param name="operation"></param>
+        public void Arith(LuaOperation operation)
+        {
+            NativeMethods.lua_arith(luaState, (int)operation);
+        }
+
+        /// <summary>
+        /// Sets a new panic function and returns the old one
+        /// </summary>
+        /// <param name="panicFunction"></param>
+        /// <returns></returns>
+        public LuaFunction AtPanic(LuaFunction panicFunction)
+        {
+            IntPtr newPanicPtr = panicFunction.ToFunctionPointer();
+            return NativeMethods.lua_atpanic(luaState, newPanicPtr).ToLuaFunction();
+        }
+
+        /// <summary>
+        ///  Calls a function. 
+        ///  To call a function you must use the following protocol: first, the function to be called is pushed onto the stack; then, the arguments to the function are pushed in direct order;
+        ///  that is, the first argument is pushed first. Finally you call lua_call; nargs is the number of arguments that you pushed onto the stack.
+        ///  All arguments and the function value are popped from the stack when the function is called. The function results are pushed onto the stack when the function returns.
+        ///  The number of results is adjusted to nresults, unless nresults is LUA_MULTRET. In this case, all results from the function are pushed;
+        ///  Lua takes care that the returned values fit into the stack space, but it does not ensure any extra space in the stack. The function results are pushed onto the stack in direct order (the first result is pushed first), so that after the call the last result is on the top of the stack. 
+        /// </summary>
+        /// <param name="arguments"></param>
+        /// <param name="results"></param>
+        public void Call(int arguments, int results)
+        {
+            NativeMethods.lua_callk(luaState, arguments, results, IntPtr.Zero, IntPtr.Zero);
+        }
+
+        /// <summary>
+        /// This function behaves exactly like lua_call, but allows the called function to yield 
+        /// </summary>
+        /// <param name="arguments"></param>
+        /// <param name="results"></param>
+        /// <param name="context"></param>
+        /// <param name="continuation"></param>
+        public void CallK(int arguments, int results, int context, LuaKFunction continuation)
+        {
+            IntPtr k = continuation.ToFunctionPointer();
+            NativeMethods.lua_callk(luaState, arguments, results, (IntPtr)context, k);
+        }
+
+        /// <summary>
+        /// Ensures that the stack has space for at least n extra slots (that is, that you can safely push up to n values into it). It returns false if it cannot fulfill the request,
+        /// </summary>
+        /// <param name="nExtraSlots"></param>
+        public bool CheckStack(int nExtraSlots)
+        {
+            return NativeMethods.lua_checkstack(luaState, nExtraSlots) != 0;
+        }
+
+        /// <summary>
+        /// Compares two Lua values. Returns 1 if the value at index index1 satisfies op when compared with the value at index index2
+        /// </summary>
+        /// <param name="index1"></param>
+        /// <param name="index2"></param>
+        /// <param name="comparison"></param>
+        /// <returns></returns>
+        public bool Compare(int index1, int index2, LuaCompare comparison)
+        {
+            return NativeMethods.lua_compare(luaState, index1, index2, (int)comparison) != 0;
+        }
+
+        /// <summary>
+        /// Concatenates the n values at the top of the stack, pops them, and leaves the result at the top. If n is 1, the result is the single value on the stack (that is, the function does nothing);
+        /// </summary>
+        /// <param name="n"></param>
+        public void Concat(int n)
+        {
+            NativeMethods.lua_concat(luaState, n);
+        }
+        /// <summary>
+        /// Copies the element at index fromidx into the valid index toidx, replacing the value at that position
+        /// </summary>
+        /// <param name="fromIndex"></param>
+        /// <param name="toIndex"></param>
+        public void Copy(int fromIndex, int toIndex)
+        {
+            NativeMethods.lua_copy(luaState, fromIndex, toIndex);
+        }
+
+        /// <summary>
+        /// Creates a new empty table and pushes it onto the stack. Parameter narr is a hint for how many elements the table will have as a sequence; parameter nrec is a hint for how many other elements the table will have
+        /// </summary>
+        /// <param name="elements"></param>
+        /// <param name="records"></param>
+        public void CreateTable(int elements, int records)
+        {
+            NativeMethods.lua_createtable(luaState, elements, records);
+        }
+
+        /// <summary>
+        /// Dumps a function as a binary chunk. Receives a Lua function on the top of the stack and produces a binary chunk that, if loaded again, results in a function equivalent to the one dumped
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="data"></param>
+        /// <param name="stripDebug"></param>
+        /// <returns></returns>
+        public int Dump(LuaWriter writer, IntPtr data, bool stripDebug)
+        {
+            return NativeMethods.lua_dump(luaState, writer.ToFunctionPointer(), data, stripDebug ? 1 : 0);
+        }
+
+        /// <summary>
+        /// Generates a Lua error, using the value at the top of the stack as the error object. This function does a long jump
+        /// </summary>
+        /// <returns></returns>
+        int Error()
+        {
+            return NativeMethods.lua_error(luaState);
+        }
+
+        /// <summary>
+        /// Controls the garbage collector. 
+        /// </summary>
+        /// <param name="what"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public int GarbageCollector(LuaGC what, int data)
+        {
+            return NativeMethods.lua_gc(luaState, (int)what, data);
+        }
+
+        /// <summary>
+        /// Returns the memory-allocation function of a given state. If ud is not NULL, Lua stores in *ud the opaque pointer given when the memory-allocator function was set. 
+        /// </summary>
+        /// <param name="ud"></param>
+        /// <returns></returns>
+        public LuaAlloc GetAllocFunction(ref IntPtr ud)
+        {
+            return NativeMethods.lua_getallocf(luaState, ref ud).ToLuaAlloc();
+        }
+
+        /// <summary>
+        ///  Pushes onto the stack the value t[k], where t is the value at the given index. As in Lua, this function may trigger a metamethod for the "index" event (see §2.4).
+        /// Returns the type of the pushed value. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public LuaType GetField(int index, string key)
+        {
+            return (LuaType)NativeMethods.lua_getfield(luaState, index, key);
+        }
+
+        /// <summary>
+        /// Pushes onto the stack the value of the global name. Returns the type of that value
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public LuaType GetGlobal(string name)
+        {
+            return (LuaType)NativeMethods.lua_getglobal(luaState, name);
+        }
+
+        /// <summary>
+        /// Pushes onto the stack the value t[i], where t is the value at the given index
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="i"></param>
+        /// <returns> Returns the type of the pushed value</returns>
+        public LuaType GetInteger(int index, long i)
+        {
+            return (LuaType)NativeMethods.lua_geti(luaState, index, i);
+        }
+
+
+        /// <summary>
+        /// Gets information about a specific function or function invocation. 
+        /// </summary>
+        /// <param name="what"></param>
+        /// <param name="ar"></param>
+        /// <returns>This function returns false on error (for instance, an invalid option in what). </returns>
+        public bool GetInfo(string what, ref LuaDebug ar)
+        {
+            return NativeMethods.lua_getinfo(luaState, what, ref ar) != 0;
+        }
+
+        /// <summary>
+        /// Gets information about a local variable of a given activation record or a given function. 
+        /// </summary>
+        /// <param name="ar"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public string GetLocal(ref LuaDebug ar, int n)
+        {
+            return NativeMethods.lua_getlocal(luaState, ref ar, n);
+        }
+
+        /// <summary>
+        /// If the value at the given index has a metatable, the function pushes that metatable onto the stack and returns 1
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool GetMetaTable(int index)
+        {
+            return NativeMethods.lua_getmetatable(luaState, index) != 0;
+        }
+
+        /// <summary>
+        /// Gets information about the interpreter runtime stack. 
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="ar"></param>
+        /// <returns></returns>
+        public int GetStack(int level, ref LuaDebug ar)
+        {
+            return NativeMethods.lua_getstack(luaState, level, ref ar);
+        }
+
+        /// <summary>
+        /// Pushes onto the stack the value t[k], where t is the value at the given index and k is the value at the top of the stack. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>Returns the type of the pushed value</returns>
+        public LuaType GetTable(int index)
+        {
+            return (LuaType)NativeMethods.lua_gettable(luaState, index);
+        }
+
+        /// <summary>
+        /// Returns the index of the top element in the stack. 0 means an empty stack.
+        /// </summary>
+        /// <returns>Returns the index of the top element in the stack.</returns>
+        public int GetTop() => NativeMethods.lua_gettop(luaState);
+        /// <summary>
+        /// Pushes onto the stack the Lua value associated with the full userdata at the given index. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>Returns the type of the pushed value. </returns>
+        public int GetUserValue(int index) => NativeMethods.lua_getuservalue(luaState, index);
+
+        /// <summary>
+        /// Moves the top element into the given valid index, shifting up the elements above this index to open space. This function cannot be called with a pseudo-index, because a pseudo-index is not an actual stack position. 
+        /// </summary>
+        /// <param name="index"></param>
+        public void Insert(int index) => NativeMethods.lua_rotate(luaState, index, 1);
+
+        /// <summary>
+        /// Returns  if the value at the given index is a boolean
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsBoolean(int index) => Type(index) == LuaType.Boolean;
+
+        /// <summary>
+        /// Returns  if the value at the given index is a C(#) function
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsCFunction(int index) => NativeMethods.lua_iscfunction(luaState, index) != 0;
+
+        /// <summary>
+        /// Returns  if the value at the given index is a function
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsFunction(int index) => Type(index) == LuaType.Function;
+
+        /// <summary>
+        /// Returns  if the value at the given index is an integer
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsInteger(int index) => NativeMethods.lua_isinteger(luaState, index) != 0;
+
+        /// <summary>
+        /// Returns  if the value at the given index is light user data
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsLightUserData(int index) => Type(index) == LuaType.LightUserData;
+
+        /// <summary>
+        /// Returns  if the value at the given index is nil
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsNil(int index) => Type(index) == LuaType.Nil;
+
+        /// <summary>
+        /// Returns  if the value at the given index is none
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsNone(int index) => Type(index) == LuaType.None;
+
+        public bool IsNoneOrNil(int index) => IsNone(index) || IsNil(index);
+
+        /// <summary>
+        /// Returns  if the value at the given index is a number
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsNumber(int index) => NativeMethods.lua_isnumber(luaState, index) != 0;
+
+        /// <summary>
+        /// Returns  if the value at the given index is a string or a number (which is always convertible to a string)
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsStringOrNumber(int index)
+        {
+            return NativeMethods.lua_isstring(luaState, index) != 0;
+        }
+
+        /// <summary>
+        /// Returns  if the value at the given index is a string
+        /// NOTE: This is different from the lua_isstring, which return true if the value is a number
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsString(int index) => Type(index) == LuaType.String;
+
+        /// <summary>
+        /// Returns  if the value at the given index is a table. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsTable(int index) => Type(index) == LuaType.Table;
+
+        /// <summary>
+        /// Returns  if the value at the given index is a thread. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsThread(int index) => Type(index) == LuaType.Thread;
+
+        /// <summary>
+        /// Returns  if the value at the given index is a user data. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsUserData(int index) => NativeMethods.lua_isuserdata(luaState, index) != 0;
+
+        /// <summary>
+        /// Returns  if the given coroutine can yield, and 0 otherwise
+        /// </summary>
+        public bool IsYieldable => NativeMethods.lua_isyieldable(luaState) != 0;
+
+        /// <summary>
+        /// Push the length of the value at the given index on the stack. It is equivalent to the '#' operator in Lua (see §3.4.7) and may trigger a metamethod for the "length" event (see §2.4). The result is pushed on the stack. 
+        /// </summary>
+        /// <param name="index"></param>
+        public void PushLength(int index) => NativeMethods.lua_len(luaState, index);
+
+        /// <summary>
+        /// Loads a Lua chunk without running it. If there are no errors, lua_load pushes the compiled chunk as a Lua function on top of the stack. Otherwise, it pushes an error message. 
+        /// The lua_load function uses a user-supplied reader function to read the chunk (see lua_Reader). The data argument is an opaque value passed to the reader function. 
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="data"></param>
+        /// <param name="chunkName"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        public LuaStatus Load
+            (LuaReader reader,
+             IntPtr data,
+             string chunkName,
+             string mode)
+        {
+            return (LuaStatus)NativeMethods.lua_load(luaState,
+                                                     reader.ToFunctionPointer(),
+                                                     data,
+                                                     chunkName,
+                                                     mode);
+        }
+
+        /// <summary>
+        /// Creates a new empty table and pushes it onto the stack
+        /// </summary>
+        public void NewTable() => NativeMethods.lua_createtable(luaState, 0, 0);
+
+        /// <summary>
+        /// Creates a new thread, pushes it on the stack, and returns a pointer to a lua_State that represents this new thread. The new thread returned by this function shares with the original thread its global environment, but has an independent execution stack. 
+        /// </summary>
+        /// <returns></returns>
+        public Lua NewThread()
+        {
+            IntPtr thread = NativeMethods.lua_newthread(luaState);
+            return new Lua(thread, this);
+        }
+
+        /// <summary>
+        /// Pops a key from the stack, and pushes a key–value pair from the table at the given index (the "next" pair after the given key).
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool Next(int index) => NativeMethods.lua_next(luaState, index) != 0;
+
+        /// <summary>
+        /// Calls a function in protected mode. 
+        /// </summary>
+        /// <param name="arguments"></param>
+        /// <param name="results"></param>
+        public LuaStatus PCall(int arguments, int results, int errorFunctionIndex)
+        {
+            return (LuaStatus)NativeMethods.lua_pcallk(luaState, arguments, results, errorFunctionIndex, IntPtr.Zero, IntPtr.Zero);
+        }
+
+        /// <summary>
+        /// This function behaves exactly like lua_pcall, but allows the called function to yield
+        /// </summary>
+        /// <param name="arguments"></param>
+        /// <param name="results"></param>
+        /// <param name="errorFunctionIndex"></param>
+        /// <param name="context"></param>
+        /// <param name="k"></param>
+        public LuaStatus PCallK(int arguments,
+            int results,
+            int errorFunctionIndex,
+            int context,
+            LuaKFunction k)
+        {
+            return (LuaStatus)NativeMethods.lua_pcallk(luaState,
+                arguments,
+                results,
+                errorFunctionIndex,
+                (IntPtr)context,
+                k.ToFunctionPointer());
+        }
+
+        /// <summary>
+        /// Pops n elements from the stack. 
+        /// </summary>
+        /// <param name="n"></param>
+        public void Pop(int n) => NativeMethods.lua_settop(luaState, -n - 1);
+
+        /// <summary>
+        /// Pushes a boolean value with value b onto the stack. 
+        /// </summary>
+        /// <param name="b"></param>
+        public void PushBoolean(bool b) => NativeMethods.lua_pushboolean(luaState, b ? 1 : 0);
+
+        /// <summary>
+        ///  Pushes a new C closure onto the stack. When a C function is created, it is possible to associate 
+        ///  some values with it, thus creating a C closure (see §4.4); these values are then accessible to the function 
+        ///  whenever it is called. To associate values with a C function, first these values must be pushed onto the 
+        ///  stack (when there are multiple values, the first value is pushed first). 
+        ///  Then lua_pushcclosure is called to create and push the C function onto the stack, 
+        ///  with the argument n telling how many values will be associated with the function. 
+        ///  lua_pushcclosure also pops these values from the stack. 
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="n"></param>
+        public void PushCClosure(LuaFunction function, int n)
+        {
+            NativeMethods.lua_pushcclosure(luaState, function.ToFunctionPointer(), n);
+        }
+
+        /// <summary>
+        /// Pushes a C function onto the stack. This function receives a pointer to a C function and pushes onto the stack a Lua value of type function that, when called, invokes the corresponding C function. 
+        /// </summary>
+        /// <param name="function"></param>
+        public void PushCFunction(LuaFunction function)
+        {
+            PushCClosure(function, 0);
+        }
+
+        /// <summary>
+        /// Pushes the global environment onto the stack. 
+        /// </summary>
+        public void PushGlobalTable()
+        {
+            NativeMethods.lua_rawgeti(luaState, (int)LuaRegistry.Index, (int)LuaRegistryIndex.Globals);
+        }
+        /// <summary>
+        /// Pushes an integer with value n onto the stack. 
+        /// </summary>
+        /// <param name="n"></param>
+        public void PushInteger(long n) => NativeMethods.lua_pushinteger(luaState, n);
+
+        /// <summary>
+        /// Pushes a reference data (C# object)  onto the stack. 
+        /// This function uses lua_pushlightuserdata, but uses a GCHandle to store the reference inside the Lua side.
+        /// The CGHandle is create as Normal, and will be freed when the value is pop
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        public void PushReferenceData<T>(T obj) where T : class
+        {
+            if (obj == null)
+            {
+                PushNil();
+                return;
+            }
+
+            var handle = GCHandle.Alloc(obj);
+            NativeMethods.lua_pushlightuserdata(luaState, GCHandle.ToIntPtr(handle));
+        }
+
+        /// <summary>
+        /// Pushes a value data (C# struct)  onto the stack. 
+        /// The value must be blitable, since the content will be stored on the unmanaged memory
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        public void PushValueData<T>(T value) where T : struct
+        {
+            int size = Marshal.SizeOf(value);
+            IntPtr data = NativeMethods.lua_newuserdata(luaState, (UIntPtr)size);
+            Marshal.StructureToPtr(value, data, false);
+        }
+
+        /// <summary>
+        /// Pushes a Nullable value data
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        public void PushValueData<T>(T? obj) where T : struct
+        {
+            if (obj.HasValue)
+                PushValueData(obj.Value);
+            else
+                PushNil();
+        }
+
+        /// <summary>
+        /// Pushes binary buffer onto the stack (usually UTF encoded string) or any arbitraty binary data
+        /// </summary>
+        /// <param name="buffer"></param>
+        public void PushBuffer(byte[] buffer)
+        {
+            if (buffer == null)
+            {
+                PushNil();
+                return;
+            }
+
+            NativeMethods.lua_pushlstring(luaState, buffer, (UIntPtr)buffer.Length);
+        }
+
+        // Pushes a string onto the stack
+        public void PushString(string value)
+        {
+            if (value == null)
+            {
+                PushNil();
+                return;
+            }
+
+            byte[] buffer = Encoding.UTF8.GetBytes(value);
+            PushBuffer(buffer);
+        }
+
+        public void PushString(string value, params object[] args)
+        {
+            PushString(string.Format(value, args));
+        }
+
+        /// <summary>
+        /// Pushes a nil value onto the stack. 
+        /// </summary>
+        public void PushNil() => NativeMethods.lua_pushnil(luaState);
+
+        /// <summary>
+        /// Pushes a double with value n onto the stack. 
+        /// </summary>
+        /// <param name="number"></param>
+        public void PushNumber(double number) => NativeMethods.lua_pushnumber(luaState, number);
+
+        /// <summary>
+        /// Pushes the thread represented by L onto the stack. Returns true if this thread is the main thread of its state. 
+        /// </summary>
+        /// <param name="thread"></param>
+        /// <returns></returns>
+        public bool PushThread(Lua thread)
+        {
+            return NativeMethods.lua_pushthread(luaState) == 1;
+        }
+
+        /// <summary>
+        /// Pushes a copy of the element at the given index onto the stack. (lua_pushvalue)
+        /// The method was renamed, since pushvalue is a bit vague
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public void PushCopy(int index)
+        {
+            NativeMethods.lua_pushvalue(luaState, index);
+        }
+
+        /// <summary>
+        /// Returns true if the two values in indices index1 and index2 are primitively equal (that is, without calling the __eq metamethod). Otherwise returns false. Also returns false if any of the indices are not valid. 
+        /// </summary>
+        /// <param name="index1"></param>
+        /// <param name="index2"></param>
+        /// <returns></returns>
+        public bool RawEqual(int index1, int index2)
+        {
+            return NativeMethods.lua_rawequal(luaState, index1, index2) != 0;
+        }
+
+        /// <summary>
+        /// Similar to GetTable, but does a raw access (i.e., without metamethods). 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>Returns the type of the pushed value</returns>
+        public LuaType RawGet(int index)
+        {
+            return (LuaType)NativeMethods.lua_rawget(luaState, index);
+        }
+
+        /// <summary>
+        /// Pushes onto the stack the value t[n], where t is the table at the given index. The access is raw, that is, it does not invoke the __index metamethod. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="n"></param>
+        /// <returns>Returns the type of the pushed value</returns>
+        public LuaType RawGetInteger(int index, long n)
+        {
+            return (LuaType)NativeMethods.lua_rawgeti(luaState, index, n);
+        }
+
+        /// <summary>
+        /// Pushes onto the stack the value t[k], where t is the table at the given index and k is the pointer p represented as a light userdata. The access is raw; that is, it does not invoke the __index metamethod. 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="index"></param>
+        /// <param name="obj"></param>
+        /// <returns>Returns the type of the pushed value. </returns>
+        public LuaType RawGetByHashCode(int index, object obj)
+        {
+            return (LuaType)NativeMethods.lua_rawgetp(luaState, index, (IntPtr)obj.GetHashCode());
+        }
+
+        /// <summary>
+        /// Returns the raw "length" of the value at the given index: for strings, this is the string length; for tables, this is the result of the length operator ('#') with no metamethods; for userdata, this is the size of the block of memory allocated for the userdata; for other values, it is 0. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public int RawLen(int index)
+        {
+            return (int)NativeMethods.lua_rawlen(luaState, index);
+        }
+
+        /// <summary>
+        /// Similar to lua_settable, but does a raw assignment (i.e., without metamethods).
+        /// </summary>
+        /// <param name="index"></param>
+        public void RawSet(int index)
+        {
+            NativeMethods.lua_rawset(luaState, index);
+        }
+
+        /// <summary>
+        ///  Does the equivalent of t[i] = v, where t is the table at the given index and v is the value at the top of the stack.
+        ///  This function pops the value from the stack. The assignment is raw, that is, it does not invoke the __newindex metamethod. 
+        /// </summary>
+        /// <param name="index">index of table</param>
+        /// <param name="i">value</param>
+        public void RawSetInteger(int index, long i)
+        {
+            NativeMethods.lua_rawseti(luaState, index, i);
+        }
+
+        /// <summary>
+        /// Does the equivalent of t[p] = v, where t is the table at the given index, p is encoded as a light userdata, and v is the value at the top of the stack. 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="index"></param>
+        /// <param name="obj"></param>
+        public void RawSetByHashCode(int index, object obj)
+        {
+            NativeMethods.lua_rawsetp(luaState, index, (IntPtr)obj.GetHashCode());
+        }
+
+        /// <summary>
+        /// Sets the C# delegate f as the new value of global name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="function"></param>
+        public void Register(string name, LuaFunction function)
+        {
+            PushCFunction(function);
+            SetGlobal(name);
+        }
+
+
+        /// <summary>
+        /// Removes the element at the given valid index, shifting down the elements above this index to fill the gap. This function cannot be called with a pseudo-index, because a pseudo-index is not an actual stack position. 
+        /// </summary>
+        /// <param name="index"></param>
+        public void Remove(int index)
+        {
+            Rotate(index, -1);
+            Pop(1);
+        }
+
+        /// <summary>
+        /// Moves the top element into the given valid index without shifting any element (therefore replacing the value at that given index), and then pops the top element.
+        /// </summary>
+        /// <param name="index"></param>
+        public void Replace(int index)
+        {
+            Copy(-1, index);
+            Pop(1);
+        }
+
+        /// <summary>
+        ///  To start a coroutine, you push onto the thread stack the main function plus any arguments; then you call lua_resume,
+        ///  with nargs being the number of arguments. This call returns when the coroutine suspends or finishes its execution. 
+        ///  When it returns, the stack contains all values passed to lua_yield, or all values returned by the body function. 
+        ///  lua_resume returns LUA_YIELD if the coroutine yields, LUA_OK if the coroutine finishes its execution without errors, 
+        ///  or an error code in case of errors (see lua_pcall).
+        ///  In case of errors, the stack is not unwound, so you can use the debug API over it. 
+        ///  The error object is on the top of the stack.
+        ///  To resume a coroutine, you remove any results from the last lua_yield, put on its stack only the values to be passed as results from yield,
+        ///  and then call lua_resume.
+        ///  The parameter from represents the coroutine that is resuming L. 
+        ///  If there is no such coroutine, this parameter can be NULL. 
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="arguments"></param>
+        /// <returns></returns>
+        public LuaStatus Resume(Lua from, int arguments)
+        {
+            return (LuaStatus)NativeMethods.lua_resume(luaState, from.luaState, arguments);
+        }
+
+        /// <summary>
+        ///  Rotates the stack elements between the valid index idx and the top of the stack. The elements are rotated n positions in the direction of the top, for a positive n, or -n positions in the direction of the bottom, for a negative n. The absolute value of n must not be greater than the size of the slice being rotated. This function cannot be called with a pseudo-index, because a pseudo-index is not an actual stack position. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="n"></param>
+        public void Rotate(int index, int n)
+        {
+            NativeMethods.lua_rotate(luaState, index, n);
+        }
+
+        /// <summary>
+        /// Changes the allocator function of a given state to f with user data ud. 
+        /// </summary>
+        /// <param name="alloc"></param>
+        /// <param name="ud"></param>
+        public void SetAllocFunction(LuaAlloc alloc, ref IntPtr ud)
+        {
+            NativeMethods.lua_setallocf(luaState, alloc.ToFunctionPointer(), ud);
+        }
+
+        /// <summary>
+        /// Does the equivalent to t[k] = v, where t is the value at the given index and v is the value at the top of the stack.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="key"></param>
+        public void SetField(int index, string key)
+        {
+            NativeMethods.lua_setfield(luaState, index, key);
+        }
+
+        /// <summary>
+        /// Pops a value from the stack and sets it as the new value of global name. 
+        /// </summary>
+        /// <param name="name"></param>
+        public void SetGlobal(string name)
+        {
+            NativeMethods.lua_setglobal(luaState, name);
+        }
+
+        /// <summary>
+        /// Does the equivalent to t[n] = v, where t is the value at the given index and v is the value at the top of the stack. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="n"></param>
+        public void SetInteger(int index, long n)
+        {
+            NativeMethods.lua_seti(luaState, index, n);
+        }
+
+        /// <summary>
+        /// Sets the value of a local variable of a given activation record. It assigns the value at the top of the stack to the variable and returns its name. It also pops the value from the stack. 
+        /// </summary>
+        /// <param name="ar"></param>
+        /// <param name="n"></param>
+        /// <returns>Returns NULL (and pops nothing) when the index is greater than the number of active local variables. </returns>
+        public string SetLocal(ref LuaDebug ar, int n)
+        {
+            return NativeMethods.lua_setlocal(luaState, ref ar, n);
+        }
+
+        /// <summary>
+        /// Pops a table from the stack and sets it as the new metatable for the value at the given index. 
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetMetaTable(int index)
+        {
+            NativeMethods.lua_setmetatable(luaState, index);
+        }
+
+        /// <summary>
+        ///  Does the equivalent to t[k] = v, where t is the value at the given index, v is the value at the top of the stack, and k is the value just below the top
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetTable(int index)
+        {
+            NativeMethods.lua_settable(luaState, index);
+        }
+
+        /// <summary>
+        /// Accepts any index, or 0, and sets the stack top to this index. If the new top is larger than the old one, then the new elements are filled with nil. If index is 0, then all stack elements are removed. 
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetTop(int newTop)
+        {
+            NativeMethods.lua_settop(luaState, newTop);
+        }
+
+        /// <summary>
+        /// Sets the value of a closure's upvalue. It assigns the value at the top of the stack to the upvalue and returns its name. It also pops the value from the stack. 
+        /// </summary>
+        /// <param name="functionIndex"></param>
+        /// <param name="n"></param>
+        /// <returns>Returns NULL (and pops nothing) when the index n is greater than the number of upvalues. </returns>
+        public string SetUpValue(int functionIndex, int n)
+        {
+            return NativeMethods.lua_setupvalue(luaState, functionIndex, n);
+        }
+
+        /// <summary>
+        ///  Pops a value from the stack and sets it as the new value associated to the full userdata at the given index.
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetUserValue(int index)
+        {
+            NativeMethods.lua_setuservalue(luaState, index);
+        }
+
+        /// <summary>
+        ///  The status can be 0 (LUA_OK) for a normal thread, an error code if the thread finished the execution of a lua_resume with an error, or LUA_YIELD if the thread is suspended. 
+        ///  You can only call functions in threads with status LUA_OK. You can resume threads with status LUA_OK (to start a new coroutine) or LUA_YIELD (to resume a coroutine). 
+        /// </summary>
+        public LuaStatus Status => (LuaStatus)NativeMethods.lua_status(luaState);
+
+        /// <summary>
+        /// Converts the zero-terminated string s to a number, pushes that number into the stack,
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public bool StringToNumber(string s)
+        {
+            return NativeMethods.lua_stringtonumber(luaState, s) != UIntPtr.Zero;
+        }
+
+        /// <summary>
+        /// Converts the Lua value at the given index to a C# boolean value
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool ToBoolean(int index)
+        {
+            return NativeMethods.lua_toboolean(luaState, index) != 0;
+        }
+
+        /// <summary>
+        /// Converts a value at the given index to a C# function. That value must be a C# function; otherwise, returns NULL
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public LuaFunction ToCFunction(int index)
+        {
+            return NativeMethods.lua_tocfunction(luaState, index).ToLuaFunction();
+        }
+
+        /// <summary>
+        /// Converts the Lua value at the given index to the signed integral type lua_Integer. The Lua value must be an integer, or a number or string convertible to an integer (see §3.4.3); otherwise, lua_tointegerx returns 0. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public long ToInteger(int index)
+        {
+            return NativeMethods.lua_tointegerx(luaState, index, out _);
+        }
+
+        /// <summary>
+        /// Converts the Lua value at the given index to the signed integral type lua_Integer. The Lua value must be an integer, or a number or string convertible to an integer (see §3.4.3); otherwise, lua_tointegerx returns 0. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public long? ToIntegerX(int index)
+        {
+            int isInteger;
+            long value = NativeMethods.lua_tointegerx(luaState, index, out isInteger);
+            if (isInteger != 0)
+                return value;
+            return null;
+        }
+
+        /// <summary>
+        /// Converts the Lua value at the given index to a byte array.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public byte[] ToBuffer(int index)
+        {
+            UIntPtr len;
+            IntPtr buff = NativeMethods.lua_tolstring(luaState, index, out len);
+            if (buff == IntPtr.Zero)
+                return null;
+
+            int length = (int)len;
+            if (length == 0)
+                return new byte[0];
+
+            byte[] output = new byte[length];
+            Marshal.Copy(buff, output, 0, length);
+            return output;
+        }
+
+        /// <summary>
+        /// Converts the Lua value at the given index to a C# string
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public string ToString(int index)
+        {
+            byte[] buffer = ToBuffer(index);
+            if (buffer == null)
+                return null;
+            return Encoding.UTF8.GetString(buffer);
+        }
+
+        /// <summary>
+        /// Converts the Lua value at the given index to a C# double
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public double ToNumber(int index)
+        {
+            return NativeMethods.lua_tonumberx(luaState, index, out _);
+        }
+
+        /// <summary>
+        /// Converts the Lua value at the given index to a C# double?
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public double? ToNumberX(int index)
+        {
+            int isNumber;
+            long value = NativeMethods.lua_tointegerx(luaState, index, out isNumber);
+            if (isNumber != 0)
+                return value;
+            return null;
+        }
+
+
+        /// <summary>
+        /// Converts the value at the given index to a Lua thread
+        /// or return the self if is the main thread
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Lua ToThread(int index)
+        {
+            IntPtr state = NativeMethods.lua_tothread(luaState, index);
+            if (state == luaState)
+                return this;
+
+            return FromIntPtr(state);
+        }
+
+        /// <summary>
+        /// Return an object (refence) at the index
+        /// Important if a object was push the object need to fetched using
+        /// this method, otherwise the C# object will never be collected
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public T ToReferenceData<T>(int index) where T : class
+        {
+            if (IsNil(index) || !IsLightUserData(index))
+                return null;
+
+            IntPtr data = NativeMethods.lua_touserdata(luaState, index);
+            if (data == IntPtr.Zero)
+                return null;
+
+            var handle = GCHandle.FromIntPtr(data);
+            var reference = (T)handle.Target;
+            handle.Free();
+
+            return reference;
+        }
+
+        /// <summary>
+        /// Return a value object from index
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public T ToValueData<T>(int index) where T : struct
+        {
+            T? value = ToValueDataNullable<T>(index);
+            return value ?? default(T);
+        }
+
+        /// <summary>
+        /// Return a value? from index
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public T? ToValueDataNullable<T>(int index) where T : struct
+        {
+            if (IsNil(index) || !IsUserData(index))
+                return null;
+
+            IntPtr data = NativeMethods.lua_touserdata(luaState, index);
+
+            if (data == IntPtr.Zero)
+                return null;
+
+            return (T)Marshal.PtrToStructure(data, typeof(T));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public LuaType Type(int index)
+        {
+            return (LuaType)NativeMethods.lua_type(luaState, index);
+        }
+
+        /// <summary>
+        /// Returns the name of the type of the value at the given index. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>Name of the type of the value at the given index</returns>
+        public string TypeName(LuaType type)
+        {
+            return NativeMethods.lua_typename(luaState, (int)type);
+        }
+
+        /// <summary>
+        ///  Returns a unique identifier for the upvalue numbered n from the closure at index funcindex.
+        /// </summary>
+        /// <param name="functionIndex"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public long UpValueId(int functionIndex, int n)
+        {
+            return (long)NativeMethods.lua_upvalueid(luaState, functionIndex, n);
+        }
+
+        /// <summary>
+        /// Returns the pseudo-index that represents the i-th upvalue of the running function 
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public static int UpValueIndex(int i)
+        {
+            return (int)LuaRegistry.Index - i;
+        }
+
+        /// <summary>
+        /// Make the n1-th upvalue of the Lua closure at index funcindex1 refer to the n2-th upvalue of the Lua closure at index funcindex2
+        /// </summary>
+        /// <param name="functionIndex1"></param>
+        /// <param name="n1"></param>
+        /// <param name="functionIndex2"></param>
+        /// <param name="n2"></param>
+        public void UpValueJoin(int functionIndex1, int n1, int functionIndex2, int n2)
+        {
+            NativeMethods.lua_upvaluejoin(luaState, functionIndex1, n1, functionIndex2, n2);
+        }
+
+        /// <summary>
+        /// Return the version of Lua (e.g 503)
+        /// </summary>
+        /// <returns></returns>
+        public double Version()
+        {
+            double[] version = new double[1];
+            IntPtr pVersion = NativeMethods.lua_version(luaState);
+            Marshal.Copy(pVersion, version, 0, 1);
+            return version[0];
+        }
+
+        /// <summary>
+        ///  Exchange values between different threads of the same state.
+        ///  This function pops n values from the current stack, and pushes them onto the stack to. 
+        /// </summary>
+        /// <param name="to"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public void XMove(Lua to, int n)
+        {
+            NativeMethods.lua_xmove(luaState, to.luaState, n);
+        }
+
+        /// <summary>
+        /// This function is equivalent to lua_yieldk, but it has no continuation (see §4.7). Therefore, when the thread resumes, it continues the function that called the function calling lua_yield. 
+        /// </summary>
+        /// <param name="results"></param>
+        /// <returns></returns>
+        public int Yield(int results)
+        {
+            return NativeMethods.lua_yieldk(luaState, results, IntPtr.Zero, IntPtr.Zero);
+        }
+
+        public int YieldK(int results, int context, LuaKFunction continuation)
+        {
+            IntPtr k = continuation.ToFunctionPointer();
+            return NativeMethods.lua_yieldk(luaState, results, (IntPtr)context, k);
+        }
+
+        /* Auxialiary Library Functions */
+
+        /// <summary>
+        /// Checks whether cond is true. If it is not, raises an error with a standard message
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="argument"></param>
+        /// <param name="message"></param>
+        public void ArgumentCheck(bool condition, int argument, string message)
+        {
+            if (condition)
+                return;
+            ArgumentError(argument, message);
+        }
+
+        /// <summary>
+        /// Raises an error reporting a problem with argument arg of the C function that called it, using a standard message that includes extramsg as a comment: 
+        /// </summary>
+        /// <param name="argument"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public int ArgumentError(int argument, string message)
+        {
+            // TODO: Use C# exception for errors?
+            return NativeMethods.luaL_argerror(luaState, argument, message);
+        }
+
+        /// <summary>
+        /// If the object at index obj has a metatable and this metatable has a field e, this function calls this field passing the object as its only argument.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="field"></param>
+        /// <returns>If there is no metatable or no metamethod, this function returns false (without pushing any value on the stack)</returns>
+        public bool CallMetaMethod(int obj, string field)
+        {
+            return NativeMethods.luaL_callmeta(luaState, obj, field) != 0;
+        }
+
+        /// <summary>
+        /// Checks whether the function has an argument of any type (including nil) at position arg. 
+        /// </summary>
+        /// <param name="argument"></param>
+        public void CheckAny(int argument)
+        {
+            NativeMethods.luaL_checkany(luaState, argument);
+        }
+
+        /// <summary>
+        /// Checks whether the function argument arg is an integer (or can be converted to an integer)
+        /// </summary>
+        /// <param name="argument"></param>
+        /// <returns></returns>
+        public long CheckInteger(int argument)
+        {
+            return NativeMethods.luaL_checkinteger(luaState, argument);
+        }
+
+        /// <summary>
+        /// Checks whether the function argument arg is a string and returns this string;
+        /// </summary>
+        /// <param name="argument"></param>
+        /// <returns></returns>
+        public byte[] CheckBuffer(int argument)
+        {
+            UIntPtr len;
+            IntPtr buff = NativeMethods.luaL_checklstring(luaState, argument, out len);
+            if (buff == IntPtr.Zero)
+                return null;
+
+            int length = (int)len;
+            if (length == 0)
+                return new byte[0];
+
+            byte[] output = new byte[length];
+            Marshal.Copy(buff, output, 0, length);
+            return output;
+        }
+
+        /// <summary>
+        /// Checks whether the function argument arg is a string and returns this string;
+        /// </summary>
+        /// <param name="argument"></param>
+        /// <returns></returns>
+        public string CheckString(int argument)
+        {
+            byte[] buffer = CheckBuffer(argument);
+            if (buffer == null)
+                return null;
+            return Encoding.UTF8.GetString(buffer);
+        }
+
+        /// <summary>
+        /// Checks whether the function argument arg is a number and returns this number. 
+        /// </summary>
+        /// <param name="argument"></param>
+        /// <returns></returns>
+        public double CheckNumber(int argument)
+        {
+            return NativeMethods.luaL_checknumber(luaState, argument);
+        }
+
+
+        /// <summary>
+        /// Checks whether the function argument arg is a string and searches for this string in the array lst 
+        /// </summary>
+        /// <param name="argument"></param>
+        /// <param name="def"></param>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public int CheckOption(int argument, string def, string[] list)
+        {
+            return NativeMethods.luaL_checkoption(luaState, argument, def, list);
+        }
+
+
+        /// <summary>
+        /// Grows the stack size to top + sz elements, raising an error if the stack cannot grow 
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="message"></param>
+        public void CheckStack(int newSize, string message)
+        {
+            NativeMethods.luaL_checkstack(luaState, newSize, message);
+        }
+
+        /// <summary>
+        /// Checks whether the function argument arg has type type
+        /// </summary>
+        /// <param name="argument"></param>
+        /// <param name="type"></param>
+        public void CheckType(int argument, LuaType type)
+        {
+            NativeMethods.luaL_checktype(luaState, argument, (int)type);
+        }
+
+        /// <summary>
+        /// Checks whether the function argument arg is a userdata of the type tname
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="argument"></param>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
+        public T CheckReferenceData<T>(int argument, string typeName) where T : class
+        {
+            if (IsNil(argument) || !IsLightUserData(argument))
+                return null;
+
+            IntPtr data = NativeMethods.luaL_checkudata(luaState, argument, typeName);
+            if (data == IntPtr.Zero)
+                return null;
+
+            var handle = GCHandle.FromIntPtr(data);
+            var reference = (T)handle.Target;
+            handle.Free();
+
+            return reference;
+        }
+
+        public T CheckValueData<T>(int argument, string typeName) where T : struct
+        {
+            T? value = CheckValueDataNullable<T>(argument, typeName);
+            return value ?? default(T);
+        }
+
+        public T? CheckValueDataNullable<T>(int argument, string typeName) where T : struct
+        {
+            if (IsNil(argument) || !IsUserData(argument))
+                return null;
+
+            IntPtr data = NativeMethods.luaL_checkudata(luaState, argument, typeName);
+
+            if (data == IntPtr.Zero)
+                return null;
+
+            return (T)Marshal.PtrToStructure(data, typeof(T));
+        }
+
+        /// <summary>
+        /// Loads and runs the given file
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>It returns false if there are no errors or true in case of errors. </returns>
+        public bool DoFile(string file)
+        {
+            bool hasError = LoadFile(file) != LuaStatus.OK || PCall(0, -1, 0) != LuaStatus.OK;
+            return hasError;
+        }
+
+        /// <summary>
+        /// Loads and runs the given string
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>It returns false if there are no errors or true in case of errors. </returns>
+        public bool DoString(string file)
+        {
+            bool hasError = LoadString(file) != LuaStatus.OK || PCall(0, -1, 0) != LuaStatus.OK;
+            return hasError;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        public int Error(string value, params object[] v)
+        {
+            string message = string.Format(value, v);
+            return NativeMethods.luaL_error(luaState, message);
+        }
+
+        /// <summary>
+        /// This function produces the return values for process-related functions in the standard library
+        /// </summary>
+        /// <param name="stat"></param>
+        /// <returns></returns>
+        public int ExecResult(int stat)
+        {
+            return NativeMethods.luaL_execresult(luaState, stat);
+        }
+
+        /// <summary>
+        /// This function produces the return values for file-related functions in the standard library
+        /// </summary>
+        /// <param name="stat"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public int FileResult(int stat, string fileName)
+        {
+            return NativeMethods.luaL_fileresult(luaState, stat, fileName);
+        }
+
+        /// <summary>
+        /// Pushes onto the stack the field e from the metatable of the object at index obj and returns the type of the pushed value
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="field"></param>
+        /// <returns></returns>
+        public LuaType GetMetaField(int obj, string field)
+        {
+            return (LuaType)NativeMethods.luaL_getmetafield(luaState, obj, field);
+        }
+
+        /// <summary>
+        /// Pushes onto the stack the metatable associated with name tname in the registry (see luaL_newmetatable) (nil if there is no metatable associated with that name)
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns>Returns the type of the pushed value. </returns>
+        public LuaType GetMetaTable(string tableName)
+        {
+            return GetField((int)LuaRegistry.Index, tableName);
+        }
+
+        /// <summary>
+        /// Ensures that the value t[fname], where t is the value at index idx, is a table, and pushes that table onto the stack. Returns true if it finds a previous table there and false if it creates a new table
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public bool GetSubTable(int index, string name)
+        {
+            return NativeMethods.luaL_getsubtable(luaState, index, name) != 0;
+        }
+
+        /// <summary>
+        /// Returns the "length" of the value at the given index as a number; it is equivalent to the '#' operator in Lua
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public long Length(int index) => NativeMethods.luaL_len(luaState, index);
+
+        /// <summary>
+        /// Loads a buffer as a Lua chunk
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="name"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        public LuaStatus LoadBuffer(byte[] buffer, string name, string mode)
+        {
+            return (LuaStatus)NativeMethods.luaL_loadbufferx(luaState, buffer, (UIntPtr)buffer.Length, name, mode);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public LuaStatus LoadBuffer(byte[] buffer, string name)
+        {
+            return LoadBuffer(buffer, name, null);
+        }
+
+        /// <summary>
+        /// Loads a buffer as a Lua chunk
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <returns></returns>
+        public LuaStatus LoadBuffer(byte[] buffer)
+        {
+            return LoadBuffer(buffer, null, null);
+
+        }
+
+        /// <summary>
+        /// Loads a string as a Lua chunk
+        /// </summary>
+        /// <param name="chunk"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public LuaStatus LoadString(string chunk, string name)
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes(chunk);
+            return LoadBuffer(buffer, name);
+        }
+
+        /// <summary>
+        /// Loads a string as a Lua chunk
+        /// </summary>
+        /// <param name="chunk"></param>
+        /// <returns></returns>
+        public LuaStatus LoadString(string chunk)
+        {
+            return LoadString(chunk, null);
+        }
+
+        public LuaStatus LoadFile(string file, string mode)
+        {
+            return (LuaStatus)NativeMethods.luaL_loadfilex(luaState, file, mode);
+        }
+
+        /// <summary>
+        /// Loads a file as a Lua chunk.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>Return the status</returns>
+        public LuaStatus LoadFile(string file)
+        {
+            return LoadFile(file, null);
+        }
+
+    }
+}
+
