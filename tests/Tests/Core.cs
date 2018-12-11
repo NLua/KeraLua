@@ -2,6 +2,7 @@
 using System;
 using NUnit.Framework;
 using System.IO;
+using System.Diagnostics;
 
 #if MONOTOUCH
     using ObjCRuntime;
@@ -31,19 +32,19 @@ namespace KeraLua.Tests
                 switch (type) {
                         
                     case LuaType.Nil:
-                        Console.Write("nil");
+                        Trace.Write("nil");
                         break;
                     case LuaType.String:
                         string s = state.ToString(i);
-                        Console.Write(s);
+                        Trace.Write(s);
                         break;
                     case LuaType.Number:
                         double number = state.ToNumber(i);
-                        Console.Write (number);
+                        Trace.Write (number);
                         break;
                 }
             }
-            Console.WriteLine();
+            Trace.WriteLine("\n");
             return 0;
         }
 

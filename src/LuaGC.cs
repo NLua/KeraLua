@@ -4,6 +4,9 @@ using System.Text;
 
 namespace KeraLua
 {
+    /// <summary>
+    /// Garbage Collector operations
+    /// </summary>
     public enum LuaGC
     {
         /// <summary>

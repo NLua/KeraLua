@@ -4,13 +4,23 @@ using System.Runtime.InteropServices;
 
 namespace KeraLua
 {
+    /// <summary>
+    /// Lua state class, main interface to use Lua library.
+    /// </summary>
     public class Lua : IDisposable
     {
         private IntPtr luaState;
         private Lua mainState;
 
-        public Lua MainState => mainState ?? this;
+        /// <summary>
+        /// Get the main thread object, if the object is the main thread will be equal this
+        /// </summary>
+        public Lua MainThread => mainState ?? this;
 
+        /// <summary>
+        /// Initialize Lua state, and open the default libs
+        /// </summary>
+        /// <param name="openLibs">flag to enable/disable opening the default libs</param>
         public Lua(bool openLibs = true)
         {
             luaState = NativeMethods.luaL_newstate();
@@ -29,16 +39,29 @@ namespace KeraLua
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Get the Lua object from IntPtr
+        /// Useful for LuaFunction callbacks, if the Lua object was already collected will return null.
+        /// </summary>
+        /// <param name="luaState"></param>
+        /// <returns></returns>
         public static Lua FromIntPtr(IntPtr luaState)
         {
             return GetExtraObject<Lua>(luaState);
         }
 
+        /// <summary>
+        /// Finalizer, will dispose the lua state if wasn't closed
+        /// </summary>
         ~Lua()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Dispose lua state
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
             Close();
@@ -57,6 +80,9 @@ namespace KeraLua
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose the lua context (calling Close)
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -375,6 +401,11 @@ namespace KeraLua
         /// <returns></returns>
         public bool IsNone(int index) => Type(index) == LuaType.None;
 
+        /// <summary>
+        /// Check if the value at the index is none or nil
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public bool IsNoneOrNil(int index) => IsNone(index) || IsNil(index);
 
         /// <summary>
@@ -483,6 +514,7 @@ namespace KeraLua
         /// </summary>
         /// <param name="arguments"></param>
         /// <param name="results"></param>
+        /// <param name="errorFunctionIndex"></param>
         public LuaStatus PCall(int arguments, int results, int errorFunctionIndex)
         {
             return (LuaStatus)NativeMethods.lua_pcallk(luaState, arguments, results, errorFunctionIndex, IntPtr.Zero, IntPtr.Zero);
@@ -620,7 +652,10 @@ namespace KeraLua
             NativeMethods.lua_pushlstring(luaState, buffer, (UIntPtr)buffer.Length);
         }
 
-        // Pushes a string onto the stack
+        /// <summary>
+        /// Pushes a string onto the stack
+        /// </summary>
+        /// <param name="value"></param>
         public void PushString(string value)
         {
             if (value == null)
@@ -633,6 +668,12 @@ namespace KeraLua
             PushBuffer(buffer);
         }
 
+        /// <summary>
+        /// Push a instring using string.Format 
+        /// PushString("Foo {0}", 10);
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="args"></param>
         public void PushString(string value, params object[] args)
         {
             PushString(string.Format(value, args));
@@ -705,7 +746,6 @@ namespace KeraLua
         /// <summary>
         /// Pushes onto the stack the value t[k], where t is the table at the given index and k is the pointer p represented as a light userdata. The access is raw; that is, it does not invoke the __index metamethod. 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="index"></param>
         /// <param name="obj"></param>
         /// <returns>Returns the type of the pushed value. </returns>
@@ -747,7 +787,6 @@ namespace KeraLua
         /// <summary>
         /// Does the equivalent of t[p] = v, where t is the table at the given index, p is encoded as a light userdata, and v is the value at the top of the stack. 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="index"></param>
         /// <param name="obj"></param>
         public void RawSetByHashCode(int index, object obj)
@@ -889,7 +928,7 @@ namespace KeraLua
         /// <summary>
         /// Accepts any index, or 0, and sets the stack top to this index. If the new top is larger than the old one, then the new elements are filled with nil. If index is 0, then all stack elements are removed. 
         /// </summary>
-        /// <param name="index"></param>
+        /// <param name="newTop"></param>
         public void SetTop(int newTop)
         {
             NativeMethods.lua_settop(luaState, newTop);
@@ -975,15 +1014,26 @@ namespace KeraLua
             return null;
         }
 
+        public byte[] ToBuffer(int index)
+        {
+            return ToBuffer(index, true);
+        }
         /// <summary>
         /// Converts the Lua value at the given index to a byte array.
         /// </summary>
         /// <param name="index"></param>
+        /// <param name="callMetamethod">Calls __tostring field if present</param>
         /// <returns></returns>
-        public byte[] ToBuffer(int index)
+        public byte[] ToBuffer(int index, bool callMetamethod)
         {
             UIntPtr len;
-            IntPtr buff = NativeMethods.lua_tolstring(luaState, index, out len);
+            IntPtr buff;
+
+            if (callMetamethod)
+                buff = NativeMethods.luaL_tolstring(luaState, index, out len);
+            else
+                buff = NativeMethods.lua_tolstring(luaState, index, out len);
+
             if (buff == IntPtr.Zero)
                 return null;
 
@@ -1003,7 +1053,17 @@ namespace KeraLua
         /// <returns></returns>
         public string ToString(int index)
         {
-            byte[] buffer = ToBuffer(index);
+            return ToString(index, true);
+        }
+        /// <summary>
+        /// Converts the Lua value at the given index to a C# string
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="callMetamethod">Calls __tostring field if present</param>
+        /// <returns></returns>
+        public string ToString(int index, bool callMetamethod)
+        {
+            byte[] buffer = ToBuffer(index, callMetamethod);
             if (buffer == null)
                 return null;
             return Encoding.UTF8.GetString(buffer);
@@ -1116,7 +1176,7 @@ namespace KeraLua
         /// <summary>
         /// Returns the name of the type of the value at the given index. 
         /// </summary>
-        /// <param name="index"></param>
+        /// <param name="type"></param>
         /// <returns>Name of the type of the value at the given index</returns>
         public string TypeName(LuaType type)
         {
@@ -1190,6 +1250,13 @@ namespace KeraLua
             return NativeMethods.lua_yieldk(luaState, results, IntPtr.Zero, IntPtr.Zero);
         }
 
+        /// <summary>
+        ///  Yields a coroutine (thread). When a C function calls lua_yieldk, the running coroutine suspends its execution, and the call to lua_resume that started this coroutine returns
+        /// </summary>
+        /// <param name="results">Number of values from the stack that will be passed as results to lua_resume.</param>
+        /// <param name="context"></param>
+        /// <param name="continuation"></param>
+        /// <returns></returns>
         public int YieldK(int results, int context, LuaKFunction continuation)
         {
             IntPtr k = continuation.ToFunctionPointer();
@@ -1314,7 +1381,7 @@ namespace KeraLua
         /// <summary>
         /// Grows the stack size to top + sz elements, raising an error if the stack cannot grow 
         /// </summary>
-        /// <param name="size"></param>
+        /// <param name="newSize"></param>
         /// <param name="message"></param>
         public void CheckStack(int newSize, string message)
         {
@@ -1354,12 +1421,26 @@ namespace KeraLua
             return reference;
         }
 
+        /// <summary>
+        /// Check if the value on stack is a nullable value data and return the value
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="argument"></param>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
         public T CheckValueData<T>(int argument, string typeName) where T : struct
         {
             T? value = CheckValueDataNullable<T>(argument, typeName);
             return value ?? default(T);
         }
 
+        /// <summary>
+        /// Check if the value on stack is a nullable value data and return the value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="argument"></param>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
         public T? CheckValueDataNullable<T>(int argument, string typeName) where T : struct
         {
             if (IsNil(argument) || !IsUserData(argument))
@@ -1396,7 +1477,7 @@ namespace KeraLua
         }
 
         /// <summary>
-        /// 
+        /// Raises an error. The error message format is given by fmt plus any extra arguments
         /// </summary>
         /// <param name="value"></param>
         /// <param name="v"></param>
@@ -1522,6 +1603,12 @@ namespace KeraLua
             return LoadString(chunk, null);
         }
 
+        /// <summary>
+        /// Loads a file as a Lua chunk. This function uses lua_load to load the chunk in the file named filename
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="mode"></param>
+        /// <returns>The status of operation</returns>
         public LuaStatus LoadFile(string file, string mode)
         {
             return (LuaStatus)NativeMethods.luaL_loadfilex(luaState, file, mode);
@@ -1537,6 +1624,237 @@ namespace KeraLua
             return LoadFile(file, null);
         }
 
+        /// <summary>
+        /// Creates a new table and registers there the functions in list library. 
+        /// </summary>
+        /// <param name="library"></param>
+        public void NewLib(LuaRegister [] library)
+        {
+            NewLibTable(library);
+            SetFuncs(library, 0);
+        }
+
+        /// <summary>
+        /// Creates a new table with a size optimized to store all entries in the array l (but does not actually store them)
+        /// </summary>
+        /// <param name="library"></param>
+        public void NewLibTable(LuaRegister [] library)
+        {
+            CreateTable(0, library.Length);
+        }
+
+        /// <summary>
+        /// Creates a new table to be used as a metatable for userdata
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>If the registry already has the key tname, returns false.,</returns>
+        public bool NewMetaTable(string name)
+        {
+            return NativeMethods.luaL_newmetatable(luaState, name) != 0;
+        }
+
+        /// <summary>
+        /// Opens all standard Lua libraries into the given state. 
+        /// </summary>
+        public void OpenLibs()
+        {
+            NativeMethods.luaL_openlibs(luaState);
+        }
+
+        /// <summary>
+        /// If the function argument arg is an integer (or convertible to an integer), returns this integer. If this argument is absent or is nil, returns d
+        /// </summary>
+        /// <param name="argument"></param>
+        /// <param name="d">default value</param>
+        /// <returns></returns>
+        public long OptInteger(int argument, long d)
+        {
+            return NativeMethods.luaL_optinteger(luaState, argument, d);
+        }
+
+        /// <summary>
+        /// If the function argument arg is a string, returns this string. If this argument is absent or is nil, returns d        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="def"></param>
+        /// <returns></returns>
+        public byte[] OptBuffer(int index, byte [] def)
+        {
+           if (IsNoneOrNil(index))
+                return def;
+
+           return CheckBuffer(index);
+        }
+
+        /// <summary>
+        /// If the function argument arg is a string, returns this string. If this argument is absent or is nil, returns d
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="def"></param>
+        /// <returns></returns>
+        public string OptString(int index, string def)
+        {
+           if (IsNoneOrNil(index))
+                return def;
+
+           return CheckString(index);
+        }
+
+
+        /// <summary>
+        /// If the function argument arg is a number, returns this number. If this argument is absent or is nil, returns d
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="def"></param>
+        /// <returns></returns>
+        public double OptNumber(int index, double def)
+        {
+            return NativeMethods.luaL_optnumber(luaState, index, def);
+        }
+
+        /// <summary>
+        /// Creates and returns a reference, in the table at index t, for the object at the top of the stack (and pops the object). 
+        /// </summary>
+        /// <param name="tableIndex"></param>
+        /// <returns></returns>
+        public int Ref(int tableIndex)
+        {
+            return NativeMethods.luaL_ref(luaState, tableIndex);
+        }
+
+        /// <summary>
+        /// If modname is not already present in package.loaded, calls function openf with string modname as an argument and sets the call result in package.loaded[modname], as if that function has been called through require
+        /// </summary>
+        /// <param name="moduleName"></param>
+        /// <param name="openFunction"></param>
+        /// <param name="global"></param>
+        public void RequireF(string moduleName, LuaFunction openFunction, bool global)
+        {
+            NativeMethods.luaL_requiref(luaState, moduleName, openFunction.ToFunctionPointer(), global ? 1: 0);
+        }
+
+        /// <summary>
+        /// Registers all functions in the array l (see luaL_Reg) into the table on the top of the stack (below optional upvalues, see next).        /// </summary>
+        /// <param name="library"></param>
+        /// <param name="numberUpValues"></param>
+        public void SetFuncs(LuaRegister [] library, int numberUpValues)
+        {
+            NativeMethods.luaL_setfuncs(luaState, library, numberUpValues);
+        }
+
+        /// <summary>
+        /// Sets the metatable of the object at the top of the stack as the metatable associated with name tname in the registry
+        /// </summary>
+        /// <param name="name"></param>
+        public void SetMetaTable(string name)
+        {
+            NativeMethods.luaL_setmetatable(luaState, name);
+        }
+
+        /// <summary>
+        /// Test if the value at index is a reference data
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="argument"></param>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
+        public T TestReferenceData<T>(int argument, string typeName) where T : class
+        {
+            if (IsNil(argument) || !IsLightUserData(argument))
+                return null;
+
+            IntPtr data = NativeMethods.luaL_testudata(luaState, argument, typeName);
+            if (data == IntPtr.Zero)
+                return null;
+
+            var handle = GCHandle.FromIntPtr(data);
+            var reference = (T)handle.Target;
+            handle.Free();
+
+            return reference;
+        }
+
+        /// <summary>
+        /// Test if the value at index is a nullable value data
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="argument"></param>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
+        public T? TestValueDataNullable<T>(int argument, string typeName) where T : struct
+        {
+            if (IsNil(argument) || !IsUserData(argument))
+                return null;
+
+            IntPtr data = NativeMethods.luaL_testudata(luaState, argument, typeName);
+
+            if (data == IntPtr.Zero)
+                return null;
+
+            return (T)Marshal.PtrToStructure(data, typeof(T));
+        }
+
+        /// <summary>
+        /// Test if the value at index is a value data
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="argument"></param>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
+        public T TestValueData<T>(int argument, string typeName) where T : struct
+        {
+            T? value = TestValueDataNullable<T>(argument, typeName);
+            return value ?? default(T);
+        }
+
+        /// <summary>
+        /// Creates and pushes a traceback of the stack L1
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="level"> Tells at which level to start the traceback</param>
+        public void Traceback(Lua state, int level = 0)
+        {
+            Traceback(state, null, level);
+        }
+
+        /// <summary>
+        /// Creates and pushes a traceback of the stack L1
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="message">appended at the beginning of the traceback</param>
+        /// <param name="level"> Tells at which level to start the traceback</param>
+        public void Traceback(Lua state, string message, int level)
+        {
+            NativeMethods.luaL_traceback(luaState, state.luaState, message, level);
+        }
+
+        /// <summary>
+        /// Returns the name of the type of the value at the given index. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public string TypeName(int index)
+        {
+            return NativeMethods.luaL_typename(luaState, index);
+        }
+
+        /// <summary>
+        /// Releases reference ref from the table at index t (see luaL_ref). The entry is removed from the table, so that the referred object can be collected. The reference ref is also freed to be used again
+        /// </summary>
+        /// <param name="tableIndex"></param>
+        /// <param name="reference"></param>
+        public void Unref(int tableIndex, int reference)
+        {
+            NativeMethods.luaL_unref(luaState, tableIndex, reference);
+        }
+
+        /// <summary>
+        /// Pushes onto the stack a string identifying the current position of the control at level lvl in the call stack
+        /// </summary>
+        /// <param name="level"></param>
+        public void Where(int level)
+        {
+            NativeMethods.luaL_where(luaState, level);
+        }
     }
 }
 

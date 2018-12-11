@@ -16,7 +16,6 @@ using lua_Hook = System.IntPtr;
 using lua_Integer = System.Int64;
 using lua_Number = System.Double;
 using lua_Number_ptr = System.IntPtr;
-using lua_Reg = System.IntPtr;
 
 namespace KeraLua
 {
@@ -28,6 +27,9 @@ namespace KeraLua
 #else
         private const string LuaLibraryName = "lua53";
 #endif
+
+#pragma warning disable IDE1006 // Naming Styles
+
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int lua_absindex(lua_State luaState, int idx);
@@ -379,10 +381,10 @@ namespace KeraLua
         internal static extern void luaL_openlibs(lua_State luaState);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern lua_Integer luaL_optinteger(lua_State luaState);
+        internal static extern lua_Integer luaL_optinteger(lua_State luaState, int arg, lua_Integer d);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern lua_Number luaL_optnumber(lua_State luaState);
+        internal static extern lua_Number luaL_optnumber(lua_State luaState, int arg, lua_Number d);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int luaL_ref(lua_State luaState, int registryIndex);
@@ -391,7 +393,7 @@ namespace KeraLua
         internal static extern void luaL_requiref(lua_State luaState, string moduleName, lua_CFunction openFunction, int global);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void luaL_setfuncs(lua_State luaState, lua_Reg [] luaReg, int numUp);
+        internal static extern void luaL_setfuncs(lua_State luaState, [In] LuaRegister [] luaReg, int numUp);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         internal static extern void luaL_setmetatable(lua_State luaState, string tName);
@@ -417,5 +419,8 @@ namespace KeraLua
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void luaL_where(lua_State luaState, int level);
+
+#pragma warning restore IDE1006 // Naming Styles
+
     }
 }

@@ -11,13 +11,12 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)DelegateExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Delegates.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DynamicLibraryPath.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Lua.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LuaBuffer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaCompare.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaDebug.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaGC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaOperation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaRegister.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaType.cs" />
