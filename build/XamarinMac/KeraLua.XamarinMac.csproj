@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -25,14 +25,19 @@
     <EnablePackageSigning>false</EnablePackageSigning>
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <UseSGen>false</UseSGen>
-    <HttpClientHandler></HttpClientHandler>
-    <LinkMode></LinkMode>
-    <XamMacArch></XamMacArch>
+    <HttpClientHandler>
+    </HttpClientHandler>
+    <LinkMode>
+    </LinkMode>
+    <XamMacArch>
+    </XamMacArch>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>..\..\lib\Release\xamarinmac</OutputPath>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <EnableCodeSigning>false</EnableCodeSigning>
@@ -40,9 +45,14 @@
     <EnablePackageSigning>false</EnablePackageSigning>
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <UseSGen>false</UseSGen>
-    <HttpClientHandler></HttpClientHandler>
-    <LinkMode></LinkMode>
-    <XamMacArch></XamMacArch>
+    <HttpClientHandler>
+    </HttpClientHandler>
+    <LinkMode>
+    </LinkMode>
+    <XamMacArch>
+    </XamMacArch>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>..\..\lib\Release\xamarinmac\KeraLua.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

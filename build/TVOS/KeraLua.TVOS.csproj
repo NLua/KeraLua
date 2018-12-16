@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -24,20 +24,27 @@
     <MtouchFastDev>true</MtouchFastDev>
     <IOSDebuggerPort>16365</IOSDebuggerPort>
     <DeviceSpecificBuild>false</DeviceSpecificBuild>
-    <MtouchLink></MtouchLink>
-    <MtouchHttpClientHandler></MtouchHttpClientHandler>
+    <MtouchLink>
+    </MtouchLink>
+    <MtouchHttpClientHandler>
+    </MtouchHttpClientHandler>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\lib\Release\xamarintvos</OutputPath>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
     <MtouchLink>SdkOnly</MtouchLink>
-    <MtouchHttpClientHandler></MtouchHttpClientHandler>
+    <MtouchHttpClientHandler>
+    </MtouchHttpClientHandler>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>..\..\lib\Release\xamarintvos\KeraLua.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

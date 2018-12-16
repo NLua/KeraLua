@@ -9,13 +9,19 @@ namespace KeraLua
     /// </summary>
     public class Lua : IDisposable
     {
-        private IntPtr luaState;
-        private Lua mainState;
+        private IntPtr _luaState;
+        private readonly Lua _mainState;
+
+        /// <summary>
+        /// Encoding for the string conversions
+        /// ASCII by default.
+        /// </summary>
+        public Encoding Encoding {get; set; }
 
         /// <summary>
         /// Get the main thread object, if the object is the main thread will be equal this
         /// </summary>
-        public Lua MainThread => mainState ?? this;
+        public Lua MainThread => _mainState ?? this;
 
         /// <summary>
         /// Initialize Lua state, and open the default libs
@@ -23,18 +29,20 @@ namespace KeraLua
         /// <param name="openLibs">flag to enable/disable opening the default libs</param>
         public Lua(bool openLibs = true)
         {
-            luaState = NativeMethods.luaL_newstate();
+            Encoding = Encoding.ASCII;
+
+            _luaState = NativeMethods.luaL_newstate();
 
             if (openLibs)
-                NativeMethods.luaL_openlibs(luaState);
+                NativeMethods.luaL_openlibs(_luaState);
 
             SetExtraObject(this);
         }
 
         private Lua(IntPtr luaThread, Lua mainState)
         {
-            this.mainState = mainState;
-            luaState = luaThread;
+            this._mainState = mainState;
+            _luaState = luaThread;
             SetExtraObject(this);
             GC.SuppressFinalize(this);
         }
@@ -72,11 +80,11 @@ namespace KeraLua
         /// </summary>
         public void Close()
         {
-            if (luaState == IntPtr.Zero || mainState != null)
+            if (_luaState == IntPtr.Zero || _mainState != null)
                 return;
 
-            NativeMethods.lua_close(luaState);
-            luaState = IntPtr.Zero;
+            NativeMethods.lua_close(_luaState);
+            _luaState = IntPtr.Zero;
             GC.SuppressFinalize(this);
         }
 
@@ -91,7 +99,7 @@ namespace KeraLua
         private void SetExtraObject<T>(T obj) where T : class
         {
             var handle = GCHandle.Alloc(obj, GCHandleType.Weak);
-            IntPtr extraSpace = luaState - IntPtr.Size;
+            IntPtr extraSpace = _luaState - IntPtr.Size;
             Marshal.WriteIntPtr(extraSpace, GCHandle.ToIntPtr(handle));
         }
 
@@ -114,7 +122,7 @@ namespace KeraLua
         /// <param name="operation"></param>
         public void Arith(LuaOperation operation)
         {
-            NativeMethods.lua_arith(luaState, (int)operation);
+            NativeMethods.lua_arith(_luaState, (int)operation);
         }
 
         /// <summary>
@@ -125,7 +133,7 @@ namespace KeraLua
         public LuaFunction AtPanic(LuaFunction panicFunction)
         {
             IntPtr newPanicPtr = panicFunction.ToFunctionPointer();
-            return NativeMethods.lua_atpanic(luaState, newPanicPtr).ToLuaFunction();
+            return NativeMethods.lua_atpanic(_luaState, newPanicPtr).ToLuaFunction();
         }
 
         /// <summary>
@@ -140,7 +148,7 @@ namespace KeraLua
         /// <param name="results"></param>
         public void Call(int arguments, int results)
         {
-            NativeMethods.lua_callk(luaState, arguments, results, IntPtr.Zero, IntPtr.Zero);
+            NativeMethods.lua_callk(_luaState, arguments, results, IntPtr.Zero, IntPtr.Zero);
         }
 
         /// <summary>
@@ -153,7 +161,7 @@ namespace KeraLua
         public void CallK(int arguments, int results, int context, LuaKFunction continuation)
         {
             IntPtr k = continuation.ToFunctionPointer();
-            NativeMethods.lua_callk(luaState, arguments, results, (IntPtr)context, k);
+            NativeMethods.lua_callk(_luaState, arguments, results, (IntPtr)context, k);
         }
 
         /// <summary>
@@ -162,7 +170,7 @@ namespace KeraLua
         /// <param name="nExtraSlots"></param>
         public bool CheckStack(int nExtraSlots)
         {
-            return NativeMethods.lua_checkstack(luaState, nExtraSlots) != 0;
+            return NativeMethods.lua_checkstack(_luaState, nExtraSlots) != 0;
         }
 
         /// <summary>
@@ -174,7 +182,7 @@ namespace KeraLua
         /// <returns></returns>
         public bool Compare(int index1, int index2, LuaCompare comparison)
         {
-            return NativeMethods.lua_compare(luaState, index1, index2, (int)comparison) != 0;
+            return NativeMethods.lua_compare(_luaState, index1, index2, (int)comparison) != 0;
         }
 
         /// <summary>
@@ -183,7 +191,7 @@ namespace KeraLua
         /// <param name="n"></param>
         public void Concat(int n)
         {
-            NativeMethods.lua_concat(luaState, n);
+            NativeMethods.lua_concat(_luaState, n);
         }
         /// <summary>
         /// Copies the element at index fromidx into the valid index toidx, replacing the value at that position
@@ -192,7 +200,7 @@ namespace KeraLua
         /// <param name="toIndex"></param>
         public void Copy(int fromIndex, int toIndex)
         {
-            NativeMethods.lua_copy(luaState, fromIndex, toIndex);
+            NativeMethods.lua_copy(_luaState, fromIndex, toIndex);
         }
 
         /// <summary>
@@ -202,7 +210,7 @@ namespace KeraLua
         /// <param name="records"></param>
         public void CreateTable(int elements, int records)
         {
-            NativeMethods.lua_createtable(luaState, elements, records);
+            NativeMethods.lua_createtable(_luaState, elements, records);
         }
 
         /// <summary>
@@ -214,7 +222,7 @@ namespace KeraLua
         /// <returns></returns>
         public int Dump(LuaWriter writer, IntPtr data, bool stripDebug)
         {
-            return NativeMethods.lua_dump(luaState, writer.ToFunctionPointer(), data, stripDebug ? 1 : 0);
+            return NativeMethods.lua_dump(_luaState, writer.ToFunctionPointer(), data, stripDebug ? 1 : 0);
         }
 
         /// <summary>
@@ -223,7 +231,7 @@ namespace KeraLua
         /// <returns></returns>
         int Error()
         {
-            return NativeMethods.lua_error(luaState);
+            return NativeMethods.lua_error(_luaState);
         }
 
         /// <summary>
@@ -234,7 +242,7 @@ namespace KeraLua
         /// <returns></returns>
         public int GarbageCollector(LuaGC what, int data)
         {
-            return NativeMethods.lua_gc(luaState, (int)what, data);
+            return NativeMethods.lua_gc(_luaState, (int)what, data);
         }
 
         /// <summary>
@@ -244,7 +252,7 @@ namespace KeraLua
         /// <returns></returns>
         public LuaAlloc GetAllocFunction(ref IntPtr ud)
         {
-            return NativeMethods.lua_getallocf(luaState, ref ud).ToLuaAlloc();
+            return NativeMethods.lua_getallocf(_luaState, ref ud).ToLuaAlloc();
         }
 
         /// <summary>
@@ -256,7 +264,7 @@ namespace KeraLua
         /// <returns></returns>
         public LuaType GetField(int index, string key)
         {
-            return (LuaType)NativeMethods.lua_getfield(luaState, index, key);
+            return (LuaType)NativeMethods.lua_getfield(_luaState, index, key);
         }
 
         /// <summary>
@@ -266,7 +274,7 @@ namespace KeraLua
         /// <returns></returns>
         public LuaType GetGlobal(string name)
         {
-            return (LuaType)NativeMethods.lua_getglobal(luaState, name);
+            return (LuaType)NativeMethods.lua_getglobal(_luaState, name);
         }
 
         /// <summary>
@@ -277,7 +285,7 @@ namespace KeraLua
         /// <returns> Returns the type of the pushed value</returns>
         public LuaType GetInteger(int index, long i)
         {
-            return (LuaType)NativeMethods.lua_geti(luaState, index, i);
+            return (LuaType)NativeMethods.lua_geti(_luaState, index, i);
         }
 
 
@@ -289,7 +297,7 @@ namespace KeraLua
         /// <returns>This function returns false on error (for instance, an invalid option in what). </returns>
         public bool GetInfo(string what, ref LuaDebug ar)
         {
-            return NativeMethods.lua_getinfo(luaState, what, ref ar) != 0;
+            return NativeMethods.lua_getinfo(_luaState, what, ref ar) != 0;
         }
 
         /// <summary>
@@ -300,7 +308,7 @@ namespace KeraLua
         /// <returns></returns>
         public string GetLocal(ref LuaDebug ar, int n)
         {
-            return NativeMethods.lua_getlocal(luaState, ref ar, n);
+            return NativeMethods.lua_getlocal(_luaState, ref ar, n);
         }
 
         /// <summary>
@@ -310,7 +318,7 @@ namespace KeraLua
         /// <returns></returns>
         public bool GetMetaTable(int index)
         {
-            return NativeMethods.lua_getmetatable(luaState, index) != 0;
+            return NativeMethods.lua_getmetatable(_luaState, index) != 0;
         }
 
         /// <summary>
@@ -321,7 +329,7 @@ namespace KeraLua
         /// <returns></returns>
         public int GetStack(int level, ref LuaDebug ar)
         {
-            return NativeMethods.lua_getstack(luaState, level, ref ar);
+            return NativeMethods.lua_getstack(_luaState, level, ref ar);
         }
 
         /// <summary>
@@ -331,26 +339,26 @@ namespace KeraLua
         /// <returns>Returns the type of the pushed value</returns>
         public LuaType GetTable(int index)
         {
-            return (LuaType)NativeMethods.lua_gettable(luaState, index);
+            return (LuaType)NativeMethods.lua_gettable(_luaState, index);
         }
 
         /// <summary>
         /// Returns the index of the top element in the stack. 0 means an empty stack.
         /// </summary>
         /// <returns>Returns the index of the top element in the stack.</returns>
-        public int GetTop() => NativeMethods.lua_gettop(luaState);
+        public int GetTop() => NativeMethods.lua_gettop(_luaState);
         /// <summary>
         /// Pushes onto the stack the Lua value associated with the full userdata at the given index. 
         /// </summary>
         /// <param name="index"></param>
         /// <returns>Returns the type of the pushed value. </returns>
-        public int GetUserValue(int index) => NativeMethods.lua_getuservalue(luaState, index);
+        public int GetUserValue(int index) => NativeMethods.lua_getuservalue(_luaState, index);
 
         /// <summary>
         /// Moves the top element into the given valid index, shifting up the elements above this index to open space. This function cannot be called with a pseudo-index, because a pseudo-index is not an actual stack position. 
         /// </summary>
         /// <param name="index"></param>
-        public void Insert(int index) => NativeMethods.lua_rotate(luaState, index, 1);
+        public void Insert(int index) => NativeMethods.lua_rotate(_luaState, index, 1);
 
         /// <summary>
         /// Returns  if the value at the given index is a boolean
@@ -364,7 +372,7 @@ namespace KeraLua
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public bool IsCFunction(int index) => NativeMethods.lua_iscfunction(luaState, index) != 0;
+        public bool IsCFunction(int index) => NativeMethods.lua_iscfunction(_luaState, index) != 0;
 
         /// <summary>
         /// Returns  if the value at the given index is a function
@@ -378,7 +386,7 @@ namespace KeraLua
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public bool IsInteger(int index) => NativeMethods.lua_isinteger(luaState, index) != 0;
+        public bool IsInteger(int index) => NativeMethods.lua_isinteger(_luaState, index) != 0;
 
         /// <summary>
         /// Returns  if the value at the given index is light user data
@@ -413,7 +421,7 @@ namespace KeraLua
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public bool IsNumber(int index) => NativeMethods.lua_isnumber(luaState, index) != 0;
+        public bool IsNumber(int index) => NativeMethods.lua_isnumber(_luaState, index) != 0;
 
         /// <summary>
         /// Returns  if the value at the given index is a string or a number (which is always convertible to a string)
@@ -422,7 +430,7 @@ namespace KeraLua
         /// <returns></returns>
         public bool IsStringOrNumber(int index)
         {
-            return NativeMethods.lua_isstring(luaState, index) != 0;
+            return NativeMethods.lua_isstring(_luaState, index) != 0;
         }
 
         /// <summary>
@@ -452,18 +460,18 @@ namespace KeraLua
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public bool IsUserData(int index) => NativeMethods.lua_isuserdata(luaState, index) != 0;
+        public bool IsUserData(int index) => NativeMethods.lua_isuserdata(_luaState, index) != 0;
 
         /// <summary>
         /// Returns  if the given coroutine can yield, and 0 otherwise
         /// </summary>
-        public bool IsYieldable => NativeMethods.lua_isyieldable(luaState) != 0;
+        public bool IsYieldable => NativeMethods.lua_isyieldable(_luaState) != 0;
 
         /// <summary>
         /// Push the length of the value at the given index on the stack. It is equivalent to the '#' operator in Lua (see §3.4.7) and may trigger a metamethod for the "length" event (see §2.4). The result is pushed on the stack. 
         /// </summary>
         /// <param name="index"></param>
-        public void PushLength(int index) => NativeMethods.lua_len(luaState, index);
+        public void PushLength(int index) => NativeMethods.lua_len(_luaState, index);
 
         /// <summary>
         /// Loads a Lua chunk without running it. If there are no errors, lua_load pushes the compiled chunk as a Lua function on top of the stack. Otherwise, it pushes an error message. 
@@ -480,7 +488,7 @@ namespace KeraLua
              string chunkName,
              string mode)
         {
-            return (LuaStatus)NativeMethods.lua_load(luaState,
+            return (LuaStatus)NativeMethods.lua_load(_luaState,
                                                      reader.ToFunctionPointer(),
                                                      data,
                                                      chunkName,
@@ -490,7 +498,7 @@ namespace KeraLua
         /// <summary>
         /// Creates a new empty table and pushes it onto the stack
         /// </summary>
-        public void NewTable() => NativeMethods.lua_createtable(luaState, 0, 0);
+        public void NewTable() => NativeMethods.lua_createtable(_luaState, 0, 0);
 
         /// <summary>
         /// Creates a new thread, pushes it on the stack, and returns a pointer to a lua_State that represents this new thread. The new thread returned by this function shares with the original thread its global environment, but has an independent execution stack. 
@@ -498,7 +506,7 @@ namespace KeraLua
         /// <returns></returns>
         public Lua NewThread()
         {
-            IntPtr thread = NativeMethods.lua_newthread(luaState);
+            IntPtr thread = NativeMethods.lua_newthread(_luaState);
             return new Lua(thread, this);
         }
 
@@ -507,7 +515,7 @@ namespace KeraLua
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public bool Next(int index) => NativeMethods.lua_next(luaState, index) != 0;
+        public bool Next(int index) => NativeMethods.lua_next(_luaState, index) != 0;
 
         /// <summary>
         /// Calls a function in protected mode. 
@@ -517,7 +525,7 @@ namespace KeraLua
         /// <param name="errorFunctionIndex"></param>
         public LuaStatus PCall(int arguments, int results, int errorFunctionIndex)
         {
-            return (LuaStatus)NativeMethods.lua_pcallk(luaState, arguments, results, errorFunctionIndex, IntPtr.Zero, IntPtr.Zero);
+            return (LuaStatus)NativeMethods.lua_pcallk(_luaState, arguments, results, errorFunctionIndex, IntPtr.Zero, IntPtr.Zero);
         }
 
         /// <summary>
@@ -534,7 +542,7 @@ namespace KeraLua
             int context,
             LuaKFunction k)
         {
-            return (LuaStatus)NativeMethods.lua_pcallk(luaState,
+            return (LuaStatus)NativeMethods.lua_pcallk(_luaState,
                 arguments,
                 results,
                 errorFunctionIndex,
@@ -546,13 +554,13 @@ namespace KeraLua
         /// Pops n elements from the stack. 
         /// </summary>
         /// <param name="n"></param>
-        public void Pop(int n) => NativeMethods.lua_settop(luaState, -n - 1);
+        public void Pop(int n) => NativeMethods.lua_settop(_luaState, -n - 1);
 
         /// <summary>
         /// Pushes a boolean value with value b onto the stack. 
         /// </summary>
         /// <param name="b"></param>
-        public void PushBoolean(bool b) => NativeMethods.lua_pushboolean(luaState, b ? 1 : 0);
+        public void PushBoolean(bool b) => NativeMethods.lua_pushboolean(_luaState, b ? 1 : 0);
 
         /// <summary>
         ///  Pushes a new C closure onto the stack. When a C function is created, it is possible to associate 
@@ -567,7 +575,7 @@ namespace KeraLua
         /// <param name="n"></param>
         public void PushCClosure(LuaFunction function, int n)
         {
-            NativeMethods.lua_pushcclosure(luaState, function.ToFunctionPointer(), n);
+            NativeMethods.lua_pushcclosure(_luaState, function.ToFunctionPointer(), n);
         }
 
         /// <summary>
@@ -584,13 +592,13 @@ namespace KeraLua
         /// </summary>
         public void PushGlobalTable()
         {
-            NativeMethods.lua_rawgeti(luaState, (int)LuaRegistry.Index, (int)LuaRegistryIndex.Globals);
+            NativeMethods.lua_rawgeti(_luaState, (int)LuaRegistry.Index, (int)LuaRegistryIndex.Globals);
         }
         /// <summary>
         /// Pushes an integer with value n onto the stack. 
         /// </summary>
         /// <param name="n"></param>
-        public void PushInteger(long n) => NativeMethods.lua_pushinteger(luaState, n);
+        public void PushInteger(long n) => NativeMethods.lua_pushinteger(_luaState, n);
 
         /// <summary>
         /// Pushes a reference data (C# object)  onto the stack. 
@@ -608,7 +616,7 @@ namespace KeraLua
             }
 
             var handle = GCHandle.Alloc(obj);
-            NativeMethods.lua_pushlightuserdata(luaState, GCHandle.ToIntPtr(handle));
+            NativeMethods.lua_pushlightuserdata(_luaState, GCHandle.ToIntPtr(handle));
         }
 
         /// <summary>
@@ -620,7 +628,7 @@ namespace KeraLua
         public void PushValueData<T>(T value) where T : struct
         {
             int size = Marshal.SizeOf(value);
-            IntPtr data = NativeMethods.lua_newuserdata(luaState, (UIntPtr)size);
+            IntPtr data = NativeMethods.lua_newuserdata(_luaState, (UIntPtr)size);
             Marshal.StructureToPtr(value, data, false);
         }
 
@@ -649,7 +657,7 @@ namespace KeraLua
                 return;
             }
 
-            NativeMethods.lua_pushlstring(luaState, buffer, (UIntPtr)buffer.Length);
+            NativeMethods.lua_pushlstring(_luaState, buffer, (UIntPtr)buffer.Length);
         }
 
         /// <summary>
@@ -664,7 +672,7 @@ namespace KeraLua
                 return;
             }
 
-            byte[] buffer = Encoding.UTF8.GetBytes(value);
+            byte[] buffer = Encoding.GetBytes(value);
             PushBuffer(buffer);
         }
 
@@ -682,13 +690,13 @@ namespace KeraLua
         /// <summary>
         /// Pushes a nil value onto the stack. 
         /// </summary>
-        public void PushNil() => NativeMethods.lua_pushnil(luaState);
+        public void PushNil() => NativeMethods.lua_pushnil(_luaState);
 
         /// <summary>
         /// Pushes a double with value n onto the stack. 
         /// </summary>
         /// <param name="number"></param>
-        public void PushNumber(double number) => NativeMethods.lua_pushnumber(luaState, number);
+        public void PushNumber(double number) => NativeMethods.lua_pushnumber(_luaState, number);
 
         /// <summary>
         /// Pushes the thread represented by L onto the stack. Returns true if this thread is the main thread of its state. 
@@ -697,7 +705,7 @@ namespace KeraLua
         /// <returns></returns>
         public bool PushThread(Lua thread)
         {
-            return NativeMethods.lua_pushthread(luaState) == 1;
+            return NativeMethods.lua_pushthread(_luaState) == 1;
         }
 
         /// <summary>
@@ -708,7 +716,7 @@ namespace KeraLua
         /// <returns></returns>
         public void PushCopy(int index)
         {
-            NativeMethods.lua_pushvalue(luaState, index);
+            NativeMethods.lua_pushvalue(_luaState, index);
         }
 
         /// <summary>
@@ -719,7 +727,7 @@ namespace KeraLua
         /// <returns></returns>
         public bool RawEqual(int index1, int index2)
         {
-            return NativeMethods.lua_rawequal(luaState, index1, index2) != 0;
+            return NativeMethods.lua_rawequal(_luaState, index1, index2) != 0;
         }
 
         /// <summary>
@@ -729,7 +737,7 @@ namespace KeraLua
         /// <returns>Returns the type of the pushed value</returns>
         public LuaType RawGet(int index)
         {
-            return (LuaType)NativeMethods.lua_rawget(luaState, index);
+            return (LuaType)NativeMethods.lua_rawget(_luaState, index);
         }
 
         /// <summary>
@@ -740,7 +748,7 @@ namespace KeraLua
         /// <returns>Returns the type of the pushed value</returns>
         public LuaType RawGetInteger(int index, long n)
         {
-            return (LuaType)NativeMethods.lua_rawgeti(luaState, index, n);
+            return (LuaType)NativeMethods.lua_rawgeti(_luaState, index, n);
         }
 
         /// <summary>
@@ -751,7 +759,7 @@ namespace KeraLua
         /// <returns>Returns the type of the pushed value. </returns>
         public LuaType RawGetByHashCode(int index, object obj)
         {
-            return (LuaType)NativeMethods.lua_rawgetp(luaState, index, (IntPtr)obj.GetHashCode());
+            return (LuaType)NativeMethods.lua_rawgetp(_luaState, index, (IntPtr)obj.GetHashCode());
         }
 
         /// <summary>
@@ -761,7 +769,7 @@ namespace KeraLua
         /// <returns></returns>
         public int RawLen(int index)
         {
-            return (int)NativeMethods.lua_rawlen(luaState, index);
+            return (int)NativeMethods.lua_rawlen(_luaState, index);
         }
 
         /// <summary>
@@ -770,7 +778,7 @@ namespace KeraLua
         /// <param name="index"></param>
         public void RawSet(int index)
         {
-            NativeMethods.lua_rawset(luaState, index);
+            NativeMethods.lua_rawset(_luaState, index);
         }
 
         /// <summary>
@@ -781,7 +789,7 @@ namespace KeraLua
         /// <param name="i">value</param>
         public void RawSetInteger(int index, long i)
         {
-            NativeMethods.lua_rawseti(luaState, index, i);
+            NativeMethods.lua_rawseti(_luaState, index, i);
         }
 
         /// <summary>
@@ -791,7 +799,7 @@ namespace KeraLua
         /// <param name="obj"></param>
         public void RawSetByHashCode(int index, object obj)
         {
-            NativeMethods.lua_rawsetp(luaState, index, (IntPtr)obj.GetHashCode());
+            NativeMethods.lua_rawsetp(_luaState, index, (IntPtr)obj.GetHashCode());
         }
 
         /// <summary>
@@ -844,7 +852,7 @@ namespace KeraLua
         /// <returns></returns>
         public LuaStatus Resume(Lua from, int arguments)
         {
-            return (LuaStatus)NativeMethods.lua_resume(luaState, from.luaState, arguments);
+            return (LuaStatus)NativeMethods.lua_resume(_luaState, from._luaState, arguments);
         }
 
         /// <summary>
@@ -854,7 +862,7 @@ namespace KeraLua
         /// <param name="n"></param>
         public void Rotate(int index, int n)
         {
-            NativeMethods.lua_rotate(luaState, index, n);
+            NativeMethods.lua_rotate(_luaState, index, n);
         }
 
         /// <summary>
@@ -864,7 +872,7 @@ namespace KeraLua
         /// <param name="ud"></param>
         public void SetAllocFunction(LuaAlloc alloc, ref IntPtr ud)
         {
-            NativeMethods.lua_setallocf(luaState, alloc.ToFunctionPointer(), ud);
+            NativeMethods.lua_setallocf(_luaState, alloc.ToFunctionPointer(), ud);
         }
 
         /// <summary>
@@ -874,7 +882,7 @@ namespace KeraLua
         /// <param name="key"></param>
         public void SetField(int index, string key)
         {
-            NativeMethods.lua_setfield(luaState, index, key);
+            NativeMethods.lua_setfield(_luaState, index, key);
         }
 
         /// <summary>
@@ -883,7 +891,7 @@ namespace KeraLua
         /// <param name="name"></param>
         public void SetGlobal(string name)
         {
-            NativeMethods.lua_setglobal(luaState, name);
+            NativeMethods.lua_setglobal(_luaState, name);
         }
 
         /// <summary>
@@ -893,7 +901,7 @@ namespace KeraLua
         /// <param name="n"></param>
         public void SetInteger(int index, long n)
         {
-            NativeMethods.lua_seti(luaState, index, n);
+            NativeMethods.lua_seti(_luaState, index, n);
         }
 
         /// <summary>
@@ -904,7 +912,7 @@ namespace KeraLua
         /// <returns>Returns NULL (and pops nothing) when the index is greater than the number of active local variables. </returns>
         public string SetLocal(ref LuaDebug ar, int n)
         {
-            return NativeMethods.lua_setlocal(luaState, ref ar, n);
+            return NativeMethods.lua_setlocal(_luaState, ref ar, n);
         }
 
         /// <summary>
@@ -913,7 +921,7 @@ namespace KeraLua
         /// <param name="index"></param>
         public void SetMetaTable(int index)
         {
-            NativeMethods.lua_setmetatable(luaState, index);
+            NativeMethods.lua_setmetatable(_luaState, index);
         }
 
         /// <summary>
@@ -922,7 +930,7 @@ namespace KeraLua
         /// <param name="index"></param>
         public void SetTable(int index)
         {
-            NativeMethods.lua_settable(luaState, index);
+            NativeMethods.lua_settable(_luaState, index);
         }
 
         /// <summary>
@@ -931,7 +939,7 @@ namespace KeraLua
         /// <param name="newTop"></param>
         public void SetTop(int newTop)
         {
-            NativeMethods.lua_settop(luaState, newTop);
+            NativeMethods.lua_settop(_luaState, newTop);
         }
 
         /// <summary>
@@ -942,7 +950,7 @@ namespace KeraLua
         /// <returns>Returns NULL (and pops nothing) when the index n is greater than the number of upvalues. </returns>
         public string SetUpValue(int functionIndex, int n)
         {
-            return NativeMethods.lua_setupvalue(luaState, functionIndex, n);
+            return NativeMethods.lua_setupvalue(_luaState, functionIndex, n);
         }
 
         /// <summary>
@@ -951,14 +959,14 @@ namespace KeraLua
         /// <param name="index"></param>
         public void SetUserValue(int index)
         {
-            NativeMethods.lua_setuservalue(luaState, index);
+            NativeMethods.lua_setuservalue(_luaState, index);
         }
 
         /// <summary>
         ///  The status can be 0 (LUA_OK) for a normal thread, an error code if the thread finished the execution of a lua_resume with an error, or LUA_YIELD if the thread is suspended. 
         ///  You can only call functions in threads with status LUA_OK. You can resume threads with status LUA_OK (to start a new coroutine) or LUA_YIELD (to resume a coroutine). 
         /// </summary>
-        public LuaStatus Status => (LuaStatus)NativeMethods.lua_status(luaState);
+        public LuaStatus Status => (LuaStatus)NativeMethods.lua_status(_luaState);
 
         /// <summary>
         /// Converts the zero-terminated string s to a number, pushes that number into the stack,
@@ -967,7 +975,7 @@ namespace KeraLua
         /// <returns></returns>
         public bool StringToNumber(string s)
         {
-            return NativeMethods.lua_stringtonumber(luaState, s) != UIntPtr.Zero;
+            return NativeMethods.lua_stringtonumber(_luaState, s) != UIntPtr.Zero;
         }
 
         /// <summary>
@@ -977,7 +985,7 @@ namespace KeraLua
         /// <returns></returns>
         public bool ToBoolean(int index)
         {
-            return NativeMethods.lua_toboolean(luaState, index) != 0;
+            return NativeMethods.lua_toboolean(_luaState, index) != 0;
         }
 
         /// <summary>
@@ -987,7 +995,7 @@ namespace KeraLua
         /// <returns></returns>
         public LuaFunction ToCFunction(int index)
         {
-            return NativeMethods.lua_tocfunction(luaState, index).ToLuaFunction();
+            return NativeMethods.lua_tocfunction(_luaState, index).ToLuaFunction();
         }
 
         /// <summary>
@@ -997,7 +1005,8 @@ namespace KeraLua
         /// <returns></returns>
         public long ToInteger(int index)
         {
-            return NativeMethods.lua_tointegerx(luaState, index, out _);
+            int isNum;
+            return NativeMethods.lua_tointegerx(_luaState, index, out isNum);
         }
 
         /// <summary>
@@ -1008,12 +1017,17 @@ namespace KeraLua
         public long? ToIntegerX(int index)
         {
             int isInteger;
-            long value = NativeMethods.lua_tointegerx(luaState, index, out isInteger);
+            long value = NativeMethods.lua_tointegerx(_luaState, index, out isInteger);
             if (isInteger != 0)
                 return value;
             return null;
         }
 
+        /// <summary>
+        /// Converts the Lua value at the given as byte array
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public byte[] ToBuffer(int index)
         {
             return ToBuffer(index, true);
@@ -1030,9 +1044,9 @@ namespace KeraLua
             IntPtr buff;
 
             if (callMetamethod)
-                buff = NativeMethods.luaL_tolstring(luaState, index, out len);
+                buff = NativeMethods.luaL_tolstring(_luaState, index, out len);
             else
-                buff = NativeMethods.lua_tolstring(luaState, index, out len);
+                buff = NativeMethods.lua_tolstring(_luaState, index, out len);
 
             if (buff == IntPtr.Zero)
                 return null;
@@ -1066,7 +1080,7 @@ namespace KeraLua
             byte[] buffer = ToBuffer(index, callMetamethod);
             if (buffer == null)
                 return null;
-            return Encoding.UTF8.GetString(buffer);
+            return Encoding.GetString(buffer);
         }
 
         /// <summary>
@@ -1076,7 +1090,8 @@ namespace KeraLua
         /// <returns></returns>
         public double ToNumber(int index)
         {
-            return NativeMethods.lua_tonumberx(luaState, index, out _);
+            int isNum;
+            return NativeMethods.lua_tonumberx(_luaState, index, out isNum);
         }
 
         /// <summary>
@@ -1087,7 +1102,7 @@ namespace KeraLua
         public double? ToNumberX(int index)
         {
             int isNumber;
-            long value = NativeMethods.lua_tointegerx(luaState, index, out isNumber);
+            long value = NativeMethods.lua_tointegerx(_luaState, index, out isNumber);
             if (isNumber != 0)
                 return value;
             return null;
@@ -1102,8 +1117,8 @@ namespace KeraLua
         /// <returns></returns>
         public Lua ToThread(int index)
         {
-            IntPtr state = NativeMethods.lua_tothread(luaState, index);
-            if (state == luaState)
+            IntPtr state = NativeMethods.lua_tothread(_luaState, index);
+            if (state == _luaState)
                 return this;
 
             return FromIntPtr(state);
@@ -1122,7 +1137,7 @@ namespace KeraLua
             if (IsNil(index) || !IsLightUserData(index))
                 return null;
 
-            IntPtr data = NativeMethods.lua_touserdata(luaState, index);
+            IntPtr data = NativeMethods.lua_touserdata(_luaState, index);
             if (data == IntPtr.Zero)
                 return null;
 
@@ -1156,7 +1171,7 @@ namespace KeraLua
             if (IsNil(index) || !IsUserData(index))
                 return null;
 
-            IntPtr data = NativeMethods.lua_touserdata(luaState, index);
+            IntPtr data = NativeMethods.lua_touserdata(_luaState, index);
 
             if (data == IntPtr.Zero)
                 return null;
@@ -1170,7 +1185,7 @@ namespace KeraLua
         /// <returns></returns>
         public LuaType Type(int index)
         {
-            return (LuaType)NativeMethods.lua_type(luaState, index);
+            return (LuaType)NativeMethods.lua_type(_luaState, index);
         }
 
         /// <summary>
@@ -1180,7 +1195,7 @@ namespace KeraLua
         /// <returns>Name of the type of the value at the given index</returns>
         public string TypeName(LuaType type)
         {
-            return NativeMethods.lua_typename(luaState, (int)type);
+            return NativeMethods.lua_typename(_luaState, (int)type);
         }
 
         /// <summary>
@@ -1191,7 +1206,7 @@ namespace KeraLua
         /// <returns></returns>
         public long UpValueId(int functionIndex, int n)
         {
-            return (long)NativeMethods.lua_upvalueid(luaState, functionIndex, n);
+            return (long)NativeMethods.lua_upvalueid(_luaState, functionIndex, n);
         }
 
         /// <summary>
@@ -1213,7 +1228,7 @@ namespace KeraLua
         /// <param name="n2"></param>
         public void UpValueJoin(int functionIndex1, int n1, int functionIndex2, int n2)
         {
-            NativeMethods.lua_upvaluejoin(luaState, functionIndex1, n1, functionIndex2, n2);
+            NativeMethods.lua_upvaluejoin(_luaState, functionIndex1, n1, functionIndex2, n2);
         }
 
         /// <summary>
@@ -1223,7 +1238,7 @@ namespace KeraLua
         public double Version()
         {
             double[] version = new double[1];
-            IntPtr pVersion = NativeMethods.lua_version(luaState);
+            IntPtr pVersion = NativeMethods.lua_version(_luaState);
             Marshal.Copy(pVersion, version, 0, 1);
             return version[0];
         }
@@ -1237,7 +1252,7 @@ namespace KeraLua
         /// <returns></returns>
         public void XMove(Lua to, int n)
         {
-            NativeMethods.lua_xmove(luaState, to.luaState, n);
+            NativeMethods.lua_xmove(_luaState, to._luaState, n);
         }
 
         /// <summary>
@@ -1247,7 +1262,7 @@ namespace KeraLua
         /// <returns></returns>
         public int Yield(int results)
         {
-            return NativeMethods.lua_yieldk(luaState, results, IntPtr.Zero, IntPtr.Zero);
+            return NativeMethods.lua_yieldk(_luaState, results, IntPtr.Zero, IntPtr.Zero);
         }
 
         /// <summary>
@@ -1260,7 +1275,7 @@ namespace KeraLua
         public int YieldK(int results, int context, LuaKFunction continuation)
         {
             IntPtr k = continuation.ToFunctionPointer();
-            return NativeMethods.lua_yieldk(luaState, results, (IntPtr)context, k);
+            return NativeMethods.lua_yieldk(_luaState, results, (IntPtr)context, k);
         }
 
         /* Auxialiary Library Functions */
@@ -1287,7 +1302,7 @@ namespace KeraLua
         public int ArgumentError(int argument, string message)
         {
             // TODO: Use C# exception for errors?
-            return NativeMethods.luaL_argerror(luaState, argument, message);
+            return NativeMethods.luaL_argerror(_luaState, argument, message);
         }
 
         /// <summary>
@@ -1298,7 +1313,7 @@ namespace KeraLua
         /// <returns>If there is no metatable or no metamethod, this function returns false (without pushing any value on the stack)</returns>
         public bool CallMetaMethod(int obj, string field)
         {
-            return NativeMethods.luaL_callmeta(luaState, obj, field) != 0;
+            return NativeMethods.luaL_callmeta(_luaState, obj, field) != 0;
         }
 
         /// <summary>
@@ -1307,7 +1322,7 @@ namespace KeraLua
         /// <param name="argument"></param>
         public void CheckAny(int argument)
         {
-            NativeMethods.luaL_checkany(luaState, argument);
+            NativeMethods.luaL_checkany(_luaState, argument);
         }
 
         /// <summary>
@@ -1317,7 +1332,7 @@ namespace KeraLua
         /// <returns></returns>
         public long CheckInteger(int argument)
         {
-            return NativeMethods.luaL_checkinteger(luaState, argument);
+            return NativeMethods.luaL_checkinteger(_luaState, argument);
         }
 
         /// <summary>
@@ -1328,7 +1343,7 @@ namespace KeraLua
         public byte[] CheckBuffer(int argument)
         {
             UIntPtr len;
-            IntPtr buff = NativeMethods.luaL_checklstring(luaState, argument, out len);
+            IntPtr buff = NativeMethods.luaL_checklstring(_luaState, argument, out len);
             if (buff == IntPtr.Zero)
                 return null;
 
@@ -1351,7 +1366,7 @@ namespace KeraLua
             byte[] buffer = CheckBuffer(argument);
             if (buffer == null)
                 return null;
-            return Encoding.UTF8.GetString(buffer);
+            return Encoding.GetString(buffer);
         }
 
         /// <summary>
@@ -1361,7 +1376,7 @@ namespace KeraLua
         /// <returns></returns>
         public double CheckNumber(int argument)
         {
-            return NativeMethods.luaL_checknumber(luaState, argument);
+            return NativeMethods.luaL_checknumber(_luaState, argument);
         }
 
 
@@ -1374,7 +1389,7 @@ namespace KeraLua
         /// <returns></returns>
         public int CheckOption(int argument, string def, string[] list)
         {
-            return NativeMethods.luaL_checkoption(luaState, argument, def, list);
+            return NativeMethods.luaL_checkoption(_luaState, argument, def, list);
         }
 
 
@@ -1385,7 +1400,7 @@ namespace KeraLua
         /// <param name="message"></param>
         public void CheckStack(int newSize, string message)
         {
-            NativeMethods.luaL_checkstack(luaState, newSize, message);
+            NativeMethods.luaL_checkstack(_luaState, newSize, message);
         }
 
         /// <summary>
@@ -1395,7 +1410,7 @@ namespace KeraLua
         /// <param name="type"></param>
         public void CheckType(int argument, LuaType type)
         {
-            NativeMethods.luaL_checktype(luaState, argument, (int)type);
+            NativeMethods.luaL_checktype(_luaState, argument, (int)type);
         }
 
         /// <summary>
@@ -1410,7 +1425,7 @@ namespace KeraLua
             if (IsNil(argument) || !IsLightUserData(argument))
                 return null;
 
-            IntPtr data = NativeMethods.luaL_checkudata(luaState, argument, typeName);
+            IntPtr data = NativeMethods.luaL_checkudata(_luaState, argument, typeName);
             if (data == IntPtr.Zero)
                 return null;
 
@@ -1446,7 +1461,7 @@ namespace KeraLua
             if (IsNil(argument) || !IsUserData(argument))
                 return null;
 
-            IntPtr data = NativeMethods.luaL_checkudata(luaState, argument, typeName);
+            IntPtr data = NativeMethods.luaL_checkudata(_luaState, argument, typeName);
 
             if (data == IntPtr.Zero)
                 return null;
@@ -1485,7 +1500,7 @@ namespace KeraLua
         public int Error(string value, params object[] v)
         {
             string message = string.Format(value, v);
-            return NativeMethods.luaL_error(luaState, message);
+            return NativeMethods.luaL_error(_luaState, message);
         }
 
         /// <summary>
@@ -1495,7 +1510,7 @@ namespace KeraLua
         /// <returns></returns>
         public int ExecResult(int stat)
         {
-            return NativeMethods.luaL_execresult(luaState, stat);
+            return NativeMethods.luaL_execresult(_luaState, stat);
         }
 
         /// <summary>
@@ -1506,7 +1521,7 @@ namespace KeraLua
         /// <returns></returns>
         public int FileResult(int stat, string fileName)
         {
-            return NativeMethods.luaL_fileresult(luaState, stat, fileName);
+            return NativeMethods.luaL_fileresult(_luaState, stat, fileName);
         }
 
         /// <summary>
@@ -1517,7 +1532,7 @@ namespace KeraLua
         /// <returns></returns>
         public LuaType GetMetaField(int obj, string field)
         {
-            return (LuaType)NativeMethods.luaL_getmetafield(luaState, obj, field);
+            return (LuaType)NativeMethods.luaL_getmetafield(_luaState, obj, field);
         }
 
         /// <summary>
@@ -1538,7 +1553,7 @@ namespace KeraLua
         /// <returns></returns>
         public bool GetSubTable(int index, string name)
         {
-            return NativeMethods.luaL_getsubtable(luaState, index, name) != 0;
+            return NativeMethods.luaL_getsubtable(_luaState, index, name) != 0;
         }
 
         /// <summary>
@@ -1546,7 +1561,7 @@ namespace KeraLua
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public long Length(int index) => NativeMethods.luaL_len(luaState, index);
+        public long Length(int index) => NativeMethods.luaL_len(_luaState, index);
 
         /// <summary>
         /// Loads a buffer as a Lua chunk
@@ -1557,7 +1572,7 @@ namespace KeraLua
         /// <returns></returns>
         public LuaStatus LoadBuffer(byte[] buffer, string name, string mode)
         {
-            return (LuaStatus)NativeMethods.luaL_loadbufferx(luaState, buffer, (UIntPtr)buffer.Length, name, mode);
+            return (LuaStatus)NativeMethods.luaL_loadbufferx(_luaState, buffer, (UIntPtr)buffer.Length, name, mode);
         }
 
         /// <summary>
@@ -1589,7 +1604,7 @@ namespace KeraLua
         /// <returns></returns>
         public LuaStatus LoadString(string chunk, string name)
         {
-            byte[] buffer = Encoding.UTF8.GetBytes(chunk);
+            byte[] buffer = Encoding.GetBytes(chunk);
             return LoadBuffer(buffer, name);
         }
 
@@ -1611,7 +1626,7 @@ namespace KeraLua
         /// <returns>The status of operation</returns>
         public LuaStatus LoadFile(string file, string mode)
         {
-            return (LuaStatus)NativeMethods.luaL_loadfilex(luaState, file, mode);
+            return (LuaStatus)NativeMethods.luaL_loadfilex(_luaState, file, mode);
         }
 
         /// <summary>
@@ -1650,7 +1665,7 @@ namespace KeraLua
         /// <returns>If the registry already has the key tname, returns false.,</returns>
         public bool NewMetaTable(string name)
         {
-            return NativeMethods.luaL_newmetatable(luaState, name) != 0;
+            return NativeMethods.luaL_newmetatable(_luaState, name) != 0;
         }
 
         /// <summary>
@@ -1658,7 +1673,7 @@ namespace KeraLua
         /// </summary>
         public void OpenLibs()
         {
-            NativeMethods.luaL_openlibs(luaState);
+            NativeMethods.luaL_openlibs(_luaState);
         }
 
         /// <summary>
@@ -1669,7 +1684,7 @@ namespace KeraLua
         /// <returns></returns>
         public long OptInteger(int argument, long d)
         {
-            return NativeMethods.luaL_optinteger(luaState, argument, d);
+            return NativeMethods.luaL_optinteger(_luaState, argument, d);
         }
 
         /// <summary>
@@ -1708,7 +1723,7 @@ namespace KeraLua
         /// <returns></returns>
         public double OptNumber(int index, double def)
         {
-            return NativeMethods.luaL_optnumber(luaState, index, def);
+            return NativeMethods.luaL_optnumber(_luaState, index, def);
         }
 
         /// <summary>
@@ -1718,7 +1733,7 @@ namespace KeraLua
         /// <returns></returns>
         public int Ref(int tableIndex)
         {
-            return NativeMethods.luaL_ref(luaState, tableIndex);
+            return NativeMethods.luaL_ref(_luaState, tableIndex);
         }
 
         /// <summary>
@@ -1729,7 +1744,7 @@ namespace KeraLua
         /// <param name="global"></param>
         public void RequireF(string moduleName, LuaFunction openFunction, bool global)
         {
-            NativeMethods.luaL_requiref(luaState, moduleName, openFunction.ToFunctionPointer(), global ? 1: 0);
+            NativeMethods.luaL_requiref(_luaState, moduleName, openFunction.ToFunctionPointer(), global ? 1: 0);
         }
 
         /// <summary>
@@ -1738,7 +1753,7 @@ namespace KeraLua
         /// <param name="numberUpValues"></param>
         public void SetFuncs(LuaRegister [] library, int numberUpValues)
         {
-            NativeMethods.luaL_setfuncs(luaState, library, numberUpValues);
+            NativeMethods.luaL_setfuncs(_luaState, library, numberUpValues);
         }
 
         /// <summary>
@@ -1747,7 +1762,7 @@ namespace KeraLua
         /// <param name="name"></param>
         public void SetMetaTable(string name)
         {
-            NativeMethods.luaL_setmetatable(luaState, name);
+            NativeMethods.luaL_setmetatable(_luaState, name);
         }
 
         /// <summary>
@@ -1762,7 +1777,7 @@ namespace KeraLua
             if (IsNil(argument) || !IsLightUserData(argument))
                 return null;
 
-            IntPtr data = NativeMethods.luaL_testudata(luaState, argument, typeName);
+            IntPtr data = NativeMethods.luaL_testudata(_luaState, argument, typeName);
             if (data == IntPtr.Zero)
                 return null;
 
@@ -1785,7 +1800,7 @@ namespace KeraLua
             if (IsNil(argument) || !IsUserData(argument))
                 return null;
 
-            IntPtr data = NativeMethods.luaL_testudata(luaState, argument, typeName);
+            IntPtr data = NativeMethods.luaL_testudata(_luaState, argument, typeName);
 
             if (data == IntPtr.Zero)
                 return null;
@@ -1824,7 +1839,7 @@ namespace KeraLua
         /// <param name="level"> Tells at which level to start the traceback</param>
         public void Traceback(Lua state, string message, int level)
         {
-            NativeMethods.luaL_traceback(luaState, state.luaState, message, level);
+            NativeMethods.luaL_traceback(_luaState, state._luaState, message, level);
         }
 
         /// <summary>
@@ -1834,7 +1849,7 @@ namespace KeraLua
         /// <returns></returns>
         public string TypeName(int index)
         {
-            return NativeMethods.luaL_typename(luaState, index);
+            return NativeMethods.luaL_typename(_luaState, index);
         }
 
         /// <summary>
@@ -1844,7 +1859,7 @@ namespace KeraLua
         /// <param name="reference"></param>
         public void Unref(int tableIndex, int reference)
         {
-            NativeMethods.luaL_unref(luaState, tableIndex, reference);
+            NativeMethods.luaL_unref(_luaState, tableIndex, reference);
         }
 
         /// <summary>
@@ -1853,7 +1868,7 @@ namespace KeraLua
         /// <param name="level"></param>
         public void Where(int level)
         {
-            NativeMethods.luaL_where(luaState, level);
+            NativeMethods.luaL_where(_luaState, level);
         }
     }
 }

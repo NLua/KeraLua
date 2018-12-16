@@ -3,11 +3,11 @@ using System;
 using NUnit.Framework;
 using System.IO;
 using System.Diagnostics;
+using System.Text;
 
 #if MONOTOUCH
     using ObjCRuntime;
 #endif
-
 
 namespace KeraLua.Tests
 {
@@ -51,7 +51,7 @@ namespace KeraLua.Tests
         static int TestUnicodeString (IntPtr p)
         {
             var state = Lua.FromIntPtr(p);
-            string param = state.ToString (1);
+            string param = state.ToString (1, false);
 
             Assert.AreEqual (UnicodeString, param, "#1 ToString()");
 
@@ -61,13 +61,14 @@ namespace KeraLua.Tests
         public static LuaFunction func_print = print;
         public static LuaFunction FuncTestUnicodeString = TestUnicodeString;
 
-        
-
         Lua state;
         string GetTestPath(string name)
         {
-            string filePath = Path.Combine (@"C:\Users\viniciusjarina\projects\nlua\KeraLua_\tests\LuaTests\core\", name + ".lua");
-            return filePath;
+            string path = GetType().Assembly.Location;
+            path = Path.GetDirectoryName(path);
+            path = Path.Combine(path, "LuaTests", "core");
+            path = Path.Combine (path, name + ".lua");
+            return path;
         }
 
         void AssertString (string chunk)
@@ -155,6 +156,12 @@ namespace KeraLua.Tests
         }
 
         [Test]
+        public void Fib ()
+        {
+            TestLuaFile ("fib");
+        }
+
+        [Test]
         public void Life ()
         {
             TestLuaFile ("life");
@@ -183,6 +190,7 @@ namespace KeraLua.Tests
         [Test]
         public void TestUnicodeString ()
         {
+            state.Encoding = Encoding.UTF8;
             state.PushCFunction (FuncTestUnicodeString);
             state.SetGlobal ("TestUnicodeString");
             state.PushString (UnicodeString);
