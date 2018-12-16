@@ -122,3 +122,5 @@ Makefile.in
 /install-sh
 /missing
 /config.status
+.vs/
+UpgradeLog*.htm
