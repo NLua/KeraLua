@@ -22,11 +22,7 @@ namespace KeraLua
     [SuppressUnmanagedCodeSecurity]
     internal static class NativeMethods
     {
-#if DEBUGLUA
-        private const string LuaLibraryName = "lua53d";
-#else
         private const string LuaLibraryName = "lua53";
-#endif
 
 #pragma warning disable IDE1006 // Naming Styles
 

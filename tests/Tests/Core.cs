@@ -17,8 +17,6 @@ namespace KeraLua.Tests
         public static readonly char UnicodeChar = '\uE007';
         public static string UnicodeString => Convert.ToString (UnicodeChar);
 
-
-        
 #if MONOTOUCH
         [MonoPInvokeCallback (typeof (LuaFunction))]
 #endif
