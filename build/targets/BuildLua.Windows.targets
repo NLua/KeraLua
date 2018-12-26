@@ -1,0 +1,27 @@
+<Project>
+  <PropertyGroup>
+    <Win32BuildDir>win-x86</Win32BuildDir>
+    <Win64BuildDir>win-x64</Win64BuildDir>
+    <BinaryLibraryPath32>bin\lua53.dll</BinaryLibraryPath32>
+    <BinaryLibraryPath64>bin64\lua53.dll</BinaryLibraryPath64>
+    <ExternalLuaPath>$([System.IO.Path]::GetFullPath($(ExternalLuaDir)))</ExternalLuaPath>
+  </PropertyGroup>
+  <Target Name="BuildLuaWindows" BeforeTargets="BeforeBuild" Condition="'$(OS)'=='Windows_NT'">
+    <Message Text="Building Windows Lua library (x86)" />
+    <Exec Command="mkdir $(ExternalLuaPath)\$(Win32BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(Win32BuildDir)')" />
+    <Exec Command="cmake $(ExternalLuaPath)" WorkingDirectory="$(ExternalLuaPath)\$(Win32BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(Win32BuildDir)\CMakeCache.txt')" />
+    <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(Win32BuildDir)" />
+    <Message Text="Building Windows Lua library (x64)" />
+    <Exec Command="mkdir $(ExternalLuaPath)\$(Win64BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(Win64BuildDir)')" />
+    <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_GENERATOR_PLATFORM=x64" WorkingDirectory="$(ExternalLuaPath)\$(Win64BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(Win64BuildDir)\CMakeCache.txt')" />
+    <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(Win64BuildDir)" />
+    <Copy SourceFiles="$(ExternalLuaPath)\$(Win32BuildDir)\$(BinaryLibraryPath32)" DestinationFolder="$(OutputRuntimeDir)\$(Win32BuildDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(ExternalLuaPath)\$(Win64BuildDir)\$(BinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(Win64BuildDir)" SkipUnchangedFiles="true" />
+  </Target>
+  <Target Name="CleanLuaWindows" AfterTargets="Clean" Condition="'$(OS)'=='Windows_NT'">
+      <Message Text="Cleaning Lua library (x86/x64)" />
+      <RemoveDir Directories="$(ExternalLuaPath)\$(Win64BuildDir); $(OutputRuntimeDir)\$(Win64BuildDir) " />
+      <RemoveDir Directories="$(ExternalLuaPath)\$(Win32BuildDir); $(OutputRuntimeDir)\$(Win32BuildDir) " />
+  </Target>
+</Project>
+

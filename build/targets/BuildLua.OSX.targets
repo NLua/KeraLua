@@ -1,0 +1,32 @@
+<Project>
+    <PropertyGroup>
+        <OSX32BuildDir>osx-32</OSX32BuildDir>
+        <OSX64BuildDir>osx-64</OSX64BuildDir>
+        <OSXBuildDir>osx</OSXBuildDir>
+        <ExternalLuaPath>$([System.IO.Path]::GetFullPath($(ExternalLuaDir)))</ExternalLuaPath>
+        <BinaryLibraryPath64>lib64\liblua53.dylib</BinaryLibraryPath64>
+        <BinaryLibraryPath32>lib\liblua53.dylib</BinaryLibraryPath32>
+        <BinaryLibraryPath>liblua53.dylib</BinaryLibraryPath>
+    </PropertyGroup>
+    <Target Name="BuildLuaOSX" BeforeTargets="BeforeBuild" Condition="'$(OS)'=='Unix' and $([System.IO.File]::Exists('/usr/lib/libc.dylib'))" >
+        <Message Text="Building macOS Lua library (x64/i386)" />
+        <Exec Command="mkdir $(ExternalLuaPath)\$(OSXBuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(OSXBuildDir)')" />
+        <Exec Command="mkdir $(ExternalLuaPath)\$(OSX32BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(OSX32BuildDir)')" />
+        <Exec Command="mkdir $(ExternalLuaPath)\$(OSX64BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(OSX64BuildDir)')" />
+        <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_OSX_ARCHITECTURES=i386" WorkingDirectory="$(ExternalLuaPath)\$(OSX32BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(OSX32BuildDir)\CMakeCache.txt')" />
+        <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_OSX_ARCHITECTURES=x86_64" WorkingDirectory="$(ExternalLuaPath)\$(OSX64BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(OSX64BuildDir)\CMakeCache.txt')" />
+        <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSX32BuildDir)" />
+        <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSX64BuildDir)" />
+        <Exec Command="lipo -create $(OSX64BuildDir)\$(BinaryLibraryPath64) $(OSX32BuildDir)\$(BinaryLibraryPath32) -output $(OSXBuildDir)\$(BinaryLibraryPath)" WorkingDirectory="$(ExternalLuaPath)" />
+        <Copy SourceFiles="$(ExternalLuaPath)\$(OSXBuildDir)\$(BinaryLibraryPath)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)" SkipUnchangedFiles="true" />
+    </Target>
+    <Target Name="CleanLuaOSX" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and $([System.IO.File]::Exists('/usr/lib/libc.dylib'))" >
+        <Message Text="Cleaning Lua library (osx)" />
+        <RemoveDir Directories="
+        $(ExternalLuaPath)\$(OSXBuildDir); 
+        $(ExternalLuaPath)\$(OSX32BuildDir); 
+        $(ExternalLuaPath)\$(OSX64BuildDir); 
+        $(OutputRuntimeDir)\$(OSXBuildDir) " />
+    </Target>
+</Project>
+

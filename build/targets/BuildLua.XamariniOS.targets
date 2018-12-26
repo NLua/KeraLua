@@ -1,0 +1,20 @@
+<Project>
+    <PropertyGroup>
+        <iOSBuildDir>ios_build</iOSBuildDir>
+        <iOSOutputDir>ios</iOSOutputDir>
+        <DylibFileFramework>liblua53.framework</DylibFileFramework>
+        <ExternalLuaPath>$([System.IO.Path]::GetFullPath($(ExternalLuaDir)))</ExternalLuaPath>
+    </PropertyGroup>
+    <Target Name="BuildLuaXamariniOS" BeforeTargets="PrepareForBuild" Condition="'$(OS)'=='Unix' and $([System.IO.File]::Exists('/usr/lib/libc.dylib'))" >
+        <Message Text="Building iOS Lua library (arm64/x86_64)" />
+        <Exec Command="make ios" WorkingDirectory="$(ExternalLuaPath)\$(iOSBuildDir)" />
+        <Exec Command="ditto $(ExternalLuaPath)\$(iOSBuildDir)\$(iOSOutputDir)\$(DylibFileFramework) $(OutputRuntimeDir)\$(iOSOutputDir)\$(DylibFileFramework)"  />
+    </Target>
+    <Target Name="CleanLuaXamariniOS" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and $([System.IO.File]::Exists('/usr/lib/libc.dylib'))" >
+        <Message Text="Cleaning Lua library (iOS)" />
+        <RemoveDir Directories="
+        $(ExternalLuaPath)\$(iOSBuildDir)\$(iOSOutputDir); 
+        $(OutputRuntimeDir)\$(iOSOutputDir) " />
+    </Target>
+</Project>
+

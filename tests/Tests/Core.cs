@@ -33,7 +33,7 @@ namespace KeraLua.Tests
                         Trace.Write("nil");
                         break;
                     case LuaType.String:
-                        string s = state.ToString(i);
+                        string s = state.ToString(i, false);
                         Trace.Write(s);
                         break;
                     case LuaType.Number:

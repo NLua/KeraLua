@@ -22,12 +22,26 @@ namespace KeraLua
     [SuppressUnmanagedCodeSecurity]
     internal static class NativeMethods
     {
+
+#if __TVOS__ && __UNIFIED__
+        private const string LuaLibraryName = "@rpath/liblua53.framework/liblua53";
+#elif __WATCHOS__ && __UNIFIED__
+        private const string LuaLibraryName = "@rpath/liblua53.framework/liblua53";
+#elif __IOS__ && __UNIFIED__
+        private const string LuaLibraryName = "@rpath/liblua53.framework/liblua53";
+#elif __ANDROID__
+        private const string LuaLibraryName = "liblua53.so";
+#elif __MACOS__
+        private const string LuaLibraryName = "liblua53.dylib";
+#elif WINDOWS_UWP
+        private const string LuaLibraryName = "lua53.dll";
+#else
         private const string LuaLibraryName = "lua53";
+#endif
 
 #pragma warning disable IDE1006 // Naming Styles
 
-
-        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport (LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int lua_absindex(lua_State luaState, int idx);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
