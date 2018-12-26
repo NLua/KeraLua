@@ -9,6 +9,7 @@
         <Message Text="Building iOS Lua library (arm64/x86_64)" />
         <Exec Command="make ios" WorkingDirectory="$(ExternalLuaPath)\$(iOSBuildDir)" />
         <Exec Command="ditto $(ExternalLuaPath)\$(iOSBuildDir)\$(iOSOutputDir)\$(DylibFileFramework) $(OutputRuntimeDir)\$(iOSOutputDir)\$(DylibFileFramework)"  />
+        <RemoveDir Directories="$(OutputRuntimeDir)\$(iOSOutputDir)\$(DylibFileFramework)\Headers" />    
     </Target>
     <Target Name="CleanLuaXamariniOS" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and $([System.IO.File]::Exists('/usr/lib/libc.dylib'))" >
         <Message Text="Cleaning Lua library (iOS)" />

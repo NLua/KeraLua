@@ -31,7 +31,7 @@ namespace KeraLua
         private const string LuaLibraryName = "@rpath/liblua53.framework/liblua53";
 #elif __ANDROID__
         private const string LuaLibraryName = "liblua53.so";
-#elif __MACOS__
+#elif __MACOS__ 
         private const string LuaLibraryName = "liblua53.dylib";
 #elif WINDOWS_UWP
         private const string LuaLibraryName = "lua53.dll";
