@@ -1,0 +1,52 @@
+<Project>
+    <PropertyGroup>
+        <AndroidBuildDir>android_build</AndroidBuildDir>
+        <AndroidOutputDir>android</AndroidOutputDir>
+        <LibsDirectory>libs</LibsDirectory>
+        <LibraryFileName>liblua53.so</LibraryFileName>
+        <Arch1>arm64-v8a</Arch1>
+        <Arch2>armeabi-v7a</Arch2>
+        <Arch3>x86</Arch3>
+        <Arch4>x86_64</Arch4>
+        <LibraryFileName>liblua53.so</LibraryFileName>
+        <ExternalLuaPath>$([System.IO.Path]::GetFullPath($(ExternalLuaDir)))</ExternalLuaPath>
+    </PropertyGroup>
+    <Target Name="BuildLuaXamarinAndroid" AfterTargets="_ResolveXamarinAndroidTools" >
+        <Message Text="Building Android Lua library (armeabi-v7a arm64-v8a x86 x86_64)" />
+        <Error Text="******* Could not locate Android NDK. ********** " Condition="!Exists ('$(_AndroidNdkDirectory)ndk-build')" />
+        <Exec Command="&quot;$(_AndroidNdkDirectory)ndk-build&quot;" WorkingDirectory="$(ExternalLuaPath)\$(AndroidBuildDir)"/>
+        <MakeDir Directories="$(OutputRuntimeDir)\$(AndroidOutputDir)" />
+        <MakeDir Directories="$(OutputRuntimeDir)\$(AndroidOutputDir)\$(LibsDirectory)" />
+        <MakeDir Directories="$(OutputRuntimeDir)\$(AndroidOutputDir)\$(LibsDirectory)\$(Arch1)" />
+        <MakeDir Directories="$(OutputRuntimeDir)\$(AndroidOutputDir)\$(LibsDirectory)\$(Arch2)" />
+        <MakeDir Directories="$(OutputRuntimeDir)\$(AndroidOutputDir)\$(LibsDirectory)\$(Arch3)" />
+        <MakeDir Directories="$(OutputRuntimeDir)\$(AndroidOutputDir)\$(LibsDirectory)\$(Arch4)" />
+        <Copy
+            SourceFiles="$(ExternalLuaPath)\$(AndroidBuildDir)\$(LibsDirectory)\$(Arch1)\$(LibraryFileName)"
+            DestinationFolder="$(OutputRuntimeDir)\$(AndroidOutputDir)\$(LibsDirectory)\$(Arch1)"
+            SkipUnchangedFiles="true"
+        />
+        <Copy
+            SourceFiles="$(ExternalLuaPath)\$(AndroidBuildDir)\$(LibsDirectory)\$(Arch2)\$(LibraryFileName)"
+            DestinationFolder="$(OutputRuntimeDir)\$(AndroidOutputDir)\$(LibsDirectory)\$(Arch2)"
+            SkipUnchangedFiles="true"
+        />
+        <Copy
+            SourceFiles="$(ExternalLuaPath)\$(AndroidBuildDir)\$(LibsDirectory)\$(Arch3)\$(LibraryFileName)"
+            DestinationFolder="$(OutputRuntimeDir)\$(AndroidOutputDir)\$(LibsDirectory)\$(Arch3)"
+            SkipUnchangedFiles="true"
+        />
+        <Copy
+            SourceFiles="$(ExternalLuaPath)\$(AndroidBuildDir)\$(LibsDirectory)\$(Arch4)\$(LibraryFileName)"
+            DestinationFolder="$(OutputRuntimeDir)\$(AndroidOutputDir)\$(LibsDirectory)\$(Arch4)"
+            SkipUnchangedFiles="true"
+        />
+    </Target>
+    <Target Name="CleanLuaXamarinAndroid" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and $([System.IO.File]::Exists('/usr/lib/libc.dylib'))" >
+        <Message Text="Cleaning Lua library (Android)" />
+        <RemoveDir Directories="
+        $(ExternalLuaPath)\$(AndroidBuildDir)\$(LibsDirectory); 
+        $(OutputRuntimeDir)\$(AndroidOutputDir) " />
+    </Target>
+</Project>
+

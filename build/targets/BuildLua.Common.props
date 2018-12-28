@@ -3,6 +3,6 @@
   <PropertyGroup>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
     <ExternalLuaDir>..\..\external\lua</ExternalLuaDir>
-    <OutputRuntimeDir>..\..\runtime\</OutputRuntimeDir>
+    <OutputRuntimeDir>..\..\runtime</OutputRuntimeDir>
   </PropertyGroup>
 </Project>

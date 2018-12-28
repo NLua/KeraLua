@@ -46,6 +46,21 @@
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedNativeLibrary Include="..\..\runtime\android\libs\arm64-v8a\liblua53.so">
+      <Link>libs\arm64-v8a\liblua53.so</Link>
+    </EmbeddedNativeLibrary>
+    <EmbeddedNativeLibrary Include="..\..\runtime\android\libs\armeabi-v7a\liblua53.so">
+      <Link>libs\armeabi-v7a\liblua53.so</Link>
+    </EmbeddedNativeLibrary>
+    <EmbeddedNativeLibrary Include="..\..\runtime\android\libs\x86\liblua53.so">
+      <Link>libs\x86\liblua53.so</Link>
+    </EmbeddedNativeLibrary>
+    <EmbeddedNativeLibrary Include="..\..\runtime\android\libs\x86_64\liblua53.so">
+      <Link>libs\x86_64\liblua53.so</Link>
+    </EmbeddedNativeLibrary>
+  </ItemGroup>
+  <Import Project="..\targets\BuildLua.XamarinAndroid.targets" />
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
