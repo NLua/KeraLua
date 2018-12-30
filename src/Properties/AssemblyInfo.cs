@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 
 #if __MACOS__ || __TVOS__ || __WATCHOS__ || __IOS__
 
@@ -22,7 +22,7 @@ using Foundation;
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
 [assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyInformationalVersion("0.1.0.0")]
+[assembly: AssemblyInformationalVersion("0.1.0-refactor-lua53.1+147.Branch.refactor_lua53.Sha.59caf06f46bc6c0a25a7b0c9fbe7c850aed1b2f0")]
 [assembly: AssemblyFileVersion("0.1.0.0")]
 
 

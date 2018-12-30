@@ -101,6 +101,10 @@
       <Link>liblua53.dylib</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\runtime\linux-x64\liblua53.so" Condition="'$(OS)'=='Unix' and not $([System.IO.File]::Exists('/usr/lib/libc.dylib'))">
+      <Link>liblua53.so</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

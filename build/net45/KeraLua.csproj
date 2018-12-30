@@ -40,4 +40,5 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\targets\BuildLua.Windows.targets" />
   <Import Project="..\targets\BuildLua.OSX.targets" />
+  <Import Project="..\targets\BuildLua.Linux.targets" />
 </Project>

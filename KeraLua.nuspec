@@ -2,14 +2,15 @@
 <package>
   <metadata>
     <id>KeraLua</id>
-    <version>0.1.0</version>
+    <version>0.1.0-refactor_lua53-build147</version>
     <authors>NLua</authors>
     <owners>Vinicius Jarina</owners>
     <licenseUrl>https://github.com/nlua/KeraLua/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/nlua/KeraLua</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/nlua/KeraLua/master/KeraLua.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description></description>
+    <description>
+    </description>
     <releaseNotes>Release: 040d1b0</releaseNotes>
     <copyright>Copyright © Code Foco 2019</copyright>
     <tags>lua keralua</tags>
@@ -17,8 +18,6 @@
   <files>
     <file src="lib\Release\net45\*.dll" target="lib\net45" />
     <file src="lib\Release\netstandard1.6\*.dll" target="lib\netstandard1.6" />
-    <file src="lib\Release\portable-net45+win8+wp8\*.dll" target="lib\portable-net45+win8+wp8" />
-    <file src="lib\Release\portable-net45+win8+wpa81\*.dll" target="lib\portable-net45+win8+wpa81" />
     <file src="lib\Release\MonoAndroid\*.dll" target="lib\MonoAndroid" />
     <file src="lib\Release\xamarinmac\*.dll" target="lib\xamarinmac" />
     <file src="lib\Release\xamarintvos\*.dll" target="lib\xamarintvos" />

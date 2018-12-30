@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -31,8 +31,8 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.7.0")]
+// [assembly: AssemblyVersion("0.1.0.0")]
 [assembly: AssemblyVersion("0.1.0.0")]
 [assembly: AssemblyFileVersion("0.1.0.0")]
 
-[assembly: AssemblyInformationalVersion("1.0.7+Branch.master.Sha.80a328a64f12ed9032a0f14a75e6ecad967514d0")]
+[assembly: AssemblyInformationalVersion("0.1.0-refactor-lua53.1+147.Branch.refactor_lua53.Sha.59caf06f46bc6c0a25a7b0c9fbe7c850aed1b2f0")]
