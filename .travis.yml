@@ -1,5 +1,5 @@
 #
-# MazeCreator Travis-CI Hook
+# KeraLua Travis-CI Hook
 #
 
 language: csharp
@@ -14,7 +14,7 @@ script:
   - nuget restore
   - msbuild /p:Configuration=Release /t:Restore
   - msbuild /p:Configuration=Release
-  - nunit-console ./tests/bin/Release/MazeCreatorTest.dll
+  - nunit-console ./tests/bin/Release/KeraLuaTest.dll
 
 # Execute additional tests or commands
 #after_script:

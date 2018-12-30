@@ -1,39 +1,36 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System;
+using System.Reflection;
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
+#if __MACOS__ || __TVOS__ || __WATCHOS__ || __IOS__
+
+using Foundation;
+[assembly: LinkerSafe]
+
+#endif
+
+// Information about this assembly is defined by the following attributes. 
+// Change them to the values specific to your project.
+
 [assembly: AssemblyTitle ("KeraLua")]
-[assembly: AssemblyDescription ("")]
-[assembly: AssemblyConfiguration ("")]
-[assembly: AssemblyCompany ("")]
+[assembly: AssemblyDescription ("Binding library for native Lua")]
+[assembly: AssemblyCompany ("NLua")]
 [assembly: AssemblyProduct ("KeraLua")]
-[assembly: AssemblyCopyright ("Copyright ©  2014 Vinicius Jarina")]
-[assembly: AssemblyTrademark ("")]
+[assembly: AssemblyCopyright ("Copyright © Vinicius Jarina 2019")]
 [assembly: AssemblyCulture ("")]
-[assembly: CLSCompliantAttribute(true)]
 
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible (false)]
+// The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
+// The form "{Major}.{Minor}.*" will automatically update the build and revision,
+// and "{Major}.{Minor}.{Build}.*" will update just the revision.
+
+[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyInformationalVersion("0.1.0.0")]
+[assembly: AssemblyFileVersion("0.1.0.0")]
 
 
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid ("a433a589-08c9-4ad1-a05f-6bf4f8739726")]
 
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion ("1.3.2.0")]
-[assembly: AssemblyFileVersion ("1.3.2.0")]
+//[assembly: AssemblyDelaySign(false)]
+
+// The following attributes are used to specify the signing key for the assembly, 
+// if desired. See the Mono documentation for more information about signing.
+
+//[assembly: AssemblyKeyFile("")]
+
