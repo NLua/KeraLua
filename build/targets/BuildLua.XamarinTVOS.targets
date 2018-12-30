@@ -5,13 +5,13 @@
         <DylibFileFramework>liblua53.framework</DylibFileFramework>
         <ExternalLuaPath>$([System.IO.Path]::GetFullPath($(ExternalLuaDir)))</ExternalLuaPath>
     </PropertyGroup>
-    <Target Name="BuildLuaXamarinTVOS" BeforeTargets="PrepareForBuild" Condition="'$(OS)'=='Unix' and $([System.IO.File]::Exists('/usr/lib/libc.dylib'))" >
+    <Target Name="BuildLuaXamarinTVOS" BeforeTargets="PrepareForBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')" >
         <Message Text="Building tvOS Lua library (arm64/x86_64)" />
         <Exec Command="make tvos" WorkingDirectory="$(ExternalLuaPath)\$(tvOSBuildDir)" />
         <Exec Command="ditto $(ExternalLuaPath)\$(tvOSBuildDir)\$(tvOSOutputDir)\$(DylibFileFramework) $(OutputRuntimeDir)\$(tvOSOutputDir)\$(DylibFileFramework)"  />
         <RemoveDir Directories="$(OutputRuntimeDir)\$(tvOSOutputDir)\$(DylibFileFramework)\Headers" />    
     </Target>
-    <Target Name="CleanLuaXamarinTVOS" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and $([System.IO.File]::Exists('/usr/lib/libc.dylib'))" >
+    <Target Name="CleanLuaXamarinTVOS" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')" >
         <Message Text="Cleaning Lua library (tvOS)" />
         <RemoveDir Directories="
         $(ExternalLuaPath)\$(tvOSBuildDir)\$(tvOSOutputDir); 

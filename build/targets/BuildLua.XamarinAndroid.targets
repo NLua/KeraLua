@@ -42,7 +42,7 @@
             SkipUnchangedFiles="true"
         />
     </Target>
-    <Target Name="CleanLuaXamarinAndroid" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and $([System.IO.File]::Exists('/usr/lib/libc.dylib'))" >
+    <Target Name="CleanLuaXamarinAndroid" AfterTargets="Clean" >
         <Message Text="Cleaning Lua library (Android)" />
         <RemoveDir Directories="
         $(ExternalLuaPath)\$(AndroidBuildDir)\$(LibsDirectory); 

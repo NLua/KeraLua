@@ -97,11 +97,11 @@
       <Link>lua53.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\runtime\osx\liblua53.dylib" Condition="'$(OS)'=='Unix' and $([System.IO.File]::Exists('/usr/lib/libc.dylib'))">
+    <Content Include="..\runtime\osx\liblua53.dylib" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')">
       <Link>liblua53.dylib</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\runtime\linux-x64\liblua53.so" Condition="'$(OS)'=='Unix' and not $([System.IO.File]::Exists('/usr/lib/libc.dylib'))">
+    <Content Include="..\runtime\linux-x64\liblua53.so" Condition="'$(OS)'=='Unix' and !Exists('/usr/lib/libc.dylib')">
       <Link>liblua53.so</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

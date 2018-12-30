@@ -18,7 +18,7 @@ function Get-Current-Commit-Message ()
 
 function Test-Should-Deploy ()
 {
-	$nugetGitVersion   = Get-Git-Package-Version
+	$nugetGitVersion = Get-Git-Package-Version
 	$buildMetaData = Get-Git-Build-MetaData
 	$fullSemVer = Get-Git-Full-Sem-Ver
 
