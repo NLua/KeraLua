@@ -18,4 +18,3 @@
       <RemoveDir Directories="$(ExternalLuaPath)\$(Linux64BuildDir); $(OutputRuntimeDir)\$(Linux64BuildDir) " />
   </Target>
 </Project>
-
