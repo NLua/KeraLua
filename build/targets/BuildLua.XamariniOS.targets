@@ -1,4 +1,4 @@
-<Project>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <iOSBuildDir>ios_build</iOSBuildDir>
         <iOSOutputDir>ios</iOSOutputDir>

@@ -1,4 +1,4 @@
-<Project>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <OSX32BuildDir>osx-32</OSX32BuildDir>
         <OSX64BuildDir>osx-64</OSX64BuildDir>
