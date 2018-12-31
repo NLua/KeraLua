@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{BD205AD6-760E-48F3-BAB2-21447396BD17}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>KeraLua</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)DelegateExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Delegates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lua.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaCompare.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaDebug.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaGC.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaOperation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaRegister.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaRegistry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeMethods.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+</Project>

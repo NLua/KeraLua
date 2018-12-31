@@ -1,6 +1,0 @@
-
-all:
-	cd external/lua; mkdir linux; cd linux; cmake -DCMAKE_BUILD_TYPE=Release ..; cmake --build . --config Release
-
-clean:
-	rm -Rf external/lua/linux

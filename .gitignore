@@ -78,8 +78,6 @@ publish
 # Publish Web Output
 *.Publish.xml
 
-# NuGet Packages Directory
-packages
 
 # Windows Azure Build Output
 csx
@@ -122,3 +120,5 @@ Makefile.in
 /install-sh
 /missing
 /config.status
+.vs/
+UpgradeLog*.htm
