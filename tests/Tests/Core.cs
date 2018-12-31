@@ -14,13 +14,12 @@ namespace KeraLua.Tests
     [TestFixture]
     public class Core
     {
-        public static readonly char UnicodeChar = '\uE007';
-        public static string UnicodeString => Convert.ToString (UnicodeChar);
+		public static LuaFunction func_print = print;
 
 #if MONOTOUCH
         [MonoPInvokeCallback (typeof (LuaFunction))]
 #endif
-        static int print (IntPtr p)
+		static int print (IntPtr p)
         {
             var state = Lua.FromIntPtr(p);
             int n = state.GetTop();  /* number of arguments */
@@ -46,18 +45,6 @@ namespace KeraLua.Tests
             return 0;
         }
 
-        static int TestUnicodeString (IntPtr p)
-        {
-            var state = Lua.FromIntPtr(p);
-            string param = state.ToString (1, false);
-
-            Assert.AreEqual (UnicodeString, param, "#1 ToString()");
-
-            return 0;
-        }
-
-        public static LuaFunction func_print = print;
-        public static LuaFunction FuncTestUnicodeString = TestUnicodeString;
 
         Lua state;
         string GetTestPath(string name)
@@ -69,24 +56,7 @@ namespace KeraLua.Tests
             return path;
         }
 
-        void AssertString (string chunk)
-        {
-            string error = string.Empty;
 
-            LuaStatus result = state.LoadString (chunk);
-
-            if (result != LuaStatus.OK)
-                error = state.ToString(1);
-
-            Assert.True (result == LuaStatus.OK, "Fail loading string: " + chunk + "ERROR:" + error);
-
-            result = state.PCall (0, -1, 0);
-
-            if (result != 0)
-                error = state.ToString(1);
-
-            Assert.True (result == 0, "Fail calling chunk: " + chunk + " ERROR: " + error);
-        }
 
         void AssertFile (string path)
         {
@@ -117,8 +87,7 @@ namespace KeraLua.Tests
         public void Setup()
         {
             state = new Lua();
-            state.PushCFunction (func_print);
-            state.SetGlobal ("print");
+            state.Register ("print", func_print);
         }
 
         [TearDown]
@@ -182,18 +151,6 @@ namespace KeraLua.Tests
         public void Sort ()
         {
             TestLuaFile ("sort");
-        }
-
-
-        [Test]
-        public void TestUnicodeString ()
-        {
-            state.Encoding = Encoding.UTF8;
-            state.PushCFunction (FuncTestUnicodeString);
-            state.SetGlobal ("TestUnicodeString");
-            state.PushString (UnicodeString);
-            state.SetGlobal ("unicodeString");
-            AssertString ("TestUnicodeString(unicodeString)");
         }
     }
 }

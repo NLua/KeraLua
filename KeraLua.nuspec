@@ -17,11 +17,17 @@
   </metadata>
   <files>
     <file src="lib\Release\net45\*.dll" target="lib\net45" />
-    <file src="lib\Release\netstandard1.6\*.dll" target="lib\netstandard1.6" />
+    <file src="lib\Release\net45\*.xml" target="lib\net45" />
+    <!-- <file src="lib\Release\netstandard1.6\*.dll" target="lib\netstandard1.6" /> -->
     <file src="lib\Release\MonoAndroid\*.dll" target="lib\MonoAndroid" />
+    <file src="lib\Release\MonoAndroid\*.xml" target="lib\MonoAndroid" />
     <file src="lib\Release\xamarinmac\*.dll" target="lib\xamarinmac" />
+    <file src="lib\Release\xamarinmac\*.xml" target="lib\xamarinmac" />
     <file src="lib\Release\xamarintvos\*.dll" target="lib\xamarintvos" />
+    <file src="lib\Release\xamarintvos\*.xml" target="lib\xamarintvos" />
     <file src="lib\Release\xamarinios\*.dll" target="lib\xamarinios" />
+    <file src="lib\Release\xamarinios\*.xml" target="lib\xamarinios" />
     <file src="lib\Release\xamarinwatchos\*.dll" target="lib\xamarinwatchos" />
+    <file src="lib\Release\xamarinwatchos\*.xml" target="lib\xamarinwatchos" />
   </files>
 </package>
