@@ -1,4 +1,5 @@
-<Project>
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Linux64BuildDir>linux-x64</Linux64BuildDir>
     <LinuxBinaryLibraryPath64>lib64\liblua53.so</LinuxBinaryLibraryPath64>
