@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <Linux64BuildDir>linux-x64</Linux64BuildDir>
-    <LinuxBinaryLibraryPath64>bin64\liblua53.so</LinuxBinaryLibraryPath64>
+    <LinuxBinaryLibraryPath64>lib64\liblua53.so</LinuxBinaryLibraryPath64>
     <ExternalLuaPath>$([System.IO.Path]::GetFullPath($(ExternalLuaDir)))</ExternalLuaPath>
   </PropertyGroup>
   <Target Name="BuildLuaLinux" BeforeTargets="BeforeBuild" Condition="'$(OS)'=='Unix' and !Exists('/usr/lib/libc.dylib')">

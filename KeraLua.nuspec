@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>KeraLua</id>
-    <version>0.1.0-refactor_lua53-build147</version>
+    <version>0.1.0-refactor_lua53-build151</version>
     <authors>NLua</authors>
     <owners>Vinicius Jarina</owners>
     <licenseUrl>https://github.com/nlua/KeraLua/blob/master/LICENSE</licenseUrl>
