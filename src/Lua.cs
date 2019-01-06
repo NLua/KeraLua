@@ -1102,7 +1102,7 @@ namespace KeraLua
         public double? ToNumberX(int index)
         {
             int isNumber;
-            long value = NativeMethods.lua_tointegerx(_luaState, index, out isNumber);
+            double value = NativeMethods.lua_tonumberx(_luaState, index, out isNumber);
             if (isNumber != 0)
                 return value;
             return null;
