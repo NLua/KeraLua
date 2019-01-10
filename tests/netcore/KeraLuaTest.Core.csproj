@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -30,48 +29,48 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
   </ItemGroup>
   <ItemGroup>
-      <Content Include="..\runtime\win-x64\lua53.dll" Condition="'$(Os)'=='Windows_NT'">
+      <Content Include="..\..\runtime\win-x64\lua53.dll" Condition="'$(Os)'=='Windows_NT'">
         <Link>lua53.dll</Link>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="..\runtime\osx\liblua53.dylib" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')">
+      <Content Include="..\..\runtime\osx\liblua53.dylib" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')">
         <Link>liblua53.dylib</Link>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="..\runtime\linux-x64\liblua53.so" Condition="'$(OS)'=='Unix' and !Exists('/usr/lib/libc.dylib')">
+      <Content Include="..\..\runtime\linux-x64\liblua53.so" Condition="'$(OS)'=='Unix' and !Exists('/usr/lib/libc.dylib')">
         <Link>liblua53.so</Link>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\build\netcore\KeraLua.NetCore.csproj" />
+    <ProjectReference Include="..\..\build\netcore\KeraLua.NetCore.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="LuaTests\core\bisect.lua">
+    <None Update="..\LuaTests\core\bisect.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="LuaTests\core\cf.lua">
+    <None Update="..\LuaTests\core\cf.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="LuaTests\core\factorial.lua">
+    <None Update="..\LuaTests\core\factorial.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="LuaTests\core\fib.lua">
+    <None Update="..\LuaTests\core\fib.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="LuaTests\core\fibfor.lua">
+    <None Update="..\LuaTests\core\fibfor.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="LuaTests\core\life.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="LuaTests\core\printf.lua">
+    <None Update="..\LuaTests\core\printf.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="LuaTests\core\sieve.lua">
+    <None Update="..\LuaTests\core\sieve.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="LuaTests\core\sort.lua">
+    <None Update="..\LuaTests\core\sort.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
