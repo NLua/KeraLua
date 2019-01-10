@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
@@ -29,11 +29,19 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
   </ItemGroup>
-    <ItemGroup>
+  <ItemGroup>
       <Content Include="..\runtime\win-x64\lua53.dll" Condition="'$(Os)'=='Windows_NT'">
-      <Link>lua53.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+        <Link>lua53.dll</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\runtime\osx\liblua53.dylib" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')">
+        <Link>liblua53.dylib</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\runtime\linux-x64\liblua53.so" Condition="'$(OS)'=='Unix' and !Exists('/usr/lib/libc.dylib')">
+        <Link>liblua53.so</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\build\netcore\KeraLua.NetCore.csproj" />
