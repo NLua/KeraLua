@@ -4,7 +4,6 @@
         <OSX32BuildDir>osx-32</OSX32BuildDir>
         <OSX64BuildDir>osx-64</OSX64BuildDir>
         <OSXBuildDir>osx</OSXBuildDir>
-        <ExternalLuaPath>$([System.IO.Path]::GetFullPath($(ExternalLuaDir)))</ExternalLuaPath>
         <OSXBinaryLibraryPath64>lib64\liblua53.dylib</OSXBinaryLibraryPath64>
         <OSXBinaryLibraryPath32>lib\liblua53.dylib</OSXBinaryLibraryPath32>
         <OSXBinaryLibraryPath>liblua53.dylib</OSXBinaryLibraryPath>
