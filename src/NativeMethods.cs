@@ -41,7 +41,7 @@ namespace KeraLua
 
 #pragma warning disable IDE1006 // Naming Styles
 
-		[DllImport (LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport (LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int lua_absindex(lua_State luaState, int idx);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
