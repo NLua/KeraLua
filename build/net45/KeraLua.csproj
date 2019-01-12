@@ -32,6 +32,7 @@
     <ConsolePause>false</ConsolePause>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DocumentationFile>..\..\lib\Release\net45\KeraLua.xml</DocumentationFile>
+    <DefineConstants>NETFRAMEWORK</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -41,4 +42,5 @@
   <Import Project="..\targets\BuildLua.Windows.targets" />
   <Import Project="..\targets\BuildLua.OSX.targets" />
   <Import Project="..\targets\BuildLua.Linux.targets" />
+  <Import Project="..\targets\KeraLua.Sign.targets" />
 </Project>

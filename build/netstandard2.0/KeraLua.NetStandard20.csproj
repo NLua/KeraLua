@@ -3,23 +3,17 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>KeraLua</RootNamespace>
     <AssemblyName>KeraLua</AssemblyName>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>..\..\lib\Release\netstandard2.0\KeraLua.xml</DocumentationFile>
     <OutputPath>..\..\lib\Release\netstandard2.0\</OutputPath>
+    <DefineConstants>TRACE;NETSTANDARD</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\lib\Debug\netstandard2.0\</OutputPath>
   </PropertyGroup>
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
+  <Import Project="..\targets\KeraLua.Sign.targets" />
 </Project>
