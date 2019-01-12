@@ -71,4 +71,5 @@
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
   <Import Project="..\targets\BuildLua.OSX.targets" />
+  <Import Project="..\targets\KeraLua.Sign.targets" />
 </Project>

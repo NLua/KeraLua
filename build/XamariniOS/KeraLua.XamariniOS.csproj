@@ -48,4 +48,5 @@
   <Import Project="..\targets\BuildLua.XamariniOS.targets" />
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
+  <Import Project="..\targets\KeraLua.Sign.targets" />
 </Project>

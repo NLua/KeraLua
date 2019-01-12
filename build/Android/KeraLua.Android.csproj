@@ -63,4 +63,5 @@
   <Import Project="..\targets\BuildLua.XamarinAndroid.targets" />
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <Import Project="..\targets\KeraLua.Sign.targets" />
 </Project>
