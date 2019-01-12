@@ -34,7 +34,7 @@ namespace KeraLuaTest.Tests
         [Test]
         public void TestUnicodeString()
         {
-            Lua state = new Lua();
+            var state = new Lua();
             state.Encoding = Encoding.UTF8;
             state.PushCFunction(FuncTestUnicodeString);
             state.SetGlobal("TestUnicodeString");
