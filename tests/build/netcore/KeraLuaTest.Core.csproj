@@ -63,7 +63,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\runtime\win-x86\lua53.dll" Condition="'$(Os)'=='Windows_NT'">
+    <Content Include="..\..\..\runtime\win-x64\lua53.dll" Condition="'$(Os)'=='Windows_NT'">
       <Link>lua53.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
