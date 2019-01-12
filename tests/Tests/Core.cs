@@ -14,12 +14,12 @@ namespace KeraLua.Tests
     [TestFixture]
     public class Core
     {
-		public static LuaFunction func_print = print;
+        public static LuaFunction func_print = print;
 
 #if MONOTOUCH
         [MonoPInvokeCallback (typeof (LuaFunction))]
 #endif
-		static int print (IntPtr p)
+        static int print (IntPtr p)
         {
             var state = Lua.FromIntPtr(p);
             int n = state.GetTop();  /* number of arguments */

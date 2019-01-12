@@ -23,4 +23,7 @@
     <OutputPath>..\..\lib\Debug\netcore\</OutputPath>
   </PropertyGroup>
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
+  <Import Project="..\targets\BuildLua.Windows.targets" />
+  <Import Project="..\targets\BuildLua.OSX.targets" />
+  <Import Project="..\targets\BuildLua.Linux.targets" />
 </Project>
