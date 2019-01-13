@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>KeraLua</id>
-    <version>0.1.1</version>
+    <version>0.1.3</version>
     <authors>NLua</authors>
     <owners>Vinicius Jarina</owners>
     <projectUrl>https://github.com/nlua/KeraLua</projectUrl>
@@ -11,7 +11,7 @@
     <description>
       C# Native bindings of Lua 5.3 (compatible with Xamarin.iOS/Mac/Android/.NET/.NET Core) 
     </description>
-    <releaseNotes>Release: 1a69c1a</releaseNotes>
+    <releaseNotes>Release: ca40319</releaseNotes>
     <copyright>Copyright © Code Foco 2019</copyright>
     <tags>lua keralua</tags>
     <license type="file">LICENSE</license>
@@ -29,15 +29,14 @@
     <file src="lib\Release\net45\*.xml" target="lib\xamarinmac" />
     <file src="lib\Release\xamarintvos\*.dll" target="lib\xamarintvos" />
     <file src="lib\Release\net45\*.xml" target="lib\xamarintvos" />
-    <file src="lib\Release\xamarintvos\*.xml" target="lib\xamarintvos" />
     <file src="lib\Release\xamarinios\*.dll" target="lib\xamarinios" />
     <file src="lib\Release\net45\*.xml" target="lib\xamarinios" />
     <file src="lib\Release\xamarinwatchos\*.dll" target="lib\xamarinwatchos" />
     <file src="lib\Release\net45\*.xml" target="lib\xamarinwatchos" />
-    <file src="runtimes/win-x64/native/lua53.dll" />
-    <file src="runtimes/win-x86/native/lua53.dll" />
-    <file src="runtimes/osx/native/liblua53.dylib" />
-    <file src="build/targets/KeraLua.targets" />
+    <file src="runtimes/win-x64/native/lua53.dll" target="runtimes/win-x64/native" />
+    <file src="runtimes/win-x86/native/lua53.dll" target="runtimes/win-x86/native" />
+    <file src="runtimes/osx/native/liblua53.dylib" target="runtimes/osx/native" />
+    <file src="build/targets/KeraLua.targets" target="build/net45/KeraLua.targets" />
     <file src="LICENSE" />
   </files>
 </package>

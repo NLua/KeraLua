@@ -40,6 +40,6 @@ using Foundation;
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
 [assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyInformationalVersion("0.1.0+149.Branch.master.Sha.1a69c1ae045933d62449d3a46e988253995810f9")]
+[assembly: AssemblyInformationalVersion("0.1.0+150.Branch.master.Sha.ca40319e10f4d138a12cb477e5f5f556347c2629")]
 [assembly: AssemblyFileVersion("0.1.0.0")]
 
