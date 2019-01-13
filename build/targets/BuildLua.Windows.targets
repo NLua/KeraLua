@@ -15,8 +15,8 @@
     <Exec Command="mkdir $(ExternalLuaPath)\$(Win64BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(Win64BuildDir)')" />
     <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_GENERATOR_PLATFORM=x64" WorkingDirectory="$(ExternalLuaPath)\$(Win64BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(Win64BuildDir)\CMakeCache.txt')" />
     <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(Win64BuildDir)" />
-    <Copy SourceFiles="$(ExternalLuaPath)\$(Win32BuildDir)\$(BinaryLibraryPath32)" DestinationFolder="$(OutputRuntimeDir)\$(Win32BuildDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(ExternalLuaPath)\$(Win64BuildDir)\$(BinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(Win64BuildDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(ExternalLuaPath)\$(Win32BuildDir)\$(BinaryLibraryPath32)" DestinationFolder="$(OutputRuntimeDir)\$(Win32BuildDir)\native" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(ExternalLuaPath)\$(Win64BuildDir)\$(BinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(Win64BuildDir)\native" SkipUnchangedFiles="true" />
   </Target>
   <Target Name="CleanLuaWindows" AfterTargets="Clean" Condition="'$(OS)'=='Windows_NT'">
       <Message Text="Cleaning Lua library (x86/x64)" />

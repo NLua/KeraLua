@@ -63,7 +63,7 @@
     <Reference Include="Xamarin.Mac" />
   </ItemGroup>
   <ItemGroup>
-    <NativeReference Include="..\..\runtime\osx\liblua53.dylib">
+    <NativeReference Include="..\..\runtimes\osx\liblua53.dylib">
       <Kind>Dynamic</Kind>
       <SmartLink>False</SmartLink>
     </NativeReference>

@@ -7,18 +7,29 @@
         <OSXBinaryLibraryPath64>lib64\liblua53.dylib</OSXBinaryLibraryPath64>
         <OSXBinaryLibraryPath32>lib\liblua53.dylib</OSXBinaryLibraryPath32>
         <OSXBinaryLibraryPath>liblua53.dylib</OSXBinaryLibraryPath>
+        <XcodeWithout32BitSupport>10</XcodeWithout32BitSupport>
     </PropertyGroup>
     <Target Name="BuildLuaOSX" BeforeTargets="BeforeBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')" >
-        <Message Text="Building macOS Lua library == $(OSXBinaryLibraryPath32)== (x64/i386)" />
+         <Exec Command="xcodebuild -version | head -1" ConsoleToMSBuild="true">
+            <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
+         </Exec>
+        <PropertyGroup>
+            <CurrentXcodeVersion>$(OutputOfExec.Split(' ')[1].Split('.')[0])</CurrentXcodeVersion>
+            <XcodeSupport32Bits Condition="$(CurrentXcodeVersion) &lt; $(XcodeWithout32BitSupport)">true</XcodeSupport32Bits>
+            <XcodeSupport32Bits Condition="$(CurrentXcodeVersion) &gt; $(XcodeWithout32BitSupport) or $(CurrentXcodeVersion) == $(XcodeWithout32BitSupport)">false</XcodeSupport32Bits>
+        </PropertyGroup>
+        <Message Text="******* Xcode 10 doesn't support 32bits skipping 32 bit build ***" Condition="!$(XcodeSupport32Bits)" />
+        <Message Text="Building macOS Lua library" />
         <Exec Command="mkdir $(ExternalLuaPath)\$(OSXBuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(OSXBuildDir)')" />
-        <Exec Command="mkdir $(ExternalLuaPath)\$(OSX32BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(OSX32BuildDir)')" />
+        <Exec Command="mkdir $(ExternalLuaPath)\$(OSX32BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(OSX32BuildDir)') and $(XcodeSupport32Bits) " />
         <Exec Command="mkdir $(ExternalLuaPath)\$(OSX64BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(OSX64BuildDir)')" />
-        <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_OSX_ARCHITECTURES=i386" WorkingDirectory="$(ExternalLuaPath)\$(OSX32BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(OSX32BuildDir)\CMakeCache.txt')" />
+        <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_OSX_ARCHITECTURES=i386" WorkingDirectory="$(ExternalLuaPath)\$(OSX32BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(OSX32BuildDir)\CMakeCache.txt') and $(XcodeSupport32Bits)" />
         <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_OSX_ARCHITECTURES=x86_64" WorkingDirectory="$(ExternalLuaPath)\$(OSX64BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(OSX64BuildDir)\CMakeCache.txt')" />
-        <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSX32BuildDir)" />
+        <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSX32BuildDir)" Condition="$(XcodeSupport32Bits)" />
         <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSX64BuildDir)" />
-        <Exec Command="lipo -create $(OSX64BuildDir)\$(OSXBinaryLibraryPath64) $(OSX32BuildDir)\$(OSXBinaryLibraryPath32) -output $(OSXBuildDir)\$(OSXBinaryLibraryPath)" WorkingDirectory="$(ExternalLuaPath)" />
-        <Copy SourceFiles="$(ExternalLuaPath)\$(OSXBuildDir)\$(OSXBinaryLibraryPath)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)" SkipUnchangedFiles="true" />
+        <Exec Command="lipo -create $(OSX64BuildDir)\$(OSXBinaryLibraryPath64) $(OSX32BuildDir)\$(OSXBinaryLibraryPath32) -output $(OSXBuildDir)\$(OSXBinaryLibraryPath)" WorkingDirectory="$(ExternalLuaPath)" Condition="$(XcodeSupport32Bits)"/>
+        <Copy SourceFiles="$(ExternalLuaPath)\$(OSXBuildDir)\$(OSXBinaryLibraryPath)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)\native" SkipUnchangedFiles="true" Condition="$(XcodeSupport32Bits)"/>
+        <Copy SourceFiles="$(ExternalLuaPath)\$(OSX64BuildDir)\$(OSXBinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)\native" SkipUnchangedFiles="true" Condition="!$(XcodeSupport32Bits)"/>
     </Target>
     <Target Name="CleanLuaOSX" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')" >
         <Message Text="Cleaning Lua library (osx)" />

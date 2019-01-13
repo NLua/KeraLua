@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>KeraLua</id>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <authors>NLua</authors>
     <owners>Vinicius Jarina</owners>
     <projectUrl>https://github.com/nlua/KeraLua</projectUrl>
@@ -11,7 +11,7 @@
     <description>
       C# Native bindings of Lua 5.3 (compatible with Xamarin.iOS/Mac/Android/.NET/.NET Core) 
     </description>
-    <releaseNotes>Release: a5fff88</releaseNotes>
+    <releaseNotes>Release: 1a69c1a</releaseNotes>
     <copyright>Copyright © Code Foco 2019</copyright>
     <tags>lua keralua</tags>
     <license type="file">LICENSE</license>
@@ -20,19 +20,23 @@
     <file src="lib\Release\net45\*.dll" target="lib\net45" />
     <file src="lib\Release\net45\*.xml" target="lib\net45" />
     <file src="lib\Release\netstandard2.0\netstandard2.0\*.dll" target="lib\netstandard2.0" />
-    <file src="lib\Release\netstandard2.0\netstandard2.0\*.dll" target="lib\netstandard2.0" />
+    <file src="lib\Release\netstandard2.0\netstandard2.0\*.xml" target="lib\netstandard2.0" />
     <file src="lib\Release\netcore\netcoreapp2.0\*.dll" target="lib\netcoreapp2.0" />
-    <file src="lib\Release\netcore\netcoreapp2.0\*.dll" target="lib\netcoreapp2.0" />
+    <file src="lib\Release\netcore\netcoreapp2.0\*.xml" target="lib\netcoreapp2.0" />
     <file src="lib\Release\MonoAndroid\*.dll" target="lib\MonoAndroid" />
     <file src="lib\Release\MonoAndroid\*.xml" target="lib\MonoAndroid" />
     <file src="lib\Release\xamarinmac\*.dll" target="lib\xamarinmac" />
-    <file src="lib\Release\xamarinmac\*.xml" target="lib\xamarinmac" />
+    <file src="lib\Release\net45\*.xml" target="lib\xamarinmac" />
     <file src="lib\Release\xamarintvos\*.dll" target="lib\xamarintvos" />
+    <file src="lib\Release\net45\*.xml" target="lib\xamarintvos" />
     <file src="lib\Release\xamarintvos\*.xml" target="lib\xamarintvos" />
     <file src="lib\Release\xamarinios\*.dll" target="lib\xamarinios" />
-    <file src="lib\Release\xamarinios\*.xml" target="lib\xamarinios" />
+    <file src="lib\Release\net45\*.xml" target="lib\xamarinios" />
     <file src="lib\Release\xamarinwatchos\*.dll" target="lib\xamarinwatchos" />
-    <file src="lib\Release\xamarinwatchos\*.xml" target="lib\xamarinwatchos" />
+    <file src="lib\Release\net45\*.xml" target="lib\xamarinwatchos" />
+    <file src="runtimes/win-x64/native/lua53.dll" />
+    <file src="runtimes/win-x86/native/lua53.dll" />
+    <file src="runtimes/osx/native/liblua53.dylib" />
     <file src="build/targets/KeraLua.targets" />
     <file src="LICENSE" />
   </files>

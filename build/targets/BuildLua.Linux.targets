@@ -11,7 +11,7 @@
     <Exec Command="mkdir $(ExternalLuaPath)\$(Linux64BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(Linux64BuildDir)')" />
     <Exec Command="cmake $(ExternalLuaPath) " WorkingDirectory="$(ExternalLuaPath)\$(Linux64BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(Linux64BuildDir)\CMakeCache.txt')" />
     <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(Linux64BuildDir)" />
-    <Copy SourceFiles="$(ExternalLuaPath)\$(Linux64BuildDir)\$(LinuxBinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(Linux64BuildDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(ExternalLuaPath)\$(Linux64BuildDir)\$(LinuxBinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(Linux64BuildDir)\native" SkipUnchangedFiles="true" />
   </Target>
   <Target Name="CleanLuaLinux" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and !Exists('/usr/lib/libc.dylib')">
       <Message Text="Cleaning Lua library (x64)" />
