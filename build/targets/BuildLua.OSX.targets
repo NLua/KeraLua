@@ -18,7 +18,7 @@
         <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSX32BuildDir)" />
         <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSX64BuildDir)" />
         <Exec Command="lipo -create $(OSX64BuildDir)\$(OSXBinaryLibraryPath64) $(OSX32BuildDir)\$(OSXBinaryLibraryPath32) -output $(OSXBuildDir)\$(OSXBinaryLibraryPath)" WorkingDirectory="$(ExternalLuaPath)" />
-        <Copy SourceFiles="$(ExternalLuaPath)\$(OSXBuildDir)\$(OSXBinaryLibraryPath)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="$(ExternalLuaPath)\$(OSXBuildDir)\$(OSXBinaryLibraryPath)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)\native" SkipUnchangedFiles="true" />
     </Target>
     <Target Name="CleanLuaOSX" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')" >
         <Message Text="Cleaning Lua library (osx)" />
