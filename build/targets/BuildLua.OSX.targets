@@ -18,7 +18,7 @@
             <XcodeSupport32Bits Condition="$(CurrentXcodeVersion) &lt; $(XcodeWithout32BitSupport)">true</XcodeSupport32Bits>
             <XcodeSupport32Bits Condition="$(CurrentXcodeVersion) &gt; $(XcodeWithout32BitSupport) or $(CurrentXcodeVersion) == $(XcodeWithout32BitSupport)">false</XcodeSupport32Bits>
         </PropertyGroup>
-        <Message Text="Xcode 10 doesn't support 32bits skipping 32 bit build " Condition="$(XcodeSupport32Bits)" />
+        <Message Text="******* Xcode 10 doesn't support 32bits skipping 32 bit build ***" Condition="!$(XcodeSupport32Bits)" />
         <Message Text="Building macOS Lua library" />
         <Exec Command="mkdir $(ExternalLuaPath)\$(OSXBuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(OSXBuildDir)')" />
         <Exec Command="mkdir $(ExternalLuaPath)\$(OSX32BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(OSX32BuildDir)') and $(XcodeSupport32Bits) " />
@@ -29,7 +29,7 @@
         <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSX64BuildDir)" />
         <Exec Command="lipo -create $(OSX64BuildDir)\$(OSXBinaryLibraryPath64) $(OSX32BuildDir)\$(OSXBinaryLibraryPath32) -output $(OSXBuildDir)\$(OSXBinaryLibraryPath)" WorkingDirectory="$(ExternalLuaPath)" Condition="$(XcodeSupport32Bits)"/>
         <Copy SourceFiles="$(ExternalLuaPath)\$(OSXBuildDir)\$(OSXBinaryLibraryPath)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)\native" SkipUnchangedFiles="true" Condition="$(XcodeSupport32Bits)"/>
-        <Copy SourceFiles="$(ExternalLuaPath)\$(OSX64BuildDir)\$(OSXBinaryLibraryPath)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)\native" SkipUnchangedFiles="true" Condition="!$(XcodeSupport32Bits)"/>
+        <Copy SourceFiles="$(ExternalLuaPath)\$(OSX64BuildDir)\$(OSXBinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)\native" SkipUnchangedFiles="true" Condition="!$(XcodeSupport32Bits)"/>
     </Target>
     <Target Name="CleanLuaOSX" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')" >
         <Message Text="Cleaning Lua library (osx)" />
