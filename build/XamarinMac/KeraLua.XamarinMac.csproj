@@ -38,9 +38,13 @@
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
     <ObjcBindingCoreSource Include="Structs.cs" />
-    <ObjcBindingNativeLibrary Include="..\..\runtimes\osx\native\liblua53.dylib" Link="liblua53.dylib" />
   </ItemGroup>
-
+  <ItemGroup>
+    <NativeReference Include="..\..\runtimes\osx\native\liblua53.dylib">
+      <Kind>Dynamic</Kind>
+      <SmartLink>False</SmartLink>
+    </NativeReference>
+  </ItemGroup>
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.ObjcBinding.CSharp.targets" />
   <Import Project="..\targets\BuildLua.OSX.targets" />
