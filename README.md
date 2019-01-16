@@ -12,8 +12,9 @@ KeraLua
 | :------ | :------: | 
 | **Linux**   | [![Linux](https://travis-ci.org/NLua/KeraLua.svg?branch=master)](https://travis-ci.org/NLua/KeraLua) |
 | **AppVeyor** | [![Build status](https://ci.appveyor.com/api/projects/status/jkqcy9m9k35jwolx?svg=true)](https://ci.appveyor.com/project/viniciusjarina/keralua)|
-|**Mac (VSTS)** | [![Build Status](https://codefoco.visualstudio.com/_apis/public/build/definitions/4f3cd26e-b8f7-4e52-9e78-c2ecf3de2929/1/badge)](https://codefoco.visualstudio.com/NLua/_build/index?context=mine&path=%5C&definitionId=1&_a=completed) |
-|**Windows (VSTS)** | [![Build Status](https://codefoco.visualstudio.com/_apis/public/build/definitions/4f3cd26e-b8f7-4e52-9e78-c2ecf3de2929/2/badge)](https://codefoco.visualstudio.com/NLua/_build/index?context=mine&path=%5C&definitionId=2&_a=completed) |
+|**Mac (Azure Pipelines)** | [![Build Status](https://dev.azure.com/NLua/NLua/_apis/build/status/NLua-KeraLua.Mac?branchName=master)](https://dev.azure.com/NLua/NLua/_build/latest?definitionId=2&branchName=master) |
+|**Linux (Azure Pipelines)** | [![Build Status](https://dev.azure.com/NLua/NLua/_apis/build/status/NLua-KeraLua.Linux?branchName=master)](https://dev.azure.com/NLua/NLua/_build/latest?definitionId=3&branchName=master) |
+|**Windows (Azure Pipelines)** | [![Build Status](https://dev.azure.com/NLua/NLua/_apis/build/status/NLua-KeraLua.Windows?branchName=master)](https://dev.azure.com/NLua/NLua/_build/latest?definitionId=4&branchName=master) |
 
 
 C# Native bindings of Lua 5.3 (compatible with Xamarin.iOS/Mac/Android/.NET/.NET Core) 
