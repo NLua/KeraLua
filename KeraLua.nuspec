@@ -2,19 +2,19 @@
 <package>
   <metadata>
     <id>KeraLua</id>
-    <version>0.1.3</version>
+    <version>0.1.6</version>
     <authors>NLua</authors>
     <owners>Vinicius Jarina</owners>
+    <licenseUrl>https://github.com/nlua/KeraLua/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/nlua/KeraLua</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/nlua/KeraLua/master/KeraLua.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
       C# Native bindings of Lua 5.3 (compatible with Xamarin.iOS/Mac/Android/.NET/.NET Core) 
     </description>
-    <releaseNotes>Release: ca40319</releaseNotes>
+    <releaseNotes>Release: 2bffe65</releaseNotes>
     <copyright>Copyright © Code Foco 2019</copyright>
     <tags>lua keralua</tags>
-    <license type="file">LICENSE</license>
   </metadata>
   <files>
     <file src="lib\Release\net45\*.dll" target="lib\net45" />

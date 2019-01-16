@@ -152,7 +152,6 @@ Global
 		{4E863C20-43C3-43A0-9678-8583B9614277}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E863C20-43C3-43A0-9678-8583B9614277}.ReleaseAndroid|Any CPU.ActiveCfg = Release|Any CPU
 		{4E863C20-43C3-43A0-9678-8583B9614277}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
-		{4E863C20-43C3-43A0-9678-8583B9614277}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
 		{4E863C20-43C3-43A0-9678-8583B9614277}.ReleaseMac|Any CPU.ActiveCfg = Release|Any CPU
 		{4E863C20-43C3-43A0-9678-8583B9614277}.ReleaseMac|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
