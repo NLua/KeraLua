@@ -629,7 +629,11 @@ namespace KeraLua
         {
             int size = Marshal.SizeOf(value);
             IntPtr data = NativeMethods.lua_newuserdata(_luaState, (UIntPtr)size);
+#if NETFRAMEWORK
             Marshal.StructureToPtr(value, data, false);
+#else
+            Marshal.StructureToPtr<T>(value, data, false);
+#endif
         }
 
         /// <summary>
@@ -1005,7 +1009,9 @@ namespace KeraLua
         /// <returns></returns>
         public long ToInteger(int index)
         {
+#pragma warning disable IDE0018 // Inline variable declaration
             int isNum;
+#pragma warning restore IDE0018 // Inline variable declaration
             return NativeMethods.lua_tointegerx(_luaState, index, out isNum);
         }
 
@@ -1175,8 +1181,11 @@ namespace KeraLua
 
             if (data == IntPtr.Zero)
                 return null;
-
+#if NETFRAMEWORK
             return (T)Marshal.PtrToStructure(data, typeof(T));
+#else
+            return Marshal.PtrToStructure<T>(data);
+#endif
         }
 
         /// <summary>
@@ -1465,8 +1474,11 @@ namespace KeraLua
 
             if (data == IntPtr.Zero)
                 return null;
-
+#if NETFRAMEWORK
             return (T)Marshal.PtrToStructure(data, typeof(T));
+#else
+            return Marshal.PtrToStructure<T>(data);
+#endif
         }
 
         /// <summary>
@@ -1804,8 +1816,11 @@ namespace KeraLua
 
             if (data == IntPtr.Zero)
                 return null;
-
+#if NETFRAMEWORK
             return (T)Marshal.PtrToStructure(data, typeof(T));
+#else
+            return Marshal.PtrToStructure<T>(data);
+#endif
         }
 
         /// <summary>
