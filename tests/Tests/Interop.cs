@@ -57,9 +57,11 @@ namespace KeraLuaTest.Tests
 
             var param1 = state.ToValueDataNullable<Rectangle>(1);
             var param2 = state.ToValueData<Rectangle>(2);
+            var param3 = state.ToValueData<DateTime>(3);
 
             Assert.IsNull(param1, "#1");
             Assert.AreEqual(param2, new Rectangle(10, 10, 100, 100),  "#2");
+            Assert.AreEqual(param3, new DateTime(2018, 10, 10, 0, 0 ,0),  "#3");
 
             return 0;
         }
@@ -116,10 +118,13 @@ namespace KeraLuaTest.Tests
             state.PushValueData(new Rectangle(10, 10, 100, 100));
             state.SetGlobal("bar");
 
+            state.PushValueData(new DateTime(2018, 10, 10, 0, 0 ,0));
+            state.SetGlobal("date");
+
             state.PushCFunction(FuncTestValueData);
             state.SetGlobal("TestValueData");
 
-            AssertString("TestValueData(foo, bar)", state);
+            AssertString("TestValueData(foo, bar, date)", state);
         }
 
         void AssertString(string chunk, Lua state)

@@ -627,13 +627,8 @@ namespace KeraLua
         /// <param name="value"></param>
         public void PushValueData<T>(T value) where T : struct
         {
-            int size = Marshal.SizeOf(value);
-            IntPtr data = NativeMethods.lua_newuserdata(_luaState, (UIntPtr)size);
-#if NETFRAMEWORK
-            Marshal.StructureToPtr(value, data, false);
-#else
-            Marshal.StructureToPtr<T>(value, data, false);
-#endif
+            object box = value;
+            PushReferenceData<object>(box);
         }
 
         /// <summary>
@@ -1174,18 +1169,7 @@ namespace KeraLua
         /// <returns></returns>
         public T? ToValueDataNullable<T>(int index) where T : struct
         {
-            if (IsNil(index) || !IsUserData(index))
-                return null;
-
-            IntPtr data = NativeMethods.lua_touserdata(_luaState, index);
-
-            if (data == IntPtr.Zero)
-                return null;
-#if NETFRAMEWORK
-            return (T)Marshal.PtrToStructure(data, typeof(T));
-#else
-            return Marshal.PtrToStructure<T>(data);
-#endif
+            return ToReferenceData<object>(index) as T?;
         }
 
         /// <summary>
