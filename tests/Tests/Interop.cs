@@ -18,6 +18,14 @@ namespace KeraLuaTest.Tests
         public static readonly char UnicodeChar = '\uE007';
         public static string UnicodeString => Convert.ToString(UnicodeChar);
 
+        [SetUp]
+        public void SetUp()
+        {
+            string path = new Uri(GetType().Assembly.CodeBase).AbsolutePath;
+            path = System.IO.Path.GetDirectoryName(path);
+            Environment.CurrentDirectory = path;
+        }
+
 #if MONOTOUCH
         [MonoPInvokeCallback(typeof(LuaFunction))]
 #endif
