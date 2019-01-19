@@ -10,7 +10,7 @@ namespace KeraLua
     /// Do not change this struct because it must match the lua structure lua_Debug
     /// </remarks>
     /// <author>Reinhard Ostermeier</author>
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct LuaDebug
     {
         /// <summary>
