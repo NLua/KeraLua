@@ -235,6 +235,7 @@ main.lua:11 (main)
             expected = expected.Replace("\r","");
             output = output.Replace("\r","");
             Assert.AreEqual(expected, output, "#1");
+            Assert.IsNotNull(state.Hook);
         }
 
         [Test]
