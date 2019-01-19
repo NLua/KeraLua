@@ -25,9 +25,6 @@ function Test-Should-Deploy ()
 	if (Test-Tag-Build $nugetGitVersion $buildMetaData $fullSemVer) {
 		return  $true
 	}
-	if (Test-Commit-Message-Deploy) {
-		return $true
-	}
 	return $false
 }
 

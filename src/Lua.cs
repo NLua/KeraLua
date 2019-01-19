@@ -295,9 +295,34 @@ namespace KeraLua
         /// <param name="what"></param>
         /// <param name="ar"></param>
         /// <returns>This function returns false on error (for instance, an invalid option in what). </returns>
+        public bool GetInfo(string what, IntPtr ar)
+        {
+            return NativeMethods.lua_getinfo(_luaState, what, ar) != 0;
+        }
+
+        /// <summary>
+        /// Gets information about a specific function or function invocation. 
+        /// </summary>
+        /// <param name="what"></param>
+        /// <param name="ar"></param>
+        /// <returns>This function returns false on error (for instance, an invalid option in what). </returns>
         public bool GetInfo(string what, ref LuaDebug ar)
         {
-            return NativeMethods.lua_getinfo(_luaState, what, ref ar) != 0;
+            IntPtr pDebug = Marshal.AllocHGlobal(Marshal.SizeOf(ar));
+            bool ret = false;
+            try {
+                Marshal.StructureToPtr(ar, pDebug, false);
+
+                ret = GetInfo(what, pDebug);
+#if NETFRAMEWORK
+                ar = (LuaDebug)Marshal.PtrToStructure(pDebug, typeof(LuaDebug));
+#else
+                ar = Marshal.PtrToStructure<LuaDebug>(pDebug);
+#endif
+            } finally {
+                Marshal.FreeHGlobal(pDebug);
+            }
+            return ret;
         }
 
         /// <summary>
@@ -306,9 +331,34 @@ namespace KeraLua
         /// <param name="ar"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        public string GetLocal(ref LuaDebug ar, int n)
+        public string GetLocal(IntPtr ar, int n)
         {
-            return NativeMethods.lua_getlocal(_luaState, ref ar, n);
+            return NativeMethods.lua_getlocal(_luaState, ar, n);
+        }
+
+        /// <summary>
+        /// Gets information about a local variable of a given activation record or a given function. 
+        /// </summary>
+        /// <param name="ar"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public string GetLocal(LuaDebug ar, int n)
+        {
+            IntPtr pDebug = Marshal.AllocHGlobal(Marshal.SizeOf(ar));
+            string ret = string.Empty;
+            try {
+                Marshal.StructureToPtr(ar, pDebug, false);
+
+                ret = GetLocal(pDebug, n);
+#if NETFRAMEWORK
+                ar = (LuaDebug)Marshal.PtrToStructure(pDebug, typeof(LuaDebug));
+#else
+                ar = Marshal.PtrToStructure<LuaDebug>(pDebug);
+#endif
+            } finally {
+                Marshal.FreeHGlobal(pDebug);
+            }
+            return ret;
         }
 
         /// <summary>
@@ -327,10 +377,36 @@ namespace KeraLua
         /// <param name="level"></param>
         /// <param name="ar"></param>
         /// <returns></returns>
+        public int GetStack(int level, IntPtr ar)
+        {
+            return NativeMethods.lua_getstack(_luaState, level, ar);
+        }
+
+        /// <summary>
+        /// Gets information about the interpreter runtime stack. 
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="ar"></param>
+        /// <returns></returns>
         public int GetStack(int level, ref LuaDebug ar)
         {
-            return NativeMethods.lua_getstack(_luaState, level, ref ar);
+            IntPtr pDebug = Marshal.AllocHGlobal(Marshal.SizeOf(ar));
+            int ret = 0;
+            try {
+                Marshal.StructureToPtr(ar, pDebug, false);
+
+                ret = GetStack(level, pDebug);
+#if NETFRAMEWORK
+                ar = (LuaDebug)Marshal.PtrToStructure(pDebug, typeof(LuaDebug));
+#else
+                ar = Marshal.PtrToStructure<LuaDebug>(pDebug);
+#endif
+            } finally {
+                Marshal.FreeHGlobal(pDebug);
+            }
+            return ret;
         }
+
 
         /// <summary>
         /// Pushes onto the stack the value t[k], where t is the value at the given index and k is the value at the top of the stack. 
@@ -347,6 +423,7 @@ namespace KeraLua
         /// </summary>
         /// <returns>Returns the index of the top element in the stack.</returns>
         public int GetTop() => NativeMethods.lua_gettop(_luaState);
+
         /// <summary>
         /// Pushes onto the stack the Lua value associated with the full userdata at the given index. 
         /// </summary>
@@ -354,6 +431,25 @@ namespace KeraLua
         /// <returns>Returns the type of the pushed value. </returns>
         public int GetUserValue(int index) => NativeMethods.lua_getuservalue(_luaState, index);
 
+        /// <summary>
+        ///  Gets information about the n-th upvalue of the closure at index funcindex. It pushes the upvalue's value onto the stack and returns its name. Returns NULL (and pushes nothing) when the index n is greater than the number of upvalues.
+        ///  For C functions, this function uses the empty string "" as a name for all upvalues. (For Lua functions, upvalues are the external local variables that the function uses, and that are consequently included in its closure.)
+        ///  Upvalues have no particular order, as they are active through the whole function. They are numbered in an arbitrary order. 
+        /// </summary>
+        /// <param name="functionIndex"></param>
+        /// <param name="n"></param>
+        /// <returns>Returns the type of the pushed value. </returns>
+        public string GetUpValue(int functionIndex, int n) => NativeMethods.lua_getupvalue(_luaState, functionIndex, n);
+
+        /// <summary>
+        /// Returns the current hook function. 
+        /// </summary>
+        public LuaHookFunction Hook => NativeMethods.lua_gethook(_luaState).ToLuaHookFunction();
+
+        /// <summary>
+        /// Returns the current hook count. 
+        /// </summary>
+        public int HookCount => NativeMethods.lua_gethookcount(_luaState);
         /// <summary>
         /// Moves the top element into the given valid index, shifting up the elements above this index to open space. This function cannot be called with a pseudo-index, because a pseudo-index is not an actual stack position. 
         /// </summary>
@@ -609,7 +705,7 @@ namespace KeraLua
         /// <param name="obj"></param>
         public void PushReferenceData<T>(T obj) where T : class
         {
-            if (obj == null)
+            if(obj == null)
             {
                 PushNil();
                 return;
@@ -638,7 +734,7 @@ namespace KeraLua
         /// <param name="obj"></param>
         public void PushValueData<T>(T? obj) where T : struct
         {
-            if (obj.HasValue)
+            if(obj.HasValue)
                 PushValueData(obj.Value);
             else
                 PushNil();
@@ -650,7 +746,7 @@ namespace KeraLua
         /// <param name="buffer"></param>
         public void PushBuffer(byte[] buffer)
         {
-            if (buffer == null)
+            if(buffer == null)
             {
                 PushNil();
                 return;
@@ -665,7 +761,7 @@ namespace KeraLua
         /// <param name="value"></param>
         public void PushString(string value)
         {
-            if (value == null)
+            if(value == null)
             {
                 PushNil();
                 return;
@@ -885,6 +981,19 @@ namespace KeraLua
         }
 
         /// <summary>
+        /// Sets the debugging hook function. 
+        /// 
+        /// Argument f is the hook function. mask specifies on which events the hook will be called: it is formed by a bitwise OR of the constants
+        /// </summary>
+        /// <param name="hookFunction">Hook function callback</param>
+        /// <param name="mask">hook mask</param>
+        /// <param name="count">count (used only with LuaHookMas.Count)</param>
+        public void SetHook(LuaHookFunction hookFunction, LuaHookMask mask, int count)
+        {
+            NativeMethods.lua_sethook(_luaState, hookFunction.ToFunctionPointer(), (int)mask, count);
+        }
+
+        /// <summary>
         /// Pops a value from the stack and sets it as the new value of global name. 
         /// </summary>
         /// <param name="name"></param>
@@ -909,9 +1018,34 @@ namespace KeraLua
         /// <param name="ar"></param>
         /// <param name="n"></param>
         /// <returns>Returns NULL (and pops nothing) when the index is greater than the number of active local variables. </returns>
-        public string SetLocal(ref LuaDebug ar, int n)
+        public string SetLocal(IntPtr ar, int n)
         {
-            return NativeMethods.lua_setlocal(_luaState, ref ar, n);
+            return NativeMethods.lua_setlocal(_luaState, ar, n);
+        }
+
+                /// <summary>
+        /// Sets the value of a local variable of a given activation record. It assigns the value at the top of the stack to the variable and returns its name. It also pops the value from the stack. 
+        /// </summary>
+        /// <param name="ar"></param>
+        /// <param name="n"></param>
+        /// <returns>Returns NULL (and pops nothing) when the index is greater than the number of active local variables. </returns>
+        public string SetLocal(LuaDebug ar, int n)
+        {
+            IntPtr pDebug = Marshal.AllocHGlobal(Marshal.SizeOf(ar));
+            string ret = string.Empty;
+            try {
+                Marshal.StructureToPtr(ar, pDebug, false);
+
+                ret = SetLocal(pDebug, n);
+#if NETFRAMEWORK
+                ar = (LuaDebug)Marshal.PtrToStructure(pDebug, typeof(LuaDebug));
+#else
+                ar = Marshal.PtrToStructure<LuaDebug>(pDebug);
+#endif
+            } finally {
+                Marshal.FreeHGlobal(pDebug);
+            }
+            return ret;
         }
 
         /// <summary>
@@ -1019,7 +1153,7 @@ namespace KeraLua
         {
             int isInteger;
             long value = NativeMethods.lua_tointegerx(_luaState, index, out isInteger);
-            if (isInteger != 0)
+            if(isInteger != 0)
                 return value;
             return null;
         }
@@ -1044,16 +1178,16 @@ namespace KeraLua
             UIntPtr len;
             IntPtr buff;
 
-            if (callMetamethod)
+            if(callMetamethod)
                 buff = NativeMethods.luaL_tolstring(_luaState, index, out len);
             else
                 buff = NativeMethods.lua_tolstring(_luaState, index, out len);
 
-            if (buff == IntPtr.Zero)
+            if(buff == IntPtr.Zero)
                 return null;
 
             int length = (int)len;
-            if (length == 0)
+            if(length == 0)
                 return new byte[0];
 
             byte[] output = new byte[length];
@@ -1079,7 +1213,7 @@ namespace KeraLua
         public string ToString(int index, bool callMetamethod)
         {
             byte[] buffer = ToBuffer(index, callMetamethod);
-            if (buffer == null)
+            if(buffer == null)
                 return null;
             return Encoding.GetString(buffer);
         }
@@ -1104,7 +1238,7 @@ namespace KeraLua
         {
             int isNumber;
             double value = NativeMethods.lua_tonumberx(_luaState, index, out isNumber);
-            if (isNumber != 0)
+            if(isNumber != 0)
                 return value;
             return null;
         }
@@ -1119,7 +1253,7 @@ namespace KeraLua
         public Lua ToThread(int index)
         {
             IntPtr state = NativeMethods.lua_tothread(_luaState, index);
-            if (state == _luaState)
+            if(state == _luaState)
                 return this;
 
             return FromIntPtr(state);
@@ -1135,11 +1269,11 @@ namespace KeraLua
         /// <returns></returns>
         public T ToReferenceData<T>(int index) where T : class
         {
-            if (IsNil(index) || !IsLightUserData(index))
+            if(IsNil(index) || !IsLightUserData(index))
                 return null;
 
             IntPtr data = NativeMethods.lua_touserdata(_luaState, index);
-            if (data == IntPtr.Zero)
+            if(data == IntPtr.Zero)
                 return null;
 
             var handle = GCHandle.FromIntPtr(data);
@@ -1341,7 +1475,7 @@ namespace KeraLua
                 return null;
 
             int length = (int)len;
-            if (length == 0)
+            if(length == 0)
                 return new byte[0];
 
             byte[] output = new byte[length];
@@ -1357,7 +1491,7 @@ namespace KeraLua
         public string CheckString(int argument)
         {
             byte[] buffer = CheckBuffer(argument);
-            if (buffer == null)
+            if(buffer == null)
                 return null;
             return Encoding.GetString(buffer);
         }
@@ -1415,11 +1549,11 @@ namespace KeraLua
         /// <returns></returns>
         public T CheckReferenceData<T>(int argument, string typeName) where T : class
         {
-            if (IsNil(argument) || !IsLightUserData(argument))
+            if(IsNil(argument) || !IsLightUserData(argument))
                 return null;
 
             IntPtr data = NativeMethods.luaL_checkudata(_luaState, argument, typeName);
-            if (data == IntPtr.Zero)
+            if(data == IntPtr.Zero)
                 return null;
 
             var handle = GCHandle.FromIntPtr(data);
@@ -1451,12 +1585,12 @@ namespace KeraLua
         /// <returns></returns>
         public T? CheckValueDataNullable<T>(int argument, string typeName) where T : struct
         {
-            if (IsNil(argument) || !IsUserData(argument))
+            if(IsNil(argument) || !IsUserData(argument))
                 return null;
 
             IntPtr data = NativeMethods.luaL_checkudata(_luaState, argument, typeName);
 
-            if (data == IntPtr.Zero)
+            if(data == IntPtr.Zero)
                 return null;
 #if NETFRAMEWORK
             return (T)Marshal.PtrToStructure(data, typeof(T));

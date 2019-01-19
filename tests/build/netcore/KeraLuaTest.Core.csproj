@@ -61,6 +61,18 @@
     <None Include="..\..\LuaTests\core\sort.lua" Link="LuaTests\core\sort.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="..\..\LuaTests\scripts\foo.lua">
+      <Link>foo.lua</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\LuaTests\scripts\main.lua">
+      <Link>main.lua</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\LuaTests\scripts\module1.lua">
+      <Link>module1.lua</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\..\runtimes\win-x64\native\lua53.dll" Condition="'$(Os)'=='Windows_NT'">
