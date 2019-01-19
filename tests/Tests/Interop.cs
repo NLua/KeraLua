@@ -47,8 +47,8 @@ namespace KeraLuaTest.Tests
         {
             var state = Lua.FromIntPtr(p);
 
-            var param1 = state.ToReferenceData<XDocument>(1);
-            var param2 = state.ToReferenceData<XDocument>(2);
+            var param1 = state.ToObject<XDocument>(1);
+            var param2 = state.ToObject<XDocument>(2);
 
             Assert.IsNull(param1, "#1");
             Assert.AreEqual(param2, _gTempDocument,  "#2");
@@ -63,9 +63,9 @@ namespace KeraLuaTest.Tests
         {
             var state = Lua.FromIntPtr(p);
 
-            var param1 = state.ToValueDataNullable<Rectangle>(1);
-            var param2 = state.ToValueData<Rectangle>(2);
-            var param3 = state.ToValueData<DateTime>(3);
+            var param1 = state.ToObject<Rectangle?>(1);
+            var param2 = state.ToObject<Rectangle>(2);
+            var param3 = state.ToObject<DateTime>(3);
 
             Assert.IsNull(param1, "#1");
             Assert.AreEqual(param2, new Rectangle(10, 10, 100, 100),  "#2");
@@ -102,10 +102,10 @@ namespace KeraLuaTest.Tests
                                                   </users>");
             var state = new Lua();
 
-            state.PushReferenceData<XDocument>(null);
+            state.PushObject<XDocument>(null);
             state.SetGlobal("foo");
 
-            state.PushReferenceData(document);
+            state.PushObject(document);
             state.SetGlobal("bar");
 
             state.PushCFunction(FuncTestReferenceData);
@@ -120,13 +120,13 @@ namespace KeraLuaTest.Tests
         {
             var state = new Lua();
 
-            state.PushValueData<Rectangle>(null);
+            state.PushObject<Rectangle?>(null);
             state.SetGlobal("foo");
 
-            state.PushValueData(new Rectangle(10, 10, 100, 100));
+            state.PushObject(new Rectangle(10, 10, 100, 100));
             state.SetGlobal("bar");
 
-            state.PushValueData(new DateTime(2018, 10, 10, 0, 0 ,0));
+            state.PushObject(new DateTime(2018, 10, 10, 0, 0 ,0));
             state.SetGlobal("date");
 
             state.PushCFunction(FuncTestValueData);
