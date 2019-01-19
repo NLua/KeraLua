@@ -694,7 +694,7 @@ namespace KeraLua
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
-        public void PushReferenceData<T>(T obj) where T : class
+        public void PushObject<T>(T obj)
         {
             if(obj == null)
             {
@@ -706,30 +706,6 @@ namespace KeraLua
             NativeMethods.lua_pushlightuserdata(_luaState, GCHandle.ToIntPtr(handle));
         }
 
-        /// <summary>
-        /// Pushes a value data (C# struct)  onto the stack. 
-        /// The value must be blitable, since the content will be stored on the unmanaged memory
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value"></param>
-        public void PushValueData<T>(T value) where T : struct
-        {
-            object box = value;
-            PushReferenceData<object>(box);
-        }
-
-        /// <summary>
-        /// Pushes a Nullable value data
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        public void PushValueData<T>(T? obj) where T : struct
-        {
-            if(obj.HasValue)
-                PushValueData(obj.Value);
-            else
-                PushNil();
-        }
 
         /// <summary>
         /// Pushes binary buffer onto the stack (usually UTF encoded string) or any arbitraty binary data
@@ -1255,14 +1231,14 @@ namespace KeraLua
         /// <typeparam name="T"></typeparam>
         /// <param name="index"></param>
         /// <returns></returns>
-        public T ToReferenceData<T>(int index) where T : class
+        public T ToObject<T>(int index)
         {
             if(IsNil(index) || !IsLightUserData(index))
-                return null;
+                return default(T);
 
             IntPtr data = NativeMethods.lua_touserdata(_luaState, index);
             if(data == IntPtr.Zero)
-                return null;
+                return default(T);
 
             var handle = GCHandle.FromIntPtr(data);
             var reference = (T)handle.Target;
@@ -1271,28 +1247,6 @@ namespace KeraLua
             return reference;
         }
 
-        /// <summary>
-        /// Return a value object from index
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public T ToValueData<T>(int index) where T : struct
-        {
-            T? value = ToValueDataNullable<T>(index);
-            return value ?? default(T);
-        }
-
-        /// <summary>
-        /// Return a value? from index
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public T? ToValueDataNullable<T>(int index) where T : struct
-        {
-            return ToReferenceData<object>(index) as T?;
-        }
 
         /// <summary>
         /// </summary>
@@ -1535,56 +1489,20 @@ namespace KeraLua
         /// <param name="argument"></param>
         /// <param name="typeName"></param>
         /// <returns></returns>
-        public T CheckReferenceData<T>(int argument, string typeName) where T : class
+        public T CheckObject<T>(int argument, string typeName)
         {
             if(IsNil(argument) || !IsLightUserData(argument))
-                return null;
+                return default(T);
 
             IntPtr data = NativeMethods.luaL_checkudata(_luaState, argument, typeName);
             if(data == IntPtr.Zero)
-                return null;
+                return default(T);
 
             var handle = GCHandle.FromIntPtr(data);
             var reference = (T)handle.Target;
             handle.Free();
 
             return reference;
-        }
-
-        /// <summary>
-        /// Check if the value on stack is a nullable value data and return the value
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="argument"></param>
-        /// <param name="typeName"></param>
-        /// <returns></returns>
-        public T CheckValueData<T>(int argument, string typeName) where T : struct
-        {
-            T? value = CheckValueDataNullable<T>(argument, typeName);
-            return value ?? default(T);
-        }
-
-        /// <summary>
-        /// Check if the value on stack is a nullable value data and return the value.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="argument"></param>
-        /// <param name="typeName"></param>
-        /// <returns></returns>
-        public T? CheckValueDataNullable<T>(int argument, string typeName) where T : struct
-        {
-            if(IsNil(argument) || !IsUserData(argument))
-                return null;
-
-            IntPtr data = NativeMethods.luaL_checkudata(_luaState, argument, typeName);
-
-            if(data == IntPtr.Zero)
-                return null;
-#if NETFRAMEWORK
-            return (T)Marshal.PtrToStructure(data, typeof(T));
-#else
-            return Marshal.PtrToStructure<T>(data);
-#endif
         }
 
         /// <summary>
@@ -1890,56 +1808,20 @@ namespace KeraLua
         /// <param name="argument"></param>
         /// <param name="typeName"></param>
         /// <returns></returns>
-        public T TestReferenceData<T>(int argument, string typeName) where T : class
+        public T TestObject<T>(int argument, string typeName)
         {
             if (IsNil(argument) || !IsLightUserData(argument))
-                return null;
+                return default(T);
 
             IntPtr data = NativeMethods.luaL_testudata(_luaState, argument, typeName);
             if (data == IntPtr.Zero)
-                return null;
+                return default(T);
 
             var handle = GCHandle.FromIntPtr(data);
             var reference = (T)handle.Target;
             handle.Free();
 
             return reference;
-        }
-
-        /// <summary>
-        /// Test if the value at index is a nullable value data
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="argument"></param>
-        /// <param name="typeName"></param>
-        /// <returns></returns>
-        public T? TestValueDataNullable<T>(int argument, string typeName) where T : struct
-        {
-            if (IsNil(argument) || !IsUserData(argument))
-                return null;
-
-            IntPtr data = NativeMethods.luaL_testudata(_luaState, argument, typeName);
-
-            if (data == IntPtr.Zero)
-                return null;
-#if NETFRAMEWORK
-            return (T)Marshal.PtrToStructure(data, typeof(T));
-#else
-            return Marshal.PtrToStructure<T>(data);
-#endif
-        }
-
-        /// <summary>
-        /// Test if the value at index is a value data
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="argument"></param>
-        /// <param name="typeName"></param>
-        /// <returns></returns>
-        public T TestValueData<T>(int argument, string typeName) where T : struct
-        {
-            T? value = TestValueDataNullable<T>(argument, typeName);
-            return value ?? default(T);
         }
 
         /// <summary>
