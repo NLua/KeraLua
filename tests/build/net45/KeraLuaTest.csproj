@@ -89,6 +89,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>LuaTests\core\sort.lua</Link>
     </None>
+    <None Include="..\..\LuaTests\scripts\foo.lua">
+      <Link>foo.lua</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\LuaTests\scripts\main.lua">
+      <Link>main.lua</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\LuaTests\scripts\module1.lua">
+      <Link>module1.lua</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,14 @@ namespace KeraLuaTest.Tests
         public static readonly char UnicodeChar = '\uE007';
         public static string UnicodeString => Convert.ToString(UnicodeChar);
 
+        [SetUp]
+        public void SetUp()
+        {
+            string path = new Uri(GetType().Assembly.CodeBase).AbsolutePath;
+            path = System.IO.Path.GetDirectoryName(path);
+            Environment.CurrentDirectory = path;
+        }
+
 #if MONOTOUCH
         [MonoPInvokeCallback(typeof(LuaFunction))]
 #endif
@@ -144,6 +152,138 @@ namespace KeraLuaTest.Tests
                 error = state.ToString(1, false);
 
             Assert.True(result == 0, "Fail calling chunk: " + chunk + " ERROR: " + error);
+        }
+
+        static StringBuilder hookLog;
+
+#if MONOTOUCH
+        [MonoPInvokeCallback(typeof(LuaHookFunction))]
+#endif
+        static void HookCallback(IntPtr p, IntPtr ar)
+        {
+            var state = Lua.FromIntPtr(p);
+            var debug = LuaDebug.FromIntPtr(ar);
+
+            Assert.NotNull(state, "#state shouldn't be null");
+            Assert.NotNull(debug, "#debug shouldn't be null");
+
+            if (debug.Event != LuaHookEvent.Line)
+                return;
+
+            state.GetStack(0, ar);
+
+            if(!state.GetInfo("Snlu", ar))
+                return;
+
+            debug = LuaDebug.FromIntPtr(ar);
+            string source = debug.Source.Substring(1);
+            source = System.IO.Path.GetFileName(source);
+            hookLog.AppendLine($"{source}:{debug.CurrentLine} ({debug.What})");
+        }
+
+        static void HookCalbackStruct(IntPtr p, IntPtr ar)
+        {
+            var state = Lua.FromIntPtr(p);
+            var debug = new LuaDebug();
+
+            state.GetStack(0, ref debug);
+
+            if(!state.GetInfo("Snlu", ref debug))
+                return;
+
+            string source = debug.Source.Substring(1);
+            source = System.IO.Path.GetFileName(source);
+            hookLog.AppendLine ($"{source}:{debug.CurrentLine} ({debug.What})");
+        }
+
+        static LuaHookFunction FuncHookCallback = HookCallback;
+
+
+        [Test]
+        public void TestLuaHook()
+        {
+            var state = new Lua();
+            hookLog = new StringBuilder();
+            state.SetHook(FuncHookCallback, LuaHookMask.Line, 0);
+            state.DoFile("main.lua");
+            string output = hookLog.ToString();
+            string expected = 
+@"main.lua:2 (main)
+foo.lua:2 (main)
+module1.lua:3 (main)
+module1.lua:9 (main)
+module1.lua:5 (main)
+module1.lua:11 (main)
+foo.lua:8 (main)
+foo.lua:4 (main)
+foo.lua:14 (main)
+foo.lua:10 (main)
+foo.lua:14 (main)
+main.lua:4 (main)
+main.lua:5 (main)
+main.lua:7 (main)
+main.lua:8 (main)
+foo.lua:5 (Lua)
+foo.lua:6 (Lua)
+foo.lua:7 (Lua)
+module1.lua:6 (Lua)
+module1.lua:7 (Lua)
+module1.lua:8 (Lua)
+foo.lua:8 (Lua)
+main.lua:11 (main)
+";
+            expected = expected.Replace("\r","");
+            output = output.Replace("\r","");
+            Assert.AreEqual(expected, output, "#1");
+            Assert.IsNotNull(state.Hook);
+        }
+
+        [Test]
+        public void TestLuaHookStruct()
+        {
+            FuncHookCallback = HookCalbackStruct;
+            var state = new Lua();
+            hookLog = new StringBuilder();
+
+            state.SetHook(FuncHookCallback, LuaHookMask.Line, 0);
+
+            Assert.AreEqual(FuncHookCallback, state.Hook, "#1");
+
+            state.DoFile("main.lua");
+            string output = hookLog.ToString();
+            string expected = 
+@"main.lua:2 (main)
+foo.lua:2 (main)
+module1.lua:3 (main)
+module1.lua:9 (main)
+module1.lua:5 (main)
+module1.lua:11 (main)
+foo.lua:8 (main)
+foo.lua:4 (main)
+foo.lua:14 (main)
+foo.lua:10 (main)
+foo.lua:14 (main)
+main.lua:4 (main)
+main.lua:5 (main)
+main.lua:7 (main)
+main.lua:8 (main)
+foo.lua:5 (Lua)
+foo.lua:6 (Lua)
+foo.lua:7 (Lua)
+module1.lua:6 (Lua)
+module1.lua:7 (Lua)
+module1.lua:8 (Lua)
+foo.lua:8 (Lua)
+main.lua:11 (main)
+";
+            expected = expected.Replace("\r","");
+            output = output.Replace("\r","");
+
+            Assert.AreEqual(expected, output, "#2");
+
+            state.SetHook(FuncHookCallback, LuaHookMask.Disabled, 0);
+
+            Assert.IsNull(state.Hook, "#3");
         }
     }
 }
