@@ -314,11 +314,8 @@ namespace KeraLua
                 Marshal.StructureToPtr(ar, pDebug, false);
 
                 ret = GetInfo(what, pDebug);
-#if NETFRAMEWORK
-                ar = (LuaDebug)Marshal.PtrToStructure(pDebug, typeof(LuaDebug));
-#else
-                ar = Marshal.PtrToStructure<LuaDebug>(pDebug);
-#endif
+                ar = LuaDebug.FromIntPtr(pDebug);
+
             } finally {
                 Marshal.FreeHGlobal(pDebug);
             }
@@ -350,11 +347,8 @@ namespace KeraLua
                 Marshal.StructureToPtr(ar, pDebug, false);
 
                 ret = GetLocal(pDebug, n);
-#if NETFRAMEWORK
-                ar = (LuaDebug)Marshal.PtrToStructure(pDebug, typeof(LuaDebug));
-#else
-                ar = Marshal.PtrToStructure<LuaDebug>(pDebug);
-#endif
+                ar = LuaDebug.FromIntPtr(pDebug);
+
             } finally {
                 Marshal.FreeHGlobal(pDebug);
             }
@@ -396,11 +390,8 @@ namespace KeraLua
                 Marshal.StructureToPtr(ar, pDebug, false);
 
                 ret = GetStack(level, pDebug);
-#if NETFRAMEWORK
-                ar = (LuaDebug)Marshal.PtrToStructure(pDebug, typeof(LuaDebug));
-#else
-                ar = Marshal.PtrToStructure<LuaDebug>(pDebug);
-#endif
+                ar = LuaDebug.FromIntPtr(pDebug);
+
             } finally {
                 Marshal.FreeHGlobal(pDebug);
             }
@@ -1037,11 +1028,8 @@ namespace KeraLua
                 Marshal.StructureToPtr(ar, pDebug, false);
 
                 ret = SetLocal(pDebug, n);
-#if NETFRAMEWORK
-                ar = (LuaDebug)Marshal.PtrToStructure(pDebug, typeof(LuaDebug));
-#else
-                ar = Marshal.PtrToStructure<LuaDebug>(pDebug);
-#endif
+                ar = LuaDebug.FromIntPtr(pDebug);
+
             } finally {
                 Marshal.FreeHGlobal(pDebug);
             }

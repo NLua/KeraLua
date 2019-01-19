@@ -13,9 +13,18 @@ namespace KeraLua
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct LuaDebug
     {
+        /// <summary>
+        /// Get a LuaDebug from IntPtr
+        /// </summary>
+        /// <param name="ar"></param>
+        /// <returns></returns>
         public static LuaDebug FromIntPtr(IntPtr ar)
         {
-            return (LuaDebug)Marshal.PtrToStructure(ar, typeof(LuaDebug));
+#if NETFRAMEWORK
+                return (LuaDebug)Marshal.PtrToStructure(ar, typeof(LuaDebug));
+#else
+                return Marshal.PtrToStructure<LuaDebug>(ar);
+#endif
         }
         /// <summary>
         /// Debug event code
