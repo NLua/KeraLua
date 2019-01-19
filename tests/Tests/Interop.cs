@@ -159,10 +159,13 @@ namespace KeraLuaTest.Tests
 #if MONOTOUCH
         [MonoPInvokeCallback(typeof(LuaHookFunction))]
 #endif
-        static void HookCalback(IntPtr p, IntPtr ar)
+        static void HookCallback(IntPtr p, IntPtr ar)
         {
             var state = Lua.FromIntPtr(p);
             var debug = LuaDebug.FromIntPtr(ar);
+
+            Assert.NotNull(state, "#state shouldn't be null");
+            Assert.NotNull(debug, "#debug shouldn't be null");
 
             if (debug.Event != LuaHookEvent.Line)
                 return;
@@ -193,7 +196,7 @@ namespace KeraLuaTest.Tests
             hookLog.AppendLine ($"{source}:{debug.CurrentLine} ({debug.What})");
         }
 
-        static LuaHookFunction FuncHookCallback = HookCalback;
+        static LuaHookFunction FuncHookCallback = HookCallback;
 
 
         [Test]
