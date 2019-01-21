@@ -441,6 +441,12 @@ namespace KeraLua
         /// Returns the current hook count. 
         /// </summary>
         public int HookCount => NativeMethods.lua_gethookcount(_luaState);
+
+        /// <summary>
+        /// Returns the current hook mask. 
+        /// </summary>
+        public LuaHookMask HookMask => (LuaHookMask)NativeMethods.lua_gethookmask(_luaState);
+
         /// <summary>
         /// Moves the top element into the given valid index, shifting up the elements above this index to open space. This function cannot be called with a pseudo-index, because a pseudo-index is not an actual stack position. 
         /// </summary>
