@@ -627,6 +627,16 @@ namespace KeraLua
         }
 
         /// <summary>
+        /// This function allocates a new block of memory with the given size, pushes onto the stack a new full userdata with the block address, and returns this address. The host program can freely use this memory
+        /// </summary>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public IntPtr NewUserData(int size)
+        {
+            return NativeMethods.lua_newuserdata(_luaState, (UIntPtr) size);
+        }
+
+        /// <summary>
         /// Pops a key from the stack, and pushes a key–value pair from the table at the given index (the "next" pair after the given key).
         /// </summary>
         /// <param name="index"></param>
@@ -717,6 +727,16 @@ namespace KeraLua
         public void PushInteger(long n) => NativeMethods.lua_pushinteger(_luaState, n);
 
         /// <summary>
+        /// Pushes a light userdata onto the stack.
+        /// Userdata represent C values in Lua. A light userdata represents a pointer, a void*. It is a value (like a number): you do not create it, it has no individual metatable, and it is not collected (as it was never created). A light userdata is equal to "any" light userdata with the same C address. 
+        /// </summary>
+        /// <param name="data"></param>
+        public void PushLightUserData(IntPtr data)
+        {
+            NativeMethods.lua_pushlightuserdata(_luaState, data);
+        }
+
+        /// <summary>
         /// Pushes a reference data (C# object)  onto the stack. 
         /// This function uses lua_pushlightuserdata, but uses a GCHandle to store the reference inside the Lua side.
         /// The CGHandle is create as Normal, and will be freed when the value is pop
@@ -732,7 +752,7 @@ namespace KeraLua
             }
 
             var handle = GCHandle.Alloc(obj);
-            NativeMethods.lua_pushlightuserdata(_luaState, GCHandle.ToIntPtr(handle));
+            PushLightUserData(GCHandle.ToIntPtr(handle));
         }
 
 
@@ -1309,7 +1329,7 @@ namespace KeraLua
             if(IsNil(index) || !IsLightUserData(index))
                 return default(T);
 
-            IntPtr data = NativeMethods.lua_touserdata(_luaState, index);
+            IntPtr data = ToUserData(index);
             if(data == IntPtr.Zero)
                 return default(T);
 
@@ -1323,6 +1343,16 @@ namespace KeraLua
                 handle.Free();
 
             return reference;
+        }
+
+        /// <summary>
+        /// If the value at the given index is a full userdata, returns its block address. If the value is a light userdata, returns its pointer. Otherwise, returns NULL
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public IntPtr ToUserData(int index)
+        {
+            return NativeMethods.lua_touserdata(_luaState, index);
         }
 
 
@@ -1573,7 +1603,7 @@ namespace KeraLua
             if(IsNil(argument) || !IsLightUserData(argument))
                 return default(T);
 
-            IntPtr data = NativeMethods.luaL_checkudata(_luaState, argument, typeName);
+            IntPtr data = CheckUserData(argument, typeName);
             if(data == IntPtr.Zero)
                 return default(T);
 
@@ -1587,6 +1617,17 @@ namespace KeraLua
                 handle.Free();
 
             return reference;
+        }
+
+        /// <summary>
+        /// Checks whether the function argument arg is a userdata of the type tname (see luaL_newmetatable) and returns the userdata address
+        /// </summary>
+        /// <param name="argument"></param>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
+        public IntPtr CheckUserData(int argument, string typeName)
+        {
+            return NativeMethods.luaL_checkudata(_luaState, argument, typeName);
         }
 
         /// <summary>
@@ -1908,7 +1949,7 @@ namespace KeraLua
             if (IsNil(argument) || !IsLightUserData(argument))
                 return default(T);
 
-            IntPtr data = NativeMethods.luaL_testudata(_luaState, argument, typeName);
+            IntPtr data = TestUserData(argument, typeName); 
             if (data == IntPtr.Zero)
                 return default(T);
 
@@ -1921,6 +1962,17 @@ namespace KeraLua
                 handle.Free();
 
             return reference;
+        }
+
+        /// <summary>
+        /// This function works like luaL_checkudata, except that, when the test fails, it returns NULL instead of raising an error.
+        /// </summary>
+        /// <param name="argument"></param>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
+        IntPtr TestUserData(int argument, string typeName)
+        {
+            return NativeMethods.luaL_testudata(_luaState, argument, typeName);
         }
 
         /// <summary>
@@ -1964,6 +2016,11 @@ namespace KeraLua
             NativeMethods.luaL_unref(_luaState, tableIndex, reference);
         }
 
+        /// <summary>
+        /// Releases reference ref from the table at index t (see luaL_ref). The entry is removed from the table, so that the referred object can be collected. The reference ref is also freed to be used again
+        /// </summary>
+        /// <param name="tableIndex"></param>
+        /// <param name="reference"></param>
         public void Unref(LuaRegistry tableIndex, int reference)
         {
             NativeMethods.luaL_unref(_luaState, (int)tableIndex, reference);
