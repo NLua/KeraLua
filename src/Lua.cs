@@ -1236,8 +1236,9 @@ namespace KeraLua
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="index"></param>
+        /// <param name="freeGCHandle">True to free the GCHandle</param>
         /// <returns></returns>
-        public T ToObject<T>(int index)
+        public T ToObject<T>(int index, bool freeGCHandle = true)
         {
             if(IsNil(index) || !IsLightUserData(index))
                 return default(T);
@@ -1247,8 +1248,13 @@ namespace KeraLua
                 return default(T);
 
             var handle = GCHandle.FromIntPtr(data);
+            if (!handle.IsAllocated)
+                return default(T);
+
             var reference = (T)handle.Target;
-            handle.Free();
+
+            if(freeGCHandle)
+                handle.Free();
 
             return reference;
         }
@@ -1494,8 +1500,9 @@ namespace KeraLua
         /// <typeparam name="T"></typeparam>
         /// <param name="argument"></param>
         /// <param name="typeName"></param>
+        /// <param name="freeGCHandle">True to release the GCHandle</param>
         /// <returns></returns>
-        public T CheckObject<T>(int argument, string typeName)
+        public T CheckObject<T>(int argument, string typeName, bool freeGCHandle = true)
         {
             if(IsNil(argument) || !IsLightUserData(argument))
                 return default(T);
@@ -1505,8 +1512,13 @@ namespace KeraLua
                 return default(T);
 
             var handle = GCHandle.FromIntPtr(data);
+            if(!handle.IsAllocated)
+                return default(T);
+
             var reference = (T)handle.Target;
-            handle.Free();
+
+            if(freeGCHandle)
+                handle.Free();
 
             return reference;
         }
@@ -1813,8 +1825,9 @@ namespace KeraLua
         /// <typeparam name="T"></typeparam>
         /// <param name="argument"></param>
         /// <param name="typeName"></param>
+        /// <param name="freeGCHandle">True to release the GCHandle of object</param>
         /// <returns></returns>
-        public T TestObject<T>(int argument, string typeName)
+        public T TestObject<T>(int argument, string typeName, bool freeGCHandle = true)
         {
             if (IsNil(argument) || !IsLightUserData(argument))
                 return default(T);
@@ -1824,8 +1837,12 @@ namespace KeraLua
                 return default(T);
 
             var handle = GCHandle.FromIntPtr(data);
+            if(!handle.IsAllocated)
+                return default(T);
+
             var reference = (T)handle.Target;
-            handle.Free();
+            if(freeGCHandle)
+                handle.Free();
 
             return reference;
         }
