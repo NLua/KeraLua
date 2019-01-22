@@ -268,6 +268,18 @@ namespace KeraLua
         }
 
         /// <summary>
+        ///  Pushes onto the stack the value t[k], where t is the value at the given index. As in Lua, this function may trigger a metamethod for the "index" event (see §2.4).
+        /// Returns the type of the pushed value. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public LuaType GetField(LuaRegistry index, string key)
+        {
+            return (LuaType)NativeMethods.lua_getfield(_luaState, (int)index, key);
+        }
+
+        /// <summary>
         /// Pushes onto the stack the value of the global name. Returns the type of that value
         /// </summary>
         /// <param name="name"></param>
@@ -408,6 +420,17 @@ namespace KeraLua
         {
             return (LuaType)NativeMethods.lua_gettable(_luaState, index);
         }
+
+        /// <summary>
+        /// Pushes onto the stack the value t[k], where t is the value at the given index and k is the value at the top of the stack. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>Returns the type of the pushed value</returns>
+        public LuaType GetTable(LuaRegistry index)
+        {
+            return (LuaType)NativeMethods.lua_gettable(_luaState, (int)index);
+        }
+
 
         /// <summary>
         /// Returns the index of the top element in the stack. 0 means an empty stack.
@@ -809,6 +832,16 @@ namespace KeraLua
         }
 
         /// <summary>
+        /// Similar to GetTable, but does a raw access (i.e., without metamethods). 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>Returns the type of the pushed value</returns>
+        public LuaType RawGet(LuaRegistry index)
+        {
+            return (LuaType)NativeMethods.lua_rawget(_luaState, (int)index);
+        }
+
+        /// <summary>
         /// Pushes onto the stack the value t[n], where t is the table at the given index. The access is raw, that is, it does not invoke the __index metamethod. 
         /// </summary>
         /// <param name="index"></param>
@@ -818,6 +851,18 @@ namespace KeraLua
         {
             return (LuaType)NativeMethods.lua_rawgeti(_luaState, index, n);
         }
+
+        /// <summary>
+        /// Pushes onto the stack the value t[n], where t is the table at the given index. The access is raw, that is, it does not invoke the __index metamethod. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public LuaType RawGetInteger(LuaRegistry index, long n)
+        {
+            return (LuaType)NativeMethods.lua_rawgeti(_luaState, (int)index, n);
+        }
+
 
         /// <summary>
         /// Pushes onto the stack the value t[k], where t is the table at the given index and k is the pointer p represented as a light userdata. The access is raw; that is, it does not invoke the __index metamethod. 
@@ -850,6 +895,15 @@ namespace KeraLua
         }
 
         /// <summary>
+        /// Similar to lua_settable, but does a raw assignment (i.e., without metamethods).
+        /// </summary>
+        /// <param name="index"></param>
+        public void RawSet(LuaRegistry index)
+        {
+            NativeMethods.lua_rawset(_luaState, (int)index);
+        }
+
+        /// <summary>
         ///  Does the equivalent of t[i] = v, where t is the table at the given index and v is the value at the top of the stack.
         ///  This function pops the value from the stack. The assignment is raw, that is, it does not invoke the __newindex metamethod. 
         /// </summary>
@@ -859,6 +913,18 @@ namespace KeraLua
         {
             NativeMethods.lua_rawseti(_luaState, index, i);
         }
+
+        /// <summary>
+        ///  Does the equivalent of t[i] = v, where t is the table at the given index and v is the value at the top of the stack.
+        ///  This function pops the value from the stack. The assignment is raw, that is, it does not invoke the __newindex metamethod. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="i"></param>
+        public void RawSetInteger(LuaRegistry index, long i)
+        {
+            NativeMethods.lua_rawseti(_luaState, (int)index, i);
+        }
+
 
         /// <summary>
         /// Does the equivalent of t[p] = v, where t is the table at the given index, p is encoded as a light userdata, and v is the value at the top of the stack. 
@@ -1596,7 +1662,7 @@ namespace KeraLua
         /// <returns>Returns the type of the pushed value. </returns>
         public LuaType GetMetaTable(string tableName)
         {
-            return GetField((int)LuaRegistry.Index, tableName);
+            return GetField(LuaRegistry.Index, tableName);
         }
 
         /// <summary>
@@ -1791,6 +1857,16 @@ namespace KeraLua
         }
 
         /// <summary>
+        /// Creates and returns a reference, in the table at index t, for the object at the top of the stack (and pops the object). 
+        /// </summary>
+        /// <param name="tableIndex"></param>
+        /// <returns></returns>
+        public int Ref(LuaRegistry tableIndex)
+        {
+            return NativeMethods.luaL_ref(_luaState, (int)tableIndex);
+        }
+
+        /// <summary>
         /// If modname is not already present in package.loaded, calls function openf with string modname as an argument and sets the call result in package.loaded[modname], as if that function has been called through require
         /// </summary>
         /// <param name="moduleName"></param>
@@ -1887,6 +1963,12 @@ namespace KeraLua
         {
             NativeMethods.luaL_unref(_luaState, tableIndex, reference);
         }
+
+        public void Unref(LuaRegistry tableIndex, int reference)
+        {
+            NativeMethods.luaL_unref(_luaState, (int)tableIndex, reference);
+        }
+
 
         /// <summary>
         /// Pushes onto the stack a string identifying the current position of the control at level lvl in the call stack
