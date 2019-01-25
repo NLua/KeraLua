@@ -34,14 +34,30 @@ namespace KeraLua
             _luaState = NativeMethods.luaL_newstate();
 
             if (openLibs)
-                NativeMethods.luaL_openlibs(_luaState);
+                OpenLibs();
+
+            SetExtraObject(this);
+        }
+
+        /// <summary>
+        /// Initialize Lua state with allocator function and user data value
+        /// This method will NOT open the default libs.
+        /// Creates a new thread running in a new, independent state. Returns NULL if it cannot create the thread or the state (due to lack of memory). The argument f is the allocator function; Lua does all memory allocation for this state through this function (see lua_Alloc). The second argument, ud, is an opaque pointer that Lua passes to the allocator in every call. 
+        /// </summary>
+        /// <param name="allocator">LuaAlloc allocator function called to alloc/free memory</param>
+        /// <param name="ud">opaque pointer passed to allocator</param>
+        public Lua(LuaAlloc allocator, IntPtr ud)
+        {
+            Encoding = Encoding.ASCII;
+
+            _luaState = NativeMethods.lua_newstate(allocator.ToFunctionPointer(), ud);
 
             SetExtraObject(this);
         }
 
         private Lua(IntPtr luaThread, Lua mainState)
         {
-            this._mainState = mainState;
+            _mainState = mainState;
             _luaState = luaThread;
             SetExtraObject(this);
             GC.SuppressFinalize(this);
@@ -115,6 +131,16 @@ namespace KeraLua
                 return null;
 
             return (T)handle.Target;
+        }
+
+        /// <summary>
+        /// Converts the acceptable index idx into an equivalent absolute index (that is, one that does not depend on the stack top). 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public int AbsIndex(int index)
+        {
+            return NativeMethods.lua_absindex(_luaState, index);
         }
         /// <summary>
         /// Performs an arithmetic or bitwise operation over the two values (or one, in the case of negations) at the top of the stack, with the value at the top being the second operand, pops these values, and pushes the result of the operation. The function follows the semantics of the corresponding Lua operator (that is, it may call metamethods). 
@@ -1299,6 +1325,17 @@ namespace KeraLua
             return null;
         }
 
+        /// <summary>
+        ///  Converts the value at the given index to a generic C pointer (void*). The value can be a userdata, a table, a thread, or a function; otherwise, lua_topointer returns NULL. Different objects will give different pointers. There is no way to convert the pointer back to its original value.
+        ///  Typically this function is used only for hashing and debug information. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public IntPtr ToPointer(int index)
+        {
+            return NativeMethods.lua_topointer(_luaState, index);
+        }
+
 
         /// <summary>
         /// Converts the value at the given index to a Lua thread
@@ -1892,16 +1929,6 @@ namespace KeraLua
         /// </summary>
         /// <param name="tableIndex"></param>
         /// <returns></returns>
-        public int Ref(int tableIndex)
-        {
-            return NativeMethods.luaL_ref(_luaState, tableIndex);
-        }
-
-        /// <summary>
-        /// Creates and returns a reference, in the table at index t, for the object at the top of the stack (and pops the object). 
-        /// </summary>
-        /// <param name="tableIndex"></param>
-        /// <returns></returns>
         public int Ref(LuaRegistry tableIndex)
         {
             return NativeMethods.luaL_ref(_luaState, (int)tableIndex);
@@ -2004,16 +2031,6 @@ namespace KeraLua
         public string TypeName(int index)
         {
             return NativeMethods.luaL_typename(_luaState, index);
-        }
-
-        /// <summary>
-        /// Releases reference ref from the table at index t (see luaL_ref). The entry is removed from the table, so that the referred object can be collected. The reference ref is also freed to be used again
-        /// </summary>
-        /// <param name="tableIndex"></param>
-        /// <param name="reference"></param>
-        public void Unref(int tableIndex, int reference)
-        {
-            NativeMethods.luaL_unref(_luaState, tableIndex, reference);
         }
 
         /// <summary>

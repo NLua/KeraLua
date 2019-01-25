@@ -87,7 +87,7 @@ namespace KeraLua
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         internal static extern int lua_getfield(lua_State luaState, int index, string k);
 
-        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         internal static extern int lua_getglobal(lua_State luaState, string name);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]

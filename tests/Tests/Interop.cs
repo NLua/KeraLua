@@ -285,5 +285,18 @@ main.lua:11 (main)
 
             Assert.IsNull(state.Hook, "#3");
         }
+
+        [Test]
+        public void TestUnref()
+        {
+            var state = new Lua();
+            state.DoString("function f() end");
+            LuaType type =  state.GetGlobal("f");
+            Assert.AreEqual(LuaType.Function, type, "#1");
+
+            state.PushCopy(-1);
+            state.Ref(LuaRegistry.Index);
+            state.Close();
+        }
     }
 }
