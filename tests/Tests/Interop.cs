@@ -298,5 +298,59 @@ main.lua:11 (main)
             state.Ref(LuaRegistry.Index);
             state.Close();
         }
+
+#if MONOTOUCH
+        [MonoPInvokeCallback(typeof(LuaFunction))]
+#endif
+        public static int Func(IntPtr p)
+        {
+            var state = Lua.FromIntPtr(p);
+            long param1 = state.CheckInteger(1);
+            long param2 = state.CheckInteger(2);
+
+            state.PushInteger(param1 + param2);
+            return 1;
+        }
+
+        [Test]
+        public void TestThreadFromToPtr()
+        {
+            using (var lua = new Lua())
+            {
+                lua.Register("func1", Func);
+
+                var thread = lua.NewThread();
+
+                thread.DoString("func1(10,10)");
+                thread.DoString("func1(10,10)");
+            }
+        }
+
+        [Test]
+        public void TestCoroutineCallback()
+        {
+            using (var lua = new Lua())
+            {
+                lua.Register("func1", Func);
+
+                string script = @"function yielder() 
+                                a=1; 
+                                coroutine.yield();
+                                a = func1(3,2);
+                                a = func1(4,2);
+                                coroutine.yield();
+                                a=2;
+                                coroutine.yield();
+                             end
+                             co_routine = coroutine.create(yielder);
+                             while coroutine.resume(co_routine) do end;";
+                lua.DoString(script);
+                lua.DoString(script);
+
+                lua.GetGlobal("a");
+                long a = lua.ToInteger(-1);
+                Assert.AreEqual(a, 2d);
+            }
+        }
     }
 }

@@ -13,10 +13,22 @@ namespace KeraLua
         private readonly Lua _mainState;
 
         /// <summary>
+        /// Internal Lua handle pointer.
+        /// </summary>
+        public IntPtr Handle => _luaState;
+
+        /// <summary>
         /// Encoding for the string conversions
         /// ASCII by default.
         /// </summary>
         public Encoding Encoding {get; set; }
+
+        /// <summary>
+        ///  Returns a pointer to a raw memory area associated with the given Lua state. The application can use this area for any purpose; Lua does not use it for anything.
+        ///  Each new thread has this area initialized with a copy of the area of the main thread. 
+        /// </summary>
+        /// <returns></returns>
+        public IntPtr ExtraSpace => _luaState - IntPtr.Size;
 
         /// <summary>
         /// Get the main thread object, if the object is the main thread will be equal this
@@ -59,6 +71,8 @@ namespace KeraLua
         {
             _mainState = mainState;
             _luaState = luaThread;
+            Encoding = mainState.Encoding;
+
             SetExtraObject(this);
             GC.SuppressFinalize(this);
         }
@@ -71,7 +85,10 @@ namespace KeraLua
         /// <returns></returns>
         public static Lua FromIntPtr(IntPtr luaState)
         {
-            return GetExtraObject<Lua>(luaState);
+            Lua state = GetExtraObject<Lua>(luaState);
+            if (state._luaState == luaState)
+                return state;
+            return new Lua(luaState, state.MainThread);
         }
 
         /// <summary>
