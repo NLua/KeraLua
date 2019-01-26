@@ -255,7 +255,7 @@ namespace KeraLua
         /// Generates a Lua error, using the value at the top of the stack as the error object. This function does a long jump
         /// </summary>
         /// <returns></returns>
-        int Error()
+        public int Error()
         {
             return NativeMethods.lua_error(_luaState);
         }
@@ -1997,7 +1997,7 @@ namespace KeraLua
         /// <param name="argument"></param>
         /// <param name="typeName"></param>
         /// <returns></returns>
-        IntPtr TestUserData(int argument, string typeName)
+        public IntPtr TestUserData(int argument, string typeName)
         {
             return NativeMethods.luaL_testudata(_luaState, argument, typeName);
         }
