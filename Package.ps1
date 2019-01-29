@@ -7,4 +7,4 @@ $releaseNotes = "Release: $($hash)"
 
 Update-NuSpec-Release-Notes $NuSpecFile $releaseNotes
 
-& nuget pack $NuSpecFile
+& nuget pack $NuSpecFile -NoPackageAnalysis
