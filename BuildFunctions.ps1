@@ -28,19 +28,6 @@ function Test-Should-Deploy ()
 	return $false
 }
 
-function Test-Commit-Message-Deploy ()
-{
-	[string] $message = Get-Current-Commit-Message
-	$message = $message.ToLower()
-	if ($message.Contains("/deploy") -or
-		$message.Contains(":deploy")-or
-		$message.Contains("/publish") -or
-		$message.Contains(":publish")) {
-		return $true
-	}
-	return $false
-}
-
 function Get-Published-PreRelase-Package ($PackageId)
 {
 	$out = [string](nuget list -PreRelease id:$PackageId)
@@ -222,6 +209,7 @@ function Get-Next-Version-String ($PackageId)
 
 	$prefix = Get-Prefix-Name
 	$prefix = $prefix.Replace("-", "")
+	$prefix = $prefix.Replace("_", "")
 	$prefix = $prefix.Replace(".", "")
 	$nextVersion = ""
 	
