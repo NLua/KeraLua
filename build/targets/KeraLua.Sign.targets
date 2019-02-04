@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <SignAssembly>true</SignAssembly>
-        <PublicSign Condition=" '$(PublicSign)' == '' and '$(SignAssembly)' == 'true'">true</PublicSign>
+        <PublicSign Condition="  '$(OS)' !='Windows_NT' and '$(PublicSign)' == '' and '$(SignAssembly)' == 'true'">true</PublicSign>
         <KeyFileName Condition=" '$(KeyFileName)' == '' ">NLua.snk</KeyFileName>
         <AssemblyOriginatorKeyFile>$(SolutionDir)$(KeyFileName)</AssemblyOriginatorKeyFile>
     </PropertyGroup>
