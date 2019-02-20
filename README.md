@@ -4,9 +4,9 @@ KeraLua
 =======
 
 
-| NuGet | NuGet (Pre-Release) |
-| ------|------|
-|[![nuget](https://img.shields.io/nuget/v/KeraLua.svg)](https://www.nuget.org/packages/KeraLua)|[![nuget](https://img.shields.io/nuget/vpre/KeraLua.svg)](https://www.nuget.org/packages/KeraLua)|
+| NuGet |
+| ------|
+|[![nuget](https://badgen.net/nuget/v/KeraLua?icon=nuget)](https://www.nuget.org/packages/KeraLua)|
 
 |  | Status | 
 | :------ | :------: | 
