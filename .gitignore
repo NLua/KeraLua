@@ -122,3 +122,4 @@ Makefile.in
 /config.status
 .vs/
 UpgradeLog*.htm
+runtimes/
