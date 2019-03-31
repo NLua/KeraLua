@@ -1277,10 +1277,15 @@ namespace KeraLua
             UIntPtr len;
             IntPtr buff;
 
-            if(callMetamethod)
+            if (callMetamethod)
+            {
                 buff = NativeMethods.luaL_tolstring(_luaState, index, out len);
+                Pop(1);
+            }
             else
+            {
                 buff = NativeMethods.lua_tolstring(_luaState, index, out len);
+            }
 
             if(buff == IntPtr.Zero)
                 return null;

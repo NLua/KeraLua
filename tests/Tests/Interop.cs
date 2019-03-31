@@ -352,5 +352,24 @@ main.lua:11 (main)
                 Assert.AreEqual(a, 2d);
             }
         }
+
+        [Test]
+        public void TestToStringStack()
+        {
+            using (var lua = new Lua())
+            {
+                lua.PushNumber(3);
+                lua.PushInteger(4);
+
+                int currentTop = lua.GetTop();
+
+                string four = lua.ToString(-1);
+
+                int newTop = lua.GetTop();
+
+                Assert.AreEqual("4", four, "#1.1");
+                Assert.AreEqual(currentTop, newTop, "#1.2");
+            }
+        }
     }
 }
