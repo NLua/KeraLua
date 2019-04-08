@@ -9,6 +9,26 @@ namespace KeraLua
     /// </summary>
     public class Lua : IDisposable
     {
+        private static INativeMethods NativeMethods;
+
+        static Lua()
+        {
+            if (IntPtr.Size == 4)
+            {
+                // 32-bit
+                NativeMethods = new NativeMethodsImpl();
+            }
+            else if (IntPtr.Size == 8)
+            {
+                // 64-bit
+                NativeMethods = new NativeMethodsImpl64();
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         private IntPtr _luaState;
         private readonly Lua _mainState;
 

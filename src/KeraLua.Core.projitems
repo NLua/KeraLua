@@ -9,6 +9,7 @@
     <Import_RootNamespace>KeraLua</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)INativeMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaHookMask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DelegateExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Delegates.cs" />
@@ -22,7 +23,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)LuaRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeMethods64.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NativeMethods.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeMethodsImpl64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeMethodsImpl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />
   </ItemGroup>
 </Project>
