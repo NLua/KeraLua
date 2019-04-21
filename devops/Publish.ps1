@@ -1,6 +1,6 @@
 param ([string] $PackageId)
 
-. .\BuildFunctions.ps1
+. .\devops\BuildFunctions.ps1
 
 if (-Not (Test-Should-Deploy)) {
 	return

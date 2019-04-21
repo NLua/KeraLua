@@ -1,0 +1,33 @@
+pool:
+  name: Hosted Ubuntu 1604
+  demands: msbuild
+
+steps:
+- checkout: self 
+  submodules: true
+
+
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  inputs:
+    restoreSolution: KeraLua.sln
+
+- task: MSBuild@1
+  displayName: 'Build solution KeraLua.sln'
+  inputs:
+    solution: KeraLua.sln
+    configuration: Release
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: liblua53.so'
+  inputs:
+    PathtoPublish: 'runtimes/linux-x64/native/liblua53.so'
+    ArtifactName: liblua53.so
+
+- task: TriggerBuild@3
+  displayName: 'Trigger a new build of KeraLua.Windows'
+  inputs:
+    buildDefinition: 'NLua.KeraLua.Windows'
+    ignoreSslCertificateErrors: true
+    useSameSourceVersion: true
+    password: '$(myToken)'

@@ -1,6 +1,6 @@
 ﻿param ([string] $PackageId, [string] $NuSpecFile)
 
-. ./BuildFunctions.ps1
+. .\devops\BuildFunctions.ps1
 
 $nextVersion = Get-Next-Version-String $PackageId
 
