@@ -496,7 +496,27 @@ namespace KeraLua
         /// <param name="functionIndex"></param>
         /// <param name="n"></param>
         /// <returns>Returns the type of the pushed value. </returns>
-        public string GetUpValue(int functionIndex, int n) => NativeMethods.lua_getupvalue(_luaState, functionIndex, n);
+        public string GetUpValue(int functionIndex, int n) => MarshalString(NativeMethods.lua_getupvalue(_luaState, functionIndex, n));
+
+        /// <summary>
+        /// Converts a char* to a string, in a way that doesn't corrupt memory in specific circumstances
+        /// </summary>
+        /// <param name="ptr"></param>
+        /// <returns>The string</returns>
+        private string MarshalString(IntPtr ptr)
+        {
+            if (ptr == IntPtr.Zero)
+                return null;
+
+            if (Encoding == Encoding.ASCII)
+            {
+                return Marshal.PtrToStringAnsi(ptr);
+            }
+            else
+            {
+                return Marshal.PtrToStringUni(ptr);
+            }
+        }
 
         /// <summary>
         /// Returns the current hook function. 
@@ -1182,7 +1202,7 @@ namespace KeraLua
         /// <returns>Returns NULL (and pops nothing) when the index n is greater than the number of upvalues. </returns>
         public string SetUpValue(int functionIndex, int n)
         {
-            return NativeMethods.lua_setupvalue(_luaState, functionIndex, n);
+            return MarshalString(NativeMethods.lua_setupvalue(_luaState, functionIndex, n));
         }
 
         /// <summary>
