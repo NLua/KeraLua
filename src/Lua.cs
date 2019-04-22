@@ -508,14 +508,7 @@ namespace KeraLua
             if (ptr == IntPtr.Zero)
                 return null;
 
-            if (Encoding == Encoding.ASCII)
-            {
-                return Marshal.PtrToStringAnsi(ptr);
-            }
-            else
-            {
-                return Marshal.PtrToStringUni(ptr);
-            }
+            return Marshal.PtrToStringAnsi(ptr);
         }
 
         /// <summary>
