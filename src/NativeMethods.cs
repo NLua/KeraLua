@@ -121,7 +121,7 @@ namespace KeraLua
         internal static extern int lua_gettop(lua_State luaState);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        internal static extern string lua_getupvalue(lua_State luaState, int funcIndex, int n);
+        internal static extern charptr_t lua_getupvalue(lua_State luaState, int funcIndex, int n);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int lua_getuservalue(lua_State luaState, int index);
@@ -261,7 +261,7 @@ namespace KeraLua
         internal static extern void lua_settop(lua_State luaState, int newTop);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        internal static extern string lua_setupvalue(lua_State luaState, int funcIndex, int n);
+        internal static extern charptr_t lua_setupvalue(lua_State luaState, int funcIndex, int n);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void lua_setuservalue(lua_State luaState, int index);

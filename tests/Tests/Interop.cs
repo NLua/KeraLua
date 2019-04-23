@@ -371,5 +371,32 @@ main.lua:11 (main)
                 Assert.AreEqual(currentTop, newTop, "#1.2");
             }
         }
+
+        [Test]
+        public void SettingUpValueDoesntCrash()
+        {
+            //This test should always pass. If it doesn't, it brings the test suite down.....
+            using (var lua = new Lua())
+            {
+                lua.LoadString("hello = 1");
+                lua.NewTable();
+                var result = lua.SetUpValue(-2, 1);
+
+                Assert.AreEqual("_ENV", result);
+            }
+        }
+
+        [Test]
+        public void GettingUpValueDoesntCrash()
+        {
+            //This test should always pass. If it doesn't, it brings the test suite down.....
+            using (var lua = new Lua())
+            {
+                lua.LoadString("hello = 1");
+                var result = lua.GetUpValue(-1, 1);
+
+                Assert.AreEqual("_ENV", result);
+            }
+        }
     }
 }
