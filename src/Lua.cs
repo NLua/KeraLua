@@ -299,7 +299,7 @@ namespace KeraLua
         }
 
         /// <summary>
-        ///  Pushes onto the stack the value t[k], where t is the value at the given index. As in Lua, this function may trigger a metamethod for the "index" event (see §2.4).
+        ///  Pushes onto the stack the value t[k], where t is the value at the given index. As in Lua, this function may trigger a metamethod for the "index" event (see Â§2.4).
         /// Returns the type of the pushed value. 
         /// </summary>
         /// <param name="index"></param>
@@ -311,7 +311,7 @@ namespace KeraLua
         }
 
         /// <summary>
-        ///  Pushes onto the stack the value t[k], where t is the value at the given index. As in Lua, this function may trigger a metamethod for the "index" event (see §2.4).
+        ///  Pushes onto the stack the value t[k], where t is the value at the given index. As in Lua, this function may trigger a metamethod for the "index" event (see Â§2.4).
         /// Returns the type of the pushed value. 
         /// </summary>
         /// <param name="index"></param>
@@ -385,7 +385,8 @@ namespace KeraLua
         /// <returns></returns>
         public string GetLocal(IntPtr ar, int n)
         {
-            return NativeMethods.lua_getlocal(_luaState, ar, n);
+            IntPtr ptr = NativeMethods.lua_getlocal(_luaState, ar, n);
+            return Marshal.PtrToStringAnsi(ptr);
         }
 
         /// <summary>
@@ -496,20 +497,12 @@ namespace KeraLua
         /// <param name="functionIndex"></param>
         /// <param name="n"></param>
         /// <returns>Returns the type of the pushed value. </returns>
-        public string GetUpValue(int functionIndex, int n) => MarshalString(NativeMethods.lua_getupvalue(_luaState, functionIndex, n));
-
-        /// <summary>
-        /// Converts a char* to a string, in a way that doesn't corrupt memory in specific circumstances
-        /// </summary>
-        /// <param name="ptr"></param>
-        /// <returns>The string</returns>
-        private string MarshalString(IntPtr ptr)
+        public string GetUpValue(int functionIndex, int n)
         {
-            if (ptr == IntPtr.Zero)
-                return null;
-
-            return Marshal.PtrToStringAnsi(ptr);
+            IntPtr ptr = NativeMethods.lua_getupvalue(_luaState, functionIndex, n);
+            return Marshal.PtrToStringAnsi (ptr);
         }
+            
 
         /// <summary>
         /// Returns the current hook function. 
@@ -640,7 +633,7 @@ namespace KeraLua
         public bool IsYieldable => NativeMethods.lua_isyieldable(_luaState) != 0;
 
         /// <summary>
-        /// Push the length of the value at the given index on the stack. It is equivalent to the '#' operator in Lua (see §3.4.7) and may trigger a metamethod for the "length" event (see §2.4). The result is pushed on the stack. 
+        /// Push the length of the value at the given index on the stack. It is equivalent to the '#' operator in Lua (see Â§3.4.7) and may trigger a metamethod for the "length" event (see Â§2.4). The result is pushed on the stack. 
         /// </summary>
         /// <param name="index"></param>
         public void PushLength(int index) => NativeMethods.lua_len(_luaState, index);
@@ -693,7 +686,7 @@ namespace KeraLua
         }
 
         /// <summary>
-        /// Pops a key from the stack, and pushes a key–value pair from the table at the given index (the "next" pair after the given key).
+        /// Pops a key from the stack, and pushes a keyâ€“value pair from the table at the given index (the "next" pair after the given key).
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -746,7 +739,7 @@ namespace KeraLua
 
         /// <summary>
         ///  Pushes a new C closure onto the stack. When a C function is created, it is possible to associate 
-        ///  some values with it, thus creating a C closure (see §4.4); these values are then accessible to the function 
+        ///  some values with it, thus creating a C closure (see Â§4.4); these values are then accessible to the function 
         ///  whenever it is called. To associate values with a C function, first these values must be pushed onto the 
         ///  stack (when there are multiple values, the first value is pushed first). 
         ///  Then lua_pushcclosure is called to create and push the C function onto the stack, 
@@ -1135,7 +1128,8 @@ namespace KeraLua
         /// <returns>Returns NULL (and pops nothing) when the index is greater than the number of active local variables. </returns>
         public string SetLocal(IntPtr ar, int n)
         {
-            return NativeMethods.lua_setlocal(_luaState, ar, n);
+            IntPtr ptr = NativeMethods.lua_setlocal(_luaState, ar, n);
+            return Marshal.PtrToStringAnsi(ptr);
         }
 
                 /// <summary>
@@ -1195,7 +1189,8 @@ namespace KeraLua
         /// <returns>Returns NULL (and pops nothing) when the index n is greater than the number of upvalues. </returns>
         public string SetUpValue(int functionIndex, int n)
         {
-            return MarshalString(NativeMethods.lua_setupvalue(_luaState, functionIndex, n));
+            IntPtr ptr = NativeMethods.lua_setupvalue(_luaState, functionIndex, n);
+            return Marshal.PtrToStringAnsi(ptr);
         }
 
         /// <summary>
@@ -1244,7 +1239,7 @@ namespace KeraLua
         }
 
         /// <summary>
-        /// Converts the Lua value at the given index to the signed integral type lua_Integer. The Lua value must be an integer, or a number or string convertible to an integer (see §3.4.3); otherwise, lua_tointegerx returns 0. 
+        /// Converts the Lua value at the given index to the signed integral type lua_Integer. The Lua value must be an integer, or a number or string convertible to an integer (see Â§3.4.3); otherwise, lua_tointegerx returns 0. 
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -1257,7 +1252,7 @@ namespace KeraLua
         }
 
         /// <summary>
-        /// Converts the Lua value at the given index to the signed integral type lua_Integer. The Lua value must be an integer, or a number or string convertible to an integer (see §3.4.3); otherwise, lua_tointegerx returns 0. 
+        /// Converts the Lua value at the given index to the signed integral type lua_Integer. The Lua value must be an integer, or a number or string convertible to an integer (see Â§3.4.3); otherwise, lua_tointegerx returns 0. 
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -1444,7 +1439,8 @@ namespace KeraLua
         /// <returns>Name of the type of the value at the given index</returns>
         public string TypeName(LuaType type)
         {
-            return NativeMethods.lua_typename(_luaState, (int)type);
+            IntPtr ptr = NativeMethods.lua_typename(_luaState, (int)type);
+            return Marshal.PtrToStringAnsi(ptr);
         }
 
         /// <summary>
@@ -1505,7 +1501,7 @@ namespace KeraLua
         }
 
         /// <summary>
-        /// This function is equivalent to lua_yieldk, but it has no continuation (see §4.7). Therefore, when the thread resumes, it continues the function that called the function calling lua_yield. 
+        /// This function is equivalent to lua_yieldk, but it has no continuation (see Â§4.7). Therefore, when the thread resumes, it continues the function that called the function calling lua_yield. 
         /// </summary>
         /// <param name="results"></param>
         /// <returns></returns>
@@ -2065,7 +2061,8 @@ namespace KeraLua
         /// <returns></returns>
         public string TypeName(int index)
         {
-            return NativeMethods.luaL_typename(_luaState, index);
+            LuaType type = Type(index);
+            return TypeName(type);
         }
 
         /// <summary>

@@ -106,7 +106,7 @@ namespace KeraLua
         internal static extern int lua_getinfo(lua_State luaState, string what, lua_Debug ar);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        internal static extern string lua_getlocal(lua_State luaState, lua_Debug ar, int n);
+        internal static extern charptr_t lua_getlocal(lua_State luaState, lua_Debug ar, int n);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int lua_getmetatable(lua_State luaState, int index);
@@ -249,7 +249,7 @@ namespace KeraLua
         internal static extern void lua_seti(lua_State luaState, int index, long n);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        internal static extern string lua_setlocal(lua_State luaState, lua_Debug ar, int n);
+        internal static extern charptr_t lua_setlocal(lua_State luaState, lua_Debug ar, int n);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void lua_setmetatable(lua_State luaState, int objIndex);
@@ -300,7 +300,7 @@ namespace KeraLua
         internal static extern int lua_type(lua_State luaState, int index);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        internal static extern string lua_typename(lua_State luaState, int type);
+        internal static extern charptr_t lua_typename(lua_State luaState, int type);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern voidptr_t lua_upvalueid(lua_State luaState, int funcIndex, int n);
@@ -421,9 +421,6 @@ namespace KeraLua
             lua_State luaState2,
             string message,
             int level);
-
-        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        internal static extern string luaL_typename(lua_State luaState, int index);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void luaL_unref(lua_State luaState, int registryIndex, int reference);

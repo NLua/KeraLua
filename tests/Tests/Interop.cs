@@ -287,6 +287,31 @@ main.lua:11 (main)
         }
 
         [Test]
+        public void TypeNameReturn()
+        {
+            using (var lua = new Lua())
+            {
+                lua.PushInteger(28);
+                string name = lua.TypeName(-1);
+
+                Assert.AreEqual("number", name, "#1");
+            }
+        }
+
+        [Test]
+        public void SettingUpValueDoesntCrash()
+        {
+            using (var lua = new Lua())
+            {
+                lua.LoadString("hello = 1");
+                lua.NewTable();
+                string result = lua.SetUpValue(-2, 1);
+
+                Assert.AreEqual("_ENV", result, "#1");
+            }
+        }
+
+        [Test]
         public void TestUnref()
         {
             var state = new Lua();
@@ -373,29 +398,14 @@ main.lua:11 (main)
         }
 
         [Test]
-        public void SettingUpValueDoesntCrash()
-        {
-            //This test should always pass. If it doesn't, it brings the test suite down.....
-            using (var lua = new Lua())
-            {
-                lua.LoadString("hello = 1");
-                lua.NewTable();
-                var result = lua.SetUpValue(-2, 1);
-
-                Assert.AreEqual("_ENV", result);
-            }
-        }
-
-        [Test]
         public void GettingUpValueDoesntCrash()
         {
-            //This test should always pass. If it doesn't, it brings the test suite down.....
             using (var lua = new Lua())
             {
                 lua.LoadString("hello = 1");
-                var result = lua.GetUpValue(-1, 1);
+                string result = lua.GetUpValue(-1, 1);
 
-                Assert.AreEqual("_ENV", result);
+                Assert.AreEqual("_ENV", result, "#1");
             }
         }
     }
