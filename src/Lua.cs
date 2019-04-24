@@ -1055,7 +1055,7 @@ namespace KeraLua
         /// <returns></returns>
         public LuaStatus Resume(Lua from, int arguments)
         {
-            return (LuaStatus)NativeMethods.lua_resume(_luaState, from._luaState, arguments);
+            return (LuaStatus)NativeMethods.lua_resume(_luaState, from?._luaState ?? IntPtr.Zero, arguments);
         }
 
         /// <summary>

@@ -408,5 +408,17 @@ main.lua:11 (main)
                 Assert.AreEqual("_ENV", result, "#1");
             }
         }
+
+        [Test]
+        public void ResumeAcceptsNull()
+        {
+            using (var lua = new Lua())
+            {
+                lua.LoadString("hello = 1");
+                LuaStatus result = lua.Resume(null, 0);
+
+                Assert.AreEqual(LuaStatus.OK, result);
+            }
+        }
     }
 }
