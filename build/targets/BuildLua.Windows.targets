@@ -9,7 +9,7 @@
   <Target Name="BuildLuaWindows" BeforeTargets="BeforeBuild" Condition="'$(OS)'=='Windows_NT'">
     <Message Text="Building Windows Lua library (x86)" />
     <Exec Command="mkdir $(ExternalLuaPath)\$(Win32BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(Win32BuildDir)')" />
-    <Exec Command="cmake $(ExternalLuaPath)" WorkingDirectory="$(ExternalLuaPath)\$(Win32BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(Win32BuildDir)\CMakeCache.txt')" />
+    <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_GENERATOR_PLATFORM=Win32" WorkingDirectory="$(ExternalLuaPath)\$(Win32BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(Win32BuildDir)\CMakeCache.txt')" />
     <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(Win32BuildDir)" />
     <Message Text="Building Windows Lua library (x64)" />
     <Exec Command="mkdir $(ExternalLuaPath)\$(Win64BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(Win64BuildDir)')" />
