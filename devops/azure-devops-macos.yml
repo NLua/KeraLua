@@ -20,9 +20,14 @@ steps:
     script: '/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/bin/mtouch --version'
 
 - task: NuGetCommand@2
-  displayName: 'NuGet restore'
+  displayName: 'NuGet restore KeraLua.Mac.sln'
   inputs:
     restoreSolution: KeraLua.Mac.sln
+
+- task: NuGetCommand@2
+  displayName: 'NuGet restore KeraLua.sln'
+  inputs:
+    restoreSolution: KeraLua.sln
 
 - script: 'brew update'
   displayName: 'Brew Update'
@@ -38,12 +43,18 @@ steps:
     arguments: 'KeraLua KeraLua.nuspec'
 
 - task: MSBuild@1
+  displayName: 'Build solution KeraLua.sln'
+  inputs:
+    solution: KeraLua.sln
+    configuration: Release
+
+- task: MSBuild@1
   displayName: 'Build solution KeraLua.Mac.sln'
   inputs:
     solution: KeraLua.Mac.sln
     configuration: Release
 
-- script: 'nunit-console ./tests/build/net45/bin/Release/KeraLuaTest.dll'
+- script: 'mono packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe ./tests/build/net45/bin/Release/KeraLuaTest.dll'
   displayName: 'Run OSX tests'
 
 - task: PublishBuildArtifacts@1
