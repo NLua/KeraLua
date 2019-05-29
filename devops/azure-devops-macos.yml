@@ -22,7 +22,7 @@ steps:
 - task: NuGetCommand@2
   displayName: 'NuGet restore'
   inputs:
-    restoreSolution: KeraLua.sln
+    restoreSolution: KeraLua.Mac.sln
 
 - script: 'brew update'
   displayName: 'Brew Update'
@@ -38,10 +38,10 @@ steps:
     arguments: 'KeraLua KeraLua.nuspec'
 
 - task: MSBuild@1
-  displayName: 'Build solution KeraLua.sln'
+  displayName: 'Build solution KeraLua.Mac.sln'
   inputs:
-    solution: KeraLua.sln
-    configuration: ReleaseMac
+    solution: KeraLua.Mac.sln
+    configuration: Release
 
 - script: 'nunit-console ./tests/build/net45/bin/Release/KeraLuaTest.dll'
   displayName: 'Run OSX tests'

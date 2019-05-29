@@ -6,7 +6,6 @@ steps:
 - checkout: self 
   submodules: true
 
-
 - task: NuGetCommand@2
   displayName: 'NuGet restore'
   inputs:
