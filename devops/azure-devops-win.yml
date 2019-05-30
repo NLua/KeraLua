@@ -19,6 +19,11 @@ steps:
   inputs:
     restoreSolution: KeraLua.sln
 
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  inputs:
+    restoreSolution: KeraLua.Core.sln
+
 - powershell: 'Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString(''https://chocolatey.org/install.ps1''))'
   displayName: 'Install Choco'
 
@@ -41,8 +46,8 @@ steps:
 - task: MSBuild@1
   displayName: 'Build .NET Core'
   inputs:
-    solution: KeraLua.sln
-    configuration: ReleaseCore
+    solution: KeraLua.Core.sln
+    configuration: Release
     msbuildArguments: /restore
 
 - task: DotNetCoreCLI@2
@@ -55,8 +60,8 @@ steps:
 - task: MSBuild@1
   displayName: 'Build Android'
   inputs:
-    solution: KeraLua.sln
-    configuration: ReleaseAndroid
+    solution: KeraLua.Android.sln
+    configuration: Release
     msbuildArguments: '/p:AndroidNdkDirectory=%ANDROID_NDK_HOME%'
 
 - task: VSTest@2
