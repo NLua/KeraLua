@@ -27,7 +27,7 @@ Before build fetch the submodules:
 Building
 ---------
 
-	msbuild
+	msbuild KaraLua.sln
 
 
 
