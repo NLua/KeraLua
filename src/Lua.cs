@@ -487,6 +487,7 @@ namespace KeraLua
         /// If the userdata does not have that value, pushes nil and returns LUA_TNONE.
         /// </summary>
         /// <param name="index"></param>
+        /// <param name="nth"></param>
         /// <returns>Returns the type of the pushed value. </returns>
         public int GetIndexedUserValue(int index, int nth) => NativeMethods.lua_getiuservalue(_luaState, index, nth);
 
@@ -681,6 +682,7 @@ namespace KeraLua
         ///  The function returns the address of the block of memory.
         /// </summary>
         /// <param name="size"></param>
+        /// <param name="uv"></param>
         /// <returns></returns>
         public IntPtr NewIndexedUserData(int size, int uv)
         {
@@ -1199,6 +1201,7 @@ namespace KeraLua
         ///  Pops a value from the stack and sets it as the new n-th user value associated to the full userdata at the given index. Returns 0 if the userdata does not have that value. 
         /// </summary>
         /// <param name="index"></param>
+        /// <param name="nth"></param>
         public void SetIndexedUserValue(int index, int nth)
         {
             NativeMethods.lua_setiuservalue(_luaState, index, nth);
