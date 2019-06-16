@@ -40,7 +40,7 @@
     <ObjcBindingCoreSource Include="Structs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <NativeReference Include="..\..\runtimes\osx\native\liblua53.dylib">
+    <NativeReference Include="..\..\runtimes\osx\native\liblua54.dylib">
       <Kind>Dynamic</Kind>
       <SmartLink>False</SmartLink>
     </NativeReference>

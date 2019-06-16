@@ -97,4 +97,17 @@ namespace KeraLua
 #endif
     public delegate voidptr_t LuaAlloc (voidptr_t ud, voidptr_t ptr, size_t osize, size_t nsize);
 
+    /// <summary>
+    /// Type for warning functions
+    /// </summary>
+    /// <param name="ud"></param>
+    /// <param name="msg"></param>
+    /// <param name="tocont"></param>
+    [SuppressUnmanagedCodeSecurity]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+#if __IOS__ || __TVOS__ || __WATCHOS__
+    [MonoNativeFunctionWrapper]
+#endif
+    public delegate void LuaWarnFunction(voidptr_t ud, charptr_t msg, int tocont);
+
 }

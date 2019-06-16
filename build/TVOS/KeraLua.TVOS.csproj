@@ -51,7 +51,7 @@
     <ObjcBindingCoreSource Include="Structs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <NativeReference Include="..\..\runtimes\tvos\liblua53.framework">
+    <NativeReference Include="..\..\runtimes\tvos\liblua54.framework">
       <Kind>Framework</Kind>
     </NativeReference>
   </ItemGroup>

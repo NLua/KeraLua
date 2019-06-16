@@ -45,17 +45,17 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedNativeLibrary Include="..\..\runtimes\android\libs\arm64-v8a\liblua53.so">
-      <Link>libs\arm64-v8a\liblua53.so</Link>
+    <EmbeddedNativeLibrary Include="..\..\runtimes\android\libs\arm64-v8a\liblua54.so">
+      <Link>libs\arm64-v8a\liblua54.so</Link>
     </EmbeddedNativeLibrary>
-    <EmbeddedNativeLibrary Include="..\..\runtimes\android\libs\armeabi-v7a\liblua53.so">
-      <Link>libs\armeabi-v7a\liblua53.so</Link>
+    <EmbeddedNativeLibrary Include="..\..\runtimes\android\libs\armeabi-v7a\liblua54.so">
+      <Link>libs\armeabi-v7a\liblua54.so</Link>
     </EmbeddedNativeLibrary>
-    <EmbeddedNativeLibrary Include="..\..\runtimes\android\libs\x86\liblua53.so">
-      <Link>libs\x86\liblua53.so</Link>
+    <EmbeddedNativeLibrary Include="..\..\runtimes\android\libs\x86\liblua54.so">
+      <Link>libs\x86\liblua54.so</Link>
     </EmbeddedNativeLibrary>
-    <EmbeddedNativeLibrary Include="..\..\runtimes\android\libs\x86_64\liblua53.so">
-      <Link>libs\x86_64\liblua53.so</Link>
+    <EmbeddedNativeLibrary Include="..\..\runtimes\android\libs\x86_64\liblua54.so">
+      <Link>libs\x86_64\liblua54.so</Link>
     </EmbeddedNativeLibrary>
   </ItemGroup>
   <Import Project="..\targets\BuildLua.XamarinAndroid.targets" />

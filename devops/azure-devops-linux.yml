@@ -18,10 +18,10 @@ steps:
     configuration: Release
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: liblua53.so'
+  displayName: 'Publish Artifact: liblua54.so'
   inputs:
-    PathtoPublish: 'runtimes/linux-x64/native/liblua53.so'
-    ArtifactName: liblua53.so
+    PathtoPublish: 'runtimes/linux-x64/native/liblua54.so'
+    ArtifactName: liblua54.so
 
 - task: TriggerBuild@3
   displayName: 'Trigger a new build of KeraLua.Windows'

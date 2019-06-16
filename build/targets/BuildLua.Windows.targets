@@ -3,8 +3,8 @@
   <PropertyGroup>
     <Win32BuildDir>win-x86</Win32BuildDir>
     <Win64BuildDir>win-x64</Win64BuildDir>
-    <BinaryLibraryPath32>bin\lua53.dll</BinaryLibraryPath32>
-    <BinaryLibraryPath64>bin64\lua53.dll</BinaryLibraryPath64>
+    <BinaryLibraryPath32>bin\lua54.dll</BinaryLibraryPath32>
+    <BinaryLibraryPath64>bin64\lua54.dll</BinaryLibraryPath64>
   </PropertyGroup>
   <Target Name="BuildLuaWindows" BeforeTargets="BeforeBuild" Condition="'$(OS)'=='Windows_NT'">
     <Message Text="Building Windows Lua library (x86)" />

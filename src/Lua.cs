@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Text;
 using System.Runtime.InteropServices;
 
@@ -483,11 +483,12 @@ namespace KeraLua
         public int GetTop() => NativeMethods.lua_gettop(_luaState);
 
         /// <summary>
-        /// Pushes onto the stack the Lua value associated with the full userdata at the given index. 
+        ///  Pushes onto the stack the n-th user value associated with the full userdata at the given index and returns the type of the pushed value.
+        /// If the userdata does not have that value, pushes nil and returns LUA_TNONE.
         /// </summary>
         /// <param name="index"></param>
         /// <returns>Returns the type of the pushed value. </returns>
-        public int GetUserValue(int index) => NativeMethods.lua_getuservalue(_luaState, index);
+        public int GetIndexedUserValue(int index, int nth) => NativeMethods.lua_getiuservalue(_luaState, index, nth);
 
         /// <summary>
         ///  Gets information about the n-th upvalue of the closure at index funcindex. It pushes the upvalue's value onto the stack and returns its name. Returns NULL (and pushes nothing) when the index n is greater than the number of upvalues.
@@ -676,13 +677,14 @@ namespace KeraLua
         }
 
         /// <summary>
-        /// This function allocates a new block of memory with the given size, pushes onto the stack a new full userdata with the block address, and returns this address. The host program can freely use this memory
+        ///  This function creates and pushes on the stack a new full userdata, with nuvalue associated Lua values, called user values, plus an associated block of raw memory with size bytes. (The user values can be set and read with the functions lua_setiuservalue and lua_getiuservalue.)
+        ///  The function returns the address of the block of memory.
         /// </summary>
         /// <param name="size"></param>
         /// <returns></returns>
-        public IntPtr NewUserData(int size)
+        public IntPtr NewIndexedUserData(int size, int uv)
         {
-            return NativeMethods.lua_newuserdata(_luaState, (UIntPtr) size);
+            return NativeMethods.lua_newuserdatauv(_luaState, (UIntPtr) size, uv);
         }
 
         /// <summary>
@@ -1194,12 +1196,12 @@ namespace KeraLua
         }
 
         /// <summary>
-        ///  Pops a value from the stack and sets it as the new value associated to the full userdata at the given index.
+        ///  Pops a value from the stack and sets it as the new n-th user value associated to the full userdata at the given index. Returns 0 if the userdata does not have that value. 
         /// </summary>
         /// <param name="index"></param>
-        public void SetUserValue(int index)
+        public void SetIndexedUserValue(int index, int nth)
         {
-            NativeMethods.lua_setuservalue(_luaState, index);
+            NativeMethods.lua_setiuservalue(_luaState, index, nth);
         }
 
         /// <summary>

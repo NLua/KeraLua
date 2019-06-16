@@ -33,10 +33,10 @@
     <file src="lib\Release\net45\KeraLua.xml" target="lib\xamarintvos" />
     <file src="lib\Release\xamarinwatchos\KeraLua.dll" target="lib\xamarinwatchos" />
     <file src="lib\Release\net45\KeraLua.xml" target="lib\xamarinwatchos" />
-    <file src="runtimes\win-x64\native\lua53.dll" target="runtimes\win-x64\native\lua53.dll" />
-    <file src="runtimes\win-x86\native\lua53.dll" target="runtimes\win-x86\native\lua53.dll" />
-    <file src="runtimes\osx\native\liblua53.dylib" target="runtimes\osx\native\liblua53.dylib" />
-    <file src="runtimes\linux-x64\native\liblua53.so" target="runtimes\linux-x64\native\liblua53.so" />
+    <file src="runtimes\win-x64\native\lua54.dll" target="runtimes\win-x64\native\lua54.dll" />
+    <file src="runtimes\win-x86\native\lua54.dll" target="runtimes\win-x86\native\lua54.dll" />
+    <file src="runtimes\osx\native\liblua54.dylib" target="runtimes\osx\native\liblua54.dylib" />
+    <file src="runtimes\linux-x64\native\liblua54.so" target="runtimes\linux-x64\native\liblua54.so" />
     <file src="build\targets\KeraLua.targets" target="build\net45\KeraLua.targets" />
     <file src="LICENSE" target="LICENSE" />
   </files>

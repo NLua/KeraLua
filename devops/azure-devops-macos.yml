@@ -82,10 +82,10 @@ steps:
     ArtifactName: Xamarin.Mac.KeraLua.dll
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: liblua53.dylib'
+  displayName: 'Publish Artifact: liblua54.dylib'
   inputs:
-    PathtoPublish: runtimes/osx/native/liblua53.dylib
-    ArtifactName: liblua53.dylib
+    PathtoPublish: runtimes/osx/native/liblua54.dylib
+    ArtifactName: liblua54.dylib
 
 - task: TriggerBuild@3
   displayName: 'Trigger a new build of KeraLua.Linux'

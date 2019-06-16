@@ -143,5 +143,28 @@ namespace KeraLua
             return Marshal.GetFunctionPointerForDelegate<LuaAlloc>(d);
 #endif
         }
+
+        public static LuaWarnFunction ToLuaWarning(this IntPtr ptr)
+        {
+            if (ptr == IntPtr.Zero)
+                return null;
+#if NETFRAMEWORK
+            return (LuaWarnFunction)Marshal.GetDelegateForFunctionPointer(ptr, typeof(LuaWarnFunction));
+#else
+            return Marshal.GetDelegateForFunctionPointer<LuaWarnFunction>(ptr);
+#endif
+        }
+
+        public static IntPtr ToFunctionPointer(this LuaWarnFunction d)
+        {
+            if (d == null)
+                return IntPtr.Zero;
+
+#if NETFRAMEWORK
+            return Marshal.GetFunctionPointerForDelegate(d);
+#else
+            return Marshal.GetFunctionPointerForDelegate<LuaWarnFunction>(d);
+#endif
+        }
     }
 }

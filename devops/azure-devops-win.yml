@@ -106,22 +106,22 @@ steps:
     artifactName: Xamarin.tvOS.KeraLua.dll
 
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download Build liblua53.dylib'
+  displayName: 'Download Build liblua54.dylib'
   inputs:
     buildType: 'specific'
     project: 'NuGets'
     definition: 'NLua.KeraLua.Mac'
     specificBuildWithTriggering: true
-    artifactName: liblua53.dylib
+    artifactName: liblua54.dylib
 
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download Build liblua53.so (Linux)'
+  displayName: 'Download Build liblua54.so (Linux)'
   inputs:
     buildType: 'specific'
     project: 'NuGets'
     definition: 'NLua.KeraLua.Linux'
     specificBuildWithTriggering: true
-    artifactName: liblua53.so
+    artifactName: liblua54.so
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: lib/Release/xamarinios/'
@@ -150,13 +150,13 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Files to: runtimes/osx/native/'
   inputs:
-    SourceFolder: '$(System.ArtifactsDirectory)\liblua53.dylib\'
+    SourceFolder: '$(System.ArtifactsDirectory)\liblua54.dylib\'
     TargetFolder: runtimes/osx/native/
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: runtimes/linux-x64/native/'
   inputs:
-    SourceFolder: '$(System.ArtifactsDirectory)\liblua53.so\'
+    SourceFolder: '$(System.ArtifactsDirectory)\liblua54.so\'
     TargetFolder: 'runtimes/linux-x64/native/'
 
 - script: 'nuget setapikey $(apikey)'
