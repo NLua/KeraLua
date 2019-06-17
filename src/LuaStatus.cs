@@ -26,10 +26,6 @@
         /// </summary>
         ErrMem = 4,
         /// <summary>
-        ///  error while running a __gc metamethod. For such errors, Lua does not call the message handler
-        /// </summary>
-        ErrGCMM = 5,
-        /// <summary>
         ///  error while running the message handler. 
         /// </summary>
         ErrErr = 6,

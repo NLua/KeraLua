@@ -83,6 +83,9 @@ namespace KeraLua
         internal static extern int lua_gc(lua_State luaState, int what, int data);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int lua_gc(lua_State luaState, int what, int data, int data2);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern lua_Alloc lua_getallocf(lua_State luaState, ref voidptr_t ud);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -232,7 +235,7 @@ namespace KeraLua
         internal static extern int lua_resetthread(lua_State luaState);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int lua_resume(lua_State luaState, lua_State from, int nargs);
+        internal static extern int lua_resume(lua_State luaState, lua_State from, int nargs, out int results);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void lua_rotate(lua_State luaState, int index, int n);
@@ -319,7 +322,7 @@ namespace KeraLua
         internal static extern void lua_upvaluejoin(lua_State luaState, int funcIndex1, int n1, int funcIndex2, int n2);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern lua_Number_ptr lua_version(lua_State luaState);
+        internal static extern lua_Number lua_version(lua_State luaState);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void lua_warning(lua_State luaState, charptr_t msg, int tocont);
