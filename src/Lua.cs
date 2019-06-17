@@ -150,6 +150,7 @@ namespace KeraLua
             return (T)handle.Target;
         }
 
+
         /// <summary>
         /// Converts the acceptable index idx into an equivalent absolute index (that is, one that does not depend on the stack top). 
         /// </summary>
@@ -1097,6 +1098,15 @@ namespace KeraLua
         }
 
         /// <summary>
+        /// Resets a thread, cleaning its call stack and closing all pending to-be-closed variables. Returns a status code: LUA_OK for no errors in closing methods, or an error status otherwise. In case of error, leaves the error object on the top of the stack, 
+        /// </summary>
+        /// <returns></returns>
+        public int ResetThread()
+        {
+            return NativeMethods.lua_resetthread(_luaState);
+        }
+
+        /// <summary>
         ///  Rotates the stack elements between the valid index idx and the top of the stack. The elements are rotated n positions in the direction of the top, for a positive n, or -n positions in the direction of the bottom, for a negative n. The absolute value of n must not be greater than the size of the slice being rotated. This function cannot be called with a pseudo-index, because a pseudo-index is not an actual stack position. 
         /// </summary>
         /// <param name="index"></param>
@@ -1232,6 +1242,16 @@ namespace KeraLua
         }
 
         /// <summary>
+        /// Sets the warning function to be used by Lua to emit warnings (see lua_WarnFunction). The ud parameter sets the value ud passed to the warning function.
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="userData"></param>
+        public void SetWarningFunction(LuaWarnFunction function, IntPtr userData)
+        {
+            NativeMethods.lua_setwarnf(_luaState, function.ToFunctionPointer(), userData);
+        }
+
+        /// <summary>
         ///  Pops a value from the stack and sets it as the new n-th user value associated to the full userdata at the given index. Returns 0 if the userdata does not have that value. 
         /// </summary>
         /// <param name="index"></param>
@@ -1281,6 +1301,17 @@ namespace KeraLua
         public LuaFunction ToCFunction(int index)
         {
             return NativeMethods.lua_tocfunction(_luaState, index).ToLuaFunction();
+        }
+
+        /// <summary>
+        ///  Marks the given index in the stack as a to-be-closed "variable" (see §3.3.8). Like a to-be-closed variable in Lua, the value at that index in the stack will be closed when it goes out of scope. Here, in the context of a C function, to go out of scope means that the running function returns to Lua, there is an error, or the index is removed from the stack through lua_settop or lua_pop. An index marked as to-be-closed should not be removed from the stack by any other function in the API except lua_settop or lua_pop.
+        /// This function should not be called for an index that is equal to or below an already marked to-be-closed index.
+        /// This function can raise an out-of-memory error. In that case, the value in the given index is immediately closed, as if it was already marked. 
+        /// </summary>
+        /// <param name="index"></param>
+        public void ToClose(int index)
+        {
+            NativeMethods.lua_toclose(_luaState, index);
         }
 
         /// <summary>
@@ -2115,6 +2146,16 @@ namespace KeraLua
         public void Unref(LuaRegistry tableIndex, int reference)
         {
             NativeMethods.luaL_unref(_luaState, (int)tableIndex, reference);
+        }
+
+        /// <summary>
+        /// Emits a warning with the given message. A message in a call with tocont true should be continued in another call to this function. 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="toContinue"></param>
+        public void Warning(string message, bool toContinue)
+        {
+            NativeMethods.lua_warning(_luaState, message, toContinue ? 1 : 0);
         }
 
 

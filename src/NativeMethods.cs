@@ -324,8 +324,8 @@ namespace KeraLua
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern lua_Number lua_version(lua_State luaState);
 
-        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void lua_warning(lua_State luaState, charptr_t msg, int tocont);
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl,CharSet = CharSet.Ansi)]
+        internal static extern void lua_warning(lua_State luaState, string msg, int tocont);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void lua_xmove(lua_State from, lua_State to, int n);
