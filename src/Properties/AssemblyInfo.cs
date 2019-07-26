@@ -39,7 +39,7 @@ using Foundation;
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyInformationalVersion("0.1.0+155.Branch.master.Sha.2bffe65059140b063c0ca22a830593629f64b2cb")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("1.0.16.0")]
+[assembly: AssemblyInformationalVersion("1.0.16+Branch.master.Sha.36a5ab85f9b3be028d4885b0f0d45cc3b2cc854f")]
+[assembly: AssemblyFileVersion("1.0.16.0")]
 

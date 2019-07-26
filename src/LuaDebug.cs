@@ -83,12 +83,13 @@ namespace KeraLua
         /// </summary>
         [MarshalAs(UnmanagedType.I1)]
         public bool IsTailCall; /* (t) */
-        /// <summary>
-        /// a "printable" version of source, to be used in error messages
-        /// </summary>
+        
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 60)]
         byte [] shortSource;
 
+        /// <summary>
+        /// a "printable" version of source, to be used in error messages
+        /// </summary>
         public string ShortSource
         {
             get
