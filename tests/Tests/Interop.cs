@@ -236,7 +236,7 @@ main.lua-main.lua:8 (main)
 main.lua-main.lua:11 (main)
 ";
             expected = expected.Replace("\r","");
-            expected = expected.Replace('/', System.IO.Path.PathSeparator);
+            expected = expected.Replace('/', System.IO.Path.DirectorySeparatorChar);
             output = output.Replace("\r","");
             Assert.AreEqual(expected, output, "#1");
             Assert.IsNotNull(state.Hook);
@@ -280,7 +280,7 @@ main.lua-main.lua:8 (main)
 ./foo.lua-foo.lua:8 (Lua)
 main.lua-main.lua:11 (main)
 ";
-            expected = expected.Replace('/', System.IO.Path.PathSeparator);
+            expected = expected.Replace('/', System.IO.Path.DirectorySeparatorChar);
             expected = expected.Replace("\r","");
             output = output.Replace("\r","");
 
