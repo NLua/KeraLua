@@ -1,3 +1,15 @@
+👋 Hello there! | 
+------------ | 
+> 🔭 Thank you for checking out this project.
+>
+> 🍻 We've made the project Open Source and **MIT** license so everyone can enjoy it. 
+>
+> 🛠 To deliver a project with quality we have to spent a lot of time working on it.
+> 
+> ⭐️ If you liked the project please star it.
+>
+> 💕 We also appreaciate any **Sponsor**  [ [Patreon](https://www.patreon.com/codefoco) | [PayPal](paypal.me/viniciusjarina) ] 
+
 [![Logo](https://raw.githubusercontent.com/NLua/KeraLua/master/KeraLua.png)]()
 
 KeraLua
