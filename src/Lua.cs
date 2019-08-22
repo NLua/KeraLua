@@ -48,7 +48,7 @@ namespace KeraLua
             if (openLibs)
                 OpenLibs();
 
-            SetExtraObject(this);
+            SetExtraObject(this, true);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace KeraLua
 
             _luaState = NativeMethods.lua_newstate(allocator.ToFunctionPointer(), ud);
 
-            SetExtraObject(this);
+            SetExtraObject(this, true);
         }
 
         private Lua(IntPtr luaThread, Lua mainState)
@@ -73,7 +73,7 @@ namespace KeraLua
             _luaState = luaThread;
             Encoding = mainState.Encoding;
 
-            SetExtraObject(this);
+            SetExtraObject(this, false);
             GC.SuppressFinalize(this);
         }
 
@@ -129,9 +129,9 @@ namespace KeraLua
             Dispose(true);
         }
 
-        private void SetExtraObject<T>(T obj) where T : class
+        private void SetExtraObject<T>(T obj, bool weak) where T : class
         {
-            var handle = GCHandle.Alloc(obj, GCHandleType.Weak);
+            var handle = GCHandle.Alloc(obj, weak ? GCHandleType.Weak : GCHandleType.Normal);
             IntPtr extraSpace = _luaState - IntPtr.Size;
             Marshal.WriteIntPtr(extraSpace, GCHandle.ToIntPtr(handle));
         }
