@@ -17,6 +17,7 @@ using lua_Integer = System.Int64;
 using lua_Number = System.Double;
 using lua_Number_ptr = System.IntPtr;
 using lua_Debug = System.IntPtr;
+using lua_WarnFunction = System.IntPtr;
 
 namespace KeraLua
 {
@@ -25,19 +26,19 @@ namespace KeraLua
     {
 
 #if __TVOS__ && __UNIFIED__
-        private const string LuaLibraryName = "@rpath/liblua53.framework/liblua53";
+        private const string LuaLibraryName = "@rpath/liblua54.framework/liblua54";
 #elif __WATCHOS__ && __UNIFIED__
-        private const string LuaLibraryName = "@rpath/liblua53.framework/liblua53";
+        private const string LuaLibraryName = "@rpath/liblua54.framework/liblua54";
 #elif __IOS__ && __UNIFIED__
-        private const string LuaLibraryName = "@rpath/liblua53.framework/liblua53";
+        private const string LuaLibraryName = "@rpath/liblua54.framework/liblua54";
 #elif __ANDROID__
-        private const string LuaLibraryName = "liblua53.so";
+        private const string LuaLibraryName = "liblua54.so";
 #elif __MACOS__ 
-        private const string LuaLibraryName = "liblua53.dylib";
+        private const string LuaLibraryName = "liblua54.dylib";
 #elif WINDOWS_UWP
-        private const string LuaLibraryName = "lua53.dll";
+        private const string LuaLibraryName = "lua54.dll";
 #else
-        private const string LuaLibraryName = "lua53";
+        private const string LuaLibraryName = "lua54";
 #endif
 
 #pragma warning disable IDE1006 // Naming Styles
@@ -82,6 +83,9 @@ namespace KeraLua
         internal static extern int lua_gc(lua_State luaState, int what, int data);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int lua_gc(lua_State luaState, int what, int data, int data2);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern lua_Alloc lua_getallocf(lua_State luaState, ref voidptr_t ud);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -105,6 +109,9 @@ namespace KeraLua
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         internal static extern int lua_getinfo(lua_State luaState, string what, lua_Debug ar);
 
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int lua_getiuservalue(lua_State luaState, int idx, int n);
+
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         internal static extern charptr_t lua_getlocal(lua_State luaState, lua_Debug ar, int n);
 
@@ -122,9 +129,6 @@ namespace KeraLua
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         internal static extern charptr_t lua_getupvalue(lua_State luaState, int funcIndex, int n);
-
-        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int lua_getuservalue(lua_State luaState, int index);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int lua_iscfunction(lua_State luaState, int index);
@@ -162,7 +166,7 @@ namespace KeraLua
         internal static extern lua_State lua_newthread(lua_State luaState);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern voidptr_t lua_newuserdata(lua_State luaState, size_t size);
+        internal static extern voidptr_t lua_newuserdatauv(lua_State luaState, size_t size, int nuvalue);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int lua_next(lua_State luaState, int index);
@@ -228,7 +232,10 @@ namespace KeraLua
         internal static extern void lua_rawsetp(lua_State luaState, int index, voidptr_t p);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int lua_resume(lua_State luaState, lua_State from, int nargs);
+        internal static extern int lua_resetthread(lua_State luaState);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int lua_resume(lua_State luaState, lua_State from, int nargs, out int results);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void lua_rotate(lua_State luaState, int index, int n);
@@ -248,6 +255,9 @@ namespace KeraLua
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void lua_seti(lua_State luaState, int index, long n);
 
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void lua_setiuservalue(lua_State luaState, int index, int n);
+
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         internal static extern charptr_t lua_setlocal(lua_State luaState, lua_Debug ar, int n);
 
@@ -260,11 +270,11 @@ namespace KeraLua
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void lua_settop(lua_State luaState, int newTop);
 
-        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern charptr_t lua_setupvalue(lua_State luaState, int funcIndex, int n);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void lua_setuservalue(lua_State luaState, int index);
+        internal static extern void lua_setwarnf(lua_State luaState, lua_WarnFunction warningFunctionPtr, voidptr_t ud);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int lua_status(lua_State luaState);
@@ -277,6 +287,9 @@ namespace KeraLua
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern lua_CFunction lua_tocfunction(lua_State luaState, int index);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern lua_CFunction lua_toclose(lua_State luaState, int index);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern lua_Integer lua_tointegerx(lua_State luaState, int index, out int isNum);
@@ -309,7 +322,10 @@ namespace KeraLua
         internal static extern void lua_upvaluejoin(lua_State luaState, int funcIndex1, int n1, int funcIndex2, int n2);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern lua_Number_ptr lua_version(lua_State luaState);
+        internal static extern lua_Number lua_version(lua_State luaState);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl,CharSet = CharSet.Ansi)]
+        internal static extern void lua_warning(lua_State luaState, string msg, int tocont);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void lua_xmove(lua_State from, lua_State to, int n);
@@ -421,6 +437,9 @@ namespace KeraLua
             lua_State luaState2,
             string message,
             int level);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        internal static extern int luaL_typeerror(lua_State luaState, int arg, string typeName);
 
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void luaL_unref(lua_State luaState, int registryIndex, int reference);

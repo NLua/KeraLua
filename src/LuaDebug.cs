@@ -51,8 +51,15 @@ namespace KeraLua
         ///  the name of the chunk that created the function. If source starts with a '@', it means that the function was defined in a file where the file name follows the '@'.
         /// </summary>
         /// 
-        public string Source => Marshal.PtrToStringAnsi(source);
+        public string Source => Marshal.PtrToStringAnsi(source, SourceLength);
         IntPtr source;
+
+        /// <summary>
+        /// The length of the string source
+        /// </summary>
+        public int SourceLength => sourceLen.ToInt32();
+        IntPtr sourceLen;
+
         /// <summary>
         ///  the current line where the given function is executing. When no line information is available, currentline is set to -1
         /// </summary>
@@ -83,6 +90,16 @@ namespace KeraLua
         /// </summary>
         [MarshalAs(UnmanagedType.I1)]
         public bool IsTailCall; /* (t) */
+
+        /// <summary>
+        /// The index on the stack of the first value being "transferred", that is, parameters in a call or return values in a return. (The other values are in consecutive indices.) Using this index, you can access and modify these values through lua_getlocal and lua_setlocal. This field is only meaningful during a call hook, denoting the first parameter, or a return hook, denoting the first value being returned. (For call hooks, this value is always 1.) 
+        /// </summary>
+        public ushort IndexFirstValue;   /* (r) index of first value transferred */
+
+        /// <summary>
+        /// The number of values being transferred (see previous item). (For calls of Lua functions, this value is always equal to nparams.) 
+        /// </summary>
+        public ushort NumberTransferredValues;   /* (r) number of transferred values */
         
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 60)]
         byte [] shortSource;

@@ -53,7 +53,7 @@
     <ObjcBindingCoreSource Include="Structs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <NativeReference Include="..\..\runtimes\watchos\liblua53.framework">
+    <NativeReference Include="..\..\runtimes\watchos\liblua54.framework">
       <Kind>Framework</Kind>
     </NativeReference>
   </ItemGroup>

@@ -3,7 +3,7 @@
     <PropertyGroup>
         <watchOSBuildDir>ios_build</watchOSBuildDir>
         <watchOSOutputDir>watchos</watchOSOutputDir>
-        <DylibFileFramework>liblua53.framework</DylibFileFramework>
+        <DylibFileFramework>liblua54.framework</DylibFileFramework>
     </PropertyGroup>
     <Target Name="BuildLuaXamarinWatchOS" BeforeTargets="PrepareForBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')" >
         <Message Text="Building watchOS Lua library (arm64/x86_64)" />
