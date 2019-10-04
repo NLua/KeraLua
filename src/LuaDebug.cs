@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Runtime.InteropServices;
 
 namespace KeraLua
@@ -99,12 +100,30 @@ namespace KeraLua
         /// The number of values being transferred (see previous item). (For calls of Lua functions, this value is always equal to nparams.) 
         /// </summary>
         public ushort NumberTransferredValues;   /* (r) number of transferred values */
+        
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 60)]
+        byte [] shortSource;
 
         /// <summary>
         /// a "printable" version of source, to be used in error messages
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 60)]
-        public string ShortSource;
+        public string ShortSource
+        {
+            get
+            {
+                if (shortSource[0] == 0)
+                    return string.Empty;
+
+                int count = 0;
+
+                while (count < shortSource.Length && shortSource[count] != 0)
+                {
+                    count++;
+                }
+
+                return Encoding.ASCII.GetString(shortSource, 0, count);
+            }
+        }
         IntPtr i_ci;
     }
 }
