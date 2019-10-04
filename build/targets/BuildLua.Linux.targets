@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Linux64BuildDir>linux-x64</Linux64BuildDir>
-    <LinuxBinaryLibraryPath64>lib64\liblua53.so</LinuxBinaryLibraryPath64>
+    <LinuxBinaryLibraryPath64>lib64\liblua54.so</LinuxBinaryLibraryPath64>
   </PropertyGroup>
   <Target Name="BuildLuaLinux" BeforeTargets="BeforeBuild" Condition="'$(OS)'=='Unix' and !Exists('/usr/lib/libc.dylib')">
     <Message Text="Building Linux Lua library (x64)" />

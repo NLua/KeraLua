@@ -3,7 +3,7 @@
     <PropertyGroup>
         <tvOSBuildDir>ios_build</tvOSBuildDir>
         <tvOSOutputDir>tvos</tvOSOutputDir>
-        <DylibFileFramework>liblua53.framework</DylibFileFramework>
+        <DylibFileFramework>liblua54.framework</DylibFileFramework>
     </PropertyGroup>
     <Target Name="BuildLuaXamarinTVOS" BeforeTargets="PrepareForBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')" >
         <Message Text="Building tvOS Lua library (arm64/x86_64)" />

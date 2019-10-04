@@ -4,9 +4,9 @@
         <OSX32BuildDir>osx-32</OSX32BuildDir>
         <OSX64BuildDir>osx-64</OSX64BuildDir>
         <OSXBuildDir>osx</OSXBuildDir>
-        <OSXBinaryLibraryPath64>lib64\liblua53.dylib</OSXBinaryLibraryPath64>
-        <OSXBinaryLibraryPath32>lib\liblua53.dylib</OSXBinaryLibraryPath32>
-        <OSXBinaryLibraryPath>liblua53.dylib</OSXBinaryLibraryPath>
+        <OSXBinaryLibraryPath64>lib64\liblua54.dylib</OSXBinaryLibraryPath64>
+        <OSXBinaryLibraryPath32>lib\liblua54.dylib</OSXBinaryLibraryPath32>
+        <OSXBinaryLibraryPath>liblua54.dylib</OSXBinaryLibraryPath>
         <XcodeWithout32BitSupport>10</XcodeWithout32BitSupport>
     </PropertyGroup>
     <Target Name="BuildLuaOSX" BeforeTargets="BeforeBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')" >

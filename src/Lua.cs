@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
@@ -151,6 +151,7 @@ namespace KeraLua
             return (T)handle.Target;
         }
 
+
         /// <summary>
         /// Converts the acceptable index idx into an equivalent absolute index (that is, one that does not depend on the stack top). 
         /// </summary>
@@ -289,6 +290,18 @@ namespace KeraLua
         public int GarbageCollector(LuaGC what, int data)
         {
             return NativeMethods.lua_gc(_luaState, (int)what, data);
+        }
+
+        /// <summary>
+        /// Controls the garbage collector. 
+        /// </summary>
+        /// <param name="what"></param>
+        /// <param name="data">passed to lua_gc vargs</param>
+        /// <param name="data2">passed to lua_gc vargs</param>
+        /// <returns></returns>
+        public int GarbageCollector(LuaGC what, int data, int data2)
+        {
+            return NativeMethods.lua_gc(_luaState, (int)what, data, data2);
         }
 
         /// <summary>
@@ -486,12 +499,20 @@ namespace KeraLua
         public int GetTop() => NativeMethods.lua_gettop(_luaState);
 
         /// <summary>
-        /// Pushes onto the stack the Lua value associated with the full userdata at the given index. 
+        ///  Pushes onto the stack the n-th user value associated with the full userdata at the given index and returns the type of the pushed value.
+        /// If the userdata does not have that value, pushes nil and returns LUA_TNONE.
         /// </summary>
         /// <param name="index"></param>
+        /// <param name="nth"></param>
         /// <returns>Returns the type of the pushed value. </returns>
-        public int GetUserValue(int index) => NativeMethods.lua_getuservalue(_luaState, index);
+        public int GetIndexedUserValue(int index, int nth) => NativeMethods.lua_getiuservalue(_luaState, index, nth);
 
+        /// <summary>
+        /// Compatibility GetIndexedUserValue with constant 1
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public int GetUserValue(int index) => GetIndexedUserValue(index, 1);
         /// <summary>
         ///  Gets information about the n-th upvalue of the closure at index funcindex. It pushes the upvalue's value onto the stack and returns its name. Returns NULL (and pushes nothing) when the index n is greater than the number of upvalues.
         ///  For C functions, this function uses the empty string "" as a name for all upvalues. (For Lua functions, upvalues are the external local variables that the function uses, and that are consequently included in its closure.)
@@ -679,13 +700,25 @@ namespace KeraLua
         }
 
         /// <summary>
-        /// This function allocates a new block of memory with the given size, pushes onto the stack a new full userdata with the block address, and returns this address. The host program can freely use this memory
+        ///  This function creates and pushes on the stack a new full userdata, with nuvalue associated Lua values, called user values, plus an associated block of raw memory with size bytes. (The user values can be set and read with the functions lua_setiuservalue and lua_getiuservalue.)
+        ///  The function returns the address of the block of memory.
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="uv"></param>
+        /// <returns></returns>
+        public IntPtr NewIndexedUserData(int size, int uv)
+        {
+            return NativeMethods.lua_newuserdatauv(_luaState, (UIntPtr) size, uv);
+        }
+
+        /// <summary>
+        /// Compatibility NewIndexedUserData with constant parameter
         /// </summary>
         /// <param name="size"></param>
         /// <returns></returns>
         public IntPtr NewUserData(int size)
         {
-            return NativeMethods.lua_newuserdata(_luaState, (UIntPtr) size);
+            return NewIndexedUserData(size, 1);
         }
 
         /// <summary>
@@ -1041,24 +1074,39 @@ namespace KeraLua
         }
 
         /// <summary>
-        ///  To start a coroutine, you push onto the thread stack the main function plus any arguments; then you call lua_resume,
-        ///  with nargs being the number of arguments. This call returns when the coroutine suspends or finishes its execution. 
-        ///  When it returns, the stack contains all values passed to lua_yield, or all values returned by the body function. 
-        ///  lua_resume returns LUA_YIELD if the coroutine yields, LUA_OK if the coroutine finishes its execution without errors, 
-        ///  or an error code in case of errors (see lua_pcall).
-        ///  In case of errors, the stack is not unwound, so you can use the debug API over it. 
-        ///  The error object is on the top of the stack.
-        ///  To resume a coroutine, you remove any results from the last lua_yield, put on its stack only the values to be passed as results from yield,
-        ///  and then call lua_resume.
-        ///  The parameter from represents the coroutine that is resuming L. 
-        ///  If there is no such coroutine, this parameter can be NULL. 
+        /// Starts and resumes a coroutine in the given thread L.
+        /// To start a coroutine, you push onto the thread stack the main function plus any arguments; then you call lua_resume, with nargs being the number of arguments.This call returns when the coroutine suspends or finishes its execution. When it returns, * nresults is updated and the top of the stack contains the* nresults values passed to lua_yield or returned by the body function. lua_resume returns LUA_YIELD if the coroutine yields, LUA_OK if the coroutine finishes its execution without errors, or an error code in case of errors (see lua_pcall). In case of errors, the error object is on the top of the stack.
+        /// To resume a coroutine, you clear its stack, push only the values to be passed as results from yield, and then call lua_resume.
+        /// The parameter from represents the coroutine that is resuming L. If there is no such coroutine, this parameter can be NULL.  
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="arguments"></param>
+        /// <param name="results"></param>
+        /// <returns></returns>
+        public LuaStatus Resume(Lua from, int arguments, out int results)
+        {
+            return (LuaStatus)NativeMethods.lua_resume(_luaState, from?._luaState ?? IntPtr.Zero, arguments, out results);
+        }
+
+        /// <summary>
+        /// Compatibility Resume without results.
         /// </summary>
         /// <param name="from"></param>
         /// <param name="arguments"></param>
         /// <returns></returns>
         public LuaStatus Resume(Lua from, int arguments)
         {
-            return (LuaStatus)NativeMethods.lua_resume(_luaState, from?._luaState ?? IntPtr.Zero, arguments);
+            int ignore;
+            return (LuaStatus)NativeMethods.lua_resume(_luaState, from?._luaState ?? IntPtr.Zero, arguments, out ignore);
+        }
+
+        /// <summary>
+        /// Resets a thread, cleaning its call stack and closing all pending to-be-closed variables. Returns a status code: LUA_OK for no errors in closing methods, or an error status otherwise. In case of error, leaves the error object on the top of the stack, 
+        /// </summary>
+        /// <returns></returns>
+        public int ResetThread()
+        {
+            return NativeMethods.lua_resetthread(_luaState);
         }
 
         /// <summary>
@@ -1197,13 +1245,30 @@ namespace KeraLua
         }
 
         /// <summary>
-        ///  Pops a value from the stack and sets it as the new value associated to the full userdata at the given index.
+        /// Sets the warning function to be used by Lua to emit warnings (see lua_WarnFunction). The ud parameter sets the value ud passed to the warning function.
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="userData"></param>
+        public void SetWarningFunction(LuaWarnFunction function, IntPtr userData)
+        {
+            NativeMethods.lua_setwarnf(_luaState, function.ToFunctionPointer(), userData);
+        }
+
+        /// <summary>
+        ///  Pops a value from the stack and sets it as the new n-th user value associated to the full userdata at the given index. Returns 0 if the userdata does not have that value. 
         /// </summary>
         /// <param name="index"></param>
-        public void SetUserValue(int index)
+        /// <param name="nth"></param>
+        public void SetIndexedUserValue(int index, int nth)
         {
-            NativeMethods.lua_setuservalue(_luaState, index);
+            NativeMethods.lua_setiuservalue(_luaState, index, nth);
         }
+
+        /// <summary>
+        /// Compatibility SetIndexedUserValue with constant 1
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetUserValue(int index) => SetIndexedUserValue(index, 1);
 
         /// <summary>
         ///  The status can be 0 (LUA_OK) for a normal thread, an error code if the thread finished the execution of a lua_resume with an error, or LUA_YIELD if the thread is suspended. 
@@ -1239,6 +1304,17 @@ namespace KeraLua
         public LuaFunction ToCFunction(int index)
         {
             return NativeMethods.lua_tocfunction(_luaState, index).ToLuaFunction();
+        }
+
+        /// <summary>
+        ///  Marks the given index in the stack as a to-be-closed "variable" (see §3.3.8). Like a to-be-closed variable in Lua, the value at that index in the stack will be closed when it goes out of scope. Here, in the context of a C function, to go out of scope means that the running function returns to Lua, there is an error, or the index is removed from the stack through lua_settop or lua_pop. An index marked as to-be-closed should not be removed from the stack by any other function in the API except lua_settop or lua_pop.
+        /// This function should not be called for an index that is equal to or below an already marked to-be-closed index.
+        /// This function can raise an out-of-memory error. In that case, the value in the given index is immediately closed, as if it was already marked. 
+        /// </summary>
+        /// <param name="index"></param>
+        public void ToClose(int index)
+        {
+            NativeMethods.lua_toclose(_luaState, index);
         }
 
         /// <summary>
@@ -1480,15 +1556,12 @@ namespace KeraLua
         }
 
         /// <summary>
-        /// Return the version of Lua (e.g 503)
+        /// Return the version of Lua (e.g 504)
         /// </summary>
         /// <returns></returns>
         public double Version()
         {
-            double[] version = new double[1];
-            IntPtr pVersion = NativeMethods.lua_version(_luaState);
-            Marshal.Copy(pVersion, version, 0, 1);
-            return version[0];
+            return NativeMethods.lua_version(_luaState);
         }
 
         /// <summary>
@@ -2076,6 +2149,16 @@ namespace KeraLua
         public void Unref(LuaRegistry tableIndex, int reference)
         {
             NativeMethods.luaL_unref(_luaState, (int)tableIndex, reference);
+        }
+
+        /// <summary>
+        /// Emits a warning with the given message. A message in a call with tocont true should be continued in another call to this function. 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="toContinue"></param>
+        public void Warning(string message, bool toContinue)
+        {
+            NativeMethods.lua_warning(_luaState, message, toContinue ? 1 : 0);
         }
 
 

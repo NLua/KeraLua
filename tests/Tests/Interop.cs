@@ -425,5 +425,36 @@ main.lua-main.lua:11 (main)
                 Assert.AreEqual(LuaStatus.OK, result);
             }
         }
+
+#if MONOTOUCH
+        [MonoPInvokeCallback(typeof(LuaWarnFunction))]
+#endif
+        public static void MyWarning(IntPtr ud, IntPtr msg, int tocont)
+        {
+            var lua = Lua.FromIntPtr(ud);
+            StringBuilder sb = lua.ToObject<StringBuilder>(-1);
+            string message = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(msg);
+            sb.Append(message);
+        }
+
+        [Test]
+        public void TestWarning()
+        {
+            using (var lua = new Lua())
+            {
+                LuaWarnFunction warnFunction = MyWarning;
+                var sb = new StringBuilder();
+
+                lua.PushObject(sb);
+                lua.SetWarningFunction(warnFunction, lua.Handle);
+
+                lua.Warning("Ola um dois tres", false);
+
+
+                Assert.AreEqual("Ola um dois tres", sb.ToString(), "#1");
+            }
+        }
+
+
     }
 }
