@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 
 namespace KeraLua
 {
@@ -270,8 +271,10 @@ namespace KeraLua
 
         /// <summary>
         /// Generates a Lua error, using the value at the top of the stack as the error object. This function does a long jump
+        /// (We want it to be inlined to avoid issues with managed stack)
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Error()
         {
             return NativeMethods.lua_error(_luaState);

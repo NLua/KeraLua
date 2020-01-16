@@ -55,7 +55,7 @@ steps:
   inputs:
     command: custom
     custom: vstest
-    arguments: '.\tests\build\netcore\bin\Release\netcoreapp2.0\KeraLuaTest.Core.dll'
+    arguments: '.\tests\build\netcore\bin\Release\netcoreapp3.0\KeraLuaTest.Core.dll'
 
 - task: MSBuild@1
   displayName: 'Build Android'
