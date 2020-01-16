@@ -1,5 +1,5 @@
 pool:
-  name: Hosted VS2017
+  vmImage: 'windows-2019'
   demands:
   - msbuild
   - visualstudio
@@ -17,9 +17,9 @@ steps:
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
 - task: NuGetToolInstaller@1
-  displayName: 'Use NuGet 4.7.3'
+  displayName: 'Use NuGet 5.4.0'
   inputs:
-    versionSpec: 4.7.3
+    versionSpec: 5.4.0
 
 - task: NuGetCommand@2
   displayName: 'NuGet restore'
