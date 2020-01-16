@@ -9,6 +9,13 @@ steps:
 - checkout: self 
   submodules: true
 
+- task: UseDotNet@2
+  displayName: 'Install .NET Core 3.0.102'
+  inputs:
+    packageType: sdk
+    version: '3.0.102'
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
 - task: NuGetToolInstaller@1
   displayName: 'Use NuGet 4.7.3'
   inputs:
