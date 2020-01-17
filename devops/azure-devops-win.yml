@@ -40,9 +40,10 @@ steps:
 - task: PowerShell@2
   displayName: 'PreBuild Script'
   inputs:
-    targetType: filePath
-    filePath: ./devops/PreBuild.ps1
+    filePath: './devops/PreBuild.ps1'
     arguments: 'KeraLua KeraLua.nuspec'
+    errorActionPreference: 'silentlyContinue'
+    pwsh: true
 
 - task: MSBuild@1
   displayName: 'Build solution KeraLua.sln'
