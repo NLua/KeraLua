@@ -1,7 +1,14 @@
-pool:
-  name: Hosted macOS
-  demands: msbuild
+# Repo: codefoco/AzureDevopsTemplates
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: codefoco/AzureDevopsTemplates
+      endpoint: codefoco
 
+pool:
+  vmImage: 'macOS-10.14'
+  demands: msbuild
 
 steps:
 - checkout: self 
