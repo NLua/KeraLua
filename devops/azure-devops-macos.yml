@@ -27,12 +27,6 @@ steps:
   inputs:
     restoreSolution: KeraLua.sln
 
-- script: 'brew update'
-  displayName: 'Brew Update'
-
-- script: 'brew install gitversion --ignore-dependencies'
-  displayName: 'Install GitVersion'
-
 - task: PowerShell@2
   displayName: 'PowerShell Script'
   inputs:
@@ -88,7 +82,7 @@ steps:
 - task: TriggerBuild@3
   displayName: 'Trigger a new build of KeraLua.Linux'
   inputs:
-    buildDefinition: 'NLua.KeraLua.Linux'
+    buildDefinition: 'KeraLua.Linux'
     ignoreSslCertificateErrors: true
     useSameSourceVersion: true
     password: '$(myToken)'

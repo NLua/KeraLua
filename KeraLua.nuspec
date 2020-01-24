@@ -19,8 +19,8 @@
   <files>
     <file src="lib\Release\MonoAndroid\KeraLua.dll" target="lib\MonoAndroid" />
     <file src="lib\Release\MonoAndroid\KeraLua.xml" target="lib\MonoAndroid" />
-    <file src="lib\Release\netcore\netcoreapp3.0\KeraLua.dll" target="lib\netcoreapp3.0" />
-    <file src="lib\Release\netcore\netcoreapp3.0\KeraLua.xml" target="lib\netcoreapp3.0" />
+    <file src="lib\Release\netcore\netcoreapp3.1\KeraLua.dll" target="lib\netcoreapp3.1" />
+    <file src="lib\Release\netcore\netcoreapp3.1\KeraLua.xml" target="lib\netcoreapp3.1" />
     <file src="lib\Release\net45\KeraLua.dll" target="lib\net45" />
     <file src="lib\Release\net45\KeraLua.xml" target="lib\net45" />
     <file src="lib\Release\netstandard2.0\netstandard2.0\KeraLua.dll" target="lib\netstandard2.0" />
