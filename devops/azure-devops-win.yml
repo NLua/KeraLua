@@ -1,3 +1,12 @@
+
+# Repo: codefoco/AzureDevopsTemplates
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: codefoco/AzureDevopsTemplates
+      endpoint: codefoco
+
 pool:
   vmImage: 'windows-2019'
   demands:
