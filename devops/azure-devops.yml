@@ -1,0 +1,306 @@
+# Repo: codefoco/AzureDevopsTemplates
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: codefoco/AzureDevopsTemplates
+      endpoint: codefoco
+
+
+jobs:
+- job: 'KeraLuaMac'
+  displayName: 'Mac'
+  variables:
+    - group: 'Keys'
+
+  pool:
+    vmImage: 'macOS-10.14'
+    demands: msbuild
+
+  steps:
+  - checkout: self 
+    submodules: 'true'
+
+  - template: common-dotnet.yml@templates
+  - template: common-macos.yml@templates
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore KeraLua.Mac.sln'
+    inputs:
+      restoreSolution: KeraLua.Mac.sln
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore KeraLua.sln'
+    inputs:
+      restoreSolution: KeraLua.sln
+
+  - task: PowerShell@2
+    displayName: 'PowerShell Script'
+    inputs:
+      targetType: filePath
+      filePath: ./devops/PreBuild.ps1
+      arguments: 'KeraLua KeraLua.nuspec'
+
+  - task: MSBuild@1
+    displayName: 'Build solution KeraLua.sln'
+    inputs:
+      solution: KeraLua.sln
+      configuration: Release
+
+  - task: MSBuild@1
+    displayName: 'Build solution KeraLua.Mac.sln'
+    inputs:
+      solution: KeraLua.Mac.sln
+      configuration: Release
+
+  - script: 'mono packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe ./tests/build/net45/bin/Release/KeraLuaTest.dll'
+    displayName: 'Run OSX tests'
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Pipeline Artifact: Xamarin.iOS.KeraLua'
+    inputs:
+      targetPath: lib/Release/xamarinios
+      artifact: 'Xamarin.iOS.KeraLua'
+      publishLocation: 'pipeline'
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Pipeline Artifact: Xamarin.tvOS.KeraLua'
+    inputs:
+      targetPath: lib/Release/xamarintvos
+      artifact: 'Xamarin.tvOS.KeraLua'
+      publishLocation: 'pipeline'
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Pipeline Artifact: Xamarin.watchOS.KeraLua'
+    inputs:
+      targetPath: lib/Release/xamarinwatchos
+      artifact: 'Xamarin.watchOS.KeraLua'
+      publishLocation: 'pipeline'
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Pipeline Artifact: Xamarin.Mac.KeraLua'
+    inputs:
+      targetPath: lib/Release/xamarinmac
+      artifact: 'Xamarin.Mac.KeraLua'
+      publishLocation: 'pipeline'
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Pipeline Artifact: liblua53.dylib'
+    inputs:
+      targetPath: runtimes/osx/native/liblua53.dylib
+      artifact: 'liblua53.dylib'
+      publishLocation: 'pipeline'
+
+  - template: send-telegram.yml@templates
+
+  - job: 'KeraLuaLinux'
+  displayName: 'Linux'
+  dependsOn: 'KeraLuaMac'
+  variables:
+    - group: 'Keys'
+
+  pool:
+    vmImage: 'ubuntu-16.04'
+    demands: msbuild
+
+  steps:
+  - template: common-dotnet.yml@templates
+
+  - checkout: self 
+    submodules: 'true'
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore'
+    inputs:
+      restoreSolution: KeraLua.sln
+
+  - task: MSBuild@1
+    displayName: 'Build solution KeraLua.sln'
+    inputs:
+      solution: KeraLua.sln
+      configuration: Release
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Pipeline Artifact: liblua53.so'
+    inputs:
+      targetPath: 'runtimes/linux-x64/native/liblua53.so'
+      artifact: 'liblua53.so'
+      publishLocation: 'pipeline'
+
+  - template: send-telegram.yml@templates
+
+- job: 'KeraLuaWindows'
+  displayName: 'Windows'
+  dependsOn: 'KeraLuaLinux'
+  variables:
+    - group: 'Keys'
+
+  pool:
+    vmImage: 'windows-2019'
+    demands:
+    - msbuild
+    - visualstudio
+    - vstest
+
+  steps:
+  - checkout: self 
+    submodules: true
+
+  - template: common-dotnet.yml@templates
+  - template: common-win.yml@templates
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore'
+    inputs:
+      restoreSolution: KeraLua.sln
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore'
+    inputs:
+      restoreSolution: KeraLua.Core.sln
+
+  - task: PowerShell@2
+    displayName: 'PreBuild Script'
+    inputs:
+      filePath: './devops/PreBuild.ps1'
+      arguments: 'KeraLua KeraLua.nuspec'
+      errorActionPreference: 'silentlyContinue'
+      pwsh: true
+
+  - task: MSBuild@1
+    displayName: 'Build solution KeraLua.sln'
+    inputs:
+      solution: KeraLua.sln
+      configuration: Release
+
+  - task: MSBuild@1
+    displayName: 'Build .NET Core'
+    inputs:
+      solution: KeraLua.Core.sln
+      configuration: Release
+      msbuildArguments: /restore
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet vstest'
+    inputs:
+      command: custom
+      custom: vstest
+      arguments: '.\tests\build\netcore\bin\Release\netcoreapp3.1\KeraLuaTest.Core.dll'
+
+  - task: MSBuild@1
+    displayName: 'Build Android'
+    inputs:
+      solution: KeraLua.Android.sln
+      configuration: Release
+      msbuildArguments: '/p:AndroidNdkDirectory=%ANDROID_NDK_HOME%'
+
+  - task: VSTest@2
+    displayName: 'VsTest - testAssemblies'
+    inputs:
+      testAssemblyVer2: '.\tests\build\net45\bin\Release\KeraLuaTest.dll'
+
+  - task: DownloadPipelineArtifact@2
+    displayName: 'Download Build Xamarin.iOS'
+    inputs:
+      buildType: 'current'
+      artifactName: 'Xamarin.iOS.KeraLua'
+      targetPath: '$(Pipeline.Workspace)\Xamarin.iOS.KeraLua'
+
+  - task: DownloadPipelineArtifact@2
+    displayName: 'Download Build Xamarin.Mac'
+    inputs:
+      buildType: 'current'
+      artifactName: 'Xamarin.Mac.KeraLua'
+      targetPath: '$(Pipeline.Workspace)\Xamarin.Mac.KeraLua'
+
+  - task: DownloadPipelineArtifact@2
+    displayName: 'Download Build Xamarin.watchOS'
+    inputs:
+      buildType: 'current'
+      artifactName: 'Xamarin.watchOS.KeraLua'
+      targetPath: '$(Pipeline.Workspace)\Xamarin.watchOS.KeraLua'
+
+  - task: DownloadPipelineArtifact@2
+    displayName: 'Download Build Xamarin.tvOS'
+    inputs:
+      buildType: 'current'
+      artifactName: 'Xamarin.tvOS.KeraLua'
+      targetPath: '$(Pipeline.Workspace)\Xamarin.tvOS.KeraLua'
+
+  - task: DownloadPipelineArtifact@2
+    displayName: 'Download Build liblua53.dylib'
+    inputs:
+      buildType: 'current'
+      artifactName: 'liblua53.dylib'
+      targetPath: '$(Pipeline.Workspace)\liblua53.dylib'
+
+  - task: DownloadPipelineArtifact@2
+    displayName: 'Download Build liblua53.so (Linux)'
+    inputs:
+      buildType: 'current'
+      artifactName: 'liblua53.so'
+      targetPath: '$(Pipeline.Workspace)\liblua53.so'
+
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: lib/Release/xamarinios/'
+    inputs:
+      SourceFolder: '$(System.ArtifactsDirectory)\Xamarin.iOS.KeraLua\'
+      TargetFolder: lib/Release/xamarinios/
+
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: lib/Release/xamarinmac/'
+    inputs:
+      SourceFolder: '$(System.ArtifactsDirectory)\Xamarin.Mac.KeraLua\'
+      TargetFolder: lib/Release/xamarinmac/
+
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: lib/Release/xamarintvos/ '
+    inputs:
+      SourceFolder: '$(System.ArtifactsDirectory)\Xamarin.tvOS.KeraLua\'
+      TargetFolder: lib/Release/xamarintvos/
+
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: lib/Release/xamarinwatchos/'
+    inputs:
+      SourceFolder: '$(System.ArtifactsDirectory)\Xamarin.watchOS.KeraLua\'
+      TargetFolder: lib/Release/xamarinwatchos/
+
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: runtimes/osx/native/'
+    inputs:
+      SourceFolder: '$(System.ArtifactsDirectory)\liblua53.dylib\'
+      TargetFolder: runtimes/osx/native/
+
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: runtimes/linux-x64/native/'
+    inputs:
+      SourceFolder: '$(System.ArtifactsDirectory)\liblua53.so\'
+      TargetFolder: 'runtimes/linux-x64/native/'
+
+  - script: 'nuget setapikey $(apikey)'
+    displayName: 'Set NuGet API Key'
+
+  - task: PowerShell@2
+    displayName: 'Package NuGet'
+    inputs:
+      targetType: filePath
+      filePath: ./devops/Package.ps1
+      arguments: 'KeraLua KeraLua.nuspec'
+
+  - script: 'rename *.nupkg KeraLua.nupkg'
+    displayName: 'Rename Nuget Package'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Save KeraLua.nupkg Artifact'
+    inputs:
+      PathtoPublish: KeraLua.nupkg
+      ArtifactName: KeraLua.nupkg
+
+  - task: PowerShell@2
+    displayName: 'Publish NuGet'
+    inputs:
+      targetType: filePath
+      filePath: ./devops/Publish.ps1
+      arguments: KeraLua
+
+  - template: send-telegram.yml@templates
