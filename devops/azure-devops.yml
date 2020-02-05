@@ -244,37 +244,37 @@ jobs:
   - task: CopyFiles@2
     displayName: 'Copy Files to: lib/Release/xamarinios/'
     inputs:
-      SourceFolder: '$(System.ArtifactsDirectory)\Xamarin.iOS.KeraLua\'
+      SourceFolder: '$(Pipeline.Workspace)\Xamarin.iOS.KeraLua\'
       TargetFolder: lib/Release/xamarinios/
 
   - task: CopyFiles@2
     displayName: 'Copy Files to: lib/Release/xamarinmac/'
     inputs:
-      SourceFolder: '$(System.ArtifactsDirectory)\Xamarin.Mac.KeraLua\'
+      SourceFolder: '$(Pipeline.Workspace)\Xamarin.Mac.KeraLua\'
       TargetFolder: lib/Release/xamarinmac/
 
   - task: CopyFiles@2
     displayName: 'Copy Files to: lib/Release/xamarintvos/ '
     inputs:
-      SourceFolder: '$(System.ArtifactsDirectory)\Xamarin.tvOS.KeraLua\'
+      SourceFolder: '$(Pipeline.Workspace)\Xamarin.tvOS.KeraLua\'
       TargetFolder: lib/Release/xamarintvos/
 
   - task: CopyFiles@2
     displayName: 'Copy Files to: lib/Release/xamarinwatchos/'
     inputs:
-      SourceFolder: '$(System.ArtifactsDirectory)\Xamarin.watchOS.KeraLua\'
+      SourceFolder: '$(Pipeline.Workspace)\Xamarin.watchOS.KeraLua\'
       TargetFolder: lib/Release/xamarinwatchos/
 
   - task: CopyFiles@2
     displayName: 'Copy Files to: runtimes/osx/native/'
     inputs:
-      SourceFolder: '$(System.ArtifactsDirectory)\liblua53.dylib\'
+      SourceFolder: '$(Pipeline.Workspace)\liblua53.dylib\'
       TargetFolder: runtimes/osx/native/
 
   - task: CopyFiles@2
     displayName: 'Copy Files to: runtimes/linux-x64/native/'
     inputs:
-      SourceFolder: '$(System.ArtifactsDirectory)\liblua53.so\'
+      SourceFolder: '$(Pipeline.Workspace)\liblua53.so\'
       TargetFolder: 'runtimes/linux-x64/native/'
 
   - script: 'nuget setapikey $(apikey)'
