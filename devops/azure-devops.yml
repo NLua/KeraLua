@@ -93,7 +93,7 @@ jobs:
 
   - template: send-telegram.yml@templates
 
-  - job: 'KeraLuaLinux'
+- job: 'KeraLuaLinux'
   displayName: 'Linux'
   dependsOn: 'KeraLuaMac'
   variables:
