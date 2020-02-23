@@ -36,8 +36,10 @@
     <file src="lib\Release\net45\KeraLua.xml" target="lib\xamarintvos" />
     <file src="lib\Release\xamarinwatchos\KeraLua.dll" target="lib\xamarinwatchos" />
     <file src="lib\Release\net45\KeraLua.xml" target="lib\xamarinwatchos" />
-    <file src="runtimes\win-arm\nativeassets\lua53.dll" target="runtimes\win-arm\nativeassets\uap10.0\lua53.dll" />
-    <file src="runtimes\win-arm64\nativeassets\lua53.dll" target="runtimes\win-arm64\nativeassets\uap10.0\lua53.dll" />
+    <file src="runtimes\win-arm\nativeassets\lua53.dll" target="runtimes\win10-arm\nativeassets\uap10.0\lua53.dll" />
+    <file src="runtimes\win-arm64\nativeassets\lua53.dll" target="runtimes\win10-arm64\nativeassets\uap10.0\lua53.dll" />
+    <file src="runtimes\win-x64\native\lua53.dll" target="runtimes\win10-x64\nativeassets\uap10.0\lua53.dll" />
+    <file src="runtimes\win-x86\native\lua53.dll" target="runtimes\win10-x86\nativeassets\uap10.0\lua53.dll" />
     <file src="runtimes\win-x64\native\lua53.dll" target="runtimes\win-x64\native\lua53.dll" />
     <file src="runtimes\win-x86\native\lua53.dll" target="runtimes\win-x86\native\lua53.dll" />
     <file src="runtimes\osx\native\liblua53.dylib" target="runtimes\osx\native\liblua53.dylib" />
