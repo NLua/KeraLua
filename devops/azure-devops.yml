@@ -150,9 +150,14 @@ jobs:
   - template: common-win.yml@templates
 
   - task: NuGetCommand@2
-    displayName: 'NuGet restore'
+    displayName: 'NuGet restore KeraLua.sln'
     inputs:
       restoreSolution: KeraLua.sln
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore KeraLua.UWP.sln'
+    inputs:
+      restoreSolution: KeraLua.UWP.sln
 
   - task: NuGetCommand@2
     displayName: 'NuGet restore'
@@ -171,6 +176,12 @@ jobs:
     displayName: 'Build solution KeraLua.sln'
     inputs:
       solution: KeraLua.sln
+      configuration: Release
+
+  - task: MSBuild@1
+    displayName: 'Build solution KeraLua.UWP.sln'
+    inputs:
+      solution: KeraLua.UWP.sln
       configuration: Release
 
   - task: MSBuild@1
