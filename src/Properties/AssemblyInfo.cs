@@ -11,6 +11,8 @@ using Foundation;
 
 #if NETFRAMEWORK
 [assembly: AssemblyTitle ("KeraLua (.NET Framework 4.5)")]
+#elif WINDOWS_UWP
+[assembly: AssemblyTitle ("KeraLua (Windows Universal)")]
 #elif __ANDROID__
 [assembly: AssemblyTitle ("KeraLua (Xamarin.Android)")]
 #elif NETCOREAPP

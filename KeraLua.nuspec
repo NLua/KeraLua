@@ -23,6 +23,9 @@
     <file src="lib\Release\netcore\netcoreapp3.1\KeraLua.xml" target="lib\netcoreapp3.1" />
     <file src="lib\Release\net45\KeraLua.dll" target="lib\net45" />
     <file src="lib\Release\net45\KeraLua.xml" target="lib\net45" />
+    <file src="lib\Release\uap10.0\KeraLua.dll" target="lib\uap10.0" />
+    <file src="lib\Release\uap10.0\KeraLua.xml" target="lib\uap10.0" />
+    <file src="lib\Release\uap10.0\KeraLua.pri" target="lib\uap10.0" />
     <file src="lib\Release\netstandard2.0\netstandard2.0\KeraLua.dll" target="lib\netstandard2.0" />
     <file src="lib\Release\netstandard2.0\netstandard2.0\KeraLua.xml" target="lib\netstandard2.0" />
     <file src="lib\Release\xamarinios\KeraLua.dll" target="lib\xamarinios" />
@@ -33,6 +36,8 @@
     <file src="lib\Release\net45\KeraLua.xml" target="lib\xamarintvos" />
     <file src="lib\Release\xamarinwatchos\KeraLua.dll" target="lib\xamarinwatchos" />
     <file src="lib\Release\net45\KeraLua.xml" target="lib\xamarinwatchos" />
+    <file src="runtimes\win-arm\nativeassets\lua53.dll" target="runtimes\win-arm\nativeassets\uap10.0\lua53.dll" />
+    <file src="runtimes\win-arm64\nativeassets\lua53.dll" target="runtimes\win-arm64\nativeassets\uap10.0\lua53.dll" />
     <file src="runtimes\win-x64\native\lua53.dll" target="runtimes\win-x64\native\lua53.dll" />
     <file src="runtimes\win-x86\native\lua53.dll" target="runtimes\win-x86\native\lua53.dll" />
     <file src="runtimes\osx\native\liblua53.dylib" target="runtimes\osx\native\liblua53.dylib" />
