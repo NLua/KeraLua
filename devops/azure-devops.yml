@@ -39,7 +39,8 @@ jobs:
     inputs:
       targetType: filePath
       filePath: ./devops/PreBuild.ps1
-      arguments: 'KeraLua KeraLua.nuspec'
+      arguments: 'KeraLua'
+      pwsh: true
 
   - task: MSBuild@1
     displayName: 'Build solution KeraLua.sln'
@@ -168,7 +169,7 @@ jobs:
     displayName: 'PreBuild Script'
     inputs:
       filePath: './devops/PreBuild.ps1'
-      arguments: 'KeraLua KeraLua.nuspec'
+      arguments: 'KeraLua'
       errorActionPreference: 'silentlyContinue'
       pwsh: true
 
@@ -296,7 +297,8 @@ jobs:
     inputs:
       targetType: filePath
       filePath: ./devops/Package.ps1
-      arguments: 'KeraLua KeraLua.nuspec'
+      arguments: 'KeraLua'
+      pwsh: true
 
   - script: 'rename *.nupkg KeraLua.nupkg'
     displayName: 'Rename Nuget Package'
@@ -313,5 +315,6 @@ jobs:
       targetType: filePath
       filePath: ./devops/Publish.ps1
       arguments: KeraLua
+      pwsh: true
 
   - template: send-telegram.yml@templates
