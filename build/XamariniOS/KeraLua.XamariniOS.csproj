@@ -23,6 +23,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\lib\Release\xamarinios</OutputPath>
     <DefineConstants></DefineConstants>
@@ -44,6 +45,12 @@
     <NativeReference Include="..\..\runtimes\ios\liblua53.framework">
       <Kind>Framework</Kind>
     </NativeReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   <Import Project="..\targets\BuildLua.XamariniOS.targets" />
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
