@@ -1,0 +1,43 @@
+<?pdb version="1.0"?>
+<package>
+  <metadata>
+    <id>KeraLua</id>
+    <version>1.0.16</version>
+    <authors>NLua</authors>
+    <owners>Vinicius Jarina</owners>
+    <licenseUrl>https://github.com/nlua/KeraLua/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/nlua/KeraLua</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/nlua/KeraLua/master/KeraLua.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      C# Native bindings of Lua 5.3 (compatible with Xamarin.iOS/Mac/Android/.NET/.NET Core) 
+    </description>
+    <releaseNotes>Release: 2bffe65</releaseNotes>
+    <copyright>Copyright © Vinicius Jarina 2020</copyright>
+    <tags>lua keralua</tags>
+    <packageTypes>
+      <packageType name="SymbolsPackage" />
+    </packageTypes>
+    <repository type="git" url="https://github.com/nlua/KeraLua" commit="708ba30e982deccb1248d099806bc00e362fbda4" />
+  </metadata>
+  <files>
+    <file src="lib\Release\MonoAndroid\KeraLua.dll" target="lib\MonoAndroid" />
+    <file src="lib\Release\MonoAndroid\KeraLua.pdb" target="lib\MonoAndroid" />
+    <file src="lib\Release\netcore\netcoreapp3.1\KeraLua.dll" target="lib\netcoreapp3.1" />
+    <file src="lib\Release\netcore\netcoreapp3.1\KeraLua.pdb" target="lib\netcoreapp3.1" />
+    <file src="lib\Release\net45\KeraLua.dll" target="lib\net45" />
+    <file src="lib\Release\net45\KeraLua.pdb" target="lib\net45" />
+    <file src="lib\Release\uap10.0\KeraLua.dll" target="lib\uap10.0" />
+    <file src="lib\Release\uap10.0\KeraLua.pdb" target="lib\uap10.0" />
+    <file src="lib\Release\netstandard2.0\netstandard2.0\KeraLua.dll" target="lib\netstandard2.0" />
+    <file src="lib\Release\netstandard2.0\netstandard2.0\KeraLua.pdb" target="lib\netstandard2.0" />
+    <file src="lib\Release\xamarinios\KeraLua.dll" target="lib\xamarinios" />
+    <file src="lib\Release\xamarinios\KeraLua.pdb" target="lib\xamarinios" />
+    <file src="lib\Release\xamarinmac\KeraLua.dll" target="lib\xamarinmac" />
+    <file src="lib\Release\xamarinmac\KeraLua.pdb" target="lib\xamarinmac" />
+    <file src="lib\Release\xamarintvos\KeraLua.dll" target="lib\xamarintvos" />
+    <file src="lib\Release\xamarintvos\KeraLua.pdb" target="lib\xamarintvos" />
+    <file src="lib\Release\xamarinwatchos\KeraLua.dll" target="lib\xamarinwatchos" />
+    <file src="lib\Release\xamarinwatchos\KeraLua.pdb" target="lib\xamarinwatchos" />
+  </files>
+</package>

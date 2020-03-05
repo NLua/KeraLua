@@ -309,6 +309,12 @@ jobs:
       PathtoPublish: KeraLua.nupkg
       ArtifactName: KeraLua.nupkg
 
+  - task: PublishBuildArtifacts@1
+    displayName: 'Save KeraLua.snupkg Artifact'
+    inputs:
+      PathtoPublish: KeraLua.snupkg
+      ArtifactName: KeraLua.snupkg
+
   - task: PowerShell@2
     displayName: 'Publish NuGet'
     inputs:

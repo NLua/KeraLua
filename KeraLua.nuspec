@@ -14,7 +14,8 @@
     </description>
     <releaseNotes>Release: 2bffe65</releaseNotes>
     <copyright>Copyright © Vinicius Jarina 2020</copyright>
-    <tags>lua keralua</tags>
+    <tags>lua keralua</tags> 
+    <repository type="git" url="https://github.com/nlua/KeraLua" commit="708ba30e982deccb1248d099806bc00e362fbda4" />
   </metadata>
   <files>
     <file src="lib\Release\MonoAndroid\KeraLua.dll" target="lib\MonoAndroid" />
