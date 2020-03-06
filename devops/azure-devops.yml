@@ -54,7 +54,7 @@ jobs:
       solution: KeraLua.Mac.sln
       configuration: Release
 
-  - script: 'mono packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe ./tests/build/net45/bin/Release/KeraLuaTest.dll'
+  - script: 'mono packages/NUnit.ConsoleRunner.3.11.1/tools/nunit3-console.exe ./tests/build/net45/bin/Release/KeraLuaTest.dll'
     displayName: 'Run OSX tests'
 
   - task: PublishPipelineArtifact@1
