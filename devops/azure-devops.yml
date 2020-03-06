@@ -54,8 +54,20 @@ jobs:
       solution: KeraLua.Mac.sln
       configuration: Release
 
-  - script: 'mono packages/NUnit.ConsoleRunner.3.11.1/tools/nunit3-console.exe ./tests/build/net45/bin/Release/KeraLuaTest.dll'
+  - script: 'mono packages/NUnit.ConsoleRunner.3.11.1/tools/nunit3-console.exe ./tests/build/net45/bin/Release/KeraLuaTest.dll /result:KeraLuaTest.Mac.xml'
     displayName: 'Run OSX tests'
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'NUnit'
+      testResultsFiles: 'KeraLuaTest.Mac.xml'
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish KeraLuaTest.Mac.xml'
+    inputs:
+      targetPath: KeraLuaTest.Mac.xml
+      artifact: 'KeraLuaTest.Mac.xml'
+      publishLocation: 'pipeline'
 
   - task: PublishPipelineArtifact@1
     displayName: 'Publish Pipeline Artifact: Xamarin.iOS.KeraLua'
@@ -206,8 +218,20 @@ jobs:
       configuration: Release
       msbuildArguments: '/p:AndroidNdkDirectory=%ANDROID_NDK_HOME%'
 
-  - script: ' .\packages\NUnit.ConsoleRunner.3.11.1\tools\nunit3-console.exe .\tests\build\net45\bin\Release\KeraLuaTest.dll --x86'
+  - script: ' .\packages\NUnit.ConsoleRunner.3.11.1\tools\nunit3-console.exe .\tests\build\net45\bin\Release\KeraLuaTest.dll --x86 /result:KeraLuaTest.Windows.xml'
     displayName: 'Run NUnit Test'
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'NUnit'
+      testResultsFiles: 'KeraLuaTest.Windows.xml'
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish KeraLuaTest.Windows.xml'
+    inputs:
+      targetPath: KeraLuaTest.Windows.xml
+      artifact: 'KeraLuaTest.Windows.xml'
+      publishLocation: 'pipeline'
     
   - task: DownloadPipelineArtifact@2
     displayName: 'Download Build Xamarin.iOS'
