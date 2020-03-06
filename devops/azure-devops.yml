@@ -206,88 +206,50 @@ jobs:
       configuration: Release
       msbuildArguments: '/p:AndroidNdkDirectory=%ANDROID_NDK_HOME%'
 
-  - task: VSTest@2
-    displayName: 'VsTest - testAssemblies'
-    inputs:
-      testAssemblyVer2: '.\tests\build\net45\bin\Release\KeraLuaTest.dll'
-
+  - script: ' .\packages\NUnit.ConsoleRunner.3.11.1\tools\nunit3-console.exe .\tests\build\net45\bin\Release\KeraLuaTest.dll --x86'
+    displayName: 'Run NUnit Test'
+    
   - task: DownloadPipelineArtifact@2
     displayName: 'Download Build Xamarin.iOS'
     inputs:
       buildType: 'current'
       artifactName: 'Xamarin.iOS.KeraLua'
-      targetPath: '$(Pipeline.Workspace)\Xamarin.iOS.KeraLua'
+      targetPath: 'lib/Release/xamarinios/'
 
   - task: DownloadPipelineArtifact@2
     displayName: 'Download Build Xamarin.Mac'
     inputs:
       buildType: 'current'
       artifactName: 'Xamarin.Mac.KeraLua'
-      targetPath: '$(Pipeline.Workspace)\Xamarin.Mac.KeraLua'
+      targetPath: 'lib/Release/xamarinmac/'
 
   - task: DownloadPipelineArtifact@2
     displayName: 'Download Build Xamarin.watchOS'
     inputs:
       buildType: 'current'
       artifactName: 'Xamarin.watchOS.KeraLua'
-      targetPath: '$(Pipeline.Workspace)\Xamarin.watchOS.KeraLua'
+      targetPath: 'lib/Release/xamarinwatchos/'
 
   - task: DownloadPipelineArtifact@2
     displayName: 'Download Build Xamarin.tvOS'
     inputs:
       buildType: 'current'
       artifactName: 'Xamarin.tvOS.KeraLua'
-      targetPath: '$(Pipeline.Workspace)\Xamarin.tvOS.KeraLua'
+      targetPath: 'lib/Release/xamarintvos/'
 
   - task: DownloadPipelineArtifact@2
     displayName: 'Download Build liblua53.dylib'
     inputs:
       buildType: 'current'
       artifactName: 'liblua53.dylib'
-      targetPath: '$(Pipeline.Workspace)\liblua53.dylib'
+      targetPath: 'runtimes/osx/native/'
 
   - task: DownloadPipelineArtifact@2
     displayName: 'Download Build liblua53.so (Linux)'
     inputs:
       buildType: 'current'
       artifactName: 'liblua53.so'
-      targetPath: '$(Pipeline.Workspace)\liblua53.so'
-
-  - task: CopyFiles@2
-    displayName: 'Copy Files to: lib/Release/xamarinios/'
-    inputs:
-      SourceFolder: '$(Pipeline.Workspace)\Xamarin.iOS.KeraLua\'
-      TargetFolder: lib/Release/xamarinios/
-
-  - task: CopyFiles@2
-    displayName: 'Copy Files to: lib/Release/xamarinmac/'
-    inputs:
-      SourceFolder: '$(Pipeline.Workspace)\Xamarin.Mac.KeraLua\'
-      TargetFolder: lib/Release/xamarinmac/
-
-  - task: CopyFiles@2
-    displayName: 'Copy Files to: lib/Release/xamarintvos/ '
-    inputs:
-      SourceFolder: '$(Pipeline.Workspace)\Xamarin.tvOS.KeraLua\'
-      TargetFolder: lib/Release/xamarintvos/
-
-  - task: CopyFiles@2
-    displayName: 'Copy Files to: lib/Release/xamarinwatchos/'
-    inputs:
-      SourceFolder: '$(Pipeline.Workspace)\Xamarin.watchOS.KeraLua\'
-      TargetFolder: lib/Release/xamarinwatchos/
-
-  - task: CopyFiles@2
-    displayName: 'Copy Files to: runtimes/osx/native/'
-    inputs:
-      SourceFolder: '$(Pipeline.Workspace)\liblua53.dylib\'
-      TargetFolder: runtimes/osx/native/
-
-  - task: CopyFiles@2
-    displayName: 'Copy Files to: runtimes/linux-x64/native/'
-    inputs:
-      SourceFolder: '$(Pipeline.Workspace)\liblua53.so\'
-      TargetFolder: 'runtimes/linux-x64/native/'
+      targetPath: 'runtimes/linux-x64/native/'
 
   - script: 'nuget setapikey $(apikey)'
     displayName: 'Set NuGet API Key'
@@ -299,9 +261,6 @@ jobs:
       filePath: ./devops/Package.ps1
       arguments: 'KeraLua'
       pwsh: true
-
-  - script: 'rename *.nupkg KeraLua.nupkg'
-    displayName: 'Rename Nuget Package'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Save KeraLua.nupkg Artifact'
