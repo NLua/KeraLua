@@ -14,7 +14,7 @@ script:
   - nuget restore KeraLua.sln
   - msbuild KeraLua.sln /p:Configuration=Release /t:Restore
   - msbuild KeraLua.sln /p:Configuration=Release
-  - mono packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe ./tests/build/net45/bin/Release/KeraLuaTest.dll
+  - mono packages/NUnit.ConsoleRunner.3.11.1/tools/nunit3-console.exe ./tests/build/net45/bin/Release/KeraLuaTest.dll
 
 # Execute additional tests or commands
 #after_script:
