@@ -229,6 +229,16 @@
             <param name="name">The property name</param>
             <returns>A collection of values</returns>
         </member>
+        <member name="P:NUnit.Engine.Extensibility.IExtensionNode.AssemblyPath">
+            <summary>
+            The path to the assembly implementing this extension.
+            </summary>
+        </member>
+        <member name="P:NUnit.Engine.Extensibility.IExtensionNode.AssemblyVersion">
+            <summary>
+            The version of the assembly implementing this extension.
+            </summary>
+        </member>
         <member name="T:NUnit.Engine.Extensibility.IExtensionPoint">
             <summary>
             An ExtensionPoint represents a single point in the TestEngine
@@ -478,7 +488,7 @@
             <summary>
             Logs the specified message at the error level.
             </summary>
-            <param name="message">The message.</param>
+            <param name="format">The message.</param>
             <param name="args">The arguments.</param>
         </member>
         <member name="M:NUnit.Engine.ILogger.Warning(System.String)">
@@ -491,7 +501,7 @@
             <summary>
             Logs the specified message at the warning level.
             </summary>
-            <param name="message">The message.</param>
+            <param name="format">The message.</param>
             <param name="args">The arguments.</param>
         </member>
         <member name="M:NUnit.Engine.ILogger.Info(System.String)">
@@ -504,7 +514,7 @@
             <summary>
             Logs the specified message at the info level.
             </summary>
-            <param name="message">The message.</param>
+            <param name="format">The message.</param>
             <param name="args">The arguments.</param>
         </member>
         <member name="M:NUnit.Engine.ILogger.Debug(System.String)">
@@ -517,7 +527,7 @@
             <summary>
             Logs the specified message at the debug level.
             </summary>
-            <param name="message">The message.</param>
+            <param name="format">The message.</param>
             <param name="args">The arguments.</param>
         </member>
         <member name="T:NUnit.Engine.ILogging">
@@ -671,14 +681,19 @@
             <returns>True if the framework is available, false if unavailable or nonexistent</returns>
         </member>
         <member name="M:NUnit.Engine.IRuntimeFrameworkService.SelectRuntimeFramework(NUnit.Engine.TestPackage)">
-            <summary>
-            Selects a target runtime framework for a TestPackage based on
-            the settings in the package and the assemblies themselves.
-            The package RuntimeFramework setting may be updated as a 
-            result and the selected runtime is returned.
-            </summary>
-            <param name="package">A TestPackage</param>
-            <returns>The selected RuntimeFramework</returns>
+             <summary>
+             Selects a target runtime framework for a TestPackage based on
+             the settings in the package and the assemblies themselves.
+             The package RuntimeFramework setting may be updated as a 
+             result and the selected runtime is returned.
+            
+             Note that if a package has subpackages, the subpackages may run on a different
+             framework to the top-level package. In future, this method should
+             probably not return a simple string, and instead require runners
+             to inspect the test package structure, to find all desired frameworks.
+             </summary>
+             <param name="package">A TestPackage</param>
+             <returns>The selected RuntimeFramework</returns>
         </member>
         <member name="T:NUnit.Engine.ServiceStatus">
             <summary>
@@ -1047,7 +1062,17 @@
             TestPackage holds information about a set of test files to
             be loaded by a TestRunner. Each TestPackage represents
             tests for one or more test files. TestPackages may be named
-            or anonymous, depending on how they are constructed.
+            or anonymous, depending on the constructor used.
+            
+            Upon construction, a package is given an ID (string), which
+            remains unchanged for the lifetime of the TestPackage instance.
+            The package ID is passed to the test framework for use in generating
+            test IDs.
+            
+            A runner that reloads test assemblies and wants the ids to remain stable
+            should avoid creating a new package but should instead use the original
+            package, changing settings as needed. This gives the best chance for the
+            tests in the reloaded assembly to match those originally loaded.
             </summary>
         </member>
         <member name="M:NUnit.Engine.TestPackage.#ctor(System.String)">
