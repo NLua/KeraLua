@@ -1,4 +1,63 @@
-﻿NUnit Console 3.10 - March 24, 2019
+NUnit Console & Engine 3.11.1 - February 15, 2020
+This hotfix fixes a problem with NUnit Project file settings being ignored.
+
+Issues Resolved
+
+ * 730 NUnit project file settings are ignored
+ * 732 Upgrade Cake Build to fix Linux CI
+ 
+NUnit Console 3.11 - January 26, 2020
+
+This release fixes a range of minor bugs, and includes a significant amount 
+of internal restructuring work. In future, this will enable improved .NET Standard 
+support in the engine, and a .NET Core build of the console.
+
+Issues Resolved
+
+ * 22 Engine modifies TestPackage
+ * 53 Add project element to top-level sub-project before merging
+ * 181 XSLT Transform not honoring --encoding value
+ * 336 Should legacyCorruptedStateExceptionsPolicy enabled=true in nunit3-console.exe.config?
+ * 386 nUnit project loader does not work when --inprocess is set
+ * 453 build-mono-docker.ps1 fails to run out the box
+ * 514 Add higher-level unit tests for structure of TestRunners
+ * 586 Create Separate Addin File for the Engine NuGet Package
+ * 588 licenseUrl in NuGet packages are deprecated
+ * 591 Release 3.10 merge
+ * 592 Add status badge from Azure pipelines
+ * 594 Fixed typos in release notes
+ * 595 Clean extension dir before running FetchExtensions task
+ * 603 Engine returns assembly-level test-suite event twice
+ * 605 Trailing \ in --work argument causes agent to crash
+ * 607 Unload + Load changes TestPackage IDs
+ * 611 Set DisableImplicitNuGetFallbackFolder and bump Ubuntu on Travis
+ * 612 Fix logging when including exception
+ * 617 Consider expanding projects before building ITestRunner structure
+ * 625 [Feature] Extend <start-run> data for ITestEventListener
+ * 628 [Question] Possible to set both labels=After and labels=Before
+ * 634 Remove unnecessary stream creation in XML Transform writer
+ * 635 Remove all #regions from codebase
+ * 636 Labels option: Rename On as OnOutputOnly, and deprecate On and All
+ * 637 Refactor RunnerSelectionTests
+ * 639 Engine initializes DriverService too early
+ * 667 Console Runner loads wrong .NET framework version when executing tests from multiple assemblies at once
+ * 669 nunit.console-runner-with-extensions.nuspec: Remove outdated release notes
+ * 671 Manually updated .NET Core SDK on Linux build
+ * 681 Display path and version of extension assemblies
+ * 683 Safely encapsulating the atomic agent database operations
+ * 684 Split engine into upper and lower parts
+ * 691 Sign NuGet Packages and msi
+ * 693 Update Engine tests to run on LTS .NET Core version
+ * 696 Minimal compilation/test of .NET Core Console
+ * 698 Update NUnit v2 driver extension in combined packages
+ * 703 Update Console options for .NET Core Console build
+ * 704 Agent in nupkg should not be referenced and causes warnings in consuming projects
+ * 706 build.cake maintenance
+ * 707 Set agent to reference core and not full engine
+ * 713 Engine will not recognize .NET Framework versions beyond 4.5
+
+
+NUnit Console 3.10 - March 24, 2019
 
 This release merges the .NET Standard version of the engine back into the nunit.engine
 NuGet package and adds a .NET Standard 2.0 version of the engine that re-enables most
@@ -10,7 +69,7 @@ The `--params` command line option which took multiple test parameters separated
 a semi-colon is now deprecated in favor of the new `--testparam` command line option.
 One of the most common uses for test parameters was to pass connection strings into
 tests but this required workarounds to handle the semi-colons. Now you must pass in
-each test paramater separately using a `--testparam` or `-tp` option for each.
+each test parameter separately using a `--testparam` or `-tp` option for each.
 
 Issues Resolved
 
@@ -61,7 +120,7 @@ NUnit Console 3.9 - September 5, 2018
 
 This release should stop the dreaded SocketException problem on shutdown. The
 console also no longer returns -5 when AppDomains fail to unload at the end of a
-test run. These fixes should make CI runs much more stable and predictible.
+test run. These fixes should make CI runs much more stable and predictable.
 
 For developers working on the NUnit Console and Engine project, Visual Studio
 2017 update 5 or newer is now required to compile on the command line. This does
