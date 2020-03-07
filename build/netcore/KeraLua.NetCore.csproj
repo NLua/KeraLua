@@ -7,6 +7,8 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
     <DocumentationFile>..\..\lib\Release\netcore\KeraLua.xml</DocumentationFile>
     <OutputPath>..\..\lib\Release\netcore\</OutputPath>
     <DefineConstants>TRACE;NETCOREAPP</DefineConstants>

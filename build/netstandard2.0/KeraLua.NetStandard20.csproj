@@ -7,6 +7,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
     <DocumentationFile>..\..\lib\Release\netstandard2.0\KeraLua.xml</DocumentationFile>
     <OutputPath>..\..\lib\Release\netstandard2.0\</OutputPath>
     <DefineConstants>TRACE;NETSTANDARD</DefineConstants>
