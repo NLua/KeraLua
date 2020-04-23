@@ -98,10 +98,10 @@ jobs:
       publishLocation: 'pipeline'
 
   - task: PublishPipelineArtifact@1
-    displayName: 'Publish Pipeline Artifact: liblua53.dylib'
+    displayName: 'Publish Pipeline Artifact: liblua54.dylib'
     inputs:
-      targetPath: runtimes/osx/native/liblua53.dylib
-      artifact: 'liblua53.dylib'
+      targetPath: runtimes/osx/native/liblua54.dylib
+      artifact: 'liblua54.dylib'
       publishLocation: 'pipeline'
 
   - template: send-telegram.yml@templates
@@ -134,10 +134,10 @@ jobs:
       configuration: Release
 
   - task: PublishPipelineArtifact@1
-    displayName: 'Publish Pipeline Artifact: liblua53.so'
+    displayName: 'Publish Pipeline Artifact: liblua54.so'
     inputs:
-      targetPath: 'runtimes/linux-x64/native/liblua53.so'
-      artifact: 'liblua53.so'
+      targetPath: 'runtimes/linux-x64/native/liblua54.so'
+      artifact: 'liblua54.so'
       publishLocation: 'pipeline'
 
   - template: send-telegram.yml@templates
@@ -262,17 +262,17 @@ jobs:
       targetPath: 'lib/Release/xamarintvos/'
 
   - task: DownloadPipelineArtifact@2
-    displayName: 'Download Build liblua53.dylib'
+    displayName: 'Download Build liblua54.dylib'
     inputs:
       buildType: 'current'
-      artifactName: 'liblua53.dylib'
+      artifactName: 'liblua54.dylib'
       targetPath: 'runtimes/osx/native/'
 
   - task: DownloadPipelineArtifact@2
-    displayName: 'Download Build liblua53.so (Linux)'
+    displayName: 'Download Build liblua54.so (Linux)'
     inputs:
       buildType: 'current'
-      artifactName: 'liblua53.so'
+      artifactName: 'liblua54.so'
       targetPath: 'runtimes/linux-x64/native/'
 
   - script: 'nuget setapikey $(apikey)'
