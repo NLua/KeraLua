@@ -220,9 +220,13 @@ jobs:
       solution: KeraLua.Android.sln
       configuration: Release
       msbuildArguments: '/p:AndroidNdkDirectory=%ANDROID_NDK_HOME%'
-
-  - script: ' .\packages\NUnit.ConsoleRunner.3.11.1\tools\nunit3-console.exe .\tests\build\net45\bin\Release\KeraLuaTest.dll --x86 /result:KeraLuaTest.Windows.xml'
-    displayName: 'Run NUnit Test'
+  - task: VSTest@2
+    displayName: 'Run VSTest'
+    inputs:
+      testSelector: 'testAssemblies'
+      testAssemblyVer2: '.\tests\build\net45\bin\Release\KeraLuaTest.dll'
+      platform: 'x86'
+      configuration: 'Release'
 
   - task: PublishTestResults@2
     inputs:
