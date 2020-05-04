@@ -57,7 +57,7 @@ jobs:
   - script: 'dotnet test ./tests/build/net45/bin/Release/KeraLuaTest.dll -l:trx'
     displayName: 'Run OSX tests'
 
-  - script: 'mv TestResults\*.trx .\KeraLuaTest.Mac.xml'
+  - script: 'mv TestResults/*.trx ./KeraLuaTest.Mac.xml'
     displayName: 'Rename Test result'
 
   - task: PublishTestResults@2
