@@ -230,7 +230,7 @@ jobs:
       resultsFolder: '.\TestResults'
       configuration: 'Release'
       
-  - script: 'rename .\TestResults\*.trx .\KeraLuaTest.Windows.xml'
+  - script: 'rename $(Agent.BuildDirectory)\TestResults\*.trx .\KeraLuaTest.Windows.xml'
     displayName: 'Rename Test result'
 
   - task: PublishTestResults@2
