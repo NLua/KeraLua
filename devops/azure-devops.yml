@@ -220,14 +220,14 @@ jobs:
       solution: KeraLua.Android.sln
       configuration: Release
       msbuildArguments: '/p:AndroidNdkDirectory=%ANDROID_NDK_HOME%'
-      
+  
   - task: VSTest@2
     displayName: 'Run VSTest'
     inputs:
       testSelector: 'testAssemblies'
       testAssemblyVer2: '.\tests\build\net45\bin\Release\KeraLuaTest.dll'
       platform: 'x86'
-      resultsFolder: '.\TestResults'
+      resultsFolder: '$(Agent.BuildDirectory)\TestResults'
       configuration: 'Release'
       
   - script: 'rename $(Agent.BuildDirectory)\TestResults\*.trx .\KeraLuaTest.Windows.xml'
