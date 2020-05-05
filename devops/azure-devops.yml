@@ -234,7 +234,7 @@ jobs:
 
   - task: PublishTestResults@2
     inputs:
-      testResultsFormat: 'NUnit'
+      testResultsFormat: 'VSTest'
       testResultsFiles: 'KeraLuaTest.Windows.xml'
 
   - task: PublishPipelineArtifact@1
