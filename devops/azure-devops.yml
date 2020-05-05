@@ -227,9 +227,10 @@ jobs:
       testSelector: 'testAssemblies'
       testAssemblyVer2: '.\tests\build\net45\bin\Release\KeraLuaTest.dll'
       platform: 'x86'
+      resultsFolder: '.\TestResults'
       configuration: 'Release'
       
-  - script: 'rename TestResults/*.trx ./KeraLuaTest.Windows.xml'
+  - script: 'rename .\TestResults\*.trx .\KeraLuaTest.Windows.xml'
     displayName: 'Rename Test result'
 
   - task: PublishTestResults@2
