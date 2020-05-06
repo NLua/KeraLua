@@ -223,8 +223,11 @@ jobs:
   - script: 'dotnet test .\tests\build\net45\bin\Release\KeraLuaTest.dll -l:trx'
     displayName: 'Run Windows Tests'
       
-  - script: 'rename TestResults\*.trx .\KeraLuaTest.Windows.xml'
+  - script: 'RENAME TestResults\*.trx KeraLuaTest.Windows.xml'
     displayName: 'Rename Test result'
+
+  - script: 'MOVE TestResults\KeraLuaTest.Windows.xml .'
+    displayName: 'Move Test result'
 
   - task: PublishTestResults@2
     inputs:
