@@ -28,6 +28,6 @@
         /// <summary>
         ///  error while running the message handler. 
         /// </summary>
-        ErrErr = 6,
+        ErrErr = 5,
     }
 }
