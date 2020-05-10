@@ -24,12 +24,12 @@ KeraLua
 | :------ | :------: | 
 |![linux](https://badgen.net/badge/icon/Ubuntu%20Linux%20x64?icon=travis&label&color=orange)   | [![Linux](https://travis-ci.org/NLua/KeraLua.svg?branch=master)](https://travis-ci.org/NLua/KeraLua) |
 | ![win](https://badgen.net/badge/icon/Windows?icon=windows&label&color=blue) | [![Build status](https://ci.appveyor.com/api/projects/status/jkqcy9m9k35jwolx?svg=true)](https://ci.appveyor.com/project/viniciusjarina/keralua)|
-| ![mac](https://badgen.net/badge/icon/macOS,iOS,tvOS,watchOS?icon=apple&label&color=purple&list=1) | [![Build Status](https://dev.azure.com/codefoco/NuGets/_apis/build/status/KeraLua?branchName=master&jobName=Mac)](https://dev.azure.com/codefoco/NuGets/_build/latest?definitionId=49&branchName=master) |
-|![linux](https://badgen.net/badge/icon/Ubuntu%20Linux%20x64?icon=terminal&label&color=orange)  | [![Build Status](https://dev.azure.com/codefoco/NuGets/_apis/build/status/KeraLua?branchName=master&jobName=Linux)](https://dev.azure.com/codefoco/NuGets/_build/latest?definitionId=49&branchName=master) |
-|![win](https://badgen.net/badge/icon/Windows,.NET%20Core?icon=windows&label&list=1) | [![Build Status](https://dev.azure.com/codefoco/NuGets/_apis/build/status/KeraLua?branchName=master&jobName=Windows)](https://dev.azure.com/codefoco/NuGets/_build/latest?definitionId=49&branchName=master) |
+| ![mac](https://badgen.net/badge/icon/macOS,iOS,tvOS,watchOS?icon=apple&label&color=purple&list=1) | [![Build Status](https://dev.azure.com/codefoco/NuGets/_apis/build/status/KeraLua?branchName=master&jobName=Mac)](https://dev.azure.com/codefoco/NuGets/_build/latest?definitionId=64&branchName=master) |
+|![linux](https://badgen.net/badge/icon/Ubuntu%20Linux%20x64?icon=terminal&label&color=orange)  | [![Build Status](https://dev.azure.com/codefoco/NuGets/_apis/build/status/KeraLua?branchName=master&jobName=Linux)](https://dev.azure.com/codefoco/NuGets/_build/latest?definitionId=64&branchName=master) |
+|![win](https://badgen.net/badge/icon/Windows,.NET%20Core?icon=windows&label&list=1) | [![Build Status](https://dev.azure.com/codefoco/NuGets/_apis/build/status/KeraLua?branchName=master&jobName=Windows)](https://dev.azure.com/codefoco/NuGets/_build/latest?definitionId=64&branchName=master) |
 
 
-C# Native bindings of Lua 5.3 (compatible with Xamarin.iOS/Mac/Android/.NET/.NET Core) 
+C# Native bindings of Lua 5.4 (compatible with Xamarin.iOS/Mac/Android/.NET/.NET Core/UWP) 
 
 Before build fetch the submodules:
 
@@ -39,6 +39,7 @@ Before build fetch the submodules:
 Building
 ---------
 
+	nuget restore KeraLua.sln
 	msbuild KaraLua.sln
 
 
