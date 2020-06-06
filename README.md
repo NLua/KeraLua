@@ -40,7 +40,7 @@ Building
 ---------
 
 	nuget restore KeraLua.sln
-	msbuild KaraLua.sln
+	msbuild KeraLua.sln
 
 
 
