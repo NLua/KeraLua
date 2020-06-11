@@ -179,6 +179,11 @@ jobs:
     inputs:
       restoreSolution: KeraLua.Core.sln
 
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore Android solution'
+    inputs:
+      restoreSolution: KeraLua.Android.sln
+
   - task: PowerShell@2
     displayName: 'PreBuild Script'
     inputs:
@@ -216,9 +221,10 @@ jobs:
   - task: MSBuild@1
     displayName: 'Build Android'
     inputs:
-      solution: KeraLua.Android.sln
-      configuration: Release
-      msbuildArguments: '/p:AndroidNdkDirectory=%ANDROID_NDK_HOME%'
+      solution: 'KeraLua.Android.sln'
+      platform: 'AnyCPU'
+      configuration: 'Release'
+      msbuildArguments: '/p:AndroidNdkDirectory="%ANDROID_NDK_HOME%"'
   
   - script: 'dotnet test .\tests\build\net45\bin\Release\KeraLuaTest.dll -l:trx'
     displayName: 'Run Windows Tests'
