@@ -222,7 +222,7 @@ jobs:
     displayName: 'Build Android'
     inputs:
       solution: 'KeraLua.Android.sln'
-      platform: 'AnyCPU'
+      platform: 'Any CPU'
       configuration: 'Release'
       msbuildArguments: '/p:AndroidNdkDirectory="%ANDROID_NDK_HOME%"'
   
