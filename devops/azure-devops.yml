@@ -218,7 +218,7 @@ jobs:
       custom: vstest
       arguments: '.\tests\build\netcore\bin\Release\netcoreapp3.1\KeraLuaTest.Core.dll'
 
-  - script: cd C:\\
+  - script: cd C:\\;
             mklink /D Android "C:\Program Files (x86)\Android" 
     displayName: 'Setup NDK path (due bug on NDK)'
 
