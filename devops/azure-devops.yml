@@ -218,12 +218,6 @@ jobs:
       custom: vstest
       arguments: '.\tests\build\netcore\bin\Release\netcoreapp3.1\KeraLuaTest.Core.dll'
 
-  - task: CmdLine@2
-    displayName: 'Setup NDK path (due bug on NDK)'
-    inputs:
-      script: 'mklink /D Android "C:\Program Files (x86)\Android"'
-      workingDirectory: 'C:\'
-  
   - task: MSBuild@1
     displayName: 'Build Android'
     inputs:
