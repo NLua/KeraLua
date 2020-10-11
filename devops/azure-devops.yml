@@ -64,6 +64,7 @@ jobs:
     inputs:
       testResultsFormat: 'VSTest'
       testResultsFiles: 'KeraLuaTest.Mac.xml'
+      failTaskOnFailedTests: true
 
   - task: PublishPipelineArtifact@1
     displayName: 'Publish KeraLuaTest.Mac.xml'
@@ -239,6 +240,7 @@ jobs:
     inputs:
       testResultsFormat: 'VSTest'
       testResultsFiles: 'KeraLuaTest.Windows.xml'
+      failTaskOnFailedTests: true
 
   - task: PublishPipelineArtifact@1
     displayName: 'Publish KeraLuaTest.Windows.xml'
