@@ -3,7 +3,6 @@ using System;
 using NUnit.Framework;
 using System.IO;
 using System.Diagnostics;
-using System.Text;
 
 #if MONOTOUCH
     using ObjCRuntime;

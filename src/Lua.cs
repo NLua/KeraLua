@@ -86,9 +86,13 @@ namespace KeraLua
         /// <returns></returns>
         public static Lua FromIntPtr(IntPtr luaState)
         {
+            if (luaState == IntPtr.Zero)
+                return null;
+
             Lua state = GetExtraObject<Lua>(luaState);
-            if (state._luaState == luaState)
+            if (state != null && state._luaState == luaState)
                 return state;
+
             return new Lua(luaState, state.MainThread);
         }
 
@@ -139,9 +143,6 @@ namespace KeraLua
 
         private static T GetExtraObject<T>(IntPtr luaState) where T : class
         {
-            if (luaState == IntPtr.Zero)
-                return null;
-
             IntPtr extraSpace = luaState - IntPtr.Size;
             IntPtr pointer = Marshal.ReadIntPtr(extraSpace);
             var handle = GCHandle.FromIntPtr(pointer);
