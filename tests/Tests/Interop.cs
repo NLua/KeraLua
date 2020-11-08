@@ -455,6 +455,56 @@ main.lua-main.lua:11 (main)
             }
         }
 
+        private static LuaRegister[] fooReg = {
+            new LuaRegister {
+                name = "foo",
+                function = Foo,
+            },
+            new LuaRegister {
+                name = null,
+                function = null,
+            }
+        };
 
+        [Test]
+        public static void TestNewLib()
+        {
+            var lua = new Lua();
+
+            lua.RequireF("foobar", OpenFoo, true);
+
+            lua.DoString("s = foobar.foo()");
+
+            lua.GetGlobal("s");
+
+            bool check = lua.IsString(-1);
+            string s = lua.ToString(-1, false);
+
+            Assert.IsTrue(check, "#1");
+            Assert.AreEqual("bar", s, "#2");
+
+            lua.Dispose();
+        }
+
+#if MONOTOUCH
+        [MonoPInvokeCallback(typeof(LuaFunction))]
+#endif
+        static int OpenFoo(IntPtr state)
+        {
+            var lua = Lua.FromIntPtr(state);
+            lua.NewLib(fooReg);
+            return 1;
+        }
+
+#if MONOTOUCH
+        [MonoPInvokeCallback(typeof(LuaFunction))]
+#endif
+        static int Foo(IntPtr state)
+        {
+            var lua = Lua.FromIntPtr(state);
+
+            lua.PushString("bar");
+            return 1;
+        }
     }
 }
