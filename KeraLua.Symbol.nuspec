@@ -10,10 +10,10 @@
     <iconUrl>https://raw.githubusercontent.com/nlua/KeraLua/master/KeraLua.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-      C# Native bindings of Lua 5.3 (compatible with Xamarin.iOS/Mac/Android/.NET/.NET Core) 
+      C# Native bindings of Lua 5.4 (compatible with Xamarin.iOS/Mac/Android/.NET/.NET Core) 
     </description>
     <releaseNotes>Release: 2bffe65</releaseNotes>
-    <copyright>Copyright © Vinicius Jarina 2020</copyright>
+    <copyright>Copyright © Vinicius Jarina 2021</copyright>
     <tags>lua keralua</tags>
     <packageTypes>
       <packageType name="SymbolsPackage" />
