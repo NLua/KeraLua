@@ -5,9 +5,9 @@
     <version>1.0.16</version>
     <authors>NLua</authors>
     <owners>Vinicius Jarina</owners>
-    <licenseUrl>https://github.com/nlua/KeraLua/blob/master/LICENSE</licenseUrl>
+    <licenseUrl>https://github.com/nlua/KeraLua/blob/main/LICENSE</licenseUrl>
     <projectUrl>https://github.com/nlua/KeraLua</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/nlua/KeraLua/master/KeraLua.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/nlua/KeraLua/main/KeraLua.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
       C# Native bindings of Lua 5.4 (compatible with iOS/Mac/Android/.NET/.NET Core/UWP) 
