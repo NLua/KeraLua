@@ -92,7 +92,6 @@
     <Folder Include="LuaTests\core\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\build\netcore\KeraLua.NetCore.csproj" />
+    <ProjectReference Include="..\..\..\build\netcoreapp3.1\KeraLua.netcoreapp3.1.csproj" />
   </ItemGroup>
-
 </Project>

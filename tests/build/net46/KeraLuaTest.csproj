@@ -11,7 +11,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KeraLuaTest</RootNamespace>
     <AssemblyName>KeraLuaTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -114,7 +114,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\build\net45\KeraLua.csproj">
+    <ProjectReference Include="..\..\..\build\net46\KeraLua.csproj">
       <Project>{c45805a8-6436-4738-bd9f-4632eea63bbc}</Project>
       <Name>KeraLua</Name>
     </ProjectReference>

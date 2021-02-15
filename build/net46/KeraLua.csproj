@@ -9,30 +9,30 @@
     <RootNamespace>KeraLua</RootNamespace>
     <AssemblyName>KeraLua</AssemblyName>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\lib\Debug\net45\</OutputPath>
+    <OutputPath>..\..\lib\Debug\net46\</OutputPath>
     <DefineConstants>DEBUG;NETFRAMEWORK</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <DocumentationFile>..\..\lib\Debug\net45\KeraLua.xml</DocumentationFile>
+    <DocumentationFile>..\..\lib\Debug\net46\KeraLua.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <DebugType>portable</DebugType>
-    <OutputPath>..\..\lib\Release\net45\</OutputPath>
+    <OutputPath>..\..\lib\Release\net46\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\..\lib\Release\net45\KeraLua.xml</DocumentationFile>
+    <DocumentationFile>..\..\lib\Release\net46\KeraLua.xml</DocumentationFile>
     <DefineConstants>NETFRAMEWORK</DefineConstants>
   </PropertyGroup>
   <ItemGroup>

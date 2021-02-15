@@ -10,7 +10,7 @@ using Foundation;
 // Change them to the values specific to your project.
 
 #if NETFRAMEWORK
-[assembly: AssemblyTitle ("KeraLua (.NET Framework 4.5)")]
+[assembly: AssemblyTitle ("KeraLua (.NET Framework 4.6)")]
 #elif WINDOWS_UWP
 [assembly: AssemblyTitle ("KeraLua (Windows Universal)")]
 #elif __ANDROID__
