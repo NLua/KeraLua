@@ -227,7 +227,7 @@ jobs:
     inputs:
       command: custom
       custom: vstest
-      arguments: '.\tests\build\netcoreapp3.1\bin\Release\netcoreapp3.1\KeraLuaTest.Core.dll'
+      arguments: '.\tests\build\netcoreapp3.1\bin\Release\netcoreapp3.1\KeraLuaTest.netcoreapp3.1.dll'
 
   - task: MSBuild@1
     displayName: 'Build Android'
