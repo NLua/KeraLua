@@ -178,7 +178,12 @@ jobs:
   - task: NuGetCommand@2
     displayName: 'NuGet restore'
     inputs:
-      restoreSolution: KeraLua.Core.sln
+      restoreSolution: KeraLua.netcoreapp3.1.sln
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore'
+    inputs:
+      restoreSolution: KeraLua.net5.0.sln
 
   - task: NuGetCommand@2
     displayName: 'NuGet restore Android solution'
@@ -208,9 +213,14 @@ jobs:
   - task: MSBuild@1
     displayName: 'Build .NET Core'
     inputs:
-      solution: KeraLua.Core.sln
+      solution: KeraLua.netcoreapp3.1.sln
       configuration: Release
-      msbuildArguments: /restore
+
+  - task: MSBuild@1
+    displayName: 'Build .NET 5'
+    inputs:
+      solution: KeraLua.net5.0.sln
+      configuration: Release
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet vstest'
