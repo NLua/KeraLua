@@ -21,7 +21,7 @@ namespace KeraLuaTest.Tests
         [SetUp]
         public void SetUp()
         {
-            string path = new Uri(GetType().Assembly.CodeBase).AbsolutePath;
+            string path = new Uri(GetType().Assembly.Location).AbsolutePath;
             path = System.IO.Path.GetDirectoryName(path);
             Environment.CurrentDirectory = path;
         }

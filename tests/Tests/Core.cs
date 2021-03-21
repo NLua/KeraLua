@@ -48,7 +48,7 @@ namespace KeraLua.Tests
         Lua state;
         string GetTestPath(string name)
         {
-            string path = new Uri(GetType().Assembly.CodeBase).AbsolutePath;
+            string path = new Uri(GetType().Assembly.Location).AbsolutePath;
             path = Path.GetDirectoryName(path);
             path = Path.Combine(path, "LuaTests", "core");
             path = Path.Combine (path, name + ".lua");
