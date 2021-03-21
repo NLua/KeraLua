@@ -216,6 +216,13 @@ jobs:
       solution: KeraLua.netcoreapp3.1.sln
       configuration: Release
 
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet vstest'
+    inputs:
+      command: custom
+      custom: vstest
+      arguments: '.\tests\build\netcoreapp3.1\bin\Release\netcoreapp3.1\KeraLuaTest.netcoreapp3.1.dll'
+
   - task: MSBuild@1
     displayName: 'Build .NET 5'
     inputs:
@@ -227,7 +234,7 @@ jobs:
     inputs:
       command: custom
       custom: vstest
-      arguments: '.\tests\build\netcoreapp3.1\bin\Release\netcoreapp3.1\KeraLuaTest.netcoreapp3.1.dll'
+      arguments: '.\tests\build\net5.0\bin\Release\net5.0\KeraLuaTest.net5.0.dll'
 
   - task: MSBuild@1
     displayName: 'Build Android'
