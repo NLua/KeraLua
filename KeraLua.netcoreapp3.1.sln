@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KeraLua", "KeraLua", "{4A43DAAC-F9FF-4EB1-BFBD-FB4655CCE1F7}"
 EndProject
@@ -11,10 +11,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLua.netcoreapp3.1", "bu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{B3EAA632-D2D7-4272-9DB9-11F46C99DAE9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLua.NetStandard20", "build\netstandard2.0\KeraLua.NetStandard20.csproj", "{23F44CC0-64E4-4E29-8A99-1A6DADB4BBB4}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLuaTest.netcoreapp3.1", "tests\build\netcoreapp3.1\KeraLuaTest.netcoreapp3.1.csproj", "{BA8AC268-775C-4A50-9EAE-F30595AC9105}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\KeraLua.Core.projitems*{078d8c1b-0cd3-4500-9400-687609c1299c}*SharedItemsImports = 5
+		src\KeraLua.Core.projitems*{23f44cc0-64e4-4e29-8a99-1a6dadb4bbb4}*SharedItemsImports = 5
 		src\KeraLua.Core.projitems*{bd205ad6-760e-48f3-bab2-21447396bd17}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +30,10 @@ Global
 		{078D8C1B-0CD3-4500-9400-687609C1299C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{078D8C1B-0CD3-4500-9400-687609C1299C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{078D8C1B-0CD3-4500-9400-687609C1299C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23F44CC0-64E4-4E29-8A99-1A6DADB4BBB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23F44CC0-64E4-4E29-8A99-1A6DADB4BBB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23F44CC0-64E4-4E29-8A99-1A6DADB4BBB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23F44CC0-64E4-4E29-8A99-1A6DADB4BBB4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BA8AC268-775C-4A50-9EAE-F30595AC9105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BA8AC268-775C-4A50-9EAE-F30595AC9105}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA8AC268-775C-4A50-9EAE-F30595AC9105}.Release|Any CPU.ActiveCfg = Release|Any CPU
