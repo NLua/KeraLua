@@ -1,36 +1,22 @@
-KeraLua
-=======
+# Buerkert.KeraLua
 
-[![Build Status](https://travis-ci.org/NLua/KeraLua.svg?branch=master)](https://travis-ci.org/NLua/KeraLua)
+[![GitHub Actions](https://github.com/Buerkert/Buerkert.KeraLua/workflows/CI/badge.svg)](https://github.com/Buerkert/Buerkert.KeraLua/actions)
+[![Release](https://badgen.net/github/release/Buerkert/Buerkert.KeraLua)](https://github.com/Buerkert/Buerkert.KeraLua/releases/latest)
+[![dependent repos](https://badgen.net/github/dependents-repo/Buerkert/Buerkert.KeraLua)](https://github.com/orgs/Buerkert/packages?repo_name=Buerkert.KeraLua)
+[![dependent pkg](https://badgen.net/github/dependents-pkg/Buerkert/Buerkert.KeraLua)](https://github.com/orgs/Buerkert/packages?repo_name=Buerkert.KeraLua)
 
-C# KopiLua compatible API for native bindings of Lua/LuaJIT (compatible with iOS/Mac/Android/.NET)
+C# Native bindings of Lua 5.2 for .NET
 
 Before build fetch the submodules:
 
-	git submodule update --init --recursive
+```sh
+git submodule update --init --recursive
+```
 
-  *  Contributing
---------------
- * KeraLua is using the Mono Code-Style http://www.mono-project.com/Coding_Guidelines .
- * Please, do not change the line-end or re-indent the code.
- * Run the tests before push.
- * Avoid to push unneeded style changes (unless is really needed) renaming, move code.
+Building
 
+```sh
+dotnet build KeraLua.sln
+```
 
-iOS Build
----------
-On the Mac/Terminal:
-
-
-	make -f Makefile.iOS
-
-Windows Build
---------------
-
-You will need the [CMake](http://cmake.org) to build the Lua library.
-
-On Command Prompt:
-
-	Makefile.Win32.bat
-	msbuild KeraLua.sln /p:Configuration=Release
-
+Original documentation: [NLua/KeraLua](https://github.com/NLua/KeraLua/blob/master/README.md)

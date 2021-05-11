@@ -1,6 +1,0 @@
-Name: KeraLua.Tests.40
-Description: KeraLua.Tests.40
-Version: 0.1
-
-Requires: 
-Libs: -r:@expanded_libdir@/@PACKAGE@/KeraLua.Tests.dll
