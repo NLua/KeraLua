@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLua.netcoreapp3.1", "bu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{B3EAA632-D2D7-4272-9DB9-11F46C99DAE9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLua.NetStandard20", "build\netstandard2.0\KeraLua.NetStandard20.csproj", "{23F44CC0-64E4-4E29-8A99-1A6DADB4BBB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLua.netstandard2.0", "build\netstandard2.0\KeraLua.netstandard2.0.csproj", "{23F44CC0-64E4-4E29-8A99-1A6DADB4BBB4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLuaTest.netcoreapp3.1", "tests\build\netcoreapp3.1\KeraLuaTest.netcoreapp3.1.csproj", "{BA8AC268-775C-4A50-9EAE-F30595AC9105}"
 EndProject
