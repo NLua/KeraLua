@@ -1,8 +1,9 @@
-name: Deploy
+name: build-deploy-prerelease
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -22,7 +23,7 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Build with dotnet
-      run: dotnet build -c Release
+      run: dotnet build -c Release --version-suffix build.${{ github.run_number }}
     - name: Run unit tests
       run: dotnet test
     - name: Push generated package to GitHub registry (symbols not supported yet)
