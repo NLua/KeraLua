@@ -17,7 +17,7 @@ namespace KeraLua
         {
             if (d == null)
                 return IntPtr.Zero;
-                
+
             return Marshal.GetFunctionPointerForDelegate<LuaFunction>(d);
         }
 
