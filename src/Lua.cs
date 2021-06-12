@@ -902,7 +902,7 @@ namespace KeraLua
         /// <returns></returns>
         public bool PushThread(Lua thread)
         {
-            return NativeMethods.lua_pushthread(_luaState) == 1;
+            return NativeMethods.lua_pushthread(thread._luaState) == 1;
         }
 
         /// <summary>
