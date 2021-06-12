@@ -895,14 +895,25 @@ namespace KeraLua
         /// <param name="number"></param>
         public void PushNumber(double number) => NativeMethods.lua_pushnumber(_luaState, number);
 
+
         /// <summary>
         /// Pushes the thread represented by L onto the stack. Returns true if this thread is the main thread of its state. 
         /// </summary>
-        /// <param name="thread"></param>
+        /// <param name="thread">Unused</param>
         /// <returns></returns>
+        [Obsolete("Use the overload without the parameter, it's unused")]
         public bool PushThread(Lua thread)
         {
-            return NativeMethods.lua_pushthread(thread._luaState) == 1;
+            return PushThread();
+        }
+
+        /// <summary>
+        /// Pushes the thread represented by L onto the stack. Returns true if this thread is the main thread of its state. 
+        /// </summary>
+        /// <returns></returns>
+        public bool PushThread()
+        {
+            return NativeMethods.lua_pushthread(_luaState) == 1;
         }
 
         /// <summary>
