@@ -8,44 +8,44 @@
     </PropertyGroup>
 
     <ItemGroup Condition=" '$(PlatformTarget)' == 'x64' ">
-        <Content Include="$(WindowsNativeX64LuaPath)" Condition="Exists($(WindowsNativeX64LuaPath))">
+        <None Include="$(WindowsNativeX64LuaPath)" >
             <Link>$([System.IO.Path]::GetFilename('$(WindowsNativeX64LuaPath)'))</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="$(LinuxNativeX64LuaPath)">
+        </None>
+        <None Include="$(LinuxNativeX64LuaPath)" >
             <Link>$([System.IO.Path]::GetFilename('$(LinuxNativeX64LuaPath)'))</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
+        </None>
     </ItemGroup>
-    <ItemGroup Condition=" '$(PlatformTarget)' == 'x86'  ">
-        <Content Include="$(WindowsNativeX86LuaPath)">
+    <ItemGroup Condition=" '$(PlatformTarget)' == 'x86' ">
+        <None Include="$(WindowsNativeX86LuaPath)" >
             <Link>$([System.IO.Path]::GetFilename('$(WindowsNativeX86LuaPath)'))</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="$(LinuxNativeX86LuaPath)">
+        </None>
+        <None Include="$(LinuxNativeX86LuaPath)" >
             <Link>$([System.IO.Path]::GetFilename('$(LinuxNativeX86LuaPath)'))</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
+        </None>
     </ItemGroup>
     <!-- a special case for Any CPU -->
     <ItemGroup Condition=" '$(PlatformTarget)' != 'x64' and '$(PlatformTarget)' != 'x86' ">
         <!-- Windows -->
-        <Content Include="$(WindowsNativeX86LuaPath)">
+        <None Include="$(WindowsNativeX86LuaPath)" >
             <Link>x86\$([System.IO.Path]::GetFilename('$(WindowsNativeX86LuaPath)'))</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="$(LinuxNativeX86LuaPath)" Condition="Exists('$(LinuxNativeX86LuaPath)')">
+        </None>
+        <None Include="$(LinuxNativeX86LuaPath)" >
             <Link>x86\$([System.IO.Path]::GetFilename('$(LinuxNativeX86LuaPath)'))</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="$(WindowsNativeX64LuaPath)">
+        </None>
+        <None Include="$(WindowsNativeX64LuaPath)" >
             <Link>x64\$([System.IO.Path]::GetFilename('$(WindowsNativeX64LuaPath)'))</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="$(LinuxNativeX64LuaPath)" Condition="Exists('$(LinuxNativeX64LuaPath)')">
+        </None>
+        <None Include="$(LinuxNativeX64LuaPath)" >
             <Link>x64\$([System.IO.Path]::GetFilename('$(LinuxNativeX64LuaPath)'))</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
+        </None>
     </ItemGroup>
 
 </Project>

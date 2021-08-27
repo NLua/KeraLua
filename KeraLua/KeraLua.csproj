@@ -36,30 +36,23 @@
   <!--we could compile lua from the submodule but with multiple target frameworks the same bin would be compiled multiple times what is nonesense-->
   <!--<Import Project="BuildLua.Windows.targets" />-->
   <!--<Import Project="BuildLua.Linux.targets" />-->
-  
+
   <!--  for projects referencing this project directly-->
-  <Import Project="build/KeraLua.targets" />
+  <Import Project="build/KeraLua.targets"/>
   
   <ItemGroup Label="FilesToCopy">
-    <Content Include="build/KeraLua.targets">
-      <PackagePath>buildCrossTargeting/$(PackageId).targets</PackagePath>
-    </Content>
-    <Content Include="build/KeraLua.targets">
-      <PackagePath>buildTransitive/$(PackageId).targets</PackagePath>
-    </Content>
-    <Content Include="build/KeraLua.targets">
-      <PackagePath>build/$(PackageId).targets</PackagePath>
-    </Content>
-    <Content Include="$(OutputRuntimeDir)\**">
-      <PackagePath>runtimes</PackagePath>
-    </Content>
+    <None Include="build/KeraLua.targets" Pack="true" PackagePath="buildCrossTargeting/$(PackageId).targets"/>
+    <None Include="build/KeraLua.targets" Pack="true" PackagePath="buildTransitive/$(PackageId).targets"/>
+    <None Include="build/KeraLua.targets" Pack="true" PackagePath="build/$(PackageId).targets"/>
+    <None Include="$(OutputRuntimeDir)\**" Pack="true" PackagePath="runtimes" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\README.md" Pack="true" PackagePath=""/>
-    <Content Include="..\LICENSE.md" Pack="true" PackagePath=""/>
-    <Content Include="..\KeraLua.png" Pack="true" PackagePath=""/>
+    <None Include="..\README.md" Pack="true" PackagePath="" />
+    <None Include="..\LICENSE.md" Pack="true" PackagePath="" />
+    <None Include="..\KeraLua.png" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
+  
 </Project>
