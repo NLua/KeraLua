@@ -26,8 +26,8 @@ jobs:
       run: dotnet build -c Release --version-suffix build.${{ github.run_number }}
     - name: Run unit tests
       run: dotnet test
-    - name: Push generated package to GitHub registry (symbols not supported yet)
-      run: dotnet nuget push KeraLua\bin\Release\Buerkert.KeraLua.*.nupkg --skip-duplicate --no-symbols true
+    - name: Push generated package to GitHub registry
+      run: dotnet nuget push KeraLua\bin\Release\Buerkert.KeraLua.*.nupkg
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
