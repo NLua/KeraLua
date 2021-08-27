@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net5.0;netstandard2.0;net48</TargetFrameworks>
-    <LangVersion>7.1</LangVersion>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
     <AssemblyTitle>Buerkert.KeraLua</AssemblyTitle>
     <Product>Buerkert.KeraLua</Product>
     <Company>Buerkert Werke GmbH &amp; Co. KG</Company>
@@ -32,7 +32,8 @@
   </PropertyGroup>
   
   <!--we could compile lua from the submodule but with multiple target frameworks the same bin would be compiled multiple times what is nonesense-->
-  <!--<Import Project="Lua.targets" />-->
+  <!--<Import Project="BuildLua.Windows.targets" />-->
+  <!--<Import Project="BuildLua.Linux.targets" />-->
   
   <!--  for projects referencing this project directly-->
   <Import Project="build/KeraLua.targets" />
@@ -52,18 +53,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\README.md">
-      <Pack>true</Pack>
-      <PackagePath>\</PackagePath>
-    </Content>
-    <Content Include="..\LICENSE.md">
-      <Pack>true</Pack>
-      <PackagePath>\</PackagePath>
-    </Content>
-    <Content Include="..\KeraLua.png">
-      <Pack>true</Pack>
-      <PackagePath>\</PackagePath>
-    </Content>
+    <Content Include="..\README.md" Pack="true" PackagePath=""/>
+    <Content Include="..\LICENSE.md" Pack="true" PackagePath=""/>
+    <Content Include="..\KeraLua.png" Pack="true" PackagePath=""/>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />

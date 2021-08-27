@@ -1,0 +1,26 @@
+<Project>
+    <PropertyGroup>
+        <ExternalLuaPath>../external/lua52</ExternalLuaPath>
+        <Linux32BuildDir>bin/cmake-x86</Linux32BuildDir>
+        <Linux64BuildDir>bin/cmake-x64</Linux64BuildDir>
+        <BinaryLibraryPath32>lib/liblua52.so</BinaryLibraryPath32>
+        <BinaryLibraryPath64>lib64/liblua52.so</BinaryLibraryPath64>
+    </PropertyGroup>
+    <Target Name="BuildLuaWindows" BeforeTargets="Build" Condition="'$(OS)'=='Unix'">
+        <Message Text="Building Linux Lua library (x86)" />
+        <Exec Command="pwd" WorkingDirectory="$(ProjectDir)" />
+        <Exec Command="cmake -G Ninja -DCMAKE_TOOLCHAIN_FILE='$(ProjectDir)toolchainLinuxX86.cmake' -S $(ExternalLuaPath) -B $(OutputPath)$(Linux32BuildDir)" WorkingDirectory="$(ProjectDir)" />
+        <Exec Command="cmake --build $(OutputPath)$(Linux32BuildDir) --config Release" WorkingDirectory="$(ProjectDir)" />
+        <Message Text="Building Linux Lua library (x64)" />
+        <Exec Command="cmake -G Ninja -DCMAKE_TOOLCHAIN_FILE='$(ProjectDir)toolchainLinuxX64.cmake' -S $(ExternalLuaPath) -B  $(OutputPath)$(Linux64BuildDir)" WorkingDirectory="$(ProjectDir)" />
+        <Exec Command="cmake --build $(OutputPath)$(Linux64BuildDir) --config Release" WorkingDirectory="$(ProjectDir)" />
+        <Message Text="Gathering binaries" />
+        <Copy SourceFiles="$(OutputPath)$(Linux32BuildDir)/$(BinaryLibraryPath32)" DestinationFolder="$(OutputRuntimeDir)/linux-x86/native" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="$(OutputPath)$(Linux64BuildDir)/$(BinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)/linux-x64/native" SkipUnchangedFiles="true" />
+    </Target>
+    <Target Name="CleanLuaWindows" AfterTargets="Clean" Condition="'$(OS)'=='Unix'">
+        <Message Text="Cleaning Lua library (x86/x64)" />
+        <RemoveDir Directories="$(Linux32BuildDir);$(Linux64BuildDir)" />
+        <RemoveDir Directories="$(OutputRuntimeDir)" />
+    </Target>
+</Project>

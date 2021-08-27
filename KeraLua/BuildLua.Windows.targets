@@ -6,7 +6,7 @@
         <BinaryLibraryPath32>bin\lua52.dll</BinaryLibraryPath32>
         <BinaryLibraryPath64>bin64\lua52.dll</BinaryLibraryPath64>
     </PropertyGroup>
-    <Target Name="BuildLuaWindows" BeforeTargets="Build">
+    <Target Name="BuildLuaWindows" BeforeTargets="Build" Condition="'$(OS)'=='Windows_NT'">
         <Message Text="Building Windows Lua library (x86)" />
         <Exec Command="cmake -DCMAKE_GENERATOR_PLATFORM=Win32 -A Win32 -DCMAKE_TOOLCHAIN_FILE='$(ProjectDir)toolchainMSVCstaticLinkLua.cmake' -S $(ExternalLuaPath) -B $(OutputPath)$(Win32BuildDir)" WorkingDirectory="$(ProjectDir)" />
         <Exec Command="cmake --build $(OutputPath)$(Win32BuildDir) --config Release" WorkingDirectory="$(ProjectDir)" />
@@ -17,7 +17,7 @@
         <Copy SourceFiles="$(OutputPath)$(Win32BuildDir)\$(BinaryLibraryPath32)" DestinationFolder="$(OutputRuntimeDir)\win-x86\native" SkipUnchangedFiles="true" />
         <Copy SourceFiles="$(OutputPath)$(Win64BuildDir)\$(BinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\win-x64\native" SkipUnchangedFiles="true" />
     </Target>
-    <Target Name="CleanLuaWindows" AfterTargets="Clean">
+    <Target Name="CleanLuaWindows" AfterTargets="Clean" Condition="'$(OS)'=='Windows_NT'">
         <Message Text="Cleaning Lua library (x86/x64)" />
         <RemoveDir Directories="$(Win32BuildDir);$(Win64BuildDir)" />
         <RemoveDir Directories="$(OutputRuntimeDir)" />
