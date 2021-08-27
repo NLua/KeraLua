@@ -19,6 +19,7 @@ jobs:
       uses: actions/setup-dotnet@v1.8.1
       with:
         dotnet-version: '5.0.x'
+        config-file: nuget.config
         source-url: https://nuget.pkg.github.com/Buerkert/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
