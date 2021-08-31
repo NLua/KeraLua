@@ -1,58 +1,74 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <LangVersion>9</LangVersion>
-    <AssemblyTitle>Buerkert.KeraLua</AssemblyTitle>
-    <Product>Buerkert.KeraLua</Product>
-    <Company>Buerkert Werke GmbH &amp; Co. KG</Company>
-    <Authors>NLua;Burkert</Authors>
-    <Copyright>
-      original Copyright © Vinicius Jarina 2019
-      modified by Copyright (c) Buerkert Fluid Control Systems 2021
-    </Copyright>
-    <VersionPrefix>1.3.0</VersionPrefix>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>Buerkert.KeraLua</PackageId>
-    <Description>C# Native bindings of Lua 5.2</Description>
-    <PackageProjectUrl>https://github.com/Buerkert/Buerkert.KeraLua</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Buerkert/Buerkert.KeraLua.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageIcon>KeraLua.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <PackageTags>lua keralua</PackageTags>
-    <!-- wait for https://github.com/NuGet/Home/issues/10791 or just add pdb to main package-->
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <!--<IncludeSymbols>true</IncludeSymbols>-->
-    <!--<SymbolPackageFormat>snupkg</SymbolPackageFormat>-->
-  </PropertyGroup>
-  <PropertyGroup>
-    <DefineConstants>USE_DYNAMIC_DLL_REGISTER;WSTRING</DefineConstants>
-    <OutputRuntimeDir>runtimes</OutputRuntimeDir>
-  </PropertyGroup>
-  
-  <!--we could compile lua from the submodule but with multiple target frameworks the same bin would be compiled multiple times what is nonesense-->
-  <!--<Import Project="BuildLua.Windows.targets" />-->
-  <!--<Import Project="BuildLua.Linux.targets" />-->
+﻿<!--<Project Sdk="Microsoft.NET.Sdk" InitialTargets="DisplayMessages">-->
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <LangVersion>9</LangVersion>
+        <AssemblyTitle>Buerkert.KeraLua</AssemblyTitle>
+        <Product>Buerkert.KeraLua</Product>
+        <Company>Buerkert Werke GmbH &amp; Co. KG</Company>
+        <Authors>NLua;Burkert</Authors>
+        <Copyright>
+            original Copyright © Vinicius Jarina 2019
+            modified by Copyright (c) Buerkert Fluid Control Systems 2021
+        </Copyright>
+        <VersionPrefix>1.3.0</VersionPrefix>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>Buerkert.KeraLua</PackageId>
+        <Description>C# Native bindings of Lua 5.2</Description>
+        <PackageProjectUrl>https://github.com/Buerkert/Buerkert.KeraLua</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Buerkert/Buerkert.KeraLua.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageIcon>KeraLua.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+        <PackageTags>lua keralua</PackageTags>
+        <!-- wait for https://github.com/NuGet/Home/issues/10791 or just add pdb to main package-->
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <!--<IncludeSymbols>true</IncludeSymbols>-->
+        <!--<SymbolPackageFormat>snupkg</SymbolPackageFormat>-->
+    </PropertyGroup>
+    <PropertyGroup>
+        <DefineConstants>USE_DYNAMIC_DLL_REGISTER</DefineConstants>
+        <OutputRuntimeDir>runtimes</OutputRuntimeDir>
+    </PropertyGroup>
 
-  <!--  for projects referencing this project directly-->
-  <Import Project="build/KeraLua.targets"/>
-  
-  <ItemGroup Label="FilesToCopy">
-    <None Include="build/KeraLua.targets" Pack="true" PackagePath="buildCrossTargeting/$(PackageId).targets"/>
-    <None Include="build/KeraLua.targets" Pack="true" PackagePath="buildTransitive/$(PackageId).targets"/>
-    <None Include="build/KeraLua.targets" Pack="true" PackagePath="build/$(PackageId).targets"/>
-    <None Include="$(OutputRuntimeDir)\**" Pack="true" PackagePath="runtimes" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\README.md" Pack="true" PackagePath="" />
-    <None Include="..\LICENSE.md" Pack="true" PackagePath="" />
-    <None Include="..\KeraLua.png" Pack="true" PackagePath="" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-  </ItemGroup>
-  
+    <!--we could compile lua from the submodule but with multiple target frameworks the same bin would be compiled multiple times what is nonesense-->
+    <!--<Import Project="BuildLua.Windows.targets"/>-->
+    <!--<Import Project="BuildLua.Linux.targets"/>-->
+
+    <ItemGroup Label="PackageFiles">
+        <None Include="$(OutputRuntimeDir)\**" Pack="true" PackagePath="runtimes"/>
+        <None Include="..\README.md" Pack="true" PackagePath=""/>
+        <None Include="..\LICENSE.md" Pack="true" PackagePath=""/>
+        <None Include="..\KeraLua.png" Pack="true" PackagePath=""/>
+    </ItemGroup>
+    <!--  for projects referencing this project directly-->
+    <PropertyGroup>
+        <IsLinux>False</IsLinux>
+        <IsWindows>False</IsWindows>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(RuntimeIdentifier)'!=''">
+        <IsLinux>$(RuntimeIdentifier.StartsWith('linux'))</IsLinux>
+        <IsWindows>$(RuntimeIdentifier.StartsWith('win'))</IsWindows>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(RuntimeIdentifier)'==''">
+        <!-- use build environment as default -->
+        <IsLinux Condition="$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))">True</IsLinux>
+        <IsWindows Condition="$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))">True</IsWindows>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Condition="$(IsLinux)" Include="$(OutputRuntimeDir)\linux*\**" CopyToOutputDirectory="PreserveNewest"/>
+        <None Condition="$(IsWindows)" Include="$(OutputRuntimeDir)\win*\**" CopyToOutputDirectory="PreserveNewest"/>
+    </ItemGroup>
+    <!--    <Target Name="DisplayMessages">-->
+    <!--        <Message Text="|| MSBuildProjectName '$(MSBuildProjectName)'" Importance="high"/>-->
+    <!--        <Message Text="|| RuntimeIdentifier '$(RuntimeIdentifier)'" Importance="high"/>-->
+    <!--        <Message Text="|| IsLinux '$(IsLinux)'" Importance="high"/>-->
+    <!--        <Message Text="|| IsWindows '$(IsWindows)'" Importance="high"/>-->
+    <!--    </Target>-->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    </ItemGroup>
 </Project>
