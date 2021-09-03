@@ -11,7 +11,7 @@
         <XcodeWithout32BitSupport>10</XcodeWithout32BitSupport>
         <XcodeWithARM64Support>12.2</XcodeWithARM64Support>
     </PropertyGroup>
-    <Target Name="BuildLuaOSX" BeforeTargets="BeforeBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')" >
+    <Target Name="BuildLuaOSX" BeforeTargets="BeforeBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
          <Exec Command="xcodebuild -version | head -1" ConsoleToMSBuild="true">
             <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
          </Exec>
@@ -41,7 +41,7 @@
         <Copy SourceFiles="$(ExternalLuaPath)\$(OSXBuildDir)\$(OSXBinaryLibraryPath)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)\native" SkipUnchangedFiles="true" Condition="$(XcodeSupport32Bits) or $(XcodeSupportARM64)"/>
         <Copy SourceFiles="$(ExternalLuaPath)\$(OSX64BuildDir)\$(OSXBinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)\native" SkipUnchangedFiles="true" Condition="!$(XcodeSupport32Bits) and !$(XcodeSupportARM64)"/>
     </Target>
-    <Target Name="CleanLuaOSX" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')" >
+    <Target Name="CleanLuaOSX" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
         <Message Text="Cleaning Lua library (osx)" />
         <RemoveDir Directories="
         $(ExternalLuaPath)\$(OSXBuildDir); 
