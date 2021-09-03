@@ -5,13 +5,13 @@
         <iOSOutputDir>ios</iOSOutputDir>
         <DylibFileFramework>liblua54.framework</DylibFileFramework>
     </PropertyGroup>
-    <Target Name="BuildLuaXamariniOS" BeforeTargets="PrepareForBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')" >
+    <Target Name="BuildLuaXamariniOS" BeforeTargets="PrepareForBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
         <Message Text="Building iOS Lua library (arm64/x86_64)" />
         <Exec Command="make ios" WorkingDirectory="$(ExternalLuaPath)\$(iOSBuildDir)" />
         <Exec Command="ditto $(ExternalLuaPath)\$(iOSBuildDir)\$(iOSOutputDir)\$(DylibFileFramework) $(OutputRuntimeDir)\$(iOSOutputDir)\$(DylibFileFramework)"  />
         <RemoveDir Directories="$(OutputRuntimeDir)\$(iOSOutputDir)\$(DylibFileFramework)\Headers" />
     </Target>
-    <Target Name="CleanLuaXamariniOS" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')" >
+    <Target Name="CleanLuaXamariniOS" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
         <Message Text="Cleaning Lua library (iOS)" />
         <RemoveDir Directories="
         $(ExternalLuaPath)\$(iOSBuildDir)\$(iOSOutputDir); 

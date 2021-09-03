@@ -79,11 +79,11 @@
       <Link>lua54.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\..\runtimes\osx\native\liblua54.dylib" Condition="'$(OS)'=='Unix' and Exists('/usr/lib/libc.dylib')">
+    <Content Include="..\..\..\runtimes\osx\native\liblua54.dylib" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')">
       <Link>liblua54.dylib</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\..\runtimes\linux-x64\native\liblua54.so" Condition="'$(OS)'=='Unix' and !Exists('/usr/lib/libc.dylib')">
+    <Content Include="..\..\..\runtimes\linux-x64\native\liblua54.so" Condition="'$(OS)'=='Unix' and !Exists('/usr/bin/xcodebuild')">
       <Link>liblua54.so</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
