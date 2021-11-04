@@ -176,19 +176,23 @@ jobs:
       restoreSolution: KeraLua.UWP.sln
 
   - task: NuGetCommand@2
-    displayName: 'NuGet restore'
+    displayName: 'NuGet restore KeraLua.netcoreapp3.1.sln'
     inputs:
       restoreSolution: KeraLua.netcoreapp3.1.sln
 
-  - task: NuGetCommand@2
-    displayName: 'NuGet restore'
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet restore KeraLua.net6.0-android.sln'
     inputs:
-      restoreSolution: KeraLua.net6.0.sln
+      command: custom
+      custom: build
+      arguments: '.\KeraLua.net6.0-android.sln'
 
-  - task: NuGetCommand@2
-    displayName: 'NuGet restore'
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet restore KeraLua.net6.0.sln'
     inputs:
-      restoreSolution: KeraLua.net6.0-android.sln
+      command: custom
+      custom: build
+      arguments: '.\KeraLua.net6.0.sln'
 
   - task: NuGetCommand@2
     displayName: 'NuGet restore Android solution'
