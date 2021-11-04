@@ -20,8 +20,8 @@
   <files>
     <file src="lib\Release\MonoAndroid\KeraLua.dll" target="lib\MonoAndroid" />
     <file src="lib\Release\MonoAndroid\KeraLua.xml" target="lib\MonoAndroid" />
-    <file src="lib\Release\net5.0\net5.0\KeraLua.dll" target="lib\net5.0" />
-    <file src="lib\Release\net5.0\net5.0\KeraLua.xml" target="lib\net5.0" />
+    <file src="lib\Release\net6.0\net6.0\KeraLua.dll" target="lib\net6.0" />
+    <file src="lib\Release\net6.0\net6.0\KeraLua.xml" target="lib\net6.0" />
     <file src="lib\Release\netcoreapp3.1\netcoreapp3.1\KeraLua.dll" target="lib\netcoreapp3.1" />
     <file src="lib\Release\netcoreapp3.1\netcoreapp3.1\KeraLua.xml" target="lib\netcoreapp3.1" />
     <file src="lib\Release\net46\KeraLua.dll" target="lib\net46" />
@@ -45,8 +45,14 @@
     <file src="runtimes\win-x86\native\lua54.dll" target="runtimes\win10-x86\nativeassets\uap10.0\lua54.dll" />
     <file src="runtimes\win-x64\native\lua54.dll" target="runtimes\win-x64\native\lua54.dll" />
     <file src="runtimes\win-x86\native\lua54.dll" target="runtimes\win-x86\native\lua54.dll" />
+    <file src="runtimes\win-arm\native\lua54.dll" target="runtimes\win-arm\native\lua54.dll" />
+    <file src="runtimes\win-arm64\native\lua54.dll" target="runtimes\win-arm64\native\lua54.dll" />
     <file src="runtimes\osx\native\liblua54.dylib" target="runtimes\osx\native\liblua54.dylib" />
     <file src="runtimes\linux-x64\native\liblua54.so" target="runtimes\linux-x64\native\liblua54.so" />
+    <file src="runtimes\android-arm\native\liblua54.so" target="runtimes\android-arm\native\liblua54.so" />
+    <file src="runtimes\android-arm64\native\liblua54.so" target="runtimes\android-arm64\native\liblua54.so" />
+    <file src="runtimes\android-x86\native\liblua54.so" target="runtimes\android-x86\native\liblua54.so" />
+    <file src="runtimes\android-x64\native\liblua54.so" target="runtimes\android-x64\native\liblua54.so" />
     <file src="build\targets\KeraLua.targets" target="build\net46\KeraLua.targets" />
     <file src="LICENSE" target="LICENSE" />
   </files>

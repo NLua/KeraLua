@@ -183,7 +183,7 @@ jobs:
   - task: NuGetCommand@2
     displayName: 'NuGet restore'
     inputs:
-      restoreSolution: KeraLua.net5.0.sln
+      restoreSolution: KeraLua.net6.0.sln
 
   - task: NuGetCommand@2
     displayName: 'NuGet restore Android solution'
@@ -226,7 +226,7 @@ jobs:
   - task: MSBuild@1
     displayName: 'Build .NET 5'
     inputs:
-      solution: KeraLua.net5.0.sln
+      solution: KeraLua.net6.0.sln
       configuration: Release
 
   - task: DotNetCoreCLI@2
@@ -234,7 +234,7 @@ jobs:
     inputs:
       command: custom
       custom: vstest
-      arguments: '.\tests\build\net5.0\bin\Release\net5.0\KeraLuaTest.net5.0.dll'
+      arguments: '.\tests\build\net6.0\bin\Release\net6.0\KeraLuaTest.net6.0.dll'
 
   - task: MSBuild@1
     displayName: 'Build Android'

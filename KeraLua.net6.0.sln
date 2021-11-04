@@ -7,11 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KeraLua", "KeraLua", "{4A43
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "KeraLua.Shared", "src\KeraLua.Shared.shproj", "{BD205AD6-760E-48F3-BAB2-21447396BD17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLua.net5.0", "build\net5.0\KeraLua.net5.0.csproj", "{078D8C1B-0CD3-4500-9400-687609C1299C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLua.net6.0", "build\net6.0\KeraLua.net6.0.csproj", "{078D8C1B-0CD3-4500-9400-687609C1299C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2AF69FF8-83DC-4BBF-8C13-C034C23B0EBA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLuaTest.net5.0", "tests\build\net5.0\KeraLuaTest.net5.0.csproj", "{B915B26F-5B5B-441A-A9BF-565B67891F2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLuaTest.net6.0", "tests\build\net6.0\KeraLuaTest.net6.0.csproj", "{B915B26F-5B5B-441A-A9BF-565B67891F2F}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
