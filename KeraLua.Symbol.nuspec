@@ -23,8 +23,8 @@
   <files>
     <file src="lib\Release\MonoAndroid\KeraLua.dll" target="lib\MonoAndroid" />
     <file src="lib\Release\MonoAndroid\KeraLua.pdb" target="lib\MonoAndroid" />
-    <file src="lib\Release\net5.0\net5.0\KeraLua.dll" target="lib\net5.0" />
-    <file src="lib\Release\net5.0\net5.0\KeraLua.pdb" target="lib\net5.0" />
+    <file src="lib\Release\net6.0\net6.0\KeraLua.dll" target="lib\net6.0" />
+    <file src="lib\Release\net6.0\net6.0\KeraLua.pdb" target="lib\net6.0" />
     <file src="lib\Release\netcoreapp3.1\netcoreapp3.1\KeraLua.dll" target="lib\netcoreapp3.1" />
     <file src="lib\Release\netcoreapp3.1\netcoreapp3.1\KeraLua.pdb" target="lib\netcoreapp3.1" />
     <file src="lib\Release\net46\KeraLua.dll" target="lib\net46" />

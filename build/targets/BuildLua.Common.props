@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <ExternalLuaPath>$(SolutionDir)external\lua</ExternalLuaPath>
-    <OutputRuntimeDir>$(SolutionDir)runtimes</OutputRuntimeDir>
+    <ExternalLuaPath>$(MSBuildThisFileDirectory)..\..\external\lua</ExternalLuaPath>
+    <OutputRuntimeDir>$(MSBuildThisFileDirectory)..\..\runtimes</OutputRuntimeDir>
   </PropertyGroup>
 </Project>

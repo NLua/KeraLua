@@ -9,7 +9,7 @@
 
     <!-- get the preferred architecture -->
     <PropertyGroup>
-        <!-- handle x86/x64 specifically -->
+        <!-- handle x86/x64/ARM/ARM64 specifically -->
         <PreferredNativeLua Condition=" '$(PreferredNativeLua)' == '' and ( '$(PlatformTarget)' == 'x64' or '$(PlatformTarget)' == 'x86' ) ">$(PlatformTarget)</PreferredNativeLua> 
         <!-- handle Any CPU, considering Prefer32Bit -->
         <PreferredNativeLua Condition=" '$(PreferredNativeLua)' == '' and '$(Prefer32Bit)' == 'False' ">x64</PreferredNativeLua>  

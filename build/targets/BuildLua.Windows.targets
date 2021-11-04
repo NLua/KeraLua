@@ -31,6 +31,8 @@
 
     <Copy SourceFiles="$(ExternalLuaPath)\$(Win32BuildDir)\$(BinaryLibraryPath32)" DestinationFolder="$(OutputRuntimeDir)\$(Win32BuildDir)\native" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(ExternalLuaPath)\$(Win64BuildDir)\$(BinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(Win64BuildDir)\native" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(ExternalLuaPath)\$(WinArm64BuildDir)\$(BinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(WinArm64BuildDir)\native" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(ExternalLuaPath)\$(WinArmBuildDir)\$(BinaryLibraryPath32)" DestinationFolder="$(OutputRuntimeDir)\$(WinArmBuildDir)\native" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(ExternalLuaPath)\$(WinArm64BuildDir)\$(BinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(WinArm64BuildDir)\nativeassets" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(ExternalLuaPath)\$(WinArmBuildDir)\$(BinaryLibraryPath32)" DestinationFolder="$(OutputRuntimeDir)\$(WinArmBuildDir)\nativeassets" SkipUnchangedFiles="true" />
   </Target>
