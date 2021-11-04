@@ -5,8 +5,8 @@
         <OSX64BuildDir>osx-64</OSX64BuildDir>
         <OSXARM64BuildDir>osx-arm64</OSXARM64BuildDir>
         <OSXBuildDir>osx</OSXBuildDir>
-        <OSXBinaryLibraryPath64>lib64\liblua54.dylib</OSXBinaryLibraryPath64>
-        <OSXBinaryLibraryPath32>lib\liblua54.dylib</OSXBinaryLibraryPath32>
+        <OSXBinaryLibraryPath64>lib64/liblua54.dylib</OSXBinaryLibraryPath64>
+        <OSXBinaryLibraryPath32>lib/liblua54.dylib</OSXBinaryLibraryPath32>
         <OSXBinaryLibraryPath>liblua54.dylib</OSXBinaryLibraryPath>
         <XcodeWithout32BitSupport>10</XcodeWithout32BitSupport>
         <XcodeWithARM64Support>12.2</XcodeWithARM64Support>
@@ -36,8 +36,8 @@
         <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSX32BuildDir)" Condition="$(XcodeSupport32Bits)" />
         <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSX64BuildDir)" />
         <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSXARM64BuildDir)" Condition="$(XcodeSupportARM64)" />
-        <Exec Command="lipo -create $(OSX64BuildDir)\$(OSXBinaryLibraryPath64) $(OSX32BuildDir)\$(OSXBinaryLibraryPath32) -output $(OSXBuildDir)\$(OSXBinaryLibraryPath)" WorkingDirectory="$(ExternalLuaPath)" Condition="$(XcodeSupport32Bits)"/>
-        <Exec Command="lipo -create $(OSX64BuildDir)\$(OSXBinaryLibraryPath64) $(OSXARM64BuildDir)\$(OSXBinaryLibraryPath64) -output $(OSXBuildDir)\$(OSXBinaryLibraryPath)" WorkingDirectory="$(ExternalLuaPath)" Condition="$(XcodeSupportARM64)"/>
+        <Exec Command="lipo -create $(ExternalLuaPath)\$(OSX64BuildDir)\$(OSXBinaryLibraryPath64) $(ExternalLuaPath)\$(OSX32BuildDir)\$(OSXBinaryLibraryPath32) -output $(ExternalLuaPath)\$(OSXBuildDir)\$(OSXBinaryLibraryPath)" WorkingDirectory="$(ExternalLuaPath)" Condition="$(XcodeSupport32Bits)"/>
+        <Exec Command="lipo -create $(ExternalLuaPath)\$(OSX64BuildDir)\$(OSXBinaryLibraryPath64) $(ExternalLuaPath)\$(OSXARM64BuildDir)\$(OSXBinaryLibraryPath64) -output $(ExternalLuaPath)\$(OSXBuildDir)\$(OSXBinaryLibraryPath)" WorkingDirectory="$(ExternalLuaPath)" Condition="$(XcodeSupportARM64)"/>
         <Copy SourceFiles="$(ExternalLuaPath)\$(OSXBuildDir)\$(OSXBinaryLibraryPath)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)\native" SkipUnchangedFiles="true" Condition="$(XcodeSupport32Bits) or $(XcodeSupportARM64)"/>
         <Copy SourceFiles="$(ExternalLuaPath)\$(OSX64BuildDir)\$(OSXBinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)\native" SkipUnchangedFiles="true" Condition="!$(XcodeSupport32Bits) and !$(XcodeSupportARM64)"/>
     </Target>

@@ -10,11 +10,11 @@
     <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
     <DocumentationFile>..\..\lib\Release\net6.0\KeraLua.xml</DocumentationFile>
-    <OutputPath>..\..\lib\Release\net6.0\</OutputPath>
+    <OutputPath>..\..\lib\Release</OutputPath>
     <DefineConstants>TRACE;NETCOREAPP</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\lib\Debug\net6.0\</OutputPath>
+    <OutputPath>..\..\lib\Debug</OutputPath>
   </PropertyGroup>
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
   <Import Project="..\targets\BuildLua.Windows.targets" />
