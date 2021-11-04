@@ -185,7 +185,7 @@ jobs:
     inputs:
       command: custom
       custom: build
-      arguments: '.\KeraLua.net6.0-android.sln'
+      arguments: '.\KeraLua.net6.0-android.sln /p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle"'
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet restore KeraLua.net6.0.sln'
