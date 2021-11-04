@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KeraLua", "KeraLua", "{4A43DAAC-F9FF-4EB1-BFBD-FB4655CCE1F7}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "KeraLua.Shared", "src\KeraLua.Shared.shproj", "{BD205AD6-760E-48F3-BAB2-21447396BD17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua.net6.0-android", "build\Android\KeraLua.net6.0-android.csproj", "{E0576585-777B-42D2-8BC2-676FF5724940}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\KeraLua.Core.projitems*{4b766e88-5872-4437-882d-c887a3c0cdf7}*SharedItemsImports = 4
+		src\KeraLua.Core.projitems*{bd205ad6-760e-48f3-bab2-21447396bd17}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0576585-777B-42D2-8BC2-676FF5724940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0576585-777B-42D2-8BC2-676FF5724940}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0576585-777B-42D2-8BC2-676FF5724940}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0576585-777B-42D2-8BC2-676FF5724940}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BD205AD6-760E-48F3-BAB2-21447396BD17} = {4A43DAAC-F9FF-4EB1-BFBD-FB4655CCE1F7}
+		{E0576585-777B-42D2-8BC2-676FF5724940} = {4A43DAAC-F9FF-4EB1-BFBD-FB4655CCE1F7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4720E610-698B-48DD-BBD7-03AC99E9BC90}
+	EndGlobalSection
+EndGlobal
