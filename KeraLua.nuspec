@@ -20,12 +20,10 @@
   <files>
     <file src="lib\Release\MonoAndroid\KeraLua.dll" target="lib\MonoAndroid" />
     <file src="lib\Release\MonoAndroid\KeraLua.xml" target="lib\MonoAndroid" />
-    <file src="lib\Release\net6.0-android\KeraLua.xml" target="lib\net6.0-android" />
-    <file src="lib\Release\net6.0-android\KeraLua.dll" target="lib\net6.0-android" />
+    <file src="lib\Release\net6.0-android\KeraLua.xml" target="lib\net6.0-android28" />
+    <file src="lib\Release\net6.0-android\KeraLua.dll" target="lib\net6.0-android28" />
     <file src="lib\Release\net6.0\KeraLua.dll" target="lib\net6.0" />
     <file src="lib\Release\net6.0\KeraLua.xml" target="lib\net6.0" />
-    <file src="lib\Release\netcoreapp3.1\netcoreapp3.1\KeraLua.dll" target="lib\netcoreapp3.1" />
-    <file src="lib\Release\netcoreapp3.1\netcoreapp3.1\KeraLua.xml" target="lib\netcoreapp3.1" />
     <file src="lib\Release\net46\KeraLua.dll" target="lib\net46" />
     <file src="lib\Release\net46\KeraLua.xml" target="lib\net46" />
     <file src="lib\Release\uap10.0\KeraLua.dll" target="lib\uap10.0" />
