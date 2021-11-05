@@ -194,11 +194,6 @@ jobs:
       custom: restore
       arguments: '.\KeraLua.net6.0.sln'
 
-  - task: NuGetCommand@2
-    displayName: 'NuGet restore Android solution'
-    inputs:
-      restoreSolution: KeraLua.Android.sln
-
   - task: PowerShell@2
     displayName: 'PreBuild Script'
     inputs:
@@ -253,6 +248,11 @@ jobs:
       custom: vstest
       arguments: 'tests\build\net6.0\bin\Release\net6.0\KeraLuaTest.net6.0.dll'
 
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore Android solution'
+    inputs:
+      restoreSolution: KeraLua.Android.sln
+      
   - task: MSBuild@1
     displayName: 'Build Android'
     inputs:
