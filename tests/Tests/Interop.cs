@@ -178,7 +178,7 @@ namespace KeraLuaTest.Tests
             debug = LuaDebug.FromIntPtr(ar);
 
             string source = debug.Source.Substring(1);
-            string shortSource = debug.ShortSource;
+            string shortSource = System.IO.Path.GetFileName(debug.ShortSource);
 
             source = System.IO.Path.GetFileName(source);
             hookLog.AppendLine($"{shortSource}-{source}:{debug.CurrentLine} ({debug.What})");
@@ -193,7 +193,7 @@ namespace KeraLuaTest.Tests
 
             if(!state.GetInfo("Snlu", ref debug))
                 return;
-            string shortSource = debug.ShortSource;
+            string shortSource = System.IO.Path.GetFileName(debug.ShortSource);
             string source = debug.Source.Substring(1);
             source = System.IO.Path.GetFileName(source);
             hookLog.AppendLine ($"{shortSource}-{source}:{debug.CurrentLine} ({debug.What})");
@@ -212,27 +212,27 @@ namespace KeraLuaTest.Tests
             string output = hookLog.ToString();
             string expected =
 @"main.lua-main.lua:2 (main)
-./foo.lua-foo.lua:2 (main)
-./module1.lua-module1.lua:3 (main)
-./module1.lua-module1.lua:9 (main)
-./module1.lua-module1.lua:5 (main)
-./module1.lua-module1.lua:11 (main)
-./foo.lua-foo.lua:8 (main)
-./foo.lua-foo.lua:4 (main)
-./foo.lua-foo.lua:14 (main)
-./foo.lua-foo.lua:10 (main)
-./foo.lua-foo.lua:14 (main)
+foo.lua-foo.lua:2 (main)
+module1.lua-module1.lua:3 (main)
+module1.lua-module1.lua:9 (main)
+module1.lua-module1.lua:5 (main)
+module1.lua-module1.lua:11 (main)
+foo.lua-foo.lua:8 (main)
+foo.lua-foo.lua:4 (main)
+foo.lua-foo.lua:14 (main)
+foo.lua-foo.lua:10 (main)
+foo.lua-foo.lua:14 (main)
 main.lua-main.lua:4 (main)
 main.lua-main.lua:5 (main)
 main.lua-main.lua:7 (main)
 main.lua-main.lua:8 (main)
-./foo.lua-foo.lua:5 (Lua)
-./foo.lua-foo.lua:6 (Lua)
-./foo.lua-foo.lua:7 (Lua)
-./module1.lua-module1.lua:6 (Lua)
-./module1.lua-module1.lua:7 (Lua)
-./module1.lua-module1.lua:8 (Lua)
-./foo.lua-foo.lua:8 (Lua)
+foo.lua-foo.lua:5 (Lua)
+foo.lua-foo.lua:6 (Lua)
+foo.lua-foo.lua:7 (Lua)
+module1.lua-module1.lua:6 (Lua)
+module1.lua-module1.lua:7 (Lua)
+module1.lua-module1.lua:8 (Lua)
+foo.lua-foo.lua:8 (Lua)
 main.lua-main.lua:11 (main)
 ";
             expected = expected.Replace("\r","");
@@ -257,27 +257,27 @@ main.lua-main.lua:11 (main)
             string output = hookLog.ToString();
             string expected =
 @"main.lua-main.lua:2 (main)
-./foo.lua-foo.lua:2 (main)
-./module1.lua-module1.lua:3 (main)
-./module1.lua-module1.lua:9 (main)
-./module1.lua-module1.lua:5 (main)
-./module1.lua-module1.lua:11 (main)
-./foo.lua-foo.lua:8 (main)
-./foo.lua-foo.lua:4 (main)
-./foo.lua-foo.lua:14 (main)
-./foo.lua-foo.lua:10 (main)
-./foo.lua-foo.lua:14 (main)
+foo.lua-foo.lua:2 (main)
+module1.lua-module1.lua:3 (main)
+module1.lua-module1.lua:9 (main)
+module1.lua-module1.lua:5 (main)
+module1.lua-module1.lua:11 (main)
+foo.lua-foo.lua:8 (main)
+foo.lua-foo.lua:4 (main)
+foo.lua-foo.lua:14 (main)
+foo.lua-foo.lua:10 (main)
+foo.lua-foo.lua:14 (main)
 main.lua-main.lua:4 (main)
 main.lua-main.lua:5 (main)
 main.lua-main.lua:7 (main)
 main.lua-main.lua:8 (main)
-./foo.lua-foo.lua:5 (Lua)
-./foo.lua-foo.lua:6 (Lua)
-./foo.lua-foo.lua:7 (Lua)
-./module1.lua-module1.lua:6 (Lua)
-./module1.lua-module1.lua:7 (Lua)
-./module1.lua-module1.lua:8 (Lua)
-./foo.lua-foo.lua:8 (Lua)
+foo.lua-foo.lua:5 (Lua)
+foo.lua-foo.lua:6 (Lua)
+foo.lua-foo.lua:7 (Lua)
+module1.lua-module1.lua:6 (Lua)
+module1.lua-module1.lua:7 (Lua)
+module1.lua-module1.lua:8 (Lua)
+foo.lua-foo.lua:8 (Lua)
 main.lua-main.lua:11 (main)
 ";
             expected = expected.Replace('/', System.IO.Path.DirectorySeparatorChar);
