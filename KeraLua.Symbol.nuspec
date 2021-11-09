@@ -27,12 +27,20 @@
     <file src="lib\Release\net6.0-android\KeraLua.pdb" target="lib\net6.0-android28" />
     <file src="lib\Release\net6.0\KeraLua.dll" target="lib\net6.0" />
     <file src="lib\Release\net6.0\KeraLua.pdb" target="lib\net6.0" />
+    <file src="lib\Release\net6.0-ios\KeraLua.pdb" target="lib\net6.0-ios11.0" />
+    <file src="lib\Release\net6.0-ios\KeraLua.dll" target="lib\net6.0-ios11.0" />
+    <file src="lib\Release\net6.0-maccatalyst\KeraLua.pdb" target="lib\net6.0-ios13.0" />
+    <file src="lib\Release\net6.0-maccatalyst\KeraLua.dll" target="lib\net6.0-ios13.0" />
+    <file src="lib\Release\net6.0-tvos\KeraLua.pdb" target="lib\net6.0-tvos11.0" />
+    <file src="lib\Release\net6.0-tvos\KeraLua.dll" target="lib\net6.0-tvos11.0" />
+    <file src="lib\Release\net6.0-macos\KeraLua.pdb" target="lib\net6.0-macos10.13" />
+    <file src="lib\Release\net6.0-macos\KeraLua.dll" target="lib\net6.0-macos10.13" />
     <file src="lib\Release\net46\KeraLua.dll" target="lib\net46" />
     <file src="lib\Release\net46\KeraLua.pdb" target="lib\net46" />
     <file src="lib\Release\uap10.0\KeraLua.dll" target="lib\uap10.0" />
     <file src="lib\Release\uap10.0\KeraLua.pdb" target="lib\uap10.0" />
-    <file src="lib\Release\netstandard2.0\netstandard2.0\KeraLua.dll" target="lib\netstandard2.0" />
-    <file src="lib\Release\netstandard2.0\netstandard2.0\KeraLua.pdb" target="lib\netstandard2.0" />
+    <file src="lib\Release\netstandard2.0\KeraLua.dll" target="lib\netstandard2.0" />
+    <file src="lib\Release\netstandard2.0\KeraLua.pdb" target="lib\netstandard2.0" />
     <file src="lib\Release\xamarinios\KeraLua.dll" target="lib\xamarinios" />
     <file src="lib\Release\xamarinios\KeraLua.pdb" target="lib\xamarinios" />
     <file src="lib\Release\xamarinmac\KeraLua.dll" target="lib\xamarinmac" />
