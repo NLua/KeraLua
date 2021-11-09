@@ -24,6 +24,14 @@
     <file src="lib\Release\net6.0-android\KeraLua.dll" target="lib\net6.0-android28" />
     <file src="lib\Release\net6.0\KeraLua.dll" target="lib\net6.0" />
     <file src="lib\Release\net6.0\KeraLua.xml" target="lib\net6.0" />
+    <file src="lib\Release\net6.0-ios\KeraLua.xml" target="lib\net6.0-ios11.0" />
+    <file src="lib\Release\net6.0-ios\KeraLua.dll" target="lib\net6.0-ios11.0" />
+    <file src="lib\Release\net6.0-maccatalyst\KeraLua.xml" target="lib\net6.0-ios13.0" />
+    <file src="lib\Release\net6.0-maccatalyst\KeraLua.dll" target="lib\net6.0-ios13.0" />
+    <file src="lib\Release\net6.0-tvos\KeraLua.xml" target="lib\net6.0-tvos11.0" />
+    <file src="lib\Release\net6.0-tvos\KeraLua.dll" target="lib\net6.0-tvos11.0" />
+    <file src="lib\Release\net6.0-macos\KeraLua.xml" target="lib\net6.0-macos10.13" />
+    <file src="lib\Release\net6.0-macos\KeraLua.dll" target="lib\net6.0-macos10.13" />
     <file src="lib\Release\net46\KeraLua.dll" target="lib\net46" />
     <file src="lib\Release\net46\KeraLua.xml" target="lib\net46" />
     <file src="lib\Release\uap10.0\KeraLua.dll" target="lib\uap10.0" />
@@ -54,7 +62,7 @@
     <file src="runtimes\ios\native\liblua54.framework\liblua54" target="runtimes\ios\native\liblua54.framework\liblua54" />
     <file src="runtimes\ios\native\liblua54.framework\Info.plist" target="runtimes\ios\native\liblua54.framework\Info.plist" />
     <file src="runtimes\maccatalyst\native\liblua54.framework\liblua54" target="runtimes\maccatalyst\native\liblua54.framework\liblua54" />
-    <file src="runtimes\maccatalyst\native\liblua54.framework\Info.plist" target="runtimes\maccatalyst\native\liblua54.framework\Info.plist" />
+    <file src="runtimes\maccatalyst\native\liblua54.framework\Info.plist" target="runtimes\maccatalyst\native\liblua54.framework\Resources\Info.plist" />
     <file src="runtimes\tvos\native\liblua54.framework\liblua54" target="runtimes\maccatalyst\native\liblua54.framework\liblua54" />
     <file src="runtimes\tvos\native\liblua54.framework\Info.plist" target="runtimes\maccatalyst\native\liblua54.framework\Info.plist" />
     <file src="build\targets\KeraLua.targets" target="build\net46\KeraLua.targets" />

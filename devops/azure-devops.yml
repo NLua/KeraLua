@@ -49,11 +49,11 @@ jobs:
       arguments: './build/iOS/KeraLua.net6.0-maccatalyst.csproj'
 
   - task: DotNetCoreCLI@2
-    displayName: 'dotnet restore ./build/macOS/KeraLua.net6.0-mac.csproj'
+    displayName: 'dotnet restore ./build/macOS/KeraLua.net6.0-macos.csproj'
     inputs:
       command: custom
       custom: restore
-      arguments: './build/macOS/KeraLua.net6.0-mac.csproj'
+      arguments: './build/macOS/KeraLua.net6.0-macos.csproj'
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet restore ./build/TVOS/KeraLua.net6.0-tvos.csproj'
@@ -87,28 +87,28 @@ jobs:
     inputs:
       command: custom
       custom: build
-      arguments: './build/iOS/KeraLua.net6.0-ios.csproj'
+      arguments: './build/iOS/KeraLua.net6.0-ios.csproj /p:Configuration=Release'
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet build ./build/iOS/KeraLua.net6.0-maccatalyst.csproj'
     inputs:
       command: custom
       custom: build
-      arguments: './build/iOS/KeraLua.net6.0-maccatalyst.csproj'
+      arguments: './build/iOS/KeraLua.net6.0-maccatalyst.csproj /p:Configuration=Release'
 
   - task: DotNetCoreCLI@2
-    displayName: 'dotnet build ./build/macOS/KeraLua.net6.0-mac.csproj'
+    displayName: 'dotnet build ./build/macOS/KeraLua.net6.0-macos.csproj'
     inputs:
       command: custom
       custom: build
-      arguments: './build/macOS/KeraLua.net6.0-mac.csproj'
+      arguments: './build/macOS/KeraLua.net6.0-macos.csproj /p:Configuration=Release'
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet build ./build/TVOS/KeraLua.net6.0-tvos.csproj'
     inputs:
       command: custom
       custom: build
-      arguments: './build/TVOS/KeraLua.net6.0-tvos.csproj'
+      arguments: './build/TVOS/KeraLua.net6.0-tvos.csproj /p:Configuration=Release'
 
   - script: 'dotnet test ./tests/build/net46/bin/Release/KeraLuaTest.dll -l:trx'
     displayName: 'Run OSX tests'
