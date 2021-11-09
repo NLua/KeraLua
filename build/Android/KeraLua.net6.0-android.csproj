@@ -59,7 +59,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-  <Import Project="..\targets\BuildLua.XamarinAndroid.targets" />
+  <Import Project="..\targets\BuildLua.Android.targets" />
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
   <Import Project="..\targets\KeraLua.Sign.targets" />
 </Project>

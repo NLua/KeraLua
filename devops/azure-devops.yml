@@ -302,14 +302,14 @@ stages:
       inputs:
         buildType: 'current'
         artifactName: 'libs.mac'
-        targetPath: '.'
+        targetPath: './lib/Release/'
 
     - task: DownloadPipelineArtifact@2
       displayName: 'Download Build runtimes.mac'
       inputs:
         buildType: 'current'
         artifactName: 'runtimes.mac'
-        targetPath: '.'
+        targetPath: './runtimes/'
 
     - task: DownloadPipelineArtifact@2
       displayName: 'Download Build liblua54.so (Linux)'
