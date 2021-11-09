@@ -10,7 +10,7 @@
     <iconUrl>https://raw.githubusercontent.com/nlua/KeraLua/main/KeraLua.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-      C# Native bindings of Lua 5.4 (compatible with iOS/Mac/Android/.NET/.NET Core/UWP) 
+      C# Native bindings of Lua 5.4 (compatible with iOS/Mac/Android/.NET/UWP) 
     </description>
     <releaseNotes>Release: 2bffe65</releaseNotes>
     <copyright>Copyright © Vinicius Jarina 2021</copyright>
@@ -63,8 +63,8 @@
     <file src="runtimes\ios\native\liblua54.framework\Info.plist" target="runtimes\ios\native\liblua54.framework\Info.plist" />
     <file src="runtimes\maccatalyst\native\liblua54.framework\liblua54" target="runtimes\maccatalyst\native\liblua54.framework\liblua54" />
     <file src="runtimes\maccatalyst\native\liblua54.framework\Resources\Info.plist" target="runtimes\maccatalyst\native\liblua54.framework\Info.plist" />
-    <file src="runtimes\tvos\native\liblua54.framework\liblua54" target="runtimes\maccatalyst\native\liblua54.framework\liblua54" />
-    <file src="runtimes\tvos\native\liblua54.framework\Info.plist" target="runtimes\maccatalyst\native\liblua54.framework\Info.plist" />
+    <file src="runtimes\tvos\native\liblua54.framework\liblua54" target="runtimes\tvos\native\liblua54.framework\liblua54" />
+    <file src="runtimes\tvos\native\liblua54.framework\Info.plist" target="runtimes\tvos\native\liblua54.framework\Info.plist" />
     <file src="build\targets\KeraLua.targets" target="build\net46\KeraLua.targets" />
     <file src="LICENSE" target="LICENSE" />
   </files>
