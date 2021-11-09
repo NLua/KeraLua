@@ -8,7 +8,7 @@ using charptr_t = System.IntPtr;
 using lua_KContext = System.IntPtr;
 using lua_Debug = System.IntPtr;
 
-#if __IOS__ || __TVOS__ || __WATCHOS__
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     using ObjCRuntime;
 #endif
 
@@ -22,7 +22,7 @@ namespace KeraLua
     /// <returns></returns>
     [SuppressUnmanagedCodeSecurity]
     [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
-#if __IOS__ || __TVOS__ || __WATCHOS__
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     [MonoNativeFunctionWrapper]
 #endif
     public delegate int LuaFunction(lua_State luaState);
@@ -34,7 +34,7 @@ namespace KeraLua
     /// <param name="ar"></param>
     [SuppressUnmanagedCodeSecurity]
     [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
-#if __IOS__ || __TVOS__ || __WATCHOS__
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     [MonoNativeFunctionWrapper]
 #endif
     public delegate void LuaHookFunction (lua_State luaState, lua_Debug ar);
@@ -48,7 +48,7 @@ namespace KeraLua
     /// <returns></returns>
     [SuppressUnmanagedCodeSecurity]
     [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
-#if __IOS__ || __TVOS__ || __WATCHOS__
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     [MonoNativeFunctionWrapper]
 #endif
     public delegate int LuaKFunction (lua_State L, int status, lua_KContext ctx);
@@ -62,7 +62,7 @@ namespace KeraLua
     /// <returns></returns>
     [SuppressUnmanagedCodeSecurity]
     [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
-#if __IOS__ || __TVOS__ || __WATCHOS__
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     [MonoNativeFunctionWrapper]
 #endif
     public delegate charptr_t LuaReader (lua_State L, voidptr_t ud, ref size_t sz);
@@ -77,7 +77,7 @@ namespace KeraLua
     /// <returns></returns>
     [SuppressUnmanagedCodeSecurity]
     [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
-#if __IOS__ || __TVOS__ || __WATCHOS__
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     [MonoNativeFunctionWrapper]
 #endif
     public delegate int LuaWriter (lua_State L, voidptr_t p, size_t size, voidptr_t ud);
@@ -92,7 +92,7 @@ namespace KeraLua
     /// <returns></returns>
     [SuppressUnmanagedCodeSecurity]
     [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
-#if __IOS__ || __TVOS__ || __WATCHOS__
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     [MonoNativeFunctionWrapper]
 #endif
     public delegate voidptr_t LuaAlloc (voidptr_t ud, voidptr_t ptr, size_t osize, size_t nsize);
@@ -105,7 +105,7 @@ namespace KeraLua
     /// <param name="tocont"></param>
     [SuppressUnmanagedCodeSecurity]
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#if __IOS__ || __TVOS__ || __WATCHOS__
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     [MonoNativeFunctionWrapper]
 #endif
     public delegate void LuaWarnFunction(voidptr_t ud, charptr_t msg, int tocont);

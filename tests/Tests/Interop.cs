@@ -6,7 +6,7 @@ using KeraLua;
 
 using System.Drawing;
 
-#if MONOTOUCH
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     using ObjCRuntime;
 #endif
 
@@ -16,7 +16,7 @@ namespace KeraLuaTest.Tests
     public class Interop
     {
         public static readonly char UnicodeChar = '\uE007';
-        public static string UnicodeString => Convert.ToString(UnicodeChar);
+        public static string UnicodeString => Convert.ToString(UnicodeChar, System.Globalization.CultureInfo.InvariantCulture);
 
         [SetUp]
         public void SetUp()
@@ -26,7 +26,7 @@ namespace KeraLuaTest.Tests
             Environment.CurrentDirectory = path;
         }
 
-#if MONOTOUCH
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         [MonoPInvokeCallback(typeof(LuaFunction))]
 #endif
         static int TestUnicodeString(IntPtr p)
@@ -40,7 +40,7 @@ namespace KeraLuaTest.Tests
         }
 
         
-#if MONOTOUCH
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         [MonoPInvokeCallback(typeof(LuaFunction))]
 #endif
         static int TestReferenceData(IntPtr p)
@@ -51,12 +51,12 @@ namespace KeraLuaTest.Tests
             var param2 = state.ToObject<XDocument>(2);
 
             Assert.IsNull(param1, "#1");
-            Assert.AreEqual(param2, _gTempDocument,  "#2");
+            Assert.AreEqual(param2, gTempDocument,  "#2");
 
             return 0;
         }
 
-#if MONOTOUCH
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         [MonoPInvokeCallback(typeof(LuaFunction))]
 #endif
         static int TestValueData(IntPtr p)
@@ -74,11 +74,11 @@ namespace KeraLuaTest.Tests
             return 0;
         }
 
-        public static LuaFunction FuncTestUnicodeString = TestUnicodeString;
-        public static LuaFunction FuncTestReferenceData = TestReferenceData;
-        public static LuaFunction FuncTestValueData = TestValueData;
+        internal static LuaFunction funcTestUnicodeString = TestUnicodeString;
+        internal static LuaFunction funcTestReferenceData = TestReferenceData;
+        internal static LuaFunction funcTestValueData = TestValueData;
 
-        private static XDocument _gTempDocument;
+        private static XDocument gTempDocument;
 
         [Test]
         public void TestUnicodeString()
@@ -86,7 +86,7 @@ namespace KeraLuaTest.Tests
             var state = new Lua {
                 Encoding = Encoding.UTF8
             };
-            state.PushCFunction(FuncTestUnicodeString);
+            state.PushCFunction(funcTestUnicodeString);
             state.SetGlobal("TestUnicodeString");
             state.PushString(UnicodeString);
             state.SetGlobal("unicodeString");
@@ -108,10 +108,10 @@ namespace KeraLuaTest.Tests
             state.PushObject(document);
             state.SetGlobal("bar");
 
-            state.PushCFunction(FuncTestReferenceData);
+            state.PushCFunction(funcTestReferenceData);
             state.SetGlobal("TestReferenceData");
 
-            _gTempDocument = document;
+            gTempDocument = document;
             AssertString("TestReferenceData(foo, bar)", state);
         }
 
@@ -129,13 +129,13 @@ namespace KeraLuaTest.Tests
             state.PushObject(new DateTime(2018, 10, 10, 0, 0 ,0));
             state.SetGlobal("date");
 
-            state.PushCFunction(FuncTestValueData);
+            state.PushCFunction(funcTestValueData);
             state.SetGlobal("TestValueData");
 
             AssertString("TestValueData(foo, bar, date)", state);
         }
 
-        void AssertString(string chunk, Lua state)
+        static void AssertString(string chunk, Lua state)
         {
             string error = string.Empty;
 
@@ -154,12 +154,12 @@ namespace KeraLuaTest.Tests
             Assert.True(result == 0, "Fail calling chunk: " + chunk + " ERROR: " + error);
         }
 
-        static StringBuilder hookLog;
+        private static StringBuilder hookLog;
 
-#if MONOTOUCH
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         [MonoPInvokeCallback(typeof(LuaHookFunction))]
 #endif
-        static void HookCallback(IntPtr p, IntPtr ar)
+        private static void HookCallback(IntPtr p, IntPtr ar)
         {
             var state = Lua.FromIntPtr(p);
             var debug = LuaDebug.FromIntPtr(ar);
@@ -170,9 +170,11 @@ namespace KeraLuaTest.Tests
             if (debug.Event != LuaHookEvent.Line)
                 return;
 
+#pragma warning disable IDE0058 // Expression value is never used
             state.GetStack(0, ar);
+#pragma warning restore IDE0058 // Expression value is never used
 
-            if(!state.GetInfo("Snlu", ar))
+            if (!state.GetInfo("Snlu", ar))
                 return;
 
             debug = LuaDebug.FromIntPtr(ar);
@@ -181,25 +183,34 @@ namespace KeraLuaTest.Tests
             string shortSource = System.IO.Path.GetFileName(debug.ShortSource);
 
             source = System.IO.Path.GetFileName(source);
+#pragma warning disable CA1305 // Specify IFormatProvider
+#pragma warning disable IDE0058 // Expression value is never used
             hookLog.AppendLine($"{shortSource}-{source}:{debug.CurrentLine} ({debug.What})");
+#pragma warning restore IDE0058 // Expression value is never used
+#pragma warning restore CA1305 // Specify IFormatProvider
         }
 
-        static void HookCalbackStruct(IntPtr p, IntPtr ar)
+        private static void HookCalbackStruct(IntPtr p, IntPtr ar)
         {
             var state = Lua.FromIntPtr(p);
             var debug = new LuaDebug();
 
+#pragma warning disable IDE0058 // Expression value is never used
             state.GetStack(0, ref debug);
 
-            if(!state.GetInfo("Snlu", ref debug))
+            if (!state.GetInfo("Snlu", ref debug))
                 return;
+
             string shortSource = System.IO.Path.GetFileName(debug.ShortSource);
             string source = debug.Source.Substring(1);
             source = System.IO.Path.GetFileName(source);
-            hookLog.AppendLine ($"{shortSource}-{source}:{debug.CurrentLine} ({debug.What})");
+#pragma warning disable CA1305 // Specify IFormatProvider
+            hookLog.AppendLine($"{shortSource}-{source}:{debug.CurrentLine} ({debug.What})");
+#pragma warning restore CA1305 // Specify IFormatProvider
+#pragma warning restore IDE0058 // Expression value is never used
         }
 
-        static LuaHookFunction FuncHookCallback = HookCallback;
+        private static LuaHookFunction funcHookCallback = HookCallback;
 
 
         [Test]
@@ -207,7 +218,7 @@ namespace KeraLuaTest.Tests
         {
             var state = new Lua();
             hookLog = new StringBuilder();
-            state.SetHook(FuncHookCallback, LuaHookMask.Line, 0);
+            state.SetHook(funcHookCallback, LuaHookMask.Line, 0);
             state.DoFile("main.lua");
             string output = hookLog.ToString();
             string expected =
@@ -245,13 +256,13 @@ main.lua-main.lua:11 (main)
         [Test]
         public void TestLuaHookStruct()
         {
-            FuncHookCallback = HookCalbackStruct;
+            funcHookCallback = HookCalbackStruct;
             var state = new Lua();
             hookLog = new StringBuilder();
 
-            state.SetHook(FuncHookCallback, LuaHookMask.Line, 0);
+            state.SetHook(funcHookCallback, LuaHookMask.Line, 0);
 
-            Assert.AreEqual(FuncHookCallback, state.Hook, "#1");
+            Assert.AreEqual(funcHookCallback, state.Hook, "#1");
 
             state.DoFile("main.lua");
             string output = hookLog.ToString();
@@ -286,7 +297,7 @@ main.lua-main.lua:11 (main)
 
             Assert.AreEqual(expected, output, "#2");
 
-            state.SetHook(FuncHookCallback, LuaHookMask.Disabled, 0);
+            state.SetHook(funcHookCallback, LuaHookMask.Disabled, 0);
 
             Assert.IsNull(state.Hook, "#3");
         }
@@ -329,7 +340,7 @@ main.lua-main.lua:11 (main)
             state.Close();
         }
 
-#if MONOTOUCH
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         [MonoPInvokeCallback(typeof(LuaFunction))]
 #endif
         public static int Func(IntPtr p)
@@ -426,7 +437,7 @@ main.lua-main.lua:11 (main)
             }
         }
 
-#if MONOTOUCH
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         [MonoPInvokeCallback(typeof(LuaWarnFunction))]
 #endif
         public static void MyWarning(IntPtr ud, IntPtr msg, int tocont)
@@ -486,7 +497,7 @@ main.lua-main.lua:11 (main)
             lua.Dispose();
         }
 
-#if MONOTOUCH
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         [MonoPInvokeCallback(typeof(LuaFunction))]
 #endif
         static int OpenFoo(IntPtr state)
@@ -496,7 +507,7 @@ main.lua-main.lua:11 (main)
             return 1;
         }
 
-#if MONOTOUCH
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         [MonoPInvokeCallback(typeof(LuaFunction))]
 #endif
         static int Foo(IntPtr state)
