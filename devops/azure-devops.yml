@@ -7,7 +7,9 @@ resources:
       endpoint: codefoco
 
 stages:
+
 - stage: Build_Mac
+  displayName: 'Build Mac'
 
   jobs:
   - job: 'KeraLuaMac'
@@ -120,10 +122,11 @@ stages:
     - template: send-telegram.yml@templates
 
 - stage: Build_Linux
+  displayName: 'Build Linux'
+  jobs:
 
   - job: 'KeraLuaLinux'
     displayName: 'Linux'
-    dependsOn: 'KeraLuaMac'
     variables:
       - group: 'Keys'
 
@@ -158,9 +161,10 @@ stages:
     - template: send-telegram.yml@templates
 
 - stage: Build_Windows
-  dependsOn: 'Build_Mac'
-  dependsOn: 'Build_Linux'
+  displayName: Build Windows
+  dependsOn: 'Build_Mac', 'Build_Linux'
 
+  jobs:
   - job: 'KeraLuaWindows'
     displayName: 'Windows'
     variables:
