@@ -34,6 +34,34 @@ jobs:
     inputs:
       restoreSolution: KeraLua.sln
 
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet restore ./build/iOS/KeraLua.net6.0-ios.csproj'
+    inputs:
+      command: custom
+      custom: restore
+      arguments: './build/iOS/KeraLua.net6.0-ios.csproj'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet restore ./build/iOS/KeraLua.net6.0-maccatalyst.csproj'
+    inputs:
+      command: custom
+      custom: restore
+      arguments: './build/iOS/KeraLua.net6.0-maccatalyst.csproj'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet restore ./build/macOS/KeraLua.net6.0-mac.csproj'
+    inputs:
+      command: custom
+      custom: restore
+      arguments: './build/macOS/KeraLua.net6.0-mac.csproj'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet restore ./build/TVOS/KeraLua.net6.0-tvos.csproj'
+    inputs:
+      command: custom
+      custom: restore
+      arguments: './build/TVOS/KeraLua.net6.0-tvos.csproj'
+
   - task: PowerShell@2
     displayName: 'PowerShell Script'
     inputs:
@@ -53,6 +81,34 @@ jobs:
     inputs:
       solution: KeraLua.Mac.sln
       configuration: Release
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet build ./build/iOS/KeraLua.net6.0-ios.csproj'
+    inputs:
+      command: custom
+      custom: build
+      arguments: './build/iOS/KeraLua.net6.0-ios.csproj'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet build ./build/iOS/KeraLua.net6.0-maccatalyst.csproj'
+    inputs:
+      command: custom
+      custom: build
+      arguments: './build/iOS/KeraLua.net6.0-maccatalyst.csproj'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet build ./build/macOS/KeraLua.net6.0-mac.csproj'
+    inputs:
+      command: custom
+      custom: build
+      arguments: './build/macOS/KeraLua.net6.0-mac.csproj'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet build ./build/TVOS/KeraLua.net6.0-tvos.csproj'
+    inputs:
+      command: custom
+      custom: build
+      arguments: './build/TVOS/KeraLua.net6.0-tvos.csproj'
 
   - script: 'dotnet test ./tests/build/net46/bin/Release/KeraLuaTest.dll -l:trx'
     displayName: 'Run OSX tests'
@@ -74,38 +130,17 @@ jobs:
       publishLocation: 'pipeline'
 
   - task: PublishPipelineArtifact@1
-    displayName: 'Publish Pipeline Artifact: Xamarin.iOS.KeraLua'
+    displayName: 'Publish Pipeline Artifact: libs.mac'
     inputs:
-      targetPath: lib/Release/xamarinios
-      artifact: 'Xamarin.iOS.KeraLua'
+      targetPath: lib/Release/
+      artifact: 'libs.mac'
       publishLocation: 'pipeline'
 
   - task: PublishPipelineArtifact@1
-    displayName: 'Publish Pipeline Artifact: Xamarin.tvOS.KeraLua'
+    displayName: 'Publish Pipeline Artifact: runtimes'
     inputs:
-      targetPath: lib/Release/xamarintvos
-      artifact: 'Xamarin.tvOS.KeraLua'
-      publishLocation: 'pipeline'
-
-  - task: PublishPipelineArtifact@1
-    displayName: 'Publish Pipeline Artifact: Xamarin.watchOS.KeraLua'
-    inputs:
-      targetPath: lib/Release/xamarinwatchos
-      artifact: 'Xamarin.watchOS.KeraLua'
-      publishLocation: 'pipeline'
-
-  - task: PublishPipelineArtifact@1
-    displayName: 'Publish Pipeline Artifact: Xamarin.Mac.KeraLua'
-    inputs:
-      targetPath: lib/Release/xamarinmac
-      artifact: 'Xamarin.Mac.KeraLua'
-      publishLocation: 'pipeline'
-
-  - task: PublishPipelineArtifact@1
-    displayName: 'Publish Pipeline Artifact: liblua54.dylib'
-    inputs:
-      targetPath: runtimes/osx/native/liblua54.dylib
-      artifact: 'liblua54.dylib'
+      targetPath: runtimes
+      artifact: 'runtimes.mac'
       publishLocation: 'pipeline'
 
   - template: send-telegram.yml@templates
@@ -189,6 +224,13 @@ jobs:
       custom: restore
       arguments: '.\KeraLua.net6.0.sln'
 
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet restore KeraLua.netstandard.sln'
+    inputs:
+      command: custom
+      custom: restore
+      arguments: '.\KeraLua.netstandard.sln'
+
   - task: PowerShell@2
     displayName: 'PreBuild Script'
     inputs:
@@ -215,6 +257,13 @@ jobs:
       command: custom
       custom: build
       arguments: '.\KeraLua.net6.0.sln /p:Configuration=Release'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet build KeraLua.netstandard.sln'
+    inputs:
+      command: custom
+      custom: build
+      arguments: '.\KeraLua.netstandard.sln /p:Configuration=Release'
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet build KeraLua.net6.0-android.sln'
@@ -266,39 +315,18 @@ jobs:
       publishLocation: 'pipeline'
     
   - task: DownloadPipelineArtifact@2
-    displayName: 'Download Build Xamarin.iOS'
+    displayName: 'Download Build libs.mac'
     inputs:
       buildType: 'current'
-      artifactName: 'Xamarin.iOS.KeraLua'
-      targetPath: 'lib/Release/xamarinios/'
+      artifactName: 'libs.mac'
+      targetPath: '.'
 
   - task: DownloadPipelineArtifact@2
-    displayName: 'Download Build Xamarin.Mac'
+    displayName: 'Download Build runtimes.mac'
     inputs:
       buildType: 'current'
-      artifactName: 'Xamarin.Mac.KeraLua'
-      targetPath: 'lib/Release/xamarinmac/'
-
-  - task: DownloadPipelineArtifact@2
-    displayName: 'Download Build Xamarin.watchOS'
-    inputs:
-      buildType: 'current'
-      artifactName: 'Xamarin.watchOS.KeraLua'
-      targetPath: 'lib/Release/xamarinwatchos/'
-
-  - task: DownloadPipelineArtifact@2
-    displayName: 'Download Build Xamarin.tvOS'
-    inputs:
-      buildType: 'current'
-      artifactName: 'Xamarin.tvOS.KeraLua'
-      targetPath: 'lib/Release/xamarintvos/'
-
-  - task: DownloadPipelineArtifact@2
-    displayName: 'Download Build liblua54.dylib'
-    inputs:
-      buildType: 'current'
-      artifactName: 'liblua54.dylib'
-      targetPath: 'runtimes/osx/native/'
+      artifactName: 'runtimes.mac'
+      targetPath: '.'
 
   - task: DownloadPipelineArtifact@2
     displayName: 'Download Build liblua54.so (Linux)'

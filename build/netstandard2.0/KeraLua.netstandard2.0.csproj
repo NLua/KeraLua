@@ -5,16 +5,17 @@
       <AssemblyName>KeraLua</AssemblyName>
       <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
       <SignAssembly>true</SignAssembly>
+      <Configurations>Release;Debug</Configurations>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
       <DebugType>portable</DebugType>
       <Optimize>true</Optimize>
       <DocumentationFile>..\..\lib\Release\netstandard2.0\KeraLua.xml</DocumentationFile>
-      <OutputPath>..\..\lib\Release\netstandard2.0\</OutputPath>
+      <OutputPath>..\..\lib\Release\netstandard2.0\netstandard2.0</OutputPath>
       <DefineConstants>TRACE;NETSTANDARD</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-      <OutputPath>..\..\lib\Debug\netstandard2.0\</OutputPath>
+      <OutputPath>..\..\lib\Debug\netstandard2.0\netstandard2.0</OutputPath>
     </PropertyGroup>
     <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
     <Import Project="..\targets\KeraLua.Sign.targets" />

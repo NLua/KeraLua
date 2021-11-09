@@ -10,7 +10,7 @@
     <!-- get the preferred architecture -->
     <PropertyGroup>
         <!-- handle x86/x64/ARM/ARM64 specifically -->
-        <PreferredNativeLua Condition=" '$(PreferredNativeLua)' == '' and ( '$(PlatformTarget)' == 'x64' or '$(PlatformTarget)' == 'x86' ) ">$(PlatformTarget)</PreferredNativeLua> 
+        <PreferredNativeLua Condition=" '$(PreferredNativeLua)' == '' and ( '$(PlatformTarget)' == 'x64' or '$(PlatformTarget)' == 'x86' or '$(PlatformTarget)' == 'ARM' or '$(PlatformTarget)' == 'ARM64') ">$(PlatformTarget)</PreferredNativeLua> 
         <!-- handle Any CPU, considering Prefer32Bit -->
         <PreferredNativeLua Condition=" '$(PreferredNativeLua)' == '' and '$(Prefer32Bit)' == 'False' ">x64</PreferredNativeLua>  
         <PreferredNativeLua Condition=" '$(PreferredNativeLua)' == '' and '$(Prefer32Bit)' == 'True' ">x86</PreferredNativeLua> 
@@ -43,7 +43,7 @@
     </ItemGroup>
 
     <!-- a special case for Any CPU -->
-    <ItemGroup Condition=" '$(ShouldIncludeNativeLua)' != 'False' and ( '$(PlatformTarget)' != 'x64' and '$(PlatformTarget)' != 'x86' ) ">
+    <ItemGroup Condition=" '$(ShouldIncludeNativeLua)' != 'False' and ( '$(PlatformTarget)' != 'x64' and '$(PlatformTarget)' != 'x86' and '$(PlatformTarget)' != 'ARM' and '$(PlatformTarget)' != 'ARM64') ">
         <!-- Windows -->
         <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\lua54.dll"
               Condition="Exists('$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\lua54.dll')">
