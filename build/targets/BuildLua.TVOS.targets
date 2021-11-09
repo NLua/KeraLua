@@ -8,7 +8,7 @@
     <Target Name="BuildLuaTVOS" BeforeTargets="PrepareForBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
         <Message Text="Building tvOS Lua library (arm64/x86_64)" />
         <Exec Command="make tvos" WorkingDirectory="$(ExternalLuaPath)/$(tvOSBuildDir)" />
-        <Exec Command="ditto $(ExternalLuaPath)/$(tvOSBuildDir)/$(tvOSOutputDir)/$(DylibFileFramework) $(OutputRuntimeDir)/$(tvOSOutputDir)/$(DylibFileFramework)"  />
+        <Exec Command="ditto $(ExternalLuaPath)/$(tvOSBuildDir)/$(tvOSOutputDir)/$(DylibFileFramework) $(OutputRuntimeDir)/$(tvOSOutputDir)/native/$(DylibFileFramework)"  />
         <RemoveDir Directories="$(OutputRuntimeDir)/$(tvOSOutputDir)/native/$(DylibFileFramework)/Headers" />
     </Target>
     <Target Name="CleanLuaTVOS" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
