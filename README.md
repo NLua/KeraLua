@@ -29,12 +29,11 @@ KeraLua
 |![win](https://badgen.net/badge/icon/Windows,.NET%20Core?icon=windows&label&list=1) | [![Build Status](https://dev.azure.com/codefoco/NuGets/_apis/build/status/KeraLua?branchName=main&jobName=Windows)](https://dev.azure.com/codefoco/NuGets/_build/latest?definitionId=64&branchName=main) |
 
 
-C# Native bindings of Lua 5.4 (compatible with Xamarin.iOS/Mac/Android/.NET/.NET Core/UWP) 
+C# Native bindings of Lua 5.4 (compatible with iOS/Mac/Android/UWP/.NET) 
 
 Before build fetch the submodules:
 
 	git submodule update --init --recursive
-
 
 Building
 ---------
@@ -43,7 +42,6 @@ KeraLua uses several solution for different targets. (I know I could use SDK sty
 So for Mac,iOS,tvOS use KeraLua.Mac.sln, Android KeraLua.Android.sln, .NET Core KeraLua.Core.sln and UWP KeraLua.UWP.sln
 
 To build old classic .NET 4.5 just use the KeraLua.sln. (I usually do my develoment on .NET 4.5 using VS4Mac + Mono on Mac, and .NET + VS on Windows, since this was the configuration which cause less issues to me.)
-
 
 
 	nuget restore KeraLua.sln

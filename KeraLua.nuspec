@@ -37,8 +37,6 @@
     <file src="lib\Release\net46\KeraLua.xml" target="lib\xamarinmac" />
     <file src="lib\Release\xamarintvos\KeraLua.dll" target="lib\xamarintvos" />
     <file src="lib\Release\net46\KeraLua.xml" target="lib\xamarintvos" />
-    <file src="lib\Release\xamarinwatchos\KeraLua.dll" target="lib\xamarinwatchos" />
-    <file src="lib\Release\net46\KeraLua.xml" target="lib\xamarinwatchos" />
     <file src="runtimes\win-arm\nativeassets\lua54.dll" target="runtimes\win10-arm\nativeassets\uap10.0\lua54.dll" />
     <file src="runtimes\win-arm64\nativeassets\lua54.dll" target="runtimes\win10-arm64\nativeassets\uap10.0\lua54.dll" />
     <file src="runtimes\win-x64\native\lua54.dll" target="runtimes\win10-x64\nativeassets\uap10.0\lua54.dll" />
@@ -53,6 +51,12 @@
     <file src="runtimes\android-arm64\native\liblua54.so" target="runtimes\android-arm64\native\liblua54.so" />
     <file src="runtimes\android-x86\native\liblua54.so" target="runtimes\android-x86\native\liblua54.so" />
     <file src="runtimes\android-x64\native\liblua54.so" target="runtimes\android-x64\native\liblua54.so" />
+    <file src="runtimes\ios\native\liblua54.framework\liblua54" target="runtimes\ios\native\liblua54.framework\liblua54" />
+    <file src="runtimes\ios\native\liblua54.framework\Info.plist" target="runtimes\ios\native\liblua54.framework\Info.plist" />
+    <file src="runtimes\maccatalyst\native\liblua54.framework\liblua54" target="runtimes\maccatalyst\native\liblua54.framework\liblua54" />
+    <file src="runtimes\maccatalyst\native\liblua54.framework\Info.plist" target="runtimes\maccatalyst\native\liblua54.framework\Info.plist" />
+    <file src="runtimes\tvos\native\liblua54.framework\liblua54" target="runtimes\maccatalyst\native\liblua54.framework\liblua54" />
+    <file src="runtimes\tvos\native\liblua54.framework\Info.plist" target="runtimes\maccatalyst\native\liblua54.framework\Info.plist" />
     <file src="build\targets\KeraLua.targets" target="build\net46\KeraLua.targets" />
     <file src="LICENSE" target="LICENSE" />
   </files>

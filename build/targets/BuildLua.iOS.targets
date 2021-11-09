@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <iOSBuildDir>ios_build</iOSBuildDir>
+        <iOSOutputDir>ios</iOSOutputDir>
+        <DylibFileFramework>liblua54.framework</DylibFileFramework>
+    </PropertyGroup>
+    <Target Name="BuildLuaXamariniOS" BeforeTargets="PrepareForBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
+        <Message Text="Building iOS Lua library (arm64/x86_64)" />
+        <Exec Command="make ios" WorkingDirectory="$(ExternalLuaPath)/$(iOSBuildDir)" />
+        <Exec Command="ditto $(ExternalLuaPath)/$(iOSBuildDir)/$(iOSOutputDir)/$(DylibFileFramework) $(OutputRuntimeDir)/$(iOSOutputDir)/native/$(DylibFileFramework)"  />
+        <RemoveDir Directories="$(OutputRuntimeDir)/$(iOSOutputDir)/$(DylibFileFramework)/Headers" />
+    </Target>
+    <Target Name="CleanLuaXamariniOS" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
+        <Message Text="Cleaning Lua library (iOS)" />
+        <RemoveDir Directories="
+        $(ExternalLuaPath)/$(iOSBuildDir)/$(iOSOutputDir); 
+        $(OutputRuntimeDir)/$(iOSOutputDir) " />
+    </Target>
+</Project>
+

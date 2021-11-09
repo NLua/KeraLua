@@ -3,7 +3,13 @@
 #if __MACOS__ || __TVOS__ || __WATCHOS__ || __IOS__
 
 using Foundation;
+
+#if NET
+[assembly: AssemblyMetadata ("IsTrimmable", "True")]
+#else
 [assembly: LinkerSafe]
+#endif
+
 #endif
 
 // Information about this assembly is defined by the following attributes. 
@@ -14,21 +20,21 @@ using Foundation;
 #elif WINDOWS_UWP
 [assembly: AssemblyTitle ("KeraLua (Windows Universal)")]
 #elif __ANDROID__
-[assembly: AssemblyTitle ("KeraLua (Xamarin.Android)")]
+[assembly: AssemblyTitle ("KeraLua (Android)")]
 #elif NETCOREAPP
 [assembly: AssemblyTitle ("KeraLua (.NET Core)")]
 #elif NETSTANDARD
 [assembly: AssemblyTitle ("KeraLua (.NET Standard)")]
 #elif __TVOS__
-[assembly: AssemblyTitle ("KeraLua (Xamarin.tvOS)")]
+[assembly: AssemblyTitle ("KeraLua (tvOS)")]
 #elif __WATCHOS__
-[assembly: AssemblyTitle ("KeraLua (Xamarin.watchOS)")]
+[assembly: AssemblyTitle ("KeraLua (watchOS)")]
 #elif __IOS__
-[assembly: AssemblyTitle ("KeraLua (Xamarin.iOS)")]
+[assembly: AssemblyTitle ("KeraLua (iOS)")]
 #elif __MACOS__
-[assembly: AssemblyTitle ("KeraLua (Xamarin.Mac)")]
+[assembly: AssemblyTitle ("KeraLua (Mac)")]
 #else
-[assembly: AssemblyTitle ("KeraLua (.NET Framework)")]
+#error "Unknow platform build"
 #endif
 
 [assembly: AssemblyDescription ("Binding library for native Lua")]

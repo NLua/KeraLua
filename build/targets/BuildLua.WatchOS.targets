@@ -8,8 +8,8 @@
     <Target Name="BuildLuaXamarinWatchOS" BeforeTargets="PrepareForBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
         <Message Text="Building watchOS Lua library (arm64/x86_64)" />
         <Exec Command="make watchos" WorkingDirectory="$(ExternalLuaPath)\$(watchOSBuildDir)" />
-        <Exec Command="ditto $(ExternalLuaPath)\$(watchOSBuildDir)\$(watchOSOutputDir)\$(DylibFileFramework) $(OutputRuntimeDir)\$(watchOSOutputDir)\$(DylibFileFramework)"  />
-        <RemoveDir Directories="$(OutputRuntimeDir)\$(watchOSOutputDir)\$(DylibFileFramework)\Headers" />    
+        <Exec Command="ditto $(ExternalLuaPath)\$(watchOSBuildDir)\$(watchOSOutputDir)\$(DylibFileFramework) $(OutputRuntimeDir)\$(watchOSOutputDir)\native\$(DylibFileFramework)"  />
+        <RemoveDir Directories="$(OutputRuntimeDir)\$(watchOSOutputDir)\native\$(DylibFileFramework)\Headers" />    
     </Target>
     <Target Name="CleanLuaXamarinWatchOS" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
         <Message Text="Cleaning Lua library (watchOS)" />

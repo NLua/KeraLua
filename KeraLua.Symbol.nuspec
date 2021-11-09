@@ -10,7 +10,7 @@
     <iconUrl>https://raw.githubusercontent.com/nlua/KeraLua/main/KeraLua.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-      C# Native bindings of Lua 5.4 (compatible with Xamarin.iOS/Mac/Android/.NET/.NET Core) 
+      C# Native bindings of Lua 5.4 (compatible with iOS/Mac/Android/UWP/.NET) 
     </description>
     <releaseNotes>Release: 2bffe65</releaseNotes>
     <copyright>Copyright © Vinicius Jarina 2021</copyright>
@@ -39,7 +39,5 @@
     <file src="lib\Release\xamarinmac\KeraLua.pdb" target="lib\xamarinmac" />
     <file src="lib\Release\xamarintvos\KeraLua.dll" target="lib\xamarintvos" />
     <file src="lib\Release\xamarintvos\KeraLua.pdb" target="lib\xamarintvos" />
-    <file src="lib\Release\xamarinwatchos\KeraLua.dll" target="lib\xamarinwatchos" />
-    <file src="lib\Release\xamarinwatchos\KeraLua.pdb" target="lib\xamarinwatchos" />
   </files>
 </package>
