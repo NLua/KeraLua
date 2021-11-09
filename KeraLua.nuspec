@@ -62,7 +62,7 @@
     <file src="runtimes\ios\native\liblua54.framework\liblua54" target="runtimes\ios\native\liblua54.framework\liblua54" />
     <file src="runtimes\ios\native\liblua54.framework\Info.plist" target="runtimes\ios\native\liblua54.framework\Info.plist" />
     <file src="runtimes\maccatalyst\native\liblua54.framework\liblua54" target="runtimes\maccatalyst\native\liblua54.framework\liblua54" />
-    <file src="runtimes\maccatalyst\native\liblua54.framework\Info.plist" target="runtimes\maccatalyst\native\liblua54.framework\Resources\Info.plist" />
+    <file src="runtimes\maccatalyst\native\liblua54.framework\Resources\Info.plist" target="runtimes\maccatalyst\native\liblua54.framework\Info.plist" />
     <file src="runtimes\tvos\native\liblua54.framework\liblua54" target="runtimes\maccatalyst\native\liblua54.framework\liblua54" />
     <file src="runtimes\tvos\native\liblua54.framework\Info.plist" target="runtimes\maccatalyst\native\liblua54.framework\Info.plist" />
     <file src="build\targets\KeraLua.targets" target="build\net46\KeraLua.targets" />
