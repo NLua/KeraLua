@@ -9,7 +9,7 @@
         <Arch3>x86</Arch3>
         <Arch4>x64</Arch4>
     </PropertyGroup>
-    <Target Name="BuildLuaXamarinAndroid" AfterTargets="_ResolveMonoAndroidSdks" >
+    <Target Name="BuildLuaAndroid" AfterTargets="_ResolveMonoAndroidSdks" >
         <Message Text="Building Android Lua library (armeabi-v7a arm64-v8a x86 x86_64) [NDK: $(_AndroidNdkDirectory)] " />
         <Error Text="******* Could not locate Android NDK. $(_AndroidNdkDirectory)ndk-build ********** " Condition="!Exists ('$(_AndroidNdkDirectory)')" />
         <Exec Command="$(_AndroidNdkDirectory)ndk-build" WorkingDirectory="$(ExternalLuaPath)\$(AndroidBuildDir)"/>
@@ -42,7 +42,7 @@
             SkipUnchangedFiles="true"
         />
     </Target>
-    <Target Name="CleanLuaXamarinAndroid" AfterTargets="Clean" >
+    <Target Name="CleanLuaAndroid" AfterTargets="Clean" >
         <Message Text="Cleaning Lua library (Android)" />
         <RemoveDir Directories="
         $(ExternalLuaPath)\$(AndroidBuildDir)\libs; 
