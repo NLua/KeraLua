@@ -162,7 +162,7 @@ stages:
 
 - stage: Build_Windows
   displayName: Build Windows
-  dependsOn: 'Build_Mac', 'Build_Linux'
+  dependsOn: ['Build_Mac', 'Build_Linux']
 
   jobs:
   - job: 'KeraLuaWindows'
