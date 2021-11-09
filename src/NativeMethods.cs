@@ -24,12 +24,7 @@ namespace KeraLua
     [SuppressUnmanagedCodeSecurity]
     internal static class NativeMethods
     {
-
-#if __TVOS__ && __UNIFIED__
-        private const string LuaLibraryName = "@rpath/liblua54.framework/liblua54";
-#elif __WATCHOS__ && __UNIFIED__
-        private const string LuaLibraryName = "@rpath/liblua54.framework/liblua54";
-#elif __IOS__ && __UNIFIED__
+#if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         private const string LuaLibraryName = "@rpath/liblua54.framework/liblua54";
 #elif __ANDROID__
         private const string LuaLibraryName = "liblua54.so";
