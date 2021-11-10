@@ -37,6 +37,7 @@ namespace KeraLua
 #endif
 
 #pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable CA2101 // Bug on CA + VS2017
 
         [DllImport (LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int lua_absindex(lua_State luaState, int idx);
@@ -442,6 +443,7 @@ namespace KeraLua
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void luaL_where(lua_State luaState, int level);
 
+#pragma warning restore CA2101 // Bug on CA + VS2017
 #pragma warning restore IDE1006 // Naming Styles
 
     }
