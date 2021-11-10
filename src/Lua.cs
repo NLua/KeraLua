@@ -129,7 +129,9 @@ namespace KeraLua
         /// <summary>
         /// Dispose the lua context (calling Close)
         /// </summary>
+#pragma warning disable CA1063 // Implement IDisposable Correctly
         public void Dispose()
+#pragma warning restore CA1063 // Implement IDisposable Correctly
         {
             Dispose(true);
         }
@@ -831,7 +833,9 @@ namespace KeraLua
         /// <param name="obj"></param>
         public void PushObject<T>(T obj)
         {
-            if(obj == null)
+#pragma warning disable RECS0017 // Possible compare of value type with 'null'
+            if (obj == null)
+#pragma warning restore RECS0017 // Possible compare of value type with 'null'
             {
                 PushNil();
                 return;
@@ -895,17 +899,6 @@ namespace KeraLua
         /// <param name="number"></param>
         public void PushNumber(double number) => NativeMethods.lua_pushnumber(_luaState, number);
 
-
-        /// <summary>
-        /// Pushes the thread represented by L onto the stack. Returns true if this thread is the main thread of its state. 
-        /// </summary>
-        /// <param name="thread">Unused</param>
-        /// <returns></returns>
-        [Obsolete("Use the overload without the parameter, it's unused")]
-        public bool PushThread(Lua thread)
-        {
-            return PushThread();
-        }
 
         /// <summary>
         /// Pushes the thread represented by L onto the stack. Returns true if this thread is the main thread of its state. 
@@ -989,6 +982,9 @@ namespace KeraLua
         /// <returns>Returns the type of the pushed value. </returns>
         public LuaType RawGetByHashCode(int index, object obj)
         {
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj), "obj shouldn't be null");
+
             return (LuaType)NativeMethods.lua_rawgetp(_luaState, index, (IntPtr)obj.GetHashCode());
         }
 
@@ -1050,6 +1046,9 @@ namespace KeraLua
         /// <param name="obj"></param>
         public void RawSetByHashCode(int index, object obj)
         {
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj), "obj shouldn't be null");
+
             NativeMethods.lua_rawsetp(_luaState, index, (IntPtr)obj.GetHashCode());
         }
 
@@ -1585,6 +1584,9 @@ namespace KeraLua
         /// <returns></returns>
         public void XMove(Lua to, int n)
         {
+            if (to == null)
+                throw new ArgumentNullException(nameof(to), "to shouldn't be null");
+
             NativeMethods.lua_xmove(_luaState, to._luaState, n);
         }
 
@@ -1889,6 +1891,9 @@ namespace KeraLua
         /// <returns></returns>
         public LuaStatus LoadBuffer(byte[] buffer, string name, string mode)
         {
+            if (buffer == null)
+                throw new ArgumentNullException(nameof(buffer), "buffer shouldn't be null");
+
             return (LuaStatus)NativeMethods.luaL_loadbufferx(_luaState, buffer, (UIntPtr)buffer.Length, name, mode);
         }
 
@@ -1972,6 +1977,9 @@ namespace KeraLua
         /// <param name="library"></param>
         public void NewLibTable(LuaRegister [] library)
         {
+            if (library == null)
+                throw new ArgumentNullException(nameof(library), "library shouldn't be null");
+
             CreateTable(0, library.Length);
         }
 
@@ -2139,6 +2147,9 @@ namespace KeraLua
         /// <param name="level"> Tells at which level to start the traceback</param>
         public void Traceback(Lua state, string message, int level)
         {
+            if (state == null)
+                throw new ArgumentNullException(nameof(state), "state shouldn't be null");
+
             NativeMethods.luaL_traceback(_luaState, state._luaState, message, level);
         }
 
