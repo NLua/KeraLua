@@ -29,8 +29,8 @@
     <file src="lib\Release\net6.0\KeraLua.pdb" target="lib\net6.0" />
     <file src="lib\Release\net6.0-ios\KeraLua.pdb" target="lib\net6.0-ios11.0" />
     <file src="lib\Release\net6.0-ios\KeraLua.dll" target="lib\net6.0-ios11.0" />
-    <file src="lib\Release\net6.0-maccatalyst\KeraLua.pdb" target="lib\net6.0-ios13.0" />
-    <file src="lib\Release\net6.0-maccatalyst\KeraLua.dll" target="lib\net6.0-ios13.0" />
+    <file src="lib\Release\net6.0-maccatalyst\KeraLua.pdb" target="lib\net6.0-maccatalyst13.0" />
+    <file src="lib\Release\net6.0-maccatalyst\KeraLua.dll" target="lib\net6.0-maccatalyst13.0" />
     <file src="lib\Release\net6.0-tvos\KeraLua.pdb" target="lib\net6.0-tvos11.0" />
     <file src="lib\Release\net6.0-tvos\KeraLua.dll" target="lib\net6.0-tvos11.0" />
     <file src="lib\Release\net6.0-macos\KeraLua.pdb" target="lib\net6.0-macos10.13" />
