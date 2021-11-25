@@ -239,9 +239,6 @@ namespace KeraLua.Tests
 		}
 
 		[Test]
-		#if !WSTRING
-		[Ignore("Not compiled with WSTRING")]
-		#endif
 		public void TestUnicodeString ()
 		{
 			Setup ();

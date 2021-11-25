@@ -31,7 +31,6 @@
     </PropertyGroup>
     <PropertyGroup>
         <DefineConstants>USE_DYNAMIC_DLL_REGISTER</DefineConstants>
-        <!--<DefineConstants>USE_DYNAMIC_DLL_REGISTER;WSTRING</DefineConstants>-->
         <OutputRuntimeDir>runtimes</OutputRuntimeDir>
     </PropertyGroup>
 
@@ -40,10 +39,10 @@
     <!--<Import Project="BuildLua.Linux.targets"/>-->
 
     <ItemGroup Label="PackageFiles">
-        <None Include="$(OutputRuntimeDir)\**" Pack="true" PackagePath="runtimes"/>
-        <None Include="..\README.md" Pack="true" PackagePath=""/>
-        <None Include="..\LICENSE.md" Pack="true" PackagePath=""/>
-        <None Include="..\KeraLua.png" Pack="true" PackagePath=""/>
+        <None Include="$(OutputRuntimeDir)\**" Pack="true" PackagePath="runtimes" />
+        <None Include="..\README.md" Pack="true" PackagePath="" />
+        <None Include="..\LICENSE.md" Pack="true" PackagePath="" />
+        <None Include="..\KeraLua.png" Pack="true" PackagePath="" />
     </ItemGroup>
     <!--  for projects referencing this project directly-->
     <PropertyGroup>
@@ -60,8 +59,8 @@
         <IsWindows Condition="$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))">True</IsWindows>
     </PropertyGroup>
     <ItemGroup>
-        <None Condition="$(IsLinux)" Include="$(OutputRuntimeDir)\linux*\**" CopyToOutputDirectory="PreserveNewest"/>
-        <None Condition="$(IsWindows)" Include="$(OutputRuntimeDir)\win*\**" CopyToOutputDirectory="PreserveNewest"/>
+        <None Condition="$(IsLinux)" Include="$(OutputRuntimeDir)\linux*\**" CopyToOutputDirectory="PreserveNewest" />
+        <None Condition="$(IsWindows)" Include="$(OutputRuntimeDir)\win*\**" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
     <!--    <Target Name="DisplayMessages">-->
     <!--        <Message Text="|| MSBuildProjectName '$(MSBuildProjectName)'" Importance="high"/>-->
@@ -70,6 +69,6 @@
     <!--        <Message Text="|| IsWindows '$(IsWindows)'" Importance="high"/>-->
     <!--    </Target>-->
     <ItemGroup>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     </ItemGroup>
 </Project>

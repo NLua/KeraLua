@@ -258,12 +258,26 @@ namespace KeraLua
 		[CLSCompliantAttribute (false)]
 		public static void LuaNetPushLString (IntPtr luaState, string str, uint size)
 		{
-			NativeMethods.LuaNetPushLString (luaState, str, size);
+			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+			{
+				NativeMethods.LuaNetPushLWString (luaState, str, size);
+			}
+			else
+			{
+				NativeMethods.LuaNetPushLString (luaState, str, size);
+			}
 		}
 
 		public static void LuaPushString (IntPtr luaState, string str)
 		{
-			NativeMethods.LuaPushString (luaState, str);
+			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+			{
+				NativeMethods.LuaPushWString(luaState, str);
+			}
+			else
+			{
+				NativeMethods.LuaPushString(luaState, str);
+			}
 		}
 
 		public static int LuaLNewMetatable (IntPtr luaState, string meta)

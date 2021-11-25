@@ -35,8 +35,21 @@ namespace KeraLua
             {
                 return handle;
             }
+            
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                libraryName = $"lib{libraryName}.so";
+            }
+            else if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                libraryName = $"{libraryName}.dll";
+            }
 
-            var runtimePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "runtimes");
+            if (NativeLibrary.TryLoad(libraryName, assembly, searchPath, out handle))
+            {
+                return handle;
+            }
+           
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 if (NativeLibrary.TryLoad(libraryName, assembly, DllImportSearchPath.ApplicationDirectory, out handle))
@@ -50,7 +63,8 @@ namespace KeraLua
                     return handle;
                 }
             }
-
+            
+            var runtimePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "runtimes");
             var preferredPath = Path.Combine(runtimePath, RuntimeInformation.RuntimeIdentifier, "native");
             if (Directory.Exists(preferredPath))
             {
@@ -216,22 +230,20 @@ namespace KeraLua
         [DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl, EntryPoint = "lua_tolstring")]
         internal static extern IntPtr LuaToLString(IntPtr luaState, int index, out uint strLen);
 
-#if WSTRING
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint =
  "luanet_pushlwstring")]
-#else
+        internal static extern void LuaNetPushLWString(IntPtr luaState, string str, uint size);
+        
         [DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi,
             EntryPoint = "luanet_pushlstring")]
-#endif
         internal static extern void LuaNetPushLString(IntPtr luaState, string str, uint size);
 
-#if WSTRING
 		[DllImport (LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint =
  "luanet_pushwstring")]
-#else
+        internal static extern void LuaPushWString(IntPtr luaState, string str);
+        
         [DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi,
             EntryPoint = "lua_pushstring")]
-#endif
         internal static extern void LuaPushString(IntPtr luaState, string str);
 
         [DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi,
