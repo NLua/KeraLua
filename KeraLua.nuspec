@@ -13,7 +13,7 @@
       C# Native bindings of Lua 5.4 (compatible with iOS/Mac/Android/.NET/UWP) 
     </description>
     <releaseNotes>Release: 2bffe65</releaseNotes>
-    <copyright>Copyright © Vinicius Jarina 2021</copyright>
+    <copyright>Copyright © Vinicius Jarina 2022</copyright>
     <tags>lua keralua</tags> 
     <repository type="git" url="https://github.com/nlua/KeraLua" commit="708ba30e982deccb1248d099806bc00e362fbda4" />
   </metadata>
