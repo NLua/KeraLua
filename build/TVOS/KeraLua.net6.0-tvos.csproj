@@ -8,6 +8,7 @@
     <AssemblyName>KeraLua</AssemblyName>
     <TargetFramework>net6.0-tvos</TargetFramework>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <IsBindingProject>true</IsBindingProject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
