@@ -8,7 +8,7 @@
         /// <summary>
         ///  success
         /// </summary>
-        OK =  0,
+        OK = 0,
         /// <summary>
         /// Yield
         /// </summary>

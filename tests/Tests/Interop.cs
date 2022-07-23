@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Drawing;
 using System.Text;
 using System.Xml.Linq;
-using NUnit.Framework;
+
 using KeraLua;
 
-using System.Drawing;
+using NUnit.Framework;
 
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     using ObjCRuntime;
@@ -29,7 +30,7 @@ namespace KeraLuaTest.Tests
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         [MonoPInvokeCallback(typeof(LuaFunction))]
 #endif
-        static int TestUnicodeString(IntPtr p)
+        private static int TestUnicodeString(IntPtr p)
         {
             var state = Lua.FromIntPtr(p);
             string param = state.ToString(1, false);
@@ -39,19 +40,19 @@ namespace KeraLuaTest.Tests
             return 0;
         }
 
-        
+
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         [MonoPInvokeCallback(typeof(LuaFunction))]
 #endif
-        static int TestReferenceData(IntPtr p)
+        private static int TestReferenceData(IntPtr p)
         {
             var state = Lua.FromIntPtr(p);
 
-            var param1 = state.ToObject<XDocument>(1);
-            var param2 = state.ToObject<XDocument>(2);
+            XDocument param1 = state.ToObject<XDocument>(1);
+            XDocument param2 = state.ToObject<XDocument>(2);
 
             Assert.IsNull(param1, "#1");
-            Assert.AreEqual(param2, gTempDocument,  "#2");
+            Assert.AreEqual(param2, gTempDocument, "#2");
 
             return 0;
         }
@@ -59,17 +60,17 @@ namespace KeraLuaTest.Tests
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         [MonoPInvokeCallback(typeof(LuaFunction))]
 #endif
-        static int TestValueData(IntPtr p)
+        private static int TestValueData(IntPtr p)
         {
             var state = Lua.FromIntPtr(p);
 
-            var param1 = state.ToObject<Rectangle?>(1);
-            var param2 = state.ToObject<Rectangle>(2);
-            var param3 = state.ToObject<DateTime>(3);
+            Rectangle? param1 = state.ToObject<Rectangle?>(1);
+            Rectangle param2 = state.ToObject<Rectangle>(2);
+            DateTime param3 = state.ToObject<DateTime>(3);
 
             Assert.IsNull(param1, "#1");
-            Assert.AreEqual(param2, new Rectangle(10, 10, 100, 100),  "#2");
-            Assert.AreEqual(param3, new DateTime(2018, 10, 10, 0, 0 ,0),  "#3");
+            Assert.AreEqual(param2, new Rectangle(10, 10, 100, 100), "#2");
+            Assert.AreEqual(param3, new DateTime(2018, 10, 10, 0, 0, 0), "#3");
 
             return 0;
         }
@@ -83,7 +84,8 @@ namespace KeraLuaTest.Tests
         [Test]
         public void TestUnicodeString()
         {
-            var state = new Lua {
+            var state = new Lua
+            {
                 Encoding = Encoding.UTF8
             };
             state.PushCFunction(funcTestUnicodeString);
@@ -126,7 +128,7 @@ namespace KeraLuaTest.Tests
             state.PushObject(new Rectangle(10, 10, 100, 100));
             state.SetGlobal("bar");
 
-            state.PushObject(new DateTime(2018, 10, 10, 0, 0 ,0));
+            state.PushObject(new DateTime(2018, 10, 10, 0, 0, 0));
             state.SetGlobal("date");
 
             state.PushCFunction(funcTestValueData);
@@ -135,20 +137,20 @@ namespace KeraLuaTest.Tests
             AssertString("TestValueData(foo, bar, date)", state);
         }
 
-        static void AssertString(string chunk, Lua state)
+        private static void AssertString(string chunk, Lua state)
         {
             string error = string.Empty;
 
             LuaStatus result = state.LoadString(chunk);
 
-            if(result != LuaStatus.OK)
+            if (result != LuaStatus.OK)
                 error = state.ToString(1, false);
 
             Assert.True(result == LuaStatus.OK, "Fail loading string: " + chunk + "ERROR:" + error);
 
             result = state.PCall(0, -1, 0);
 
-            if(result != 0)
+            if (result != 0)
                 error = state.ToString(1, false);
 
             Assert.True(result == 0, "Fail calling chunk: " + chunk + " ERROR: " + error);
@@ -219,7 +221,7 @@ namespace KeraLuaTest.Tests
             var state = new Lua();
             hookLog = new StringBuilder();
             state.SetHook(funcHookCallback, LuaHookMask.Line, 0);
-            state.DoFile("main.lua");
+            _ = state.DoFile("main.lua");
             string output = hookLog.ToString();
             string expected =
 @"main.lua-main.lua:2 (main)
@@ -246,9 +248,9 @@ module1.lua-module1.lua:8 (Lua)
 foo.lua-foo.lua:8 (Lua)
 main.lua-main.lua:11 (main)
 ";
-            expected = expected.Replace("\r","");
+            expected = expected.Replace("\r", "");
             expected = expected.Replace('/', System.IO.Path.DirectorySeparatorChar);
-            output = output.Replace("\r","");
+            output = output.Replace("\r", "");
             Assert.AreEqual(expected, output, "#1");
             Assert.IsNotNull(state.Hook);
         }
@@ -264,7 +266,7 @@ main.lua-main.lua:11 (main)
 
             Assert.AreEqual(funcHookCallback, state.Hook, "#1");
 
-            state.DoFile("main.lua");
+            _ = state.DoFile("main.lua");
             string output = hookLog.ToString();
             string expected =
 @"main.lua-main.lua:2 (main)
@@ -292,8 +294,8 @@ foo.lua-foo.lua:8 (Lua)
 main.lua-main.lua:11 (main)
 ";
             expected = expected.Replace('/', System.IO.Path.DirectorySeparatorChar);
-            expected = expected.Replace("\r","");
-            output = output.Replace("\r","");
+            expected = expected.Replace("\r", "");
+            output = output.Replace("\r", "");
 
             Assert.AreEqual(expected, output, "#2");
 
@@ -319,7 +321,7 @@ main.lua-main.lua:11 (main)
         {
             using (var lua = new Lua())
             {
-                lua.LoadString("hello = 1");
+                _ = lua.LoadString("hello = 1");
                 lua.NewTable();
                 string result = lua.SetUpValue(-2, 1);
 
@@ -331,12 +333,12 @@ main.lua-main.lua:11 (main)
         public void TestUnref()
         {
             var state = new Lua();
-            state.DoString("function f() end");
-            LuaType type =  state.GetGlobal("f");
+            _ = state.DoString("function f() end");
+            LuaType type = state.GetGlobal("f");
             Assert.AreEqual(LuaType.Function, type, "#1");
 
             state.PushCopy(-1);
-            state.Ref(LuaRegistry.Index);
+            _ = state.Ref(LuaRegistry.Index);
             state.Close();
         }
 
@@ -360,10 +362,10 @@ main.lua-main.lua:11 (main)
             {
                 lua.Register("func1", Func);
 
-                var thread = lua.NewThread();
+                Lua thread = lua.NewThread();
 
-                thread.DoString("func1(10,10)");
-                thread.DoString("func1(10,10)");
+                _ = thread.DoString("func1(10,10)");
+                _ = thread.DoString("func1(10,10)");
             }
         }
 
@@ -385,10 +387,10 @@ main.lua-main.lua:11 (main)
                              end
                              co_routine = coroutine.create(yielder);
                              while coroutine.resume(co_routine) do end;";
-                lua.DoString(script);
-                lua.DoString(script);
+                _ = lua.DoString(script);
+                _ = lua.DoString(script);
 
-                lua.GetGlobal("a");
+                _ = lua.GetGlobal("a");
                 long a = lua.ToInteger(-1);
                 Assert.AreEqual(a, 2d);
             }
@@ -418,7 +420,7 @@ main.lua-main.lua:11 (main)
         {
             using (var lua = new Lua())
             {
-                lua.LoadString("hello = 1");
+                _ = lua.LoadString("hello = 1");
                 string result = lua.GetUpValue(-1, 1);
 
                 Assert.AreEqual("_ENV", result, "#1");
@@ -430,7 +432,7 @@ main.lua-main.lua:11 (main)
         {
             using (var lua = new Lua())
             {
-                lua.LoadString("hello = 1");
+                _ = lua.LoadString("hello = 1");
                 LuaStatus result = lua.Resume(null, 0);
 
                 Assert.AreEqual(LuaStatus.OK, result);
@@ -445,7 +447,7 @@ main.lua-main.lua:11 (main)
             var lua = Lua.FromIntPtr(ud);
             StringBuilder sb = lua.ToObject<StringBuilder>(-1);
             string message = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(msg);
-            sb.Append(message);
+            _ = sb.Append(message);
         }
 
         [Test]
@@ -466,7 +468,7 @@ main.lua-main.lua:11 (main)
             }
         }
 
-        private static LuaRegister[] fooReg = {
+        private static readonly LuaRegister[] fooReg = {
             new LuaRegister {
                 name = "foo",
                 function = Foo,
@@ -484,9 +486,9 @@ main.lua-main.lua:11 (main)
 
             lua.RequireF("foobar", OpenFoo, true);
 
-            lua.DoString("s = foobar.foo()");
+            _ = lua.DoString("s = foobar.foo()");
 
-            lua.GetGlobal("s");
+            _ = lua.GetGlobal("s");
 
             bool check = lua.IsString(-1);
             string s = lua.ToString(-1, false);
@@ -500,7 +502,7 @@ main.lua-main.lua:11 (main)
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         [MonoPInvokeCallback(typeof(LuaFunction))]
 #endif
-        static int OpenFoo(IntPtr state)
+        private static int OpenFoo(IntPtr state)
         {
             var lua = Lua.FromIntPtr(state);
             lua.NewLib(fooReg);
@@ -510,7 +512,7 @@ main.lua-main.lua:11 (main)
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
         [MonoPInvokeCallback(typeof(LuaFunction))]
 #endif
-        static int Foo(IntPtr state)
+        private static int Foo(IntPtr state)
         {
             var lua = Lua.FromIntPtr(state);
 

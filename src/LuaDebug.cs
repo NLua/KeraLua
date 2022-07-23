@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace KeraLua
 {
@@ -96,9 +96,9 @@ namespace KeraLua
         /// The number of values being transferred (see previous item). (For calls of Lua functions, this value is always equal to nparams.) 
         /// </summary>
         public ushort NumberTransferredValues;   /* (r) number of transferred values */
-        
+
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 60)]
-        byte [] shortSource;
+        byte[] shortSource;
 
         /// <summary>
         /// a "printable" version of source, to be used in error messages

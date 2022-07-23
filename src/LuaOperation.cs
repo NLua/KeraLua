@@ -46,7 +46,7 @@ namespace KeraLua
         /// <summary>
         /// performs bitwise OR (|)
         /// </summary>
-        Bor  = 8,
+        Bor = 8,
         /// <summary>
         /// performs bitwise exclusive OR (~)
         /// </summary>
@@ -54,15 +54,15 @@ namespace KeraLua
         /// <summary>
         /// performs left shift 
         /// </summary>
-        Shl  = 10,
+        Shl = 10,
         /// <summary>
         ///  performs right shift
         /// </summary>
-        Shr  = 11,
+        Shr = 11,
         /// <summary>
         ///  performs mathematical negation (unary -)
         /// </summary>
-        Unm  = 12,
+        Unm = 12,
         /// <summary>
         /// performs bitwise NOT (~)
         /// </summary>

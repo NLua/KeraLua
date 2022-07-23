@@ -12,7 +12,7 @@
         <XcodeWithARM64Support>12.2</XcodeWithARM64Support>
     </PropertyGroup>
     <Target Name="BuildLuaOSX" BeforeTargets="BeforeBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
-         <Exec Command="xcodebuild -version | head -1" ConsoleToMSBuild="true">
+         <Exec Command="/usr/bin/xcodebuild -version | head -1" ConsoleToMSBuild="true">
             <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
          </Exec>
         <PropertyGroup>

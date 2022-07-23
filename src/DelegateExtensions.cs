@@ -21,7 +21,7 @@ namespace KeraLua
             return Marshal.GetFunctionPointerForDelegate<LuaFunction>(d);
         }
 
-        public static LuaHookFunction ToLuaHookFunction (this IntPtr ptr)
+        public static LuaHookFunction ToLuaHookFunction(this IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
                 return null;
@@ -29,7 +29,7 @@ namespace KeraLua
             return Marshal.GetDelegateForFunctionPointer<LuaHookFunction>(ptr);
         }
 
-        public static IntPtr ToFunctionPointer (this LuaHookFunction d)
+        public static IntPtr ToFunctionPointer(this LuaHookFunction d)
         {
             if (d == null)
                 return IntPtr.Zero;
@@ -37,15 +37,15 @@ namespace KeraLua
             return Marshal.GetFunctionPointerForDelegate<LuaHookFunction>(d);
         }
 
-        public static LuaKFunction ToLuaKFunction (this IntPtr ptr)
+        public static LuaKFunction ToLuaKFunction(this IntPtr ptr)
         {
-           if(ptr == IntPtr.Zero)
+            if (ptr == IntPtr.Zero)
                 return null;
 
             return Marshal.GetDelegateForFunctionPointer<LuaKFunction>(ptr);
         }
 
-        public static IntPtr ToFunctionPointer (this LuaKFunction d)
+        public static IntPtr ToFunctionPointer(this LuaKFunction d)
         {
             if (d == null)
                 return IntPtr.Zero;
@@ -53,15 +53,15 @@ namespace KeraLua
             return Marshal.GetFunctionPointerForDelegate<LuaKFunction>(d);
         }
 
-        public static LuaReader ToLuaReader (this IntPtr ptr)
+        public static LuaReader ToLuaReader(this IntPtr ptr)
         {
-            if(ptr == IntPtr.Zero)
+            if (ptr == IntPtr.Zero)
                 return null;
 
             return Marshal.GetDelegateForFunctionPointer<LuaReader>(ptr);
         }
 
-        public static IntPtr ToFunctionPointer (this LuaReader d)
+        public static IntPtr ToFunctionPointer(this LuaReader d)
         {
             if (d == null)
                 return IntPtr.Zero;
@@ -69,15 +69,15 @@ namespace KeraLua
             return Marshal.GetFunctionPointerForDelegate<LuaReader>(d);
         }
 
-        public static LuaWriter ToLuaWriter (this IntPtr ptr)
+        public static LuaWriter ToLuaWriter(this IntPtr ptr)
         {
-            if(ptr == IntPtr.Zero)
+            if (ptr == IntPtr.Zero)
                 return null;
 
             return Marshal.GetDelegateForFunctionPointer<LuaWriter>(ptr);
         }
 
-        public static IntPtr ToFunctionPointer (this LuaWriter d)
+        public static IntPtr ToFunctionPointer(this LuaWriter d)
         {
             if (d == null)
                 return IntPtr.Zero;
@@ -85,15 +85,15 @@ namespace KeraLua
             return Marshal.GetFunctionPointerForDelegate<LuaWriter>(d);
         }
 
-        public static LuaAlloc ToLuaAlloc (this IntPtr ptr)
+        public static LuaAlloc ToLuaAlloc(this IntPtr ptr)
         {
-            if(ptr == IntPtr.Zero)
+            if (ptr == IntPtr.Zero)
                 return null;
 
             return Marshal.GetDelegateForFunctionPointer<LuaAlloc>(ptr);
         }
 
-        public static IntPtr ToFunctionPointer (this LuaAlloc d)
+        public static IntPtr ToFunctionPointer(this LuaAlloc d)
         {
             if (d == null)
                 return IntPtr.Zero;

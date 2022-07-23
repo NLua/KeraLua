@@ -1,12 +1,11 @@
 ﻿using System.Runtime.InteropServices;
 using System.Security;
-
-using size_t = System.UIntPtr;
-using lua_State = System.IntPtr;
-using voidptr_t = System.IntPtr;
 using charptr_t = System.IntPtr;
-using lua_KContext = System.IntPtr;
 using lua_Debug = System.IntPtr;
+using lua_KContext = System.IntPtr;
+using lua_State = System.IntPtr;
+using size_t = System.UIntPtr;
+using voidptr_t = System.IntPtr;
 
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     using ObjCRuntime;
@@ -21,7 +20,7 @@ namespace KeraLua
     /// <param name="luaState"></param>
     /// <returns></returns>
     [SuppressUnmanagedCodeSecurity]
-    [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     [MonoNativeFunctionWrapper]
 #endif
@@ -33,11 +32,11 @@ namespace KeraLua
     /// <param name="luaState"></param>
     /// <param name="ar"></param>
     [SuppressUnmanagedCodeSecurity]
-    [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     [MonoNativeFunctionWrapper]
 #endif
-    public delegate void LuaHookFunction (lua_State luaState, lua_Debug ar);
+    public delegate void LuaHookFunction(lua_State luaState, lua_Debug ar);
 
     /// <summary>
     /// Type for continuation functions 
@@ -47,11 +46,11 @@ namespace KeraLua
     /// <param name="ctx"></param>
     /// <returns></returns>
     [SuppressUnmanagedCodeSecurity]
-    [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     [MonoNativeFunctionWrapper]
 #endif
-    public delegate int LuaKFunction (lua_State L, int status, lua_KContext ctx);
+    public delegate int LuaKFunction(lua_State L, int status, lua_KContext ctx);
 
     /// <summary>
     /// The reader function used by lua_load. Every time it needs another piece of the chunk, lua_load calls the reader, passing along its data parameter. The reader must return a pointer to a block of memory with a new piece of the chunk and set size to the block size
@@ -61,11 +60,11 @@ namespace KeraLua
     /// <param name="sz"></param>
     /// <returns></returns>
     [SuppressUnmanagedCodeSecurity]
-    [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     [MonoNativeFunctionWrapper]
 #endif
-    public delegate charptr_t LuaReader (lua_State L, voidptr_t ud, ref size_t sz);
+    public delegate charptr_t LuaReader(lua_State L, voidptr_t ud, ref size_t sz);
 
     /// <summary>
     /// 
@@ -76,11 +75,11 @@ namespace KeraLua
     /// <param name="ud"></param>
     /// <returns></returns>
     [SuppressUnmanagedCodeSecurity]
-    [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     [MonoNativeFunctionWrapper]
 #endif
-    public delegate int LuaWriter (lua_State L, voidptr_t p, size_t size, voidptr_t ud);
+    public delegate int LuaWriter(lua_State L, voidptr_t p, size_t size, voidptr_t ud);
 
     /// <summary>
     /// The type of the memory-allocation function used by Lua states. The allocator function must provide a functionality similar to realloc
@@ -91,11 +90,11 @@ namespace KeraLua
     /// <param name="nsize"></param>
     /// <returns></returns>
     [SuppressUnmanagedCodeSecurity]
-    [UnmanagedFunctionPointer (CallingConvention.Cdecl)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
     [MonoNativeFunctionWrapper]
 #endif
-    public delegate voidptr_t LuaAlloc (voidptr_t ud, voidptr_t ptr, size_t osize, size_t nsize);
+    public delegate voidptr_t LuaAlloc(voidptr_t ud, voidptr_t ptr, size_t osize, size_t nsize);
 
     /// <summary>
     /// Type for warning functions

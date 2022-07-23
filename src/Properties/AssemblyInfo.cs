@@ -22,7 +22,7 @@ using Foundation;
 #elif __ANDROID__
 [assembly: AssemblyTitle ("KeraLua (Android)")]
 #elif NETCOREAPP
-[assembly: AssemblyTitle ("KeraLua (.NET Core)")]
+[assembly: AssemblyTitle("KeraLua (.NET Core)")]
 #elif NETSTANDARD
 [assembly: AssemblyTitle ("KeraLua (.NET Standard)")]
 #elif __TVOS__
@@ -37,11 +37,11 @@ using Foundation;
 #error "Unknow platform build"
 #endif
 
-[assembly: AssemblyDescription ("Binding library for native Lua")]
-[assembly: AssemblyCompany ("NLua")]
-[assembly: AssemblyProduct ("KeraLua")]
-[assembly: AssemblyCopyright ("Copyright © Vinicius Jarina 2022")]
-[assembly: AssemblyCulture ("")]
+[assembly: AssemblyDescription("Binding library for native Lua")]
+[assembly: AssemblyCompany("NLua")]
+[assembly: AssemblyProduct("KeraLua")]
+[assembly: AssemblyCopyright("Copyright © Vinicius Jarina 2022")]
+[assembly: AssemblyCulture("")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
