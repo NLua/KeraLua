@@ -331,6 +331,36 @@ namespace KeraLua
             lua_KContext ctx,
             lua_KFunction k);
 
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int luaopen_base(lua_State luaState);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int luaopen_package(lua_State luaState);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int luaopen_coroutine(lua_State luaState);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int luaopen_table(lua_State luaState);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int luaopen_io(lua_State luaState);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int luaopen_os(lua_State luaState);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int luaopen_string(lua_State luaState);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int luaopen_math(lua_State luaState);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int luaopen_utf8(lua_State luaState);
+
+        [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int luaopen_debug(lua_State luaState);
+
         [DllImport(LuaLibraryName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         internal static extern int luaL_argerror(lua_State luaState, int arg, string message);
 
