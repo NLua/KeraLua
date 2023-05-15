@@ -253,7 +253,7 @@ stages:
       inputs:
         command: custom
         custom: build
-        arguments: '.\KeraLua.net6.0-android.sln /p:Configuration=Release /p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle"'
+        arguments: '.\KeraLua.net6.0-android.sln /p:Configuration=Release /p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle" /p:AndroidSdkDirectory="C:\Android\android-sdk"'
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet vstest'
@@ -273,7 +273,7 @@ stages:
         solution: 'KeraLua.Android.sln'
         platform: 'Any CPU'
         configuration: 'Release'
-        msbuildArguments: '/p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle"'
+        msbuildArguments: '/p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle" /p:AndroidSdkDirectory="C:\Android\android-sdk"'
     
     - script: 'dotnet test .\tests\build\net46\bin\Release\KeraLuaTest.dll -l:trx'
       displayName: 'Run Windows Tests'
