@@ -133,6 +133,9 @@ stages:
     pool:
       vmImage: 'ubuntu-20.04'
       demands: msbuild
+      variables:
+        CC: gcc-9.3
+        CXX: g++-9.3
 
     steps:
     - template: common-dotnet.yml@templates
@@ -171,7 +174,7 @@ stages:
       - group: 'Keys'
 
     pool:
-      vmImage: 'windows-2019'
+      vmImage: 'windows-2022'
       demands:
       - msbuild
       - visualstudio
@@ -253,7 +256,7 @@ stages:
       inputs:
         command: custom
         custom: build
-        arguments: '.\KeraLua.net6.0-android.sln /p:Configuration=Release /p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle" /p:AndroidSdkDirectory="C:\Android\android-sdk"'
+        arguments: '.\KeraLua.net6.0-android.sln /p:Configuration=Release /p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle" '
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet vstest'
@@ -273,7 +276,7 @@ stages:
         solution: 'KeraLua.Android.sln'
         platform: 'Any CPU'
         configuration: 'Release'
-        msbuildArguments: '/p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle" /p:AndroidSdkDirectory="C:\Android\android-sdk"'
+        msbuildArguments: '/p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle" '
     
     - script: 'dotnet test .\tests\build\net46\bin\Release\KeraLuaTest.dll -l:trx'
       displayName: 'Run Windows Tests'
