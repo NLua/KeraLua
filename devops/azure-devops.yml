@@ -86,10 +86,14 @@ stages:
         custom: build
         arguments: './build/TVOS/KeraLua.net7.0-tvos.csproj /p:Configuration=Release'
 
-    - script: 'dotnet test ./tests/build/net46/bin/Release/KeraLuaTest.dll -l:trx'
+    - script: 'nuget install NUnit.ConsoleRunner -Version 3.16.3'
+      displayName: 'nuget install NUnit.ConsoleRunner'
+
+    # reverted back to use NUnit.ConsoleRunner because Microsoft keeps breaking .NET
+    - script: 'mono NUnit.ConsoleRunner.3.16.3/tools/nunit3-console.exe ./tests/build/net46/bin/Release/KeraLuaTest.dll'
       displayName: 'Run OSX tests'
 
-    - script: 'mv TestResults/*.trx ./KeraLuaTest.Mac.xml'
+    - script: 'mv TestResults.xml ./KeraLuaTest.Mac.xml'
       displayName: 'Rename Test result'
 
     - task: PublishTestResults@2
