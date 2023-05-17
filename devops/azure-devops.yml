@@ -252,11 +252,11 @@ stages:
         arguments: '.\KeraLua.netstandard.sln /p:Configuration=Release'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build KeraLua.net6.0-android.sln'
+      displayName: 'dotnet build build/Android/KeraLua.net6.0-android.csproj'
       inputs:
         command: custom
         custom: build
-        arguments: '.\KeraLua.net6.0-android.sln /p:Configuration=Release /p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle" '
+        arguments: '.\build\Android\KeraLua.net6.0-android.csproj /p:Configuration=Release /p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle" '
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet vstest'
