@@ -94,7 +94,7 @@ stages:
     - script: 'mono NUnit.ConsoleRunner.3.16.3/tools/nunit3-console.exe ./tests/build/net46/bin/Release/KeraLuaTest.dll'
       displayName: 'Run OSX tests'
 
-    - script: 'mv TestResults.xml ./KeraLuaTest.Mac.xml'
+    - script: 'mv TestResult.xml ./KeraLuaTest.Mac.xml'
       displayName: 'Rename Test result'
 
     - task: PublishTestResults@2
