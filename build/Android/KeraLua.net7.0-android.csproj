@@ -4,45 +4,54 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>KeraLua</RootNamespace>
+    <RootNamespace>KeraLua.Android</RootNamespace>
     <AssemblyName>KeraLua</AssemblyName>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TargetFramework>net6.0-macos</TargetFramework>
-    <MacResourcePrefix>Resources</MacResourcePrefix>
-    <IsBindingProject>true</IsBindingProject>
+    <TargetFramework>net7.0-android</TargetFramework>
+    <RuntimeIdentifiers>android-x86;android-x64;android-arm;android-arm64</RuntimeIdentifiers>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\lib\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG;__MOBILE__;__ANDROID__</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <JavaMaximumHeapSize>
+    </JavaMaximumHeapSize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <EnableCodeSigning>false</EnableCodeSigning>
-    <UseSGen>false</UseSGen>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
+    <DebugType>portable</DebugType>
     <OutputPath>..\..\lib\Release</OutputPath>
+    <DefineConstants>__MOBILE__;__ANDROID__</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AndroidManagedSymbols>true</AndroidManagedSymbols>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <JavaMaximumHeapSize>
+    </JavaMaximumHeapSize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\..\lib\Release\net6.0-macos\KeraLua.xml</DocumentationFile>
-    <EnableCodeSigning>false</EnableCodeSigning>
-    <UseSGen>false</UseSGen>
+    <DocumentationFile>..\..\lib\Release\net7.0-android\KeraLua.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
-    <ObjcBindingCoreSource Include="Structs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <NativeReference Include="..\..\runtimes\osx\native\liblua54.dylib">
-      <Kind>Dynamic</Kind>
-      <SmartLink>False</SmartLink>
-    </NativeReference>
+    <EmbeddedNativeLibrary Include="$(OutputRuntimeDir)\android-arm64\native\liblua54.so">
+      <Link>libs\arm64-v8a\liblua54.so</Link>
+    </EmbeddedNativeLibrary>
+    <EmbeddedNativeLibrary Include="$(OutputRuntimeDir)\android-arm\native\liblua54.so">
+      <Link>libs\armeabi-v7a\liblua54.so</Link>
+    </EmbeddedNativeLibrary>
+    <EmbeddedNativeLibrary Include="$(OutputRuntimeDir)\android-x86\native\liblua54.so">
+      <Link>libs\x86\liblua54.so</Link>
+    </EmbeddedNativeLibrary>
+    <EmbeddedNativeLibrary Include="$(OutputRuntimeDir)\android-x64\native\liblua54.so">
+      <Link>libs\x86_64\liblua54.so</Link>
+    </EmbeddedNativeLibrary>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
@@ -50,7 +59,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+  <Import Project="..\targets\BuildLua.Android.targets" />
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
-  <Import Project="..\targets\BuildLua.OSX.targets" />
   <Import Project="..\targets\KeraLua.Sign.targets" />
 </Project>

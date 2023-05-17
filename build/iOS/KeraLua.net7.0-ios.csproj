@@ -6,7 +6,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>KeraLua</RootNamespace>
     <AssemblyName>KeraLua</AssemblyName>
-    <TargetFramework>net6.0-maccatalyst</TargetFramework>
+    <TargetFramework>net7.0-ios</TargetFramework>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <IsBindingProject>true</IsBindingProject>
     <NoBindingEmbedding>false</NoBindingEmbedding>
@@ -31,14 +31,14 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\..\lib\Release\net6.0-maccatalyst\KeraLua.xml</DocumentationFile>
+    <DocumentationFile>..\..\lib\Release\net7.0-ios\KeraLua.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
     <ObjcBindingCoreSource Include="Structs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <NativeReference Include="..\..\runtimes\maccatalyst\native\liblua54.framework">
+    <NativeReference Include="..\..\runtimes\ios\native\liblua54.framework">
       <Kind>Framework</Kind>
     </NativeReference>
   </ItemGroup>
@@ -48,7 +48,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-  <Import Project="..\targets\BuildLua.MacCatalyst.targets" />
+  <Import Project="..\targets\BuildLua.iOS.targets" />
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
   <Import Project="..\targets\KeraLua.Sign.targets" />
 </Project>

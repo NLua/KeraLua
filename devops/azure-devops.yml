@@ -59,32 +59,32 @@ stages:
         configuration: Release
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build ./build/iOS/KeraLua.net6.0-ios.csproj'
+      displayName: 'dotnet build ./build/iOS/KeraLua.net7.0-ios.csproj'
       inputs:
         command: custom
         custom: build
-        arguments: './build/iOS/KeraLua.net6.0-ios.csproj /p:Configuration=Release'
+        arguments: './build/iOS/KeraLua.net7.0-ios.csproj /p:Configuration=Release'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build ./build/iOS/KeraLua.net6.0-maccatalyst.csproj'
+      displayName: 'dotnet build ./build/iOS/KeraLua.net7.0-maccatalyst.csproj'
       inputs:
         command: custom
         custom: build
-        arguments: './build/iOS/KeraLua.net6.0-maccatalyst.csproj /p:Configuration=Release'
+        arguments: './build/iOS/KeraLua.net7.0-maccatalyst.csproj /p:Configuration=Release'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build ./build/macOS/KeraLua.net6.0-macos.csproj'
+      displayName: 'dotnet build ./build/macOS/KeraLua.net7.0-macos.csproj'
       inputs:
         command: custom
         custom: build
-        arguments: './build/macOS/KeraLua.net6.0-macos.csproj /p:Configuration=Release'
+        arguments: './build/macOS/KeraLua.net7.0-macos.csproj /p:Configuration=Release'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build ./build/TVOS/KeraLua.net6.0-tvos.csproj'
+      displayName: 'dotnet build ./build/TVOS/KeraLua.net7.0-tvos.csproj'
       inputs:
         command: custom
         custom: build
-        arguments: './build/TVOS/KeraLua.net6.0-tvos.csproj /p:Configuration=Release'
+        arguments: './build/TVOS/KeraLua.net7.0-tvos.csproj /p:Configuration=Release'
 
     - script: 'dotnet test ./tests/build/net46/bin/Release/KeraLuaTest.dll -l:trx'
       displayName: 'Run OSX tests'
@@ -197,18 +197,18 @@ stages:
         restoreSolution: KeraLua.UWP.sln
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet restore KeraLua.net6.0-android.sln'
+      displayName: 'dotnet restore KeraLua.net7.0-android.sln'
       inputs:
         command: custom
         custom: restore
-        arguments: '.\KeraLua.net6.0-android.sln'
+        arguments: '.\KeraLua.net7.0-android.sln'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet restore KeraLua.net6.0.sln'
+      displayName: 'dotnet restore KeraLua.net7.0.sln'
       inputs:
         command: custom
         custom: restore
-        arguments: '.\KeraLua.net6.0.sln'
+        arguments: '.\KeraLua.net7.0.sln'
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet restore KeraLua.netstandard.sln'
@@ -238,11 +238,11 @@ stages:
         configuration: Release
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build KeraLua.net6.0.sln'
+      displayName: 'dotnet build KeraLua.net7.0.sln'
       inputs:
         command: custom
         custom: build
-        arguments: '.\KeraLua.net6.0.sln /p:Configuration=Release'
+        arguments: '.\KeraLua.net7.0.sln /p:Configuration=Release'
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet build KeraLua.netstandard.sln'
@@ -252,18 +252,18 @@ stages:
         arguments: '.\KeraLua.netstandard.sln /p:Configuration=Release'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build build/Android/KeraLua.net6.0-android.csproj'
+      displayName: 'dotnet build build/Android/KeraLua.net7.0-android.csproj'
       inputs:
         command: custom
         custom: build
-        arguments: '.\build\Android\KeraLua.net6.0-android.csproj /p:Configuration=Release /p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle" '
+        arguments: '.\build\Android\KeraLua.net7.0-android.csproj /p:Configuration=Release /p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle" '
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet vstest'
       inputs:
         command: custom
         custom: vstest
-        arguments: 'tests\build\net6.0\bin\Release\net6.0\KeraLuaTest.net6.0.dll'
+        arguments: 'tests\build\net7.0\bin\Release\net7.0\KeraLuaTest.net7.0.dll'
 
     - task: NuGetCommand@2
       displayName: 'NuGet restore Android solution'
