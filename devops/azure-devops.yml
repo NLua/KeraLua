@@ -22,7 +22,7 @@ stages:
       demands: msbuild
 
     steps:
-    - checkout: self 
+    - checkout: self
       submodules: 'true'
 
     - template: common-dotnet.yml@templates
@@ -261,7 +261,7 @@ stages:
       inputs:
         command: custom
         custom: build
-        arguments: '.\build\Android\KeraLua.net7.0-android.csproj /p:Configuration=Release /p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle" '
+        arguments: '.\build\Android\KeraLua.net7.0-android.csproj /p:Configuration=Release /p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle"'
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet vstest'
@@ -281,7 +281,7 @@ stages:
         solution: 'KeraLua.Android.sln'
         platform: 'Any CPU'
         configuration: 'Release'
-        msbuildArguments: '/p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle" '
+        msbuildArguments: '/p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle"'
     
     - script: 'dotnet test .\tests\build\net46\bin\Release\KeraLuaTest.dll -l:trx'
       displayName: 'Run Windows Tests'
