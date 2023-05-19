@@ -9,10 +9,17 @@
         <Arch3>x86</Arch3>
         <Arch4>x64</Arch4>
     </PropertyGroup>
-    <Target Name="BuildLuaAndroid" AfterTargets="_ResolveMonoAndroidSdks" >
-        <Message Text="Building Android Lua library (armeabi-v7a arm64-v8a x86 x86_64) [NDK: $(_AndroidNdkDirectory)] " />
-        <Error Text="******* Could not locate Android NDK. $(_AndroidNdkDirectory)ndk-build ********** " Condition="!Exists ('$(_AndroidNdkDirectory)')" />
-        <Exec Command="$(_AndroidNdkDirectory)ndk-build" WorkingDirectory="$(ExternalLuaPath)\$(AndroidBuildDir)"/>
+    <Target Name="BuildChipmunkAndroid" AfterTargets="_ResolveAndroidTooling" >
+        <PropertyGroup>
+            <AndroidNdkHome Condition=" '$(ANDROID_NDK_HOME)' != '' and $(AndroidNdkHome) == '' ">$(ANDROID_NDK_HOME)</AndroidNdkHome>
+            <AndroidNdkHome Condition=" '$(AndroidNdkHome)' == '' ">$(_AndroidNdkDirectory)</AndroidNdkHome>
+            <AndroidNdkHome Condition=" !HasTrailingSlash($(AndroidNdkHome)) ">$(AndroidNdkHome)\</AndroidNdkHome>
+        </PropertyGroup>
+        <Error Text="******* Android NDK is not set, use ANDROID_NDK_HOME or AndroidNdkHome ********** " Condition="'$(AndroidNdkHome)' == '' or '$(AndroidNdkHome)' == '/' " />
+        <Message Text="Building Android Chipmunk library (armeabi-v7a arm64-v8a x86 x86_64) [NDK: $(AndroidNdkHome)] " />
+
+        <Error Text="******* Could not locate Android NDK. $(AndroidNdkHome)ndk-build ********** " Condition="!Exists ('$(AndroidNdkHome)')" />
+        <Exec Command="$(AndroidNdkHome)ndk-build" WorkingDirectory="$(ExternalChipmunkPath)\$(AndroidBuildDir)"/>
         <MakeDir Directories="$(OutputRuntimeDir)\$(AndroidOutputDir)-$(Arch1)" />
         <MakeDir Directories="$(OutputRuntimeDir)\$(AndroidOutputDir)-$(Arch1)\native" />
         <MakeDir Directories="$(OutputRuntimeDir)\$(AndroidOutputDir)-$(Arch2)" />
@@ -49,4 +56,3 @@
         $(OutputRuntimeDir)\$(AndroidOutputDir) " />
     </Target>
 </Project>
-
