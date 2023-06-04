@@ -290,7 +290,7 @@ stages:
     - script: 'RENAME TestResult.xml KeraLuaTest.Windows.xml'
       displayName: 'Rename Test result'
 
-    - script: 'MOVE TestResults\KeraLuaTest.Windows.xml .'
+    - script: 'MOVE KeraLuaTest.Windows.xml .'
       displayName: 'Move Test result'
 
     - task: PublishTestResults@2
