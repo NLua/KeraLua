@@ -284,7 +284,7 @@ stages:
         msbuildArguments: '/p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle"'
 
     # reverted back to use NUnit.ConsoleRunner because Microsoft keeps breaking .NET
-    - script: 'nunit3-console.exe ./tests/build/net46/bin/Release/KeraLuaTest.dl --x86'
+    - script: 'nunit3-console.exe ./tests/build/net46/bin/Release/KeraLuaTest.dll --x86'
       displayName: 'Run Windows tests'
 
     - script: 'RENAME TestResult.xml KeraLuaTest.Windows.xml'
