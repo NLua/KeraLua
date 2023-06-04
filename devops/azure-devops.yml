@@ -282,11 +282,12 @@ stages:
         platform: 'Any CPU'
         configuration: 'Release'
         msbuildArguments: '/p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle"'
-    
-    - script: 'dotnet test .\tests\build\net46\bin\Release\KeraLuaTest.dll -l:trx'
-      displayName: 'Run Windows Tests'
-        
-    - script: 'RENAME TestResults\*.trx KeraLuaTest.Windows.xml'
+
+    # reverted back to use NUnit.ConsoleRunner because Microsoft keeps breaking .NET
+    - script: 'nunit3-console.exe ./tests/build/net46/bin/Release/KeraLuaTest.dl --x86'
+      displayName: 'Run Windows tests'
+
+    - script: 'RENAME TestResult.xml KeraLuaTest.Windows.xml'
       displayName: 'Rename Test result'
 
     - script: 'MOVE TestResults\KeraLuaTest.Windows.xml .'
