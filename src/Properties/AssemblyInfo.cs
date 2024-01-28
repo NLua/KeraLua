@@ -40,7 +40,7 @@ using Foundation;
 [assembly: AssemblyDescription("Binding library for native Lua")]
 [assembly: AssemblyCompany("NLua")]
 [assembly: AssemblyProduct("KeraLua")]
-[assembly: AssemblyCopyright("Copyright © Vinicius Jarina 2023")]
+[assembly: AssemblyCopyright("Copyright © Vinicius Jarina 2024")]
 [assembly: AssemblyCulture("")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
