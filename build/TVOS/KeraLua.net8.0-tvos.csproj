@@ -6,9 +6,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>KeraLua</RootNamespace>
     <AssemblyName>KeraLua</AssemblyName>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TargetFramework>net7.0-macos</TargetFramework>
-    <MacResourcePrefix>Resources</MacResourcePrefix>
+    <TargetFramework>net8.0-tvos</TargetFramework>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <IsBindingProject>true</IsBindingProject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -19,29 +18,37 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
+    <MtouchFastDev>true</MtouchFastDev>
+    <IOSDebuggerPort>16365</IOSDebuggerPort>
+    <DeviceSpecificBuild>false</DeviceSpecificBuild>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <EnableCodeSigning>false</EnableCodeSigning>
-    <UseSGen>false</UseSGen>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\lib\Release</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
+    <MtouchLink>SdkOnly</MtouchLink>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\..\lib\Release\net7.0-macos\KeraLua.xml</DocumentationFile>
-    <EnableCodeSigning>false</EnableCodeSigning>
-    <UseSGen>false</UseSGen>
+    <DocumentationFile>..\..\lib\Release\net8.0-tvos\KeraLua.xml</DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
     <ObjcBindingCoreSource Include="Structs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <NativeReference Include="..\..\runtimes\osx\native\liblua54.dylib">
-      <Kind>Dynamic</Kind>
-      <SmartLink>False</SmartLink>
+    <NativeReference Include="..\..\runtimes\tvos\native\liblua54.framework">
+      <Kind>Framework</Kind>
     </NativeReference>
   </ItemGroup>
   <ItemGroup>
@@ -50,7 +57,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+  <Import Project="..\targets\BuildLua.TVOS.targets" />
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
-  <Import Project="..\targets\BuildLua.OSX.targets" />
   <Import Project="..\targets\KeraLua.Sign.targets" />
 </Project>

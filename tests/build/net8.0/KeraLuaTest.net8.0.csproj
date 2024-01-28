@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
@@ -93,6 +93,6 @@
     <Folder Include="LuaTests\core\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\build\net7.0\KeraLua.net7.0.csproj" />
+    <ProjectReference Include="..\..\..\build\net8.0\KeraLua.net8.0.csproj" />
   </ItemGroup>
 </Project>
