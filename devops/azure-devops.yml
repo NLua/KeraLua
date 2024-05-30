@@ -18,7 +18,7 @@ stages:
       - group: 'Keys'
 
     pool:
-      vmImage: 'macOS-13'
+      vmImage: 'macOS-14'
       demands: msbuild
 
     steps:
