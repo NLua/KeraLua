@@ -177,6 +177,8 @@ stages:
     displayName: 'Windows'
     variables:
       - group: 'Keys'
+      - name: WindowsSDKVersion
+        value: 10.0.22621.0
 
     pool:
       vmImage: 'windows-2022'
