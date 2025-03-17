@@ -81,6 +81,7 @@
     <file src="runtimes\win-arm64\native\lua54.dll" target="runtimes\win-arm64\native\lua54.dll" />
     <file src="runtimes\osx\native\liblua54.dylib" target="runtimes\osx\native\liblua54.dylib" />
     <file src="runtimes\linux-x64\native\liblua54.so" target="runtimes\linux-x64\native\liblua54.so" />
+    <file src="runtimes\linux-arm64\native\liblua54.so" target="runtimes\linux-arm64\native\liblua54.so" />
     <file src="runtimes\android-arm\native\liblua54.so" target="runtimes\android-arm\native\liblua54.so" />
     <file src="runtimes\android-arm64\native\liblua54.so" target="runtimes\android-arm64\native\liblua54.so" />
     <file src="runtimes\android-x86\native\liblua54.so" target="runtimes\android-x86\native\liblua54.so" />
