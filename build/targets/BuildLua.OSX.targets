@@ -12,11 +12,12 @@
         <XcodeWithARM64Support>12.2</XcodeWithARM64Support>
     </PropertyGroup>
     <Target Name="BuildLuaOSX" BeforeTargets="BeforeBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
-         <Exec Command="/usr/bin/xcodebuild -help" IgnoreExitCode="true" />
-         <Exec Command="/usr/bin/xcodebuild -version | head -1" ConsoleToMSBuild="true">
+         <Exec Command="/usr/bin/xcodebuild -version" IgnoreExitCode="true" />
+         <Exec Command="/usr/bin/xcodebuild -version | head -1" ConsoleToMSBuild="true" IgnoreExitCode="true">
             <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
          </Exec>
         <PropertyGroup>
+            <OutputOfExec Condition="$(OutputOfExec) == ''">Xcode 16.0</OutputOfExec>
             <CurrentXcodeVersion>$(OutputOfExec.Split(' ')[1])</CurrentXcodeVersion>
             <CurrentXcodeMajorVersion>$(OutputOfExec.Split(' ')[1].Split('.')[0])</CurrentXcodeMajorVersion>
             <XcodeSupportARM64 Condition="$(CurrentXcodeVersion) &lt; $(XcodeWithARM64Support)">false</XcodeSupportARM64>
@@ -27,29 +28,29 @@
         <Message Text="******* Xcode 10 doesn't support 32bits skipping 32 bit build ***" Condition="!$(XcodeSupport32Bits)" />
         <Message Text="******* Xcode $(CurrentXcodeVersion) doesn't support Apple Silicon skipping ARM64 build ***" Condition="!$(XcodeSupportARM64)" />
         <Message Text="Building macOS Lua library on $(ExternalLuaPath)" />
-        <Exec Command="mkdir $(ExternalLuaPath)\$(OSXBuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(OSXBuildDir)')" />
-        <Exec Command="mkdir $(ExternalLuaPath)\$(OSX32BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(OSX32BuildDir)') and $(XcodeSupport32Bits) " />
-        <Exec Command="mkdir $(ExternalLuaPath)\$(OSX64BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(OSX64BuildDir)')" />
-        <Exec Command="mkdir $(ExternalLuaPath)\$(OSXARM64BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(OSXARM64BuildDir)') and $(XcodeSupportARM64) " />
-        <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_OSX_ARCHITECTURES=i386" WorkingDirectory="$(ExternalLuaPath)\$(OSX32BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(OSX32BuildDir)\CMakeCache.txt') and $(XcodeSupport32Bits)" />
-        <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_OSX_ARCHITECTURES=x86_64" WorkingDirectory="$(ExternalLuaPath)\$(OSX64BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(OSX64BuildDir)\CMakeCache.txt')" />
-        <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_OSX_ARCHITECTURES=arm64" WorkingDirectory="$(ExternalLuaPath)\$(OSXARM64BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(OSXARM64BuildDir)\CMakeCache.txt') and $(XcodeSupportARM64) " />
-        <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSX32BuildDir)" Condition="$(XcodeSupport32Bits)" />
-        <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSX64BuildDir)" />
-        <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(OSXARM64BuildDir)" Condition="$(XcodeSupportARM64)" />
-        <Exec Command="lipo -create $(ExternalLuaPath)\$(OSX64BuildDir)\$(OSXBinaryLibraryPath64) $(ExternalLuaPath)\$(OSX32BuildDir)\$(OSXBinaryLibraryPath32) -output $(ExternalLuaPath)\$(OSXBuildDir)\$(OSXBinaryLibraryPath)" WorkingDirectory="$(ExternalLuaPath)" Condition="$(XcodeSupport32Bits)"/>
-        <Exec Command="lipo -create $(ExternalLuaPath)\$(OSX64BuildDir)\$(OSXBinaryLibraryPath64) $(ExternalLuaPath)\$(OSXARM64BuildDir)\$(OSXBinaryLibraryPath64) -output $(ExternalLuaPath)\$(OSXBuildDir)\$(OSXBinaryLibraryPath)" WorkingDirectory="$(ExternalLuaPath)" Condition="$(XcodeSupportARM64)"/>
-        <Copy SourceFiles="$(ExternalLuaPath)\$(OSXBuildDir)\$(OSXBinaryLibraryPath)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)\native" SkipUnchangedFiles="true" Condition="$(XcodeSupport32Bits) or $(XcodeSupportARM64)"/>
-        <Copy SourceFiles="$(ExternalLuaPath)\$(OSX64BuildDir)\$(OSXBinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(OSXBuildDir)\native" SkipUnchangedFiles="true" Condition="!$(XcodeSupport32Bits) and !$(XcodeSupportARM64)"/>
+        <Exec Command="mkdir $(ExternalLuaPath)/$(OSXBuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)/$(OSXBuildDir)')" />
+        <Exec Command="mkdir $(ExternalLuaPath)/$(OSX32BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)/$(OSX32BuildDir)') and $(XcodeSupport32Bits) " />
+        <Exec Command="mkdir $(ExternalLuaPath)/$(OSX64BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)/$(OSX64BuildDir)')" />
+        <Exec Command="mkdir $(ExternalLuaPath)/$(OSXARM64BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)/$(OSXARM64BuildDir)') and $(XcodeSupportARM64) " />
+        <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_OSX_ARCHITECTURES=i386" WorkingDirectory="$(ExternalLuaPath)/$(OSX32BuildDir)" Condition="!Exists('$(ExternalLuaPath)/$(OSX32BuildDir)\CMakeCache.txt') and $(XcodeSupport32Bits)" />
+        <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_OSX_ARCHITECTURES=x86_64" WorkingDirectory="$(ExternalLuaPath)/$(OSX64BuildDir)" Condition="!Exists('$(ExternalLuaPath)/$(OSX64BuildDir)\CMakeCache.txt')" />
+        <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_OSX_ARCHITECTURES=arm64" WorkingDirectory="$(ExternalLuaPath)/$(OSXARM64BuildDir)" Condition="!Exists('$(ExternalLuaPath)/$(OSXARM64BuildDir)\CMakeCache.txt') and $(XcodeSupportARM64) " />
+        <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)/$(OSX32BuildDir)" Condition="$(XcodeSupport32Bits)" />
+        <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)/$(OSX64BuildDir)" />
+        <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)/$(OSXARM64BuildDir)" Condition="$(XcodeSupportARM64)" />
+        <Exec Command="lipo -create $(ExternalLuaPath)/$(OSX64BuildDir)/$(OSXBinaryLibraryPath64) $(ExternalLuaPath)/$(OSX32BuildDir)/$(OSXBinaryLibraryPath32) -output $(ExternalLuaPath)/$(OSXBuildDir)/$(OSXBinaryLibraryPath)" WorkingDirectory="$(ExternalLuaPath)" Condition="$(XcodeSupport32Bits)"/>
+        <Exec Command="lipo -create $(ExternalLuaPath)/$(OSX64BuildDir)/$(OSXBinaryLibraryPath64) $(ExternalLuaPath)/$(OSXARM64BuildDir)/$(OSXBinaryLibraryPath64) -output $(ExternalLuaPath)/$(OSXBuildDir)/$(OSXBinaryLibraryPath)" WorkingDirectory="$(ExternalLuaPath)" Condition="$(XcodeSupportARM64)"/>
+        <Copy SourceFiles="$(ExternalLuaPath)/$(OSXBuildDir)/$(OSXBinaryLibraryPath)" DestinationFolder="$(OutputRuntimeDir)/$(OSXBuildDir)\native" SkipUnchangedFiles="true" Condition="$(XcodeSupport32Bits) or $(XcodeSupportARM64)"/>
+        <Copy SourceFiles="$(ExternalLuaPath)/$(OSX64BuildDir)/$(OSXBinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)/$(OSXBuildDir)\native" SkipUnchangedFiles="true" Condition="!$(XcodeSupport32Bits) and !$(XcodeSupportARM64)"/>
     </Target>
     <Target Name="CleanLuaOSX" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
         <Message Text="Cleaning Lua library (osx)" />
         <RemoveDir Directories="
-        $(ExternalLuaPath)\$(OSXBuildDir); 
-        $(ExternalLuaPath)\$(OSX32BuildDir); 
-        $(ExternalLuaPath)\$(OSX64BuildDir); 
-        $(ExternalLuaPath)\$(OSXARM64BuildDir); 
-        $(OutputRuntimeDir)\$(OSXBuildDir) " />
+        $(ExternalLuaPath)/$(OSXBuildDir); 
+        $(ExternalLuaPath)/$(OSX32BuildDir); 
+        $(ExternalLuaPath)/$(OSX64BuildDir); 
+        $(ExternalLuaPath)/$(OSXARM64BuildDir); 
+        $(OutputRuntimeDir)/$(OSXBuildDir) " />
     </Target>
 </Project>
 
