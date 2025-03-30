@@ -148,6 +148,9 @@ stages:
     - checkout: self 
       submodules: 'true'
 
+    - script: 'sudo apt update; sudo apt install gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu g++-aarch64-linux-gnu'
+      displayName: 'Install ARM64 build tools'
+
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
@@ -163,7 +166,14 @@ stages:
       displayName: 'Publish Pipeline Artifact: liblua54.so'
       inputs:
         targetPath: 'runtimes/linux-x64/native/liblua54.so'
-        artifact: 'liblua54.so'
+        artifact: 'liblua54.so.x64'
+        publishLocation: 'pipeline'
+
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Pipeline Artifact: liblua54.so'
+      inputs:
+        targetPath: 'runtimes/linux-arm64/native/liblua54.so'
+        artifact: 'liblua54.so.arm64'
         publishLocation: 'pipeline'
 
     - template: send-telegram.yml@templates
@@ -323,11 +333,18 @@ stages:
         targetPath: './runtimes/'
 
     - task: DownloadPipelineArtifact@2
-      displayName: 'Download Build liblua54.so (Linux)'
+      displayName: 'Download Build liblua54.so x64 (Linux)'
       inputs:
         buildType: 'current'
-        artifactName: 'liblua54.so'
+        artifactName: 'liblua54.so.x64'
         targetPath: 'runtimes/linux-x64/native/'
+
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download Build liblua54.so arm64 (Linux)'
+      inputs:
+        buildType: 'current'
+        artifactName: 'liblua54.so.arm64'
+        targetPath: 'runtimes/linux-arm64/native/'
 
     - script: 'nuget setapikey $(apikey)'
       displayName: 'Set NuGet API Key'

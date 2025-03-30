@@ -2,6 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Linux64BuildDir>linux-x64</Linux64BuildDir>
+    <LinuxARM64BuildDir>linux-arm64</LinuxARM64BuildDir>
     <LinuxBinaryLibraryPath64>lib64\liblua54.so</LinuxBinaryLibraryPath64>
   </PropertyGroup>
   <Target Name="BuildLuaLinux" BeforeTargets="BeforeBuild" Condition="'$(OS)'=='Unix' and !Exists('/usr/bin/xcodebuild')">
@@ -13,8 +14,19 @@
     <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(Linux64BuildDir)" />
     <Copy SourceFiles="$(ExternalLuaPath)\$(Linux64BuildDir)\$(LinuxBinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(Linux64BuildDir)\native" SkipUnchangedFiles="true" />
   </Target>
+  <Target Name="BuildLuaLinuxARM64" AfterTargets="BuildLuaLinux" Condition="'$(OS)'=='Unix' and !Exists('/usr/bin/xcodebuild')">
+    <Message Text="Building Linux Lua library (arm64)" />
+    <Exec Command="export CXXFLAGS=-march=armv8-a" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(LinuxARM64BuildDir)')" />
+    <Exec Command="export CFLAGS=-march=armv8-a" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(LinuxARM64BuildDir)')" />
+    <Exec Command="export LDFLAGS=-march=armv8-a" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(LinuxARM64BuildDir)')" />
+    <Exec Command="mkdir $(ExternalLuaPath)\$(LinuxARM64BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(LinuxARM64BuildDir)')" />
+    <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_BUILD_TYPE=Release -DCMAKE_CROSSCOMPILING=TRUE -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER -DCMAKE_SYSTEM_PROCESSOR=aarch64" WorkingDirectory="$(ExternalLuaPath)\$(LinuxARM64BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(LinuxARM64BuildDir)\CMakeCache.txt')" />
+    <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(LinuxARM64BuildDir)" />
+    <Copy SourceFiles="$(ExternalLuaPath)\$(LinuxARM64BuildDir)\$(LinuxBinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(LinuxARM64BuildDir)\native" SkipUnchangedFiles="true" />
+  </Target>
   <Target Name="CleanLuaLinux" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and !Exists('/usr/bin/xcodebuild')">
       <Message Text="Cleaning Lua library (x64)" />
       <RemoveDir Directories="$(ExternalLuaPath)\$(Linux64BuildDir); $(OutputRuntimeDir)\$(Linux64BuildDir) " />
+      <RemoveDir Directories="$(ExternalLuaPath)\$(LinuxARM64BuildDir); $(OutputRuntimeDir)\$(LinuxARM64BuildDir) " />
   </Target>
 </Project>
