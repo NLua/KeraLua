@@ -2014,6 +2014,106 @@ namespace KeraLua
         }
 
         /// <summary>
+        /// Open the standard base library into the given state.
+        /// </summary>
+        /// <param name="moduleName"></param>
+        /// <param name="global"></param>
+        public void OpenBase(string moduleName = LuaLibraryName.Base, bool global = true)
+        {
+            RequireF(moduleName, NativeMethods.luaopen_base, global);
+        }
+
+        /// <summary>
+        /// Open the standard package library into the given state.
+        /// </summary>
+        /// <param name="moduleName"></param>
+        /// <param name="global"></param>
+        public void OpenPackage(string moduleName = LuaLibraryName.Package, bool global = true)
+        {
+            RequireF(moduleName, NativeMethods.luaopen_package, global);
+        }
+
+        /// <summary>
+        /// Open the standard coroutine library into the given state.
+        /// </summary>
+        /// <param name="moduleName"></param>
+        /// <param name="global"></param>
+        public void OpenCoroutine(string moduleName = LuaLibraryName.Coroutine, bool global = true)
+        {
+            RequireF(moduleName, NativeMethods.luaopen_coroutine, global);
+        }
+
+        /// <summary>
+        /// Open the standard table library into the given state.
+        /// </summary>
+        /// <param name="moduleName"></param>
+        /// <param name="global"></param>
+        public void OpenTable(string moduleName = LuaLibraryName.Table, bool global = true)
+        {
+            RequireF(moduleName, NativeMethods.luaopen_table, global);
+        }
+
+        /// <summary>
+        /// Open the standard IO library into the given state.
+        /// </summary>
+        /// <param name="moduleName"></param>
+        /// <param name="global"></param>
+        public void OpenIO(string moduleName = LuaLibraryName.IO, bool global = true)
+        {
+            RequireF(moduleName, NativeMethods.luaopen_io, global);
+        }
+
+        /// <summary>
+        /// Open the standard OS library into the given state.
+        /// </summary>
+        /// <param name="moduleName"></param>
+        /// <param name="global"></param>
+        public void OpenOS(string moduleName = LuaLibraryName.OS, bool global = true)
+        {
+            RequireF(moduleName, NativeMethods.luaopen_os, global);
+        }
+
+        /// <summary>
+        /// Open the standard string library into the given state.
+        /// </summary>
+        /// <param name="moduleName"></param>
+        /// <param name="global"></param>
+        public void OpenString(string moduleName = LuaLibraryName.String, bool global = true)
+        {
+            RequireF(moduleName, NativeMethods.luaopen_string, global);
+        }
+
+        /// <summary>
+        /// Open the standard math library into the given state.
+        /// </summary>
+        /// <param name="moduleName"></param>
+        /// <param name="global"></param>
+        public void OpenMath(string moduleName = LuaLibraryName.Math, bool global = true)
+        {
+            RequireF(moduleName, NativeMethods.luaopen_math, global);
+        }
+
+        /// <summary>
+        /// Open the standard UTF8 library into the given state.
+        /// </summary>
+        /// <param name="moduleName"></param>
+        /// <param name="global"></param>
+        public void OpenUTF8(string moduleName = LuaLibraryName.UTF8, bool global = true)
+        {
+            RequireF(moduleName, NativeMethods.luaopen_utf8, global);
+        }
+
+        /// <summary>
+        /// Open the standard debug library into the given state.
+        /// </summary>
+        /// <param name="moduleName"></param>
+        /// <param name="global"></param>
+        public void OpenDebug(string moduleName = LuaLibraryName.Debug, bool global = true)
+        {
+            RequireF(moduleName, NativeMethods.luaopen_debug, global);
+        }
+
+        /// <summary>
         /// If the function argument arg is an integer (or convertible to an integer), returns this integer. If this argument is absent or is nil, returns d
         /// </summary>
         /// <param name="argument"></param>
