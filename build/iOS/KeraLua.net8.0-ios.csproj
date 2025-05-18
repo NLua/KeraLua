@@ -6,7 +6,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>KeraLua</RootNamespace>
     <AssemblyName>KeraLua</AssemblyName>
-    <TargetFramework>net8.0-ios</TargetFramework>
+    <TargetFramework>net9.0-ios</TargetFramework>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <IsBindingProject>true</IsBindingProject>
     <NoBindingEmbedding>false</NoBindingEmbedding>
@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\..\lib\Release\net8.0-ios\KeraLua.xml</DocumentationFile>
+    <DocumentationFile>..\..\lib\Release\net9.0-ios\KeraLua.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />

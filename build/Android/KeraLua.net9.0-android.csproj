@@ -6,7 +6,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>KeraLua.Android</RootNamespace>
     <AssemblyName>KeraLua</AssemblyName>
-    <TargetFramework>net8.0-android</TargetFramework>
+    <TargetFramework>net9.0-android</TargetFramework>
     <SupportedOSPlatformVersion>28.0</SupportedOSPlatformVersion>
     <TargetFrameworkVersion>v13.0</TargetFrameworkVersion>
     <RuntimeIdentifiers>android-x86;android-x64;android-arm;android-arm64</RuntimeIdentifiers>
@@ -37,7 +37,7 @@
     <JavaMaximumHeapSize>
     </JavaMaximumHeapSize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\..\lib\Release\net8.0-android\KeraLua.xml</DocumentationFile>
+    <DocumentationFile>..\..\lib\Release\net9.0-android\KeraLua.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
   </ItemGroup>

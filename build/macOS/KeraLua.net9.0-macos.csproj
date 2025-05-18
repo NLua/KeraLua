@@ -7,7 +7,7 @@
     <RootNamespace>KeraLua</RootNamespace>
     <AssemblyName>KeraLua</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TargetFramework>net8.0-macos</TargetFramework>
+    <TargetFramework>net9.0-macos</TargetFramework>
     <MacResourcePrefix>Resources</MacResourcePrefix>
     <IsBindingProject>true</IsBindingProject>
   </PropertyGroup>
@@ -30,7 +30,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\..\lib\Release\net8.0-macos\KeraLua.xml</DocumentationFile>
+    <DocumentationFile>..\..\lib\Release\net9.0-macos\KeraLua.xml</DocumentationFile>
     <EnableCodeSigning>false</EnableCodeSigning>
     <UseSGen>false</UseSGen>
   </PropertyGroup>

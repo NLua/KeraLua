@@ -22,29 +22,29 @@
     <file src="lib\Release\MonoAndroid\KeraLua.pdb" target="lib\MonoAndroid" />
     <file src="lib\Release\MonoAndroid\KeraLua.xml" target="lib\MonoAndroid" />
 
-    <file src="lib\Release\net8.0-android\KeraLua.xml" target="lib\net8.0-android28" />
-    <file src="lib\Release\net8.0-android\KeraLua.pdb" target="lib\net8.0-android28" />
-    <file src="lib\Release\net8.0-android\KeraLua.dll" target="lib\net8.0-android28" />
+    <file src="lib\Release\net9.0-android\KeraLua.xml" target="lib\net9.0-android28" />
+    <file src="lib\Release\net9.0-android\KeraLua.pdb" target="lib\net9.0-android28" />
+    <file src="lib\Release\net9.0-android\KeraLua.dll" target="lib\net9.0-android28" />
 
     <file src="lib\Release\net8.0\KeraLua.dll" target="lib\net8.0" />
     <file src="lib\Release\net8.0\KeraLua.pdb" target="lib\net8.0" />
     <file src="lib\Release\net8.0\KeraLua.xml" target="lib\net8.0" />
 
-    <file src="lib\Release\net8.0-ios\KeraLua.dll" target="lib\net8.0-ios11.0" />
-    <file src="lib\Release\net8.0-ios\KeraLua.pdb" target="lib\net8.0-ios11.0" />
-    <file src="lib\Release\net8.0-ios\KeraLua.xml" target="lib\net8.0-ios11.0" />
+    <file src="lib\Release\net9.0-ios\KeraLua.dll" target="lib\net9.0-ios11.0" />
+    <file src="lib\Release\net9.0-ios\KeraLua.pdb" target="lib\net9.0-ios11.0" />
+    <file src="lib\Release\net9.0-ios\KeraLua.xml" target="lib\net9.0-ios11.0" />
 
-    <file src="lib\Release\net8.0-maccatalyst\KeraLua.dll" target="lib\net8.0-maccatalyst13.0" />
-    <file src="lib\Release\net8.0-maccatalyst\KeraLua.pdb" target="lib\net8.0-maccatalyst13.0" />
-    <file src="lib\Release\net8.0-maccatalyst\KeraLua.xml" target="lib\net8.0-maccatalyst13.0" />
+    <file src="lib\Release\net9.0-maccatalyst\KeraLua.dll" target="lib\net9.0-maccatalyst13.0" />
+    <file src="lib\Release\net9.0-maccatalyst\KeraLua.pdb" target="lib\net9.0-maccatalyst13.0" />
+    <file src="lib\Release\net9.0-maccatalyst\KeraLua.xml" target="lib\net9.0-maccatalyst13.0" />
 
-    <file src="lib\Release\net8.0-tvos\KeraLua.dll" target="lib\net8.0-tvos11.0" />
-    <file src="lib\Release\net8.0-tvos\KeraLua.pdb" target="lib\net8.0-tvos11.0" />
-    <file src="lib\Release\net8.0-tvos\KeraLua.xml" target="lib\net8.0-tvos11.0" />
+    <file src="lib\Release\net9.0-tvos\KeraLua.dll" target="lib\net9.0-tvos11.0" />
+    <file src="lib\Release\net9.0-tvos\KeraLua.pdb" target="lib\net9.0-tvos11.0" />
+    <file src="lib\Release\net9.0-tvos\KeraLua.xml" target="lib\net9.0-tvos11.0" />
 
-    <file src="lib\Release\net8.0-macos\KeraLua.dll" target="lib\net8.0-macos10.13" />
-    <file src="lib\Release\net8.0-macos\KeraLua.pdb" target="lib\net8.0-macos10.13" />
-    <file src="lib\Release\net8.0-macos\KeraLua.xml" target="lib\net8.0-macos10.13" />
+    <file src="lib\Release\net9.0-macos\KeraLua.dll" target="lib\net9.0-macos10.13" />
+    <file src="lib\Release\net9.0-macos\KeraLua.pdb" target="lib\net9.0-macos10.13" />
+    <file src="lib\Release\net9.0-macos\KeraLua.xml" target="lib\net9.0-macos10.13" />
 
     <file src="lib\Release\net46\KeraLua.dll" target="lib\net46" />
     <file src="lib\Release\net46\KeraLua.pdb" target="lib\net46" />

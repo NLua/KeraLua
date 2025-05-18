@@ -6,7 +6,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>KeraLua</RootNamespace>
     <AssemblyName>KeraLua</AssemblyName>
-    <TargetFramework>net8.0-tvos</TargetFramework>
+    <TargetFramework>net9.0-tvos</TargetFramework>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <IsBindingProject>true</IsBindingProject>
   </PropertyGroup>
@@ -39,7 +39,7 @@
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
     <MtouchLink>SdkOnly</MtouchLink>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\..\lib\Release\net8.0-tvos\KeraLua.xml</DocumentationFile>
+    <DocumentationFile>..\..\lib\Release\net9.0-tvos\KeraLua.xml</DocumentationFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>

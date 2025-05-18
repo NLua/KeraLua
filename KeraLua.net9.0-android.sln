@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KeraLua", "KeraLua", "{4A43
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "KeraLua.Shared", "src\KeraLua.Shared.shproj", "{BD205AD6-760E-48F3-BAB2-21447396BD17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua.net8.0-android", "build\Android\KeraLua.net8.0-android.csproj", "{E0576585-777B-42D2-8BC2-676FF5724940}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua.net9.0-android", "build\Android\KeraLua.net9.0-android.csproj", "{E0576585-777B-42D2-8BC2-676FF5724940}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
