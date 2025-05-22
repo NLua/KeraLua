@@ -280,7 +280,7 @@ stages:
       inputs:
         command: custom
         custom: vstest
-        arguments: 'tests\build\net8.0\bin\Release\net8.0\KeraLuaTest.net8.0.dll'
+        arguments: 'tests\build\net9.0\bin\Release\net9.0\KeraLuaTest.net9.0.dll'
 
     - task: NuGetCommand@2
       displayName: 'NuGet restore Android solution'
