@@ -141,7 +141,9 @@ namespace KeraLuaTest.Tests
         {
             string error = string.Empty;
 
+#pragma warning disable CA1062 // Validate arguments of public methods
             LuaStatus result = state.LoadString(chunk);
+#pragma warning restore CA1062 // Validate arguments of public methods
 
             if (result != LuaStatus.OK)
                 error = state.ToString(1, false);

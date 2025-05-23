@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLua.net8.0", "build\net
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2AF69FF8-83DC-4BBF-8C13-C034C23B0EBA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLuaTest.net8.0", "tests\build\net8.0\KeraLuaTest.net8.0.csproj", "{B915B26F-5B5B-441A-A9BF-565B67891F2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeraLuaTest.net9.0", "tests\build\net9.0\KeraLuaTest.net9.0.csproj", "{B915B26F-5B5B-441A-A9BF-565B67891F2F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0BB3C48C-2EA8-4E26-BBB7-7B13BDE86841}"
 	ProjectSection(SolutionItems) = preProject
