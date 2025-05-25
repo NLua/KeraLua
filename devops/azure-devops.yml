@@ -143,6 +143,7 @@ stages:
         CXX: g++-9.3
 
     steps:
+    - template: common-linux-ubuntu.yaml@templates
     - template: common-dotnet.yml@templates
 
     - checkout: self 
