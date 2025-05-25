@@ -20,7 +20,7 @@
     <Exec Command="export CFLAGS=-march=armv8-a" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(LinuxARM64BuildDir)')" />
     <Exec Command="export LDFLAGS=-march=armv8-a" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(LinuxARM64BuildDir)')" />
     <Exec Command="mkdir $(ExternalLuaPath)\$(LinuxARM64BuildDir)" WorkingDirectory="$(ExternalLuaPath)" Condition="!Exists('$(ExternalLuaPath)\$(LinuxARM64BuildDir)')" />
-    <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_BUILD_TYPE=Release -DCMAKE_CROSSCOMPILING=TRUE -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER -DCMAKE_SYSTEM_PROCESSOR=aarch64 -DCMAKE_SYSTEM_NAME=Linux" WorkingDirectory="$(ExternalLuaPath)\$(LinuxARM64BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(LinuxARM64BuildDir)\CMakeCache.txt')" />
+    <Exec Command="cmake $(ExternalLuaPath) -DCMAKE_BUILD_TYPE=Release -DCMAKE_CROSSCOMPILING=TRUE -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER -DCMAKE_SYSTEM_PROCESSOR=aarch64 -DCMAKE_SYSTEM_NAME=Linux" WorkingDirectory="$(ExternalLuaPath)\$(LinuxARM64BuildDir)" Condition="!Exists('$(ExternalLuaPath)\$(LinuxARM64BuildDir)\CMakeCache.txt')" />
     <Exec Command="cmake --build . --config Release" WorkingDirectory="$(ExternalLuaPath)\$(LinuxARM64BuildDir)" />
     <Copy SourceFiles="$(ExternalLuaPath)\$(LinuxARM64BuildDir)\$(LinuxBinaryLibraryPath64)" DestinationFolder="$(OutputRuntimeDir)\$(LinuxARM64BuildDir)\native" SkipUnchangedFiles="true" />
   </Target>
