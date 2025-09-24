@@ -18,8 +18,8 @@
          </Exec>
         <PropertyGroup>
             <OutputOfExec Condition="$(OutputOfExec) == ''">Xcode 16.0</OutputOfExec>
-            <CurrentXcodeVersion>$(OutputOfExec.Split(' ')[1])</CurrentXcodeVersion>
-            <CurrentXcodeMajorVersion>$(OutputOfExec.Split(' ')[1].Split('.')[0].Replace(";", "").Replace("*",""))</CurrentXcodeMajorVersion>
+            <CurrentXcodeVersion>$(OutputOfExec.Split(' ')[1].Replace(";", "").Replace("*",""))</CurrentXcodeVersion>
+            <CurrentXcodeMajorVersion>$(OutputOfExec.Split(' ')[1].Split('.')[0])</CurrentXcodeMajorVersion>
             <XcodeSupportARM64 Condition="$(CurrentXcodeVersion) &lt; $(XcodeWithARM64Support)">false</XcodeSupportARM64>
             <XcodeSupportARM64 Condition="$(CurrentXcodeVersion) &gt; $(XcodeWithARM64Support) or $(CurrentXcodeVersion) == $(XcodeWithARM64Support)">true</XcodeSupportARM64>
             <XcodeSupport32Bits Condition="$(CurrentXcodeMajorVersion) &lt; $(XcodeWithout32BitSupport)">true</XcodeSupport32Bits>
