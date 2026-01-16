@@ -42,17 +42,17 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedNativeLibrary Include="$(OutputRuntimeDir)\android-arm64\native\liblua54.so">
-      <Link>libs\arm64-v8a\liblua54.so</Link>
+    <EmbeddedNativeLibrary Include="$(OutputRuntimeDir)\android-arm64\native\liblua55.so">
+      <Link>libs\arm64-v8a\liblua55.so</Link>
     </EmbeddedNativeLibrary>
-    <EmbeddedNativeLibrary Include="$(OutputRuntimeDir)\android-arm\native\liblua54.so">
-      <Link>libs\armeabi-v7a\liblua54.so</Link>
+    <EmbeddedNativeLibrary Include="$(OutputRuntimeDir)\android-arm\native\liblua55.so">
+      <Link>libs\armeabi-v7a\liblua55.so</Link>
     </EmbeddedNativeLibrary>
-    <EmbeddedNativeLibrary Include="$(OutputRuntimeDir)\android-x86\native\liblua54.so">
-      <Link>libs\x86\liblua54.so</Link>
+    <EmbeddedNativeLibrary Include="$(OutputRuntimeDir)\android-x86\native\liblua55.so">
+      <Link>libs\x86\liblua55.so</Link>
     </EmbeddedNativeLibrary>
-    <EmbeddedNativeLibrary Include="$(OutputRuntimeDir)\android-x64\native\liblua54.so">
-      <Link>libs\x86_64\liblua54.so</Link>
+    <EmbeddedNativeLibrary Include="$(OutputRuntimeDir)\android-x64\native\liblua55.so">
+      <Link>libs\x86_64\liblua55.so</Link>
     </EmbeddedNativeLibrary>
   </ItemGroup>
   <ItemGroup>

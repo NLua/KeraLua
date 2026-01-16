@@ -5,9 +5,9 @@
         <OSX64BuildDir>osx-64</OSX64BuildDir>
         <OSXARM64BuildDir>osx-arm64</OSXARM64BuildDir>
         <OSXBuildDir>osx</OSXBuildDir>
-        <OSXBinaryLibraryPath64>lib64/liblua54.dylib</OSXBinaryLibraryPath64>
-        <OSXBinaryLibraryPath32>lib/liblua54.dylib</OSXBinaryLibraryPath32>
-        <OSXBinaryLibraryPath>liblua54.dylib</OSXBinaryLibraryPath>
+        <OSXBinaryLibraryPath64>lib64/liblua55.dylib</OSXBinaryLibraryPath64>
+        <OSXBinaryLibraryPath32>lib/liblua55.dylib</OSXBinaryLibraryPath32>
+        <OSXBinaryLibraryPath>liblua55.dylib</OSXBinaryLibraryPath>
         <XcodeWithout32BitSupport>10</XcodeWithout32BitSupport>
         <XcodeWithARM64Support>12.2</XcodeWithARM64Support>
     </PropertyGroup>

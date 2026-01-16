@@ -24,15 +24,15 @@ namespace KeraLua
     internal static class NativeMethods
     {
 #if __IOS__ || __TVOS__ || __WATCHOS__ || __MACCATALYST__
-        private const string LuaLibraryName = "@rpath/liblua54.framework/liblua54";
+        private const string LuaLibraryName = "@rpath/liblua55.framework/liblua55";
 #elif __ANDROID__
-        private const string LuaLibraryName = "liblua54.so";
+        private const string LuaLibraryName = "liblua55.so";
 #elif __MACOS__ 
-        private const string LuaLibraryName = "liblua54.dylib";
+        private const string LuaLibraryName = "liblua55.dylib";
 #elif WINDOWS_UWP
-        private const string LuaLibraryName = "lua54.dll";
+        private const string LuaLibraryName = "lua55.dll";
 #else
-        private const string LuaLibraryName = "lua54";
+        private const string LuaLibraryName = "lua55";
 #endif
 
 #pragma warning disable IDE1006 // Naming Styles

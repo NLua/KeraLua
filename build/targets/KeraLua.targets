@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <!-- This target file was inspired by SkiaSharp one, it will be used to copy the native Lua dll to the output directory -->
 
-    <!-- if ShouldIncludeNativeLua == False then don't include the native lua54 -->
+    <!-- if ShouldIncludeNativeLua == False then don't include the native lua55 -->
     <PropertyGroup>
         <ShouldIncludeNativeLua Condition=" '$(ShouldIncludeNativeLua)' == '' ">True</ShouldIncludeNativeLua>
     </PropertyGroup>
@@ -31,9 +31,9 @@
 
     <!-- get the preferred paths -->
     <PropertyGroup>
-        <PreferredWindowsNativeLuaPath>$(MSBuildThisFileDirectory)..\..\runtimes\win-$(PreferredNativeLua)\native\lua54.dll</PreferredWindowsNativeLuaPath>
-        <PreferredOSXNativeLuaPath>$(MSBuildThisFileDirectory)..\..\runtimes\osx\native\liblua54.dylib</PreferredOSXNativeLuaPath>
-        <PreferredLinuxNativeLuaPath>$(MSBuildThisFileDirectory)..\..\runtimes\linux-$(PreferredNativeLua)\native\liblua54.so</PreferredLinuxNativeLuaPath>
+        <PreferredWindowsNativeLuaPath>$(MSBuildThisFileDirectory)..\..\runtimes\win-$(PreferredNativeLua)\native\lua55.dll</PreferredWindowsNativeLuaPath>
+        <PreferredOSXNativeLuaPath>$(MSBuildThisFileDirectory)..\..\runtimes\osx\native\liblua55.dylib</PreferredOSXNativeLuaPath>
+        <PreferredLinuxNativeLuaPath>$(MSBuildThisFileDirectory)..\..\runtimes\linux-$(PreferredNativeLua)\native\liblua55.so</PreferredLinuxNativeLuaPath>
     </PropertyGroup>
 
     <ItemGroup Condition=" '$(ShouldIncludeNativeLua)' != 'False' ">
@@ -54,35 +54,35 @@
     <!-- a special case for Any CPU -->
     <ItemGroup Condition=" '$(ShouldIncludeNativeLua)' != 'False' and ( '$(PlatformTarget)' != 'x64' and '$(PlatformTarget)' != 'x86' and '$(PlatformTarget)' != 'ARM' and '$(PlatformTarget)' != 'ARM64') ">
         <!-- Windows -->
-        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\lua54.dll"
-              Condition="Exists('$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\lua54.dll')">
-            <Link>x86\lua54.dll</Link>
+        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\lua55.dll"
+              Condition="Exists('$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\lua55.dll')">
+            <Link>x86\lua55.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\lua54.dll"
-              Condition="Exists('$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\lua54.dll')">
-            <Link>x64\lua54.dll</Link>
+        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\lua55.dll"
+              Condition="Exists('$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\lua55.dll')">
+            <Link>x64\lua55.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-arm64\native\lua54.dll"
-              Condition="Exists('$(MSBuildThisFileDirectory)..\..\runtimes\win-arm64\native\lua54.dll')">
-            <Link>ARM64\lua54.dll</Link>
+        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-arm64\native\lua55.dll"
+              Condition="Exists('$(MSBuildThisFileDirectory)..\..\runtimes\win-arm64\native\lua55.dll')">
+            <Link>ARM64\lua55.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <!-- Linux -->
-        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\linux-x86\native\native\liblua54.so"
-              Condition="Exists('$(MSBuildThisFileDirectory)..\..\runtimes\linux-x86\native\liblua54.so')">
-            <Link>x86\liblua54.so</Link>
+        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\linux-x86\native\native\liblua55.so"
+              Condition="Exists('$(MSBuildThisFileDirectory)..\..\runtimes\linux-x86\native\liblua55.so')">
+            <Link>x86\liblua55.so</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\linux-x64\native\liblua54.so"
-              Condition="Exists('$(MSBuildThisFileDirectory)..\..\runtimes\linux-x64\native\liblua54.so')">
-            <Link>x64\liblua54.so</Link>
+        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\linux-x64\native\liblua55.so"
+              Condition="Exists('$(MSBuildThisFileDirectory)..\..\runtimes\linux-x64\native\liblua55.so')">
+            <Link>x64\liblua55.so</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\linux-arm64\native\liblua54.so"
-              Condition="Exists('$(MSBuildThisFileDirectory)..\..\runtimes\linux-arm64\native\liblua54.so')">
-            <Link>ARM64\liblua54.so</Link>
+        <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\linux-arm64\native\liblua55.so"
+              Condition="Exists('$(MSBuildThisFileDirectory)..\..\runtimes\linux-arm64\native\liblua55.so')">
+            <Link>ARM64\liblua55.so</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
