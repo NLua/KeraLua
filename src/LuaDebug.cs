@@ -82,6 +82,10 @@ namespace KeraLua
         [MarshalAs(UnmanagedType.I1)]
         public bool IsVarArg;        /* (u) */
         /// <summary>
+        /// number of extra arguments
+        /// </summary>
+        public byte NumberExtraArguments;
+        /// <summary>
         ///  true if this function invocation was called by a tail call. In this case, the caller of this level is not in the stack.
         /// </summary>
         [MarshalAs(UnmanagedType.I1)]
@@ -90,12 +94,12 @@ namespace KeraLua
         /// <summary>
         /// The index on the stack of the first value being "transferred", that is, parameters in a call or return values in a return. (The other values are in consecutive indices.) Using this index, you can access and modify these values through lua_getlocal and lua_setlocal. This field is only meaningful during a call hook, denoting the first parameter, or a return hook, denoting the first value being returned. (For call hooks, this value is always 1.) 
         /// </summary>
-        public ushort IndexFirstValue;   /* (r) index of first value transferred */
+        public int IndexFirstValue;   /* (r) index of first value transferred */
 
         /// <summary>
         /// The number of values being transferred (see previous item). (For calls of Lua functions, this value is always equal to nparams.) 
         /// </summary>
-        public ushort NumberTransferredValues;   /* (r) number of transferred values */
+        public int NumberTransferredValues;   /* (r) number of transferred values */
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 60)]
         byte[] shortSource;
