@@ -86,12 +86,12 @@ stages:
         custom: build
         arguments: './build/TVOS/KeraLua.net9.0-tvos.csproj /p:Configuration=Release'
 
-    - script: 'nuget install NUnit.ConsoleRunner -Version 3.16.3 -source "https://api.nuget.org/v3/index.json" -OutputDirectory .'
+    - script: 'nuget install NUnit.ConsoleRunner -Version 3.20.2 -source "https://api.nuget.org/v3/index.json" -OutputDirectory .'
       workingDirectory: ./
       displayName: 'nuget install NUnit.ConsoleRunner'
 
     # reverted back to use NUnit.ConsoleRunner because Microsoft keeps breaking .NET
-    - script: 'mono NUnit.ConsoleRunner.3.16.3/tools/nunit3-console.exe ./tests/build/net46/bin/Release/KeraLuaTest.dll'
+    - script: 'mono NUnit.ConsoleRunner.3.20.2/tools/nunit3-console.exe ./tests/build/net46/bin/Release/KeraLuaTest.dll --framework=mono-4.0'
       displayName: 'Run OSX tests'
 
     - script: 'mv TestResult.xml ./KeraLuaTest.Mac.xml'
@@ -136,26 +136,41 @@ stages:
       - group: 'Keys'
 
     pool:
-      vmImage: 'ubuntu-22.04'
-      demands: msbuild
-      variables:
-        CC: gcc-9.3
-        CXX: g++-9.3
+      vmImage: 'ubuntu-24.04'
 
     steps:
     - template: common-linux-ubuntu.yaml@templates
+    - template: common-linux-ubuntu-docker.yaml@templates
     - template: common-dotnet.yml@templates
 
     - checkout: self 
       submodules: 'true'
 
-    - script: 'sudo apt update; sudo apt install gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu g++-aarch64-linux-gnu'
-      displayName: 'Install ARM64 build tools'
-
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
         restoreSolution: KeraLua.sln
+
+    # Build Lua using docker to be able to target old distros
+    - script: 'mkdir -p runtimes/linux-x64/native/'
+      displayName: 'Create Linux x64 directory'
+
+    - script: 'mkdir -p runtimes/linux-arm64/native/'
+      displayName: 'Create Linux arm64 directory'
+
+    - script: '~/.docker/cli-plugins/docker-buildx build --platform=linux/arm64 . --output type=local,dest=./out-arm64'
+      workingDirectory: ./external/lua
+      displayName: 'Build arm64 Lua based on Ubuntu 18'
+
+    - script: 'docker build . --output type=local,dest=./out-x64'
+      workingDirectory: ./external/lua
+      displayName: 'Build x64 Lua based on Ubuntu 18'
+
+    - script: 'mv ./external/lua/out-arm64/liblua54.so ./runtimes/linux-arm64/native/liblua54.so'
+      displayName: 'Move arm64 liblua54.so'
+
+    - script: 'mv ./external/lua/out-x64/liblua54.so ./runtimes/linux-x64/native/liblua54.so'
+      displayName: 'Move x64 liblua54.so'
 
     - task: MSBuild@1
       displayName: 'Build solution KeraLua.sln'

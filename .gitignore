@@ -125,3 +125,4 @@ UpgradeLog*.htm
 runtimes/
 Result.xml
 .DS_Store
+.idea/*
