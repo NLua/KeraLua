@@ -60,6 +60,7 @@ stages:
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet build ./build/iOS/KeraLua.net9.0-ios.csproj'
+      retryCountOnTaskFailure: 3
       inputs:
         command: custom
         custom: build
@@ -67,6 +68,7 @@ stages:
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet build ./build/iOS/KeraLua.net9.0-maccatalyst.csproj'
+      retryCountOnTaskFailure: 3
       inputs:
         command: custom
         custom: build
@@ -74,6 +76,7 @@ stages:
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet build ./build/macOS/KeraLua.net9.0-macos.csproj'
+      retryCountOnTaskFailure: 3
       inputs:
         command: custom
         custom: build
@@ -81,6 +84,7 @@ stages:
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet build ./build/TVOS/KeraLua.net9.0-tvos.csproj'
+      retryCountOnTaskFailure: 3
       inputs:
         command: custom
         custom: build
