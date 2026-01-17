@@ -86,12 +86,13 @@ stages:
         custom: build
         arguments: './build/TVOS/KeraLua.net9.0-tvos.csproj /p:Configuration=Release'
 
-    - script: 'nuget install NUnit.ConsoleRunner -Version 3.20.2 -source "https://api.nuget.org/v3/index.json" -OutputDirectory .'
+    # DON'T BUMP NUnit.ConsoleRunner, new versions fail to run tests for .NET Framework (even 3.20.2)
+    - script: 'nuget install NUnit.ConsoleRunner -Version 3.20.1  -source "https://api.nuget.org/v3/index.json" -OutputDirectory .'
       workingDirectory: ./
       displayName: 'nuget install NUnit.ConsoleRunner'
 
     # reverted back to use NUnit.ConsoleRunner because Microsoft keeps breaking .NET
-    - script: 'mono NUnit.ConsoleRunner.3.20.2/tools/nunit3-console.exe ./tests/build/net46/bin/Release/KeraLuaTest.dll --framework=mono-4.0'
+    - script: 'mono NUnit.ConsoleRunner.3.20.1/tools/nunit3-console.exe ./tests/build/net46/bin/Release/KeraLuaTest.dll --framework=mono-4.0'
       displayName: 'Run OSX tests'
 
     - script: 'mv TestResult.xml ./KeraLuaTest.Mac.xml'
