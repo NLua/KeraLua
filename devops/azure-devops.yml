@@ -171,11 +171,11 @@ stages:
       workingDirectory: ./external/lua
       displayName: 'Build x64 Lua based on Ubuntu 18'
 
-    - script: 'mv ./external/lua/out-arm64/liblua54.so ./runtimes/linux-arm64/native/liblua54.so'
-      displayName: 'Move arm64 liblua54.so'
+    - script: 'mv ./external/lua/out-arm64/liblua55.so ./runtimes/linux-arm64/native/liblua55.so'
+      displayName: 'Move arm64 liblua55.so'
 
-    - script: 'mv ./external/lua/out-x64/liblua54.so ./runtimes/linux-x64/native/liblua54.so'
-      displayName: 'Move x64 liblua54.so'
+    - script: 'mv ./external/lua/out-x64/liblua55.so ./runtimes/linux-x64/native/liblua55.so'
+      displayName: 'Move x64 liblua55.so'
 
     - task: MSBuild@1
       displayName: 'Build solution KeraLua.sln'
@@ -184,17 +184,17 @@ stages:
         configuration: Release
 
     - task: PublishPipelineArtifact@1
-      displayName: 'Publish Pipeline Artifact: liblua54.so'
+      displayName: 'Publish Pipeline Artifact: liblua55.so'
       inputs:
-        targetPath: 'runtimes/linux-x64/native/liblua54.so'
-        artifact: 'liblua54.so.x64'
+        targetPath: 'runtimes/linux-x64/native/liblua55.so'
+        artifact: 'liblua55.so.x64'
         publishLocation: 'pipeline'
 
     - task: PublishPipelineArtifact@1
-      displayName: 'Publish Pipeline Artifact: liblua54.so'
+      displayName: 'Publish Pipeline Artifact: liblua55.so'
       inputs:
-        targetPath: 'runtimes/linux-arm64/native/liblua54.so'
-        artifact: 'liblua54.so.arm64'
+        targetPath: 'runtimes/linux-arm64/native/liblua55.so'
+        artifact: 'liblua55.so.arm64'
         publishLocation: 'pipeline'
 
     - template: send-telegram.yml@templates
@@ -354,17 +354,17 @@ stages:
         targetPath: './runtimes/'
 
     - task: DownloadPipelineArtifact@2
-      displayName: 'Download Build liblua54.so x64 (Linux)'
+      displayName: 'Download Build liblua55.so x64 (Linux)'
       inputs:
         buildType: 'current'
-        artifactName: 'liblua54.so.x64'
+        artifactName: 'liblua55.so.x64'
         targetPath: 'runtimes/linux-x64/native/'
 
     - task: DownloadPipelineArtifact@2
-      displayName: 'Download Build liblua54.so arm64 (Linux)'
+      displayName: 'Download Build liblua55.so arm64 (Linux)'
       inputs:
         buildType: 'current'
-        artifactName: 'liblua54.so.arm64'
+        artifactName: 'liblua55.so.arm64'
         targetPath: 'runtimes/linux-arm64/native/'
 
     - script: 'nuget setapikey $(apikey)'

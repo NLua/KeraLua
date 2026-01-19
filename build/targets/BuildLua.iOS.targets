@@ -3,7 +3,7 @@
     <PropertyGroup>
         <iOSBuildDir>ios_build</iOSBuildDir>
         <iOSOutputDir>ios</iOSOutputDir>
-        <DylibFileFramework>liblua54.framework</DylibFileFramework>
+        <DylibFileFramework>liblua55.framework</DylibFileFramework>
     </PropertyGroup>
     <Target Name="BuildLuaiOS" BeforeTargets="PrepareForBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
         <Message Text="Building iOS Lua library (arm64/x86_64)" />

@@ -45,6 +45,8 @@ namespace KeraLua
             Encoding = Encoding.ASCII;
 
             _luaState = NativeMethods.luaL_newstate();
+            if (_luaState == IntPtr.Zero)
+                throw new OutOfMemoryException("Could not allocate memory for new Lua state");
 
             if (openLibs)
                 OpenLibs();
@@ -55,15 +57,20 @@ namespace KeraLua
         /// <summary>
         /// Initialize Lua state with allocator function and user data value
         /// This method will NOT open the default libs.
-        /// Creates a new thread running in a new, independent state. Returns NULL if it cannot create the thread or the state (due to lack of memory). The argument f is the allocator function; Lua does all memory allocation for this state through this function (see lua_Alloc). The second argument, ud, is an opaque pointer that Lua passes to the allocator in every call. 
+        /// Creates a new thread running in a new, independent state. Returns NULL if it cannot create the thread or the state (due to lack of memory). The argument <paramref name="allocator"/> is the allocator function; Lua does all memory allocation for this state through this function (see <see cref="LuaAlloc"/>).
+        /// The second argument, <paramref name="ud"/>, is an opaque pointer that Lua passes to the allocator in every call.
+        /// The third argument, <paramref name="seed"/>, is a seed for the hashing of strings.
         /// </summary>
         /// <param name="allocator">LuaAlloc allocator function called to alloc/free memory</param>
         /// <param name="ud">opaque pointer passed to allocator</param>
-        public Lua(LuaAlloc allocator, IntPtr ud)
+        /// <param name="seed">seed for the hashing of strings</param>
+        public Lua(LuaAlloc allocator, IntPtr ud, uint seed)
         {
             Encoding = Encoding.ASCII;
 
-            _luaState = NativeMethods.lua_newstate(allocator.ToFunctionPointer(), ud);
+            _luaState = NativeMethods.lua_newstate(allocator.ToFunctionPointer(), ud, seed);
+            if (_luaState == IntPtr.Zero)
+                throw new OutOfMemoryException("Could not allocate memory for new Lua state");
 
             SetExtraObject(this, true);
         }
@@ -1126,7 +1133,7 @@ namespace KeraLua
         /// <returns></returns>
         public int ResetThread()
         {
-            return NativeMethods.lua_resetthread(_luaState);
+            return NativeMethods.lua_closethread(_luaState, IntPtr.Zero);
         }
 
         /// <summary>
@@ -1579,7 +1586,7 @@ namespace KeraLua
         }
 
         /// <summary>
-        /// Return the version of Lua (e.g 504)
+        /// Return the version of Lua (e.g 505)
         /// </summary>
         /// <returns></returns>
         public double Version()
@@ -2006,11 +2013,26 @@ namespace KeraLua
         }
 
         /// <summary>
-        /// Opens all standard Lua libraries into the given state. 
+        /// Opens (loads) and preloads selected standard libraries into the state.
+        /// </summary>
+        /// <param name="load">Libraries to load</param>
+        /// <param name="preload">Libraries to preload</param>
+        /// <remarks>
+        /// To <i>preload</i> means to add the library loader into the table <c>package.preload</c>, so that the library can be required later by the program.
+        /// Keep in mind that require itself is provided by the package library.
+        /// If a program does not load that library, it will be unable to <c>require</c> anything.
+        /// </remarks>
+        public void OpenSelectedLibs(LuaLibrary load, LuaLibrary preload)
+        {
+            NativeMethods.luaL_openselectedlibs(_luaState, load, preload);
+        }
+
+        /// <summary>
+        /// Opens all standard Lua libraries into the given state.
         /// </summary>
         public void OpenLibs()
         {
-            NativeMethods.luaL_openlibs(_luaState);
+            OpenSelectedLibs(LuaLibrary.All, LuaLibrary.None);
         }
 
         /// <summary>
@@ -2025,7 +2047,8 @@ namespace KeraLua
         }
 
         /// <summary>
-        /// If the function argument arg is a string, returns this string. If this argument is absent or is nil, returns d        /// </summary>
+        /// If the function argument arg is a string, returns this string. If this argument is absent or is nil, returns d
+        /// </summary>
         /// <param name="index"></param>
         /// <param name="def"></param>
         /// <returns></returns>
