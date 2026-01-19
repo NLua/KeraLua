@@ -9,6 +9,7 @@
     <Import_RootNamespace>KeraLua</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)LuaLibraryName.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaHookMask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DelegateExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Delegates.cs" />
