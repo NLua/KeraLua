@@ -2005,12 +2005,154 @@ namespace KeraLua
             return NativeMethods.luaL_newmetatable(_luaState, name) != 0;
         }
 
+        private static int OpenBase(IntPtr luaState)
+        {
+            return KeraLua.NativeMethods.luaopen_base(luaState);
+        }
+
+        private static int OpenPackage(IntPtr luaState)
+        {
+            return KeraLua.NativeMethods.luaopen_package(luaState);
+        }
+
+        private static int OpenCoroutine(IntPtr luaState)
+        {
+            return KeraLua.NativeMethods.luaopen_coroutine(luaState);
+        }
+
+        private static int OpenTable(IntPtr luaState)
+        {
+            return KeraLua.NativeMethods.luaopen_table(luaState);
+        }
+
+        private static int OpenIO(IntPtr luaState)
+        {
+            return KeraLua.NativeMethods.luaopen_io(luaState);
+        }
+
+        private static int OpenOS(IntPtr luaState)
+        {
+            return KeraLua.NativeMethods.luaopen_os(luaState);
+        }
+
+        private static int OpenString(IntPtr luaState)
+        {
+            return KeraLua.NativeMethods.luaopen_string(luaState);
+        }
+
+        private static int OpenUtf8(IntPtr luaState)
+        {
+            return KeraLua.NativeMethods.luaopen_utf8(luaState);
+        }
+
+        private static int OpenMath(IntPtr luaState)
+        {
+            return KeraLua.NativeMethods.luaopen_math(luaState);
+        }
+
+        private static int OpenDebug(IntPtr luaState)
+        {
+            return KeraLua.NativeMethods.luaopen_debug(luaState);
+        }
+
         /// <summary>
         /// Opens all standard Lua libraries into the given state. 
+        /// Equivalent to calling <c>luaL_openlibs</c>
         /// </summary>
         public void OpenLibs()
         {
             NativeMethods.luaL_openlibs(_luaState);
+        }
+
+        /// <summary>
+        /// Opens the base library (<c>_G</c>), registering core global functions
+        /// such as <c>print</c>, <c>pairs</c>, and <c>type</c>
+        /// </summary>
+        public void OpenBasicLibrary()
+        {
+            RequireF("_G", OpenBase, true);
+            Pop(1);
+        }
+
+        /// <summary>
+        /// Opens the package library, enabling module loading via <c>require</c>
+        /// </summary>
+        public void OpenPackageLibrary()
+        {
+            RequireF("package", OpenPackage, true);
+            Pop(1);
+        }
+
+        /// <summary>
+        /// Opens the coroutine library for cooperative multitasking
+        /// </summary>
+        public void OpenCoroutineLibrary()
+        {
+            RequireF("coroutine", OpenCoroutine, true);
+            Pop(1);
+        }
+
+        /// <summary>
+        /// Opens the table library for table manipulation utilities
+        /// </summary>
+        public void OpenTableLibrary()
+        {
+            RequireF("table", OpenTable, true);
+            Pop(1);
+        }
+
+        /// <summary>
+        /// Opens the I/O library for file operations
+        /// </summary>
+        public void OpenIOLibrary()
+        {
+            RequireF("io", OpenIO, true);
+            Pop(1);
+        }
+
+        /// <summary>
+        /// Opens the OS library for operating system interactions
+        /// </summary>
+        public void OpenOSLibrary()
+        {
+            RequireF("os", OpenOS, true);
+            Pop(1);
+        }
+
+        /// <summary>
+        /// Opens the string library for string manipulation functions
+        /// </summary>
+        public void OpenStringLibrary()
+        {
+            RequireF("string", OpenString, true);
+            Pop(1);
+        }
+
+        /// <summary>
+        /// Opens the UTF-8 library for Unicode string handling
+        /// </summary>
+        public void OpenUTF8Library()
+        {
+            RequireF("utf8", OpenUtf8, true);
+            Pop(1);
+        }
+
+        /// <summary>
+        /// Opens the math library for mathematical operations
+        /// </summary>
+        public void OpenMathLibrary()
+        {
+            RequireF("math", OpenMath, true);
+            Pop(1);
+        }
+
+        /// <summary>
+        /// Opens the debug library for advanced debugging and introspection
+        /// </summary>
+        public void OpenDebugLibrary()
+        {
+            RequireF("debug", OpenDebug, true);
+            Pop(1);
         }
 
         /// <summary>
