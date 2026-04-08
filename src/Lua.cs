@@ -908,7 +908,6 @@ namespace KeraLua
         /// <param name="number"></param>
         public void PushNumber(double number) => NativeMethods.lua_pushnumber(_luaState, number);
 
-
         /// <summary>
         /// Pushes the thread represented by L onto the stack. Returns true if this thread is the main thread of its state. 
         /// </summary>
