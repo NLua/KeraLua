@@ -2039,7 +2039,7 @@ namespace KeraLua
             return KeraLua.NativeMethods.luaopen_string(luaState);
         }
 
-        private static int OpenUtf8(IntPtr luaState)
+        private static int OpenUTF8(IntPtr luaState)
         {
             return KeraLua.NativeMethods.luaopen_utf8(luaState);
         }
@@ -2132,7 +2132,7 @@ namespace KeraLua
         /// </summary>
         public void OpenUTF8Library()
         {
-            RequireF("utf8", OpenUtf8, true);
+            RequireF("utf8", OpenUTF8, true);
             Pop(1);
         }
 
