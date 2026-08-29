@@ -16,6 +16,7 @@ luaL_checkudata
 luaL_checkversion_
 luaL_error
 luaL_execresult
+luaL_alloc
 luaL_fileresult
 luaL_getmetafield
 luaL_getsubtable
@@ -26,7 +27,8 @@ luaL_loadfilex
 luaL_loadstring
 luaL_newmetatable
 luaL_newstate
-luaL_openlibs
+luaL_makeseed
+luaL_openselectedlibs
 luaL_optinteger
 luaL_optlstring
 luaL_optnumber
@@ -80,6 +82,7 @@ lua_len
 lua_load
 lua_newstate
 lua_newthread
+lua_closethread
 lua_newuserdata
 lua_next
 lua_pcallk
@@ -89,6 +92,7 @@ lua_pushfstring
 lua_pushinteger
 lua_pushlightuserdata
 lua_pushlstring
+lua_pushexternalstring
 lua_pushnil
 lua_pushnumber
 lua_pushstring
@@ -117,6 +121,7 @@ lua_settop
 lua_setupvalue
 lua_setuservalue
 lua_status
+lua_numbertocstring
 lua_stringtonumber
 lua_toboolean
 lua_tocfunction

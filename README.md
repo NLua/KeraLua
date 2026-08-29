@@ -29,7 +29,7 @@ KeraLua
 |![win](https://badgen.net/badge/icon/Windows,.NET%20Core?icon=windows&label&list=1) | [![Build Status](https://dev.azure.com/codefoco/NuGets/_apis/build/status/KeraLua?branchName=main&jobName=Windows)](https://dev.azure.com/codefoco/NuGets/_build/latest?definitionId=64&branchName=main) |
 
 
-C# Native bindings of Lua 5.4 (compatible with iOS/Mac/Android/UWP/.NET) 
+C# Native bindings of Lua 5.5 (compatible with iOS/Mac/Android/UWP/.NET) 
 
 Before build fetch the submodules:
 

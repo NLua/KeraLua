@@ -3,7 +3,7 @@
     <PropertyGroup>
         <AndroidBuildDir>android_build</AndroidBuildDir>
         <AndroidOutputDir>android</AndroidOutputDir>
-        <LibraryFileName>liblua54.so</LibraryFileName>
+        <LibraryFileName>liblua55.so</LibraryFileName>
         <Arch1>arm</Arch1>
         <Arch2>arm64</Arch2>
         <Arch3>x86</Arch3>

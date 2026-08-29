@@ -7,11 +7,10 @@
     public enum LuaRegistry
 #pragma warning restore CA1008 // Enums should have zero value
     {
-        /* LUAI_MAXSTACK		1000000 */
         /// <summary>
-        /// pseudo-index used by registry table
+        /// pseudo-index used by registry table: <c>-1073742823</c>
         /// </summary>
-        Index = -1000000 - 1000
+        Index = -(int.MaxValue / 2 + 1000)
     }
 
     /// <summary>
@@ -21,13 +20,15 @@
     public enum LuaRegistryIndex
 #pragma warning restore CA1008 // Enums should have zero value
     {
-        /// <summary>
-        ///  At this index the registry has the main thread of the state.
-        /// </summary>
-        MainThread = 1,
+        /* index 1 is reserved for the reference mechanism */
+
         /// <summary>
         /// At this index the registry has the global environment. 
         /// </summary>
         Globals = 2,
+        /// <summary>
+        ///  At this index the registry has the main thread of the state.
+        /// </summary>
+        MainThread = 3
     }
 }

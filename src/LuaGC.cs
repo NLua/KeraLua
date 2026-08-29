@@ -34,26 +34,51 @@ namespace KeraLua
         /// </summary>
         Step = 5,
         /// <summary>
-        /// The options LUA_GCSETPAUSE and LUA_GCSETSTEPMUL of the function lua_gc are deprecated. You should use the new option LUA_GCINC to set them. 
-        /// </summary>
-        [Obsolete("Deprecatad since Lua 5.4, Use Incremental instead")]
-        SetPause = 6,
-        /// <summary>
-        /// The options LUA_GCSETPAUSE and LUA_GCSETSTEPMUL of the function lua_gc are deprecated. You should use the new option LUA_GCINC to set them. 
-        /// </summary>
-        [Obsolete("Deprecatad since Lua 5.4, Use Incremental instead")]
-        SetStepMultiplier = 7,
-        /// <summary>
         ///  returns a boolean that tells whether the collector is running
         /// </summary>
-        IsRunning = 9,
+        IsRunning = 6,
         /// <summary>
         ///  Changes the collector to generational mode with the given parameters (see §2.5.2). Returns the previous mode (LUA_GCGEN or LUA_GCINC). 
         /// </summary>
-        Generational = 10,
+        Generational = 7,
         /// <summary>
         /// Changes the collector to incremental mode with the given parameters (see §2.5.1). Returns the previous mode (LUA_GCGEN or LUA_GCINC). 
         /// </summary>
-        Incremental = 11,
+        Incremental = 8,
+        /// <summary>
+        /// Changes and/or returns the value of a parameter of the collector.
+        /// </summary>
+        Parameter = 9,
+    }
+
+    /// <summary>
+    /// Garbage Collector operations for use with <see cref="LuaGC.Parameter"/>
+    /// </summary>
+    public enum LuaGCParameter
+    {
+        /// <summary>
+        /// The minor multiplier.
+        /// </summary>
+        MinorMultiplier = 0,
+        /// <summary>
+        /// The major-minor multiplier.
+        /// </summary>
+        MajorMinorMultiplier = 1,
+        /// <summary>
+        /// The minor-major multiplier.
+        /// </summary>
+        MinorMajorMultiplier = 2,
+        /// <summary>
+        /// The garbage-collector pause.
+        /// </summary>
+        Pause = 3,
+        /// <summary>
+        /// The step multiplier.
+        /// </summary>
+        StepMultiplier = 4,
+        /// <summary>
+        /// The step size.
+        /// </summary>
+        StepSize = 5,
     }
 }

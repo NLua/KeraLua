@@ -10,7 +10,7 @@
     <iconUrl>https://raw.githubusercontent.com/nlua/KeraLua/main/KeraLua.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-      C# Native bindings of Lua 5.4 (compatible with iOS/Mac/Android/.NET/UWP) 
+      C# Native bindings of Lua 5.5 (compatible with iOS/Mac/Android/.NET/UWP) 
     </description>
     <releaseNotes>Release: 2bffe65</releaseNotes>
     <copyright>Copyright © Vinicius Jarina 2026</copyright>
@@ -71,27 +71,27 @@
     <file src="lib\Release\xamarintvos\KeraLua.pdb" target="lib\xamarintvos" />
     <file src="lib\Release\net46\KeraLua.xml" target="lib\xamarintvos" />
 
-    <file src="runtimes\win-arm\nativeassets\lua54.dll" target="runtimes\win10-arm\nativeassets\uap10.0\lua54.dll" />
-    <file src="runtimes\win-arm64\nativeassets\lua54.dll" target="runtimes\win10-arm64\nativeassets\uap10.0\lua54.dll" />
-    <file src="runtimes\win-x64\native\lua54.dll" target="runtimes\win10-x64\nativeassets\uap10.0\lua54.dll" />
-    <file src="runtimes\win-x86\native\lua54.dll" target="runtimes\win10-x86\nativeassets\uap10.0\lua54.dll" />
-    <file src="runtimes\win-x64\native\lua54.dll" target="runtimes\win-x64\native\lua54.dll" />
-    <file src="runtimes\win-x86\native\lua54.dll" target="runtimes\win-x86\native\lua54.dll" />
-    <file src="runtimes\win-arm\native\lua54.dll" target="runtimes\win-arm\native\lua54.dll" />
-    <file src="runtimes\win-arm64\native\lua54.dll" target="runtimes\win-arm64\native\lua54.dll" />
-    <file src="runtimes\osx\native\liblua54.dylib" target="runtimes\osx\native\liblua54.dylib" />
-    <file src="runtimes\linux-x64\native\liblua54.so" target="runtimes\linux-x64\native\liblua54.so" />
-    <file src="runtimes\linux-arm64\native\liblua54.so" target="runtimes\linux-arm64\native\liblua54.so" />
-    <file src="runtimes\android-arm\native\liblua54.so" target="runtimes\android-arm\native\liblua54.so" />
-    <file src="runtimes\android-arm64\native\liblua54.so" target="runtimes\android-arm64\native\liblua54.so" />
-    <file src="runtimes\android-x86\native\liblua54.so" target="runtimes\android-x86\native\liblua54.so" />
-    <file src="runtimes\android-x64\native\liblua54.so" target="runtimes\android-x64\native\liblua54.so" />
-    <file src="runtimes\ios\native\liblua54.framework\liblua54" target="runtimes\ios\native\liblua54.framework\liblua54" />
-    <file src="runtimes\ios\native\liblua54.framework\Info.plist" target="runtimes\ios\native\liblua54.framework\Info.plist" />
-    <file src="runtimes\maccatalyst\native\liblua54.framework\liblua54" target="runtimes\maccatalyst\native\liblua54.framework\liblua54" />
-    <file src="runtimes\maccatalyst\native\liblua54.framework\Resources\Info.plist" target="runtimes\maccatalyst\native\liblua54.framework\Info.plist" />
-    <file src="runtimes\tvos\native\liblua54.framework\liblua54" target="runtimes\tvos\native\liblua54.framework\liblua54" />
-    <file src="runtimes\tvos\native\liblua54.framework\Info.plist" target="runtimes\tvos\native\liblua54.framework\Info.plist" />
+    <file src="runtimes\win-arm\nativeassets\lua55.dll" target="runtimes\win10-arm\nativeassets\uap10.0\lua55.dll" />
+    <file src="runtimes\win-arm64\nativeassets\lua55.dll" target="runtimes\win10-arm64\nativeassets\uap10.0\lua55.dll" />
+    <file src="runtimes\win-x64\native\lua55.dll" target="runtimes\win10-x64\nativeassets\uap10.0\lua55.dll" />
+    <file src="runtimes\win-x86\native\lua55.dll" target="runtimes\win10-x86\nativeassets\uap10.0\lua55.dll" />
+    <file src="runtimes\win-x64\native\lua55.dll" target="runtimes\win-x64\native\lua55.dll" />
+    <file src="runtimes\win-x86\native\lua55.dll" target="runtimes\win-x86\native\lua55.dll" />
+    <file src="runtimes\win-arm\native\lua55.dll" target="runtimes\win-arm\native\lua55.dll" />
+    <file src="runtimes\win-arm64\native\lua55.dll" target="runtimes\win-arm64\native\lua55.dll" />
+    <file src="runtimes\osx\native\liblua55.dylib" target="runtimes\osx\native\liblua55.dylib" />
+    <file src="runtimes\linux-x64\native\liblua55.so" target="runtimes\linux-x64\native\liblua55.so" />
+    <file src="runtimes\linux-arm64\native\liblua55.so" target="runtimes\linux-arm64\native\liblua55.so" />
+    <file src="runtimes\android-arm\native\liblua55.so" target="runtimes\android-arm\native\liblua55.so" />
+    <file src="runtimes\android-arm64\native\liblua55.so" target="runtimes\android-arm64\native\liblua55.so" />
+    <file src="runtimes\android-x86\native\liblua55.so" target="runtimes\android-x86\native\liblua55.so" />
+    <file src="runtimes\android-x64\native\liblua55.so" target="runtimes\android-x64\native\liblua55.so" />
+    <file src="runtimes\ios\native\liblua55.framework\liblua55" target="runtimes\ios\native\liblua55.framework\liblua55" />
+    <file src="runtimes\ios\native\liblua55.framework\Info.plist" target="runtimes\ios\native\liblua55.framework\Info.plist" />
+    <file src="runtimes\maccatalyst\native\liblua55.framework\liblua55" target="runtimes\maccatalyst\native\liblua55.framework\liblua55" />
+    <file src="runtimes\maccatalyst\native\liblua55.framework\Resources\Info.plist" target="runtimes\maccatalyst\native\liblua55.framework\Info.plist" />
+    <file src="runtimes\tvos\native\liblua55.framework\liblua55" target="runtimes\tvos\native\liblua55.framework\liblua55" />
+    <file src="runtimes\tvos\native\liblua55.framework\Info.plist" target="runtimes\tvos\native\liblua55.framework\Info.plist" />
     <file src="build\targets\KeraLua.targets" target="build\net46\KeraLua.targets" />
     <file src="LICENSE" target="LICENSE" />
   </files>

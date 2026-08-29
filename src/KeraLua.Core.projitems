@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)LuaDebug.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaGC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaHookEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LuaLibrary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaOperation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaRegister.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaRegistry.cs" />

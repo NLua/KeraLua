@@ -3,7 +3,7 @@
     <PropertyGroup>
         <iOSBuildDir>ios_build</iOSBuildDir>
         <iOSOutputDir>maccatalyst</iOSOutputDir>
-        <DylibFileFramework>liblua54.framework</DylibFileFramework>
+        <DylibFileFramework>liblua55.framework</DylibFileFramework>
     </PropertyGroup>
     <Target Name="BuildLuaXamariniOS" BeforeTargets="PrepareForBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
         <Message Text="Building MacCatalyst Lua library (arm64/x86_64)" />
