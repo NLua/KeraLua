@@ -59,36 +59,36 @@ stages:
         configuration: Release
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build ./build/iOS/KeraLua.net9.0-ios.csproj'
+      displayName: 'dotnet build ./build/iOS/KeraLua.net10.0-ios.csproj'
       retryCountOnTaskFailure: 3
       inputs:
         command: custom
         custom: build
-        arguments: './build/iOS/KeraLua.net9.0-ios.csproj /p:Configuration=Release'
+        arguments: './build/iOS/KeraLua.net10.0-ios.csproj /p:Configuration=Release'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build ./build/iOS/KeraLua.net9.0-maccatalyst.csproj'
+      displayName: 'dotnet build ./build/iOS/KeraLua.net10.0-maccatalyst.csproj'
       retryCountOnTaskFailure: 3
       inputs:
         command: custom
         custom: build
-        arguments: './build/iOS/KeraLua.net9.0-maccatalyst.csproj /p:Configuration=Release'
+        arguments: './build/iOS/KeraLua.net10.0-maccatalyst.csproj /p:Configuration=Release'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build ./build/macOS/KeraLua.net9.0-macos.csproj'
+      displayName: 'dotnet build ./build/macOS/KeraLua.net10.0-macos.csproj'
       retryCountOnTaskFailure: 3
       inputs:
         command: custom
         custom: build
-        arguments: './build/macOS/KeraLua.net9.0-macos.csproj /p:Configuration=Release'
+        arguments: './build/macOS/KeraLua.net10.0-macos.csproj /p:Configuration=Release'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build ./build/TVOS/KeraLua.net9.0-tvos.csproj'
+      displayName: 'dotnet build ./build/TVOS/KeraLua.net10.0-tvos.csproj'
       retryCountOnTaskFailure: 3
       inputs:
         command: custom
         custom: build
-        arguments: './build/TVOS/KeraLua.net9.0-tvos.csproj /p:Configuration=Release'
+        arguments: './build/TVOS/KeraLua.net10.0-tvos.csproj /p:Configuration=Release'
 
     # DON'T BUMP NUnit.ConsoleRunner, new versions fail to run tests for .NET Framework (even 3.20.2)
     - script: 'nuget install NUnit.ConsoleRunner -Version 3.20.1  -source "https://api.nuget.org/v3/index.json" -OutputDirectory .'
@@ -235,11 +235,11 @@ stages:
         restoreSolution: KeraLua.UWP.sln
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet restore KeraLua.net9.0-android.sln'
+      displayName: 'dotnet restore KeraLua.net10.0-android.sln'
       inputs:
         command: custom
         custom: restore
-        arguments: '.\KeraLua.net9.0-android.sln'
+        arguments: '.\KeraLua.net10.0-android.sln'
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet restore KeraLua.net8.0.sln'
@@ -290,11 +290,11 @@ stages:
         arguments: '.\KeraLua.netstandard.sln /p:Configuration=Release'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build build/Android/KeraLua.net9.0-android.csproj'
+      displayName: 'dotnet build build/Android/KeraLua.net10.0-android.csproj'
       inputs:
         command: custom
         custom: build
-        arguments: '.\build\Android\KeraLua.net9.0-android.csproj /p:Configuration=Release /p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle"'
+        arguments: '.\build\Android\KeraLua.net10.0-android.csproj /p:Configuration=Release /p:AndroidNdkDirectory="C:\Android\android-sdk\ndk-bundle"'
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet vstest'
