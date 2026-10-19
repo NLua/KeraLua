@@ -88,6 +88,10 @@
     <file src="runtimes\android-x64\native\liblua54.so" target="runtimes\android-x64\native\liblua54.so" />
     <file src="runtimes\ios\native\liblua54.framework\liblua54" target="runtimes\ios\native\liblua54.framework\liblua54" />
     <file src="runtimes\ios\native\liblua54.framework\Info.plist" target="runtimes\ios\native\liblua54.framework\Info.plist" />
+    <file src="runtimes\iossimulator-x64\native\liblua54.framework\liblua54" target="runtimes\iossimulator-x64\native\liblua54.framework\liblua54" />
+    <file src="runtimes\iossimulator-x64\native\liblua54.framework\Info.plist" target="runtimes\iossimulator-x64\native\liblua54.framework\Info.plist" />
+    <file src="runtimes\iossimulator-arm64\native\liblua54.framework\liblua54" target="runtimes\iossimulator-arm64\native\liblua54.framework\liblua54" />
+    <file src="runtimes\iossimulator-arm64\native\liblua54.framework\Info.plist" target="runtimes\iossimulator-arm64\native\liblua54.framework\Info.plist" />
     <file src="runtimes\maccatalyst\native\liblua54.framework\liblua54" target="runtimes\maccatalyst\native\liblua54.framework\liblua54" />
     <file src="runtimes\maccatalyst\native\liblua54.framework\Resources\Info.plist" target="runtimes\maccatalyst\native\liblua54.framework\Info.plist" />
     <file src="runtimes\tvos\native\liblua54.framework\liblua54" target="runtimes\tvos\native\liblua54.framework\liblua54" />

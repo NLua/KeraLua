@@ -3,19 +3,28 @@
     <PropertyGroup>
         <iOSBuildDir>ios_build</iOSBuildDir>
         <iOSOutputDir>ios</iOSOutputDir>
+        <iOSSimulatorX64OutputDir>iossimulator-x64</iOSSimulatorX64OutputDir>
+        <iOSSimulatorArm64OutputDir>iossimulator-arm64</iOSSimulatorArm64OutputDir>
         <DylibFileFramework>liblua54.framework</DylibFileFramework>
     </PropertyGroup>
     <Target Name="BuildLuaiOS" BeforeTargets="PrepareForBuild" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
-        <Message Text="Building iOS Lua library (arm64/x86_64)" />
-        <Exec Command="make ios" WorkingDirectory="$(ExternalLuaPath)/$(iOSBuildDir)" />
+        <Message Text="Building iOS Lua library (arm64, iossimulator x64, iossimulator arm64)" />
+        <Exec Command="make ios iossimulator-x64 iossimulator-arm64" WorkingDirectory="$(ExternalLuaPath)/$(iOSBuildDir)" />
+        <MakeDir Directories="$(OutputRuntimeDir)/$(iOSOutputDir)/native;$(OutputRuntimeDir)/$(iOSSimulatorX64OutputDir)/native;$(OutputRuntimeDir)/$(iOSSimulatorArm64OutputDir)/native" />
         <Exec Command="ditto $(ExternalLuaPath)/$(iOSBuildDir)/$(iOSOutputDir)/$(DylibFileFramework) $(OutputRuntimeDir)/$(iOSOutputDir)/native/$(DylibFileFramework)"  />
-        <RemoveDir Directories="$(OutputRuntimeDir)/$(iOSOutputDir)/$(DylibFileFramework)/Headers" />
+        <Exec Command="ditto $(ExternalLuaPath)/$(iOSBuildDir)/$(iOSSimulatorX64OutputDir)/$(DylibFileFramework) $(OutputRuntimeDir)/$(iOSSimulatorX64OutputDir)/native/$(DylibFileFramework)"  />
+        <Exec Command="ditto $(ExternalLuaPath)/$(iOSBuildDir)/$(iOSSimulatorArm64OutputDir)/$(DylibFileFramework) $(OutputRuntimeDir)/$(iOSSimulatorArm64OutputDir)/native/$(DylibFileFramework)"  />
+        <RemoveDir Directories="$(OutputRuntimeDir)/$(iOSOutputDir)/native/$(DylibFileFramework)/Headers;$(OutputRuntimeDir)/$(iOSSimulatorX64OutputDir)/native/$(DylibFileFramework)/Headers;$(OutputRuntimeDir)/$(iOSSimulatorArm64OutputDir)/native/$(DylibFileFramework)/Headers" />
     </Target>
     <Target Name="CleanLuaiOS" AfterTargets="Clean" Condition="'$(OS)'=='Unix' and Exists('/usr/bin/xcodebuild')" >
         <Message Text="Cleaning Lua library (iOS)" />
         <RemoveDir Directories="
-        $(ExternalLuaPath)/$(iOSBuildDir)/$(iOSOutputDir); 
-        $(OutputRuntimeDir)/$(iOSOutputDir) " />
+        $(ExternalLuaPath)/$(iOSBuildDir)/$(iOSOutputDir);
+        $(ExternalLuaPath)/$(iOSBuildDir)/$(iOSSimulatorX64OutputDir);
+        $(ExternalLuaPath)/$(iOSBuildDir)/$(iOSSimulatorArm64OutputDir);
+        $(OutputRuntimeDir)/$(iOSOutputDir);
+        $(OutputRuntimeDir)/$(iOSSimulatorX64OutputDir);
+        $(OutputRuntimeDir)/$(iOSSimulatorArm64OutputDir) " />
     </Target>
 </Project>
 
